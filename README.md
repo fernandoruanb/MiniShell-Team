@@ -1,1 +1,1 @@
-# MiniShell-Team
+# Dont read me pls ><, i'm shy
