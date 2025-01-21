@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:56:07 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/01/21 10:01:13 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:01:56 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	main(void)
 
 	root = NULL;
 	root = ft_lstnew(2);
+	root = add_value(root, -1);
+	root = add_value(root, 2);
 	root = add_value(root, 3);
 	root = add_value(root, 1);
 	root = add_value(root, 10);
