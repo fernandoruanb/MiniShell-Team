@@ -15,12 +15,12 @@
 
 typedef struct s_binary_tree
 {
-	int	value;
+	int						value;
 	struct s_binary_tree	*left_branch;
 	struct s_binary_tree	*right_branch;
 }	t_binary_tree;
 
-t_binary_tree	*new_branch(int	content)
+t_binary_tree	*new_branch(int content)
 {
 	t_binary_tree	*new_branch;
 
@@ -76,4 +76,3 @@ int	main(void)
 	free_each_branch(root);
 	return (0);
 }
-

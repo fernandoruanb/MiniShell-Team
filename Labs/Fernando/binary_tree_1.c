@@ -15,7 +15,7 @@
 
 typedef struct s_binary_tree
 {
-	int	value;
+	int						value;
 	struct s_binary_tree	*left_branch;
 	struct s_binary_tree	*right_branch;
 }	t_binary_tree;
