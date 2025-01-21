@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/21 17:12:09 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/21 17:21:11 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*display_prompt(void)
 		return (NULL);
 	if (getcwd(dir_path, len))
 	{
-		prompt = ft_strchar(first_char(strstr(dir_path, "home"), '/'), ' ');
+		prompt = ft_strchar(ft_strchar(first_char(strstr(dir_path, "home"), '/'), '$'), ' ');
 		if (!prompt)
 			return (ft_free(dir_path, NULL));
 		return (prompt);
