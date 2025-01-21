@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 10:40:06 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/21 12:07:31 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:01:58 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,35 +25,27 @@ typedef struct s_tree
 	struct s_tree	*right;
 }	t_tree;
 
-void	hello(void);
-void	destroy_tree(t_tree *root);
-
-t_tree	*new_tree(int value)
+t_tree	*new_tree(pid_t pid)
 {
 	t_tree	*new;
 
 	new = malloc(sizeof(t_tree));
 	if (!new)
 		return (NULL);
-	new->pid = value;
+	new->pid = pid;
 	new->left = NULL;
 	new->right = NULL;
-	if (new->pid == -1)
-		exit(1);
-	if (new->pid == 0)
-		hello();
-	waitpid(new->pid, NULL, 0);
 	return (new);
 }
 
-t_tree	*add_tree(t_tree *root, int value)
+t_tree	*add_tree(t_tree *root, pid_t pid)
 {
 	if (!root)
-		return (new_tree(value));
-	if (value < root->pid)
-		root->left = add_tree(root->left, value);
+		return (new_tree(pid));
+	if (pid < 0)
+		root->left = add_tree(root->left, pid);
 	else
-		root->right = add_tree(root->right, value);
+		root->right = add_tree(root->right, pid);
 	return (root);
 }
 
@@ -75,22 +67,37 @@ void	destroy_tree(t_tree *root)
 	free(root);
 }
 
-void	hello(void)
+void	run_nodes(t_tree *root)
 {
-	printf("Hello from %d\n", getpid());
+	if (!root)
+		return ;
+	if (root->pid == 0)
+	{
+		printf("Hello from %d\n", getpid());
+		exit (0);
+	}
+	else
+	{
+		run_nodes(root->right);
+		wait(NULL);
+	}
 }
 
 int	main(void)
 {
+	t_tree	*root;
 	t_tree	*node;
-	t_tree	*temp;
+	pid_t	pid;
+	int		i;
 
-	node = new_tree(fork());
-	if (node->pid != 0)
+	root = new_tree(getpid());
+	i = 0;
+	while (i < 4)
 	{
-		node = add_tree(node, fork());
-		node = add_tree(node, fork());
-		node = add_tree(node, fork());
-		destroy_tree(node);
+		pid = fork();
+		root = add_tree(root, pid);
+		i++;
 	}
+	run_nodes(root);
+	destroy_tree(root);
 }
