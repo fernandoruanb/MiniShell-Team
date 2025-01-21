@@ -2,7 +2,7 @@
 NAME = minishell
 
 SRC_DIR = src
-SRCS = main/events.c \
+SRCS = main/2-events.c \
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJ = $(SRC:.c=.o)
@@ -23,7 +23,7 @@ $(LIBFT)/libft.a:
 #Creates libft.a. Copy to the current directory. Add libft.a to libprintf.a
 $(NAME): $(OBJ) $(LIBFT)/libft.a
 	@echo "Compiling Minishell"
-	@$(CC) $(CFLAGS) $(SRC_DIR)/main/main.c $(OBJ) $(LIBFT)/libft.a -o $(NAME)
+	@$(CC) $(CFLAGS) $(SRC_DIR)/main/1-main.c $(OBJ) $(LIBFT)/libft.a -o $(NAME)
 
 leak: $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) 2>&1 | \
