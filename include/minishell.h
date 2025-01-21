@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/07 15:22:10 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/21 10:34:46 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ typedef struct s_data
 
 void	create(t_data *data);
 void	execute(t_data *data);
-void	destroy(t_data *data, char *message);
+void	destroy(t_data *data, char *message, int exit_code);
 
 #endif
