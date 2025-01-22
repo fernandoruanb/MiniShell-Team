@@ -17,8 +17,15 @@ static void	set_null(t_data *data)
 	data->temp = 0;
 }
 
-void	create(t_data *data);
-void	execute(t_data *data);
+void	create(t_data *data)
+{
+	execute(data);
+}
+void	execute(t_data *data)
+{
+	(void)data;
+	display_prompt();
+}
 void	destroy(t_data *data, char *message, int exit_code)
 {
 	set_null(data);

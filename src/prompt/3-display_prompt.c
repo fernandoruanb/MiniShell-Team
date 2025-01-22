@@ -10,115 +10,77 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <string.h>
-
-void	*ft_free(void *a, void *b)
-{
-	free(a);
-	free(b);
-	return (NULL);
-}
-
-static int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+#include "minishell.h"
 
 /*
-	Concatena uma str com um caractere
+	Set the dir_path to the correct format
+
+	name/something$ command
 */
-static char	*ft_strchar(char *str, char c)
+static char	*set_dir(char *src)
 {
-	char	*s;
 	int		len;
+	char	*dst;
 	int		i;
+	char	*temp;
 
-	len = ft_strlen(str) + 2;
-	s = calloc(len, 1);
-	if (!s)
+	len = ft_strlen(src);
+	temp = ft_strchr(ft_strnstr(src, "home", len),'/');
+	temp++;
+	dst = ft_calloc(len + 3, 1);
+	if (!dst)
 		return (NULL);
+	ft_strcpy(dst, src);
 	i = 0;
-	while (str[i])
-	{
-		s[i] = str[i];
+	while (dst[i])
 		i++;
-	}
-	s[i++] = c;
-	s[i] = '\0';
-	return (s);
+	dst[i++] = '$';
+	dst[i] = ' ';
+	return (dst);
 }
 
-char	*first_char(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (&str[++i]);
-		i++;
-	}
-	return (NULL);
-}
-
-char	*display_prompt(void)
+static char	*get_name(void)
 {
 	char	*dir_path;
 	char	*prompt;
 	int		len;
 
 	len = 1024;
-	dir_path = calloc(len, 1);
+	dir_path = ft_calloc(len, 1);
 	if (!dir_path)
 		return (NULL);
 	if (getcwd(dir_path, len))
 	{
-		prompt = ft_strchar(ft_strchar(first_char(strstr(dir_path, "home"), '/'), '$'), ' ');
-		if (!prompt)
-			return (ft_free(dir_path, NULL));
+		prompt = set_dir(dir_path);
+		free(dir_path);
 		return (prompt);
 	}
 	return (NULL);
 }
 
-/*
-	compilar com a flag -lreadline -lncurses
-*/
-void	get_input(void)
+void	ft_free(void *a, void *b)
 {
+	free(a);
+	free(b);
+}
+
+void	display_prompt(void)
+{
+	char	*path;
 	char	*input;
-	char	*dir_path;
 
 	while (1)
 	{
-		dir_path = display_prompt();
-		input = readline(dir_path);
+		path = get_name();
+		input = readline(path);
 		if (!input)
 		{
-			printf("\n");
-			ft_free(dir_path, input);
 			rl_clear_history();
-			break ;
+			printf("\n");
+			return (ft_free(path, input));
 		}
-		if (input)
-			add_history(input);
-		printf("O seu input foi: %s\n", input);
-		ft_free(dir_path, input);
+		add_history(input);
+		printf("You have typed: %s\n", input);
+		ft_free(input, path);
 	}
-}
-
-int	main(void)
-{
-	get_input();
-	return (0);
 }

@@ -14,9 +14,8 @@
 
 int	main(void)
 {
-	char	*s;
+	t_data	data;
 
-	s = ft_calloc(1, 1);
-	ft_printf("Hello world!!!\n");
+	create(&data);
 	return (0);
 }

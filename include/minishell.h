@@ -28,14 +28,19 @@
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <termcap.h>
+#include <readline/history.h>
 
 typedef struct s_data
 {
 	int	temp;
 }	t_data;
 
+//	main/2-events.c
 void	create(t_data *data);
 void	execute(t_data *data);
 void	destroy(t_data *data, char *message, int exit_code);
+
+//	prompt/3-display_prompt.c
+void	display_prompt(void);
 
 #endif
