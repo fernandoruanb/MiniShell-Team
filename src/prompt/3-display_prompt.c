@@ -58,7 +58,7 @@ static char	*get_name(void)
 	return (NULL);
 }
 
-void	ft_free(void *a, void *b)
+static void	ft_free(void *a, void *b)
 {
 	free(a);
 	free(b);
