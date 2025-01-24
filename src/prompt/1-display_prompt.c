@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   4-display_prompt.c                                 :+:      :+:    :+:   */
+/*   1-display_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/24 13:40:19 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:42:56 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*set_dir(char *src)
 	dst = ft_calloc(len + 3, 1);
 	if (!dst)
 		return (NULL);
-	ft_strcpy(dst, src);
+	ft_strcpy(dst, temp);
 	i = 0;
 	while (dst[i])
 		i++;
@@ -64,6 +64,23 @@ static void	ft_free(void *a, void *b)
 	free(b);
 }
 
+static char	*colours(char *str)
+{
+	char	*temp;
+	char	*temp2;
+	char	*yellow_text;
+
+	temp = ft_calloc(ft_strlen("\033[1;33m") + 1, 1);
+	if (!temp)
+		return (NULL);
+	ft_strcpy(temp, "\033[1;33m");
+	temp2 = ft_strjoin(temp, str);
+	free(temp);
+	yellow_text = ft_strjoin(temp2, "\033[0m");
+	free(temp2);
+	return (yellow_text);
+}
+
 void	display_prompt(t_prompt *prompt)
 {
 	char	*path;
@@ -71,8 +88,7 @@ void	display_prompt(t_prompt *prompt)
 	while (1)
 	{
 		path = get_name();
-		printf("\033[1;33m%s\033[0m ", path);
-		prompt->input = readline(NULL);
+		prompt->input = readline(colours(path));
 		if (!prompt->input)
 		{
 			rl_clear_history();

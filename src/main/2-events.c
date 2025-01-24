@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:32 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/24 13:22:38 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:34:08 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	create(t_data *data, char **envp)
 void	execute(t_data *data)
 {
 	display_prompt(data->prompt);
-	destroy(data, "Successfully destroyes", 0);
+	destroy(data, "Successfully destroyed", 0);
 }
 void	destroy(t_data *data, char *message, int exit_code)
 {

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   5-exec_cmd.c                                       :+:      :+:    :+:   */
+/*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/24 13:45:15 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:27:57 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,39 @@ static int	child(t_prompt *prompt)
 	return (0);
 }
 
+// static int	luke_i_am_your_father(t_prompt *prompt)
+// {
+// 	char	**pipes;
+// 	int		i;
+
+// 	pipes = ft_split(prompt->input, '|');
+// 	if (!pipes)
+// 		return (1);
+// 	free(prompt->input);
+// 	i = 0;
+// 	while (pipes[i])
+// 	{
+// 		prompt->input = ft_strdup(pipes[i]);
+// 		free(prompt->input);
+// 		if (child(prompt))
+// 			return (1);
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
 void	exec_cmd(t_prompt *prompt)
 {
+	// if (prompt->input[0] == '\0')
+	// {
+	// 		printf("\n");
+	// 		return ;
+	// }
+	// if (ft_strchr(prompt->input, '|'))
+	// 	if (luke_i_am_your_father(prompt))
+	// 		return ;
+	if (ft_strncmp(prompt->input, "cd", 2) == 0)
+		change_directory(prompt->input);
 	if (child(prompt))
 		return ;
 }

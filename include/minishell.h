@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/24 13:23:37 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:17:38 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,8 @@ int		init_data(t_data *data, char **envp);
 
 //	prompt/5-exec_cmd.c
 void	exec_cmd(t_prompt *prompt);
+
+//	built_in/1-cd.c
+void	change_directory(char *input);
 
 #endif
