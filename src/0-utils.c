@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1-main.c                                           :+:      :+:    :+:   */
+/*   0-utils.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/06 13:09:08 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/24 13:20:08 by jopereir         ###   ########.fr       */
+/*   Created: 2025/01/24 13:15:20 by jopereir          #+#    #+#             */
+/*   Updated: 2025/01/24 13:17:05 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	*clear_split(char **str)
 {
-	t_data	data;
+	int	i;
 
-	(void)argv;
-	if (argc != 1)
-		return (1);
-	create(&data, envp);
-	return (0);
+	i = 0;
+	while (str[i])
+		free(str[i]);
+	free(str);
+	return (NULL);
 }

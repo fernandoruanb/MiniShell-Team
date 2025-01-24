@@ -2,7 +2,12 @@
 NAME = minishell
 
 SRC_DIR = src
-SRCS = main/2-events.c prompt/3-display_prompt.c
+SRCS = main/2-events.c \
+		main/3-init.c \
+		prompt/4-display_prompt.c \
+		0-utils.c \
+		prompt/5-exec_cmd.c
+
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJ = $(SRC:.c=.o)

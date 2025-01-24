@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1-main.c                                           :+:      :+:    :+:   */
+/*   3-init.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/06 13:09:08 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/24 13:20:08 by jopereir         ###   ########.fr       */
+/*   Created: 2025/01/24 13:09:27 by jopereir          #+#    #+#             */
+/*   Updated: 2025/01/24 13:14:53 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	init_data(t_data *data, char **envp)
 {
-	t_data	data;
-
-	(void)argv;
-	if (argc != 1)
+	data->prompt = ft_calloc(1, sizeof(t_prompt));
+	if (!data->prompt)
 		return (1);
-	create(&data, envp);
+	data->prompt->envp = envp;
+	data->prompt->pid = -1;
+	data->prompt->input = NULL;
+	data->prompt->cmdset = NULL;
+	data->prompt->path = NULL;
 	return (0);
 }

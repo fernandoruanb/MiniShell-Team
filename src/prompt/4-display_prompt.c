@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_input.c                                        :+:      :+:    :+:   */
+/*   4-display_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/21 17:21:11 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:40:19 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,23 @@ static void	ft_free(void *a, void *b)
 	free(b);
 }
 
-void	display_prompt(void)
+void	display_prompt(t_prompt *prompt)
 {
 	char	*path;
-	char	*input;
 
 	while (1)
 	{
 		path = get_name();
-		input = readline(path);
-		if (!input)
+		printf("\033[1;33m%s\033[0m ", path);
+		prompt->input = readline(NULL);
+		if (!prompt->input)
 		{
 			rl_clear_history();
 			printf("\n");
-			return (ft_free(path, input));
+			return (ft_free(path, prompt->input));
 		}
-		add_history(input);
-		printf("You have typed: %s\n", input);
-		ft_free(input, path);
+		add_history(prompt->input);
+		exec_cmd(prompt);
+		ft_free(prompt->input, path);
 	}
 }
