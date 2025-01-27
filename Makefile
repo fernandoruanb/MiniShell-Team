@@ -19,10 +19,16 @@ LIBFT = libft
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -I$(HEADER) -g
 
+define	title
+	@echo "\033[1;32m===========================================\033[0m"
+	@echo "\033[1;32m		$(NAME) READY						\033[0m"
+	@echo "\033[1;32m===========================================\033[0m"
+endef
+
 all: $(NAME)
 
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
-	@echo "Compiling $<"
+	@echo "\033[1;33mCompiling	->	$<\033[0m"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT)/libft.a:
@@ -30,20 +36,24 @@ $(LIBFT)/libft.a:
 
 #Creates libft.a. Copy to the current directory. Add libft.a to libprintf.a
 $(NAME): $(OBJ) $(LIBFT)/libft.a
-	@echo "Compiling Minishell"
 	@$(CC) $(CFLAGS) $(SRC_DIR)/main/1-main.c $(OBJ) $(LIBFT)/libft.a -o $(NAME) -lreadline -lncurses
+	$(call title)
 
 leak: $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) 2>&1 | \
 	grep -i "no leaks are possible" > /dev/null && echo "Tudo nos conformes." || echo "Faz denovo, faz direito!!"
 
 clean:
-	@echo "Objects removed."
+	@echo "\033[1;32m===========================================\033[0m"
+	@echo "\033[1;32m		OBJECTS REMOVED						\033[0m"
+	@echo "\033[1;32m===========================================\033[0m"
 	@rm -f $(OBJ)
 	@make -C $(LIBFT) clean
 
 fclean: clean
-	@echo "$(NAME) removed."
+	@echo "\033[1;32m===========================================\033[0m"
+	@echo "\033[1;32m		$(NAME) REMOVED						\033[0m"
+	@echo "\033[1;32m===========================================\033[0m"
 	@rm -f $(NAME)
 	@make -C $(LIBFT) fclean
 
