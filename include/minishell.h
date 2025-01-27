@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/24 15:17:38 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:32:45 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_prompt
 	char	*path;
 
 	pid_t	pid;
+	int		exit_status;
 }	t_prompt;
 
 typedef struct s_data
@@ -51,7 +52,7 @@ void	*clear_split(char **str);
 //	main/2-events.c
 void	create(t_data *data, char **envp);
 void	execute(t_data *data);
-void	destroy(t_data *data, char *message, int exit_code);
+int		destroy(t_data *data, char *message, int exit_code);
 
 //	prompt/3-display_prompt.c
 void	display_prompt(t_prompt *prompt);
@@ -61,8 +62,13 @@ int		init_data(t_data *data, char **envp);
 
 //	prompt/5-exec_cmd.c
 void	exec_cmd(t_prompt *prompt);
+int		child(t_prompt *prompt);
 
 //	built_in/1-cd.c
-void	change_directory(char *input);
+void	ft_cd(char *input);
+
+//	built_in/5-echo.c
+void	ft_echo(t_prompt *prompt);
+char	*enviroment_var(char *cmd, int exit_status);
 
 #endif

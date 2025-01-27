@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1-cd.c                                             :+:      :+:    :+:   */
+/*   2-exit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 14:24:06 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/27 15:24:39 by jopereir         ###   ########.fr       */
+/*   Created: 2025/01/27 11:47:20 by jopereir          #+#    #+#             */
+/*   Updated: 2025/01/27 11:58:30 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_cd(char *input)
+int	ft_exit(t_prompt *prompt)
 {
-	if (chdir(&input[3]) < 0)
-		printf("cd: arquivo ou diretório inexistente: %s\n", &input[3]);
+	exit (prompt->exit_status);
 }

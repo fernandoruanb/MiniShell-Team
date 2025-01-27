@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:09:27 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/24 13:14:53 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/27 11:30:26 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int	init_data(t_data *data, char **envp)
 	data->prompt->input = NULL;
 	data->prompt->cmdset = NULL;
 	data->prompt->path = NULL;
+	data->prompt->exit_status = 0;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/24 15:27:57 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:24:28 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ static void	execute_proccess(t_prompt *prompt)
 		exit(1);
 }
 
-static int	child(t_prompt *prompt)
+int	child(t_prompt *prompt)
 {
-	prompt->cmdset = ft_split(prompt->input, ' ');
 	prompt->path = find_path(prompt->cmdset[0], prompt->envp);
 	if (!prompt->path)
 		return (1);
@@ -58,7 +57,7 @@ static int	child(t_prompt *prompt)
 		return (1);
 	if (prompt->pid == 0)
 		execute_proccess(prompt);
-	waitpid(prompt->pid, NULL, 0);
+	waitpid(prompt->pid, &prompt->exit_status, 0);
 	return (0);
 }
 
@@ -85,16 +84,14 @@ static int	child(t_prompt *prompt)
 
 void	exec_cmd(t_prompt *prompt)
 {
-	// if (prompt->input[0] == '\0')
-	// {
-	// 		printf("\n");
-	// 		return ;
-	// }
 	// if (ft_strchr(prompt->input, '|'))
 	// 	if (luke_i_am_your_father(prompt))
 	// 		return ;
 	if (ft_strncmp(prompt->input, "cd", 2) == 0)
-		change_directory(prompt->input);
+		ft_cd(prompt->input);
+	prompt->cmdset = ft_split(prompt->input, ' ');
+	if (ft_strncmp(prompt->cmdset[0], "echo", 5) == 0)
+		return (ft_echo(prompt));
 	if (child(prompt))
 		return ;
 }

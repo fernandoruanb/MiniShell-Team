@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/24 15:42:56 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:34:28 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*set_dir(char *src)
 	char	*temp;
 
 	len = ft_strlen(src);
-	temp = ft_strchr(ft_strnstr(src, "home", len),'/');
+	temp = ft_strchr(ft_strnstr(src, "home", len), '/');
 	temp++;
 	dst = ft_calloc(len + 3, 1);
 	if (!dst)
@@ -84,19 +84,23 @@ static char	*colours(char *str)
 void	display_prompt(t_prompt *prompt)
 {
 	char	*path;
+	char	*c_path;
 
 	while (1)
 	{
 		path = get_name();
-		prompt->input = readline(colours(path));
+		c_path = colours(path);
+		prompt->input = readline(c_path);
 		if (!prompt->input)
 		{
 			rl_clear_history();
 			printf("\n");
+			free(c_path);
 			return (ft_free(path, prompt->input));
 		}
 		add_history(prompt->input);
 		exec_cmd(prompt);
+		free(c_path);
 		ft_free(prompt->input, path);
 	}
 }

@@ -7,7 +7,9 @@ SRCS = main/2-events.c \
 		prompt/1-display_prompt.c \
 		0-utils.c \
 		prompt/2-exec_cmd.c \
-		built_in/1-cd.c
+		built_in/1-cd.c \
+		built_in/5-echo.c \
+		built_in/5.1-echo_utils.c
 
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
