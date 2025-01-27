@@ -6,13 +6,13 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:01:12 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/27 15:21:10 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:56:32 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*find_quotes_couples(char *cmd)
+static int	find_quotes_couples(char *cmd)
 {
 	int	cnt;
 	int	i;
@@ -43,29 +43,6 @@ static int	get_len(char *cmd)
 	}
 	return (len);
 }
-
-// static char	*cpy_without_quotes(char *cmd)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		len;
-// 	char	*cpy;
-
-// 	len = get_len(cmd);
-// 	cpy = ft_calloc(len + 1, 1);
-// 	if (!cpy)
-// 		return (NULL);
-// 	i = 0;
-// 	j = 0;
-// 	while (cmd[i])
-// 	{
-// 		if (cmd[i] != '\'' && cmd[i] != '\"')
-// 			cpy[j++] = cmd[i];
-// 		i++;
-// 	}
-// 	cpy[len] = '\0';
-// 	return (cpy);
-// }
 
 static char	*cpy_without_quotes(char *cmd)
 {

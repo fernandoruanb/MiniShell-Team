@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/27 13:34:28 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:59:43 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,14 @@ static char	*set_dir(char *src)
 	return (dst);
 }
 
-static char	*get_name(void)
+static char	*get_name(int flag)
 {
 	char	*dir_path;
 	char	*prompt;
 	int		len;
 
+	if (flag)
+		return (ft_strdup("<<Master of universe(mini)>>"));
 	len = 1024;
 	dir_path = ft_calloc(len, 1);
 	if (!dir_path)
@@ -64,19 +66,19 @@ static void	ft_free(void *a, void *b)
 	free(b);
 }
 
-static char	*colours(char *str)
+static char	*colours(char *str, char *c1, char *c2)
 {
 	char	*temp;
 	char	*temp2;
 	char	*yellow_text;
 
-	temp = ft_calloc(ft_strlen("\033[1;33m") + 1, 1);
+	temp = ft_calloc(ft_strlen(c1) + 1, 1);
 	if (!temp)
 		return (NULL);
-	ft_strcpy(temp, "\033[1;33m");
+	ft_strcpy(temp, c1);
 	temp2 = ft_strjoin(temp, str);
 	free(temp);
-	yellow_text = ft_strjoin(temp2, "\033[0m");
+	yellow_text = ft_strjoin(temp2, c2);
 	free(temp2);
 	return (yellow_text);
 }
@@ -88,8 +90,13 @@ void	display_prompt(t_prompt *prompt)
 
 	while (1)
 	{
-		path = get_name();
-		c_path = colours(path);
+		path = get_name(1);
+		
+		//Yellow
+		//c_path = colours(path, "\033[1;33m", "\033[0m");
+
+		//Cyan
+		c_path = colours(path, "\033[1;36m", "\033[0m");
 		prompt->input = readline(c_path);
 		if (!prompt->input)
 		{
