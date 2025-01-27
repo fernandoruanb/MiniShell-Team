@@ -145,15 +145,16 @@ ifeq ($(findstring bonus,$(MAKECMDGOALS)),bonus)
 	OBJS += $(BONUS_OBJS)
 endif
 
-define	title
+.DEFAULT_GOAL := all
+
+intro:
 	@echo "\033[1;32m===========================================\033[0m"
 	@echo "\033[1;32m		$(NAME) READY						\033[0m"
 	@echo "\033[1;32m===========================================\033[0m"
-endef
 
 # Main
 
-all: $(NAME)
+all: intro $(NAME)
 
 # Main rule
 

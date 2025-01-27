@@ -19,13 +19,15 @@ LIBFT = libft
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -I$(HEADER) -g
 
-define	title
-	@echo "\033[1;32m===========================================\033[0m"
-	@echo "\033[1;32m		$(NAME) READY						\033[0m"
-	@echo "\033[1;32m===========================================\033[0m"
-endef
+.DEFAULT_GOAL := all
 
-all: $(NAME)
+
+intro:
+	@echo "\033[1;32m===========================================\033[0m"
+	@echo "\033[1;32m		$(NAME)								\033[0m"
+	@echo "\033[1;32m===========================================\033[0m"
+
+all: intro $(NAME)
 
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo "\033[1;33mCompiling	->	$<\033[0m"
@@ -37,7 +39,6 @@ $(LIBFT)/libft.a:
 #Creates libft.a. Copy to the current directory. Add libft.a to libprintf.a
 $(NAME): $(OBJ) $(LIBFT)/libft.a
 	@$(CC) $(CFLAGS) $(SRC_DIR)/main/1-main.c $(OBJ) $(LIBFT)/libft.a -o $(NAME) -lreadline -lncurses
-	$(call title)
 
 leak: $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) 2>&1 | \
