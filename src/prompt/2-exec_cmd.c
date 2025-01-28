@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 11:34:37 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:44:35 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static	char	*find_path(char *cmd, char **env)
 	char	**paths;
 	char	*path;
 
+	if (!cmd)
+		return (NULL);
 	i = 0;
 	while (!ft_strnstr(env[i], "PATH", 4))
 		i++;
