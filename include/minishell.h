@@ -6,13 +6,14 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/27 13:32:45 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:30:47 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <limits.h>
 # include "libft.h"
 # include "libft.h"
 # include <readline/readline.h>

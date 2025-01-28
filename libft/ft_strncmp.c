@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:27:55 by fruan-ba          #+#    #+#             */
-/*   Updated: 2024/10/13 10:27:57 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:30:34 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	index;
 
+	if (!s1 || !s2)
+		return (INT_MIN);
 	index = 0;
 	while (s1[index] != '\0' && s2[index] != '\0' && index < n)
 	{

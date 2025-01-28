@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/27 13:24:28 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:34:37 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,12 @@ void	exec_cmd(t_prompt *prompt)
 	// if (ft_strchr(prompt->input, '|'))
 	// 	if (luke_i_am_your_father(prompt))
 	// 		return ;
+
 	if (ft_strncmp(prompt->input, "cd", 2) == 0)
 		ft_cd(prompt->input);
 	prompt->cmdset = ft_split(prompt->input, ' ');
 	if (ft_strncmp(prompt->cmdset[0], "echo", 5) == 0)
 		return (ft_echo(prompt));
-	if (child(prompt))
-		return ;
+	if (prompt->input != NULL)
+		child(prompt);
 }

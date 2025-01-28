@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 12:41:02 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/01/06 17:39:50 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:31:19 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include <limits.h>
 
 typedef struct s_list
 {
