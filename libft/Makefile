@@ -145,15 +145,22 @@ ifeq ($(findstring bonus,$(MAKECMDGOALS)),bonus)
 	OBJS += $(BONUS_OBJS)
 endif
 
+.DEFAULT_GOAL := all
+
+intro:
+	@echo "\033[1;32m===========================================\033[0m"
+	@echo "\033[1;32m		$(NAME) READY						\033[0m"
+	@echo "\033[1;32m===========================================\033[0m"
+
 # Main
 
-all: $(NAME)
+all: intro $(NAME)
 
 # Main rule
 
 $(NAME): $(OBJS)
-	@echo "Making libft"
 	@ar rcs $(NAME) $(OBJS)
+	$(call title)
 
 # Main bonus
 
@@ -162,19 +169,23 @@ bonus: $(NAME)
 # .c -> .o
 
 %.o: %.c
-	@echo "Compiling $<"
+	@echo "\033[1;36mCompiling	->	$<\033[0m"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Clear archives
 
 clean:
-	@echo "Objects removed."
+	@echo "\033[1;32m===========================================\033[0m"
+	@echo "\033[1;32m		OBJECTS REMOVED						\033[0m"
+	@echo "\033[1;32m===========================================\033[0m"
 	@rm -f $(OBJS) $(BONUS_OBJS)
 
 # Full clean
 
 fclean: clean
-	@echo "$(NAME) removed."
+	@echo "\033[1;32m===========================================\033[0m"
+	@echo "\033[1;32m		$(NAME) REMOVED						\033[0m"
+	@echo "\033[1;32m===========================================\033[0m"
 	@rm -f $(NAME)
 
 # Restart

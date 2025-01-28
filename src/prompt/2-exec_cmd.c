@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/24 14:21:53 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:24:28 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ static void	execute_proccess(t_prompt *prompt)
 		exit(1);
 }
 
-static int	child(t_prompt *prompt)
+int	child(t_prompt *prompt)
 {
-	prompt->cmdset = ft_split(prompt->input, ' ');
 	prompt->path = find_path(prompt->cmdset[0], prompt->envp);
 	if (!prompt->path)
 		return (1);
@@ -58,12 +57,41 @@ static int	child(t_prompt *prompt)
 		return (1);
 	if (prompt->pid == 0)
 		execute_proccess(prompt);
-	waitpid(prompt->pid, NULL, 0);
+	waitpid(prompt->pid, &prompt->exit_status, 0);
 	return (0);
 }
 
+// static int	luke_i_am_your_father(t_prompt *prompt)
+// {
+// 	char	**pipes;
+// 	int		i;
+
+// 	pipes = ft_split(prompt->input, '|');
+// 	if (!pipes)
+// 		return (1);
+// 	free(prompt->input);
+// 	i = 0;
+// 	while (pipes[i])
+// 	{
+// 		prompt->input = ft_strdup(pipes[i]);
+// 		free(prompt->input);
+// 		if (child(prompt))
+// 			return (1);
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
 void	exec_cmd(t_prompt *prompt)
 {
+	// if (ft_strchr(prompt->input, '|'))
+	// 	if (luke_i_am_your_father(prompt))
+	// 		return ;
+	if (ft_strncmp(prompt->input, "cd", 2) == 0)
+		ft_cd(prompt->input);
+	prompt->cmdset = ft_split(prompt->input, ' ');
+	if (ft_strncmp(prompt->cmdset[0], "echo", 5) == 0)
+		return (ft_echo(prompt));
 	if (child(prompt))
 		return ;
 }
