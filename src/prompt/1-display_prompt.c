@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 11:45:20 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:53:13 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,29 +71,29 @@ static void	clear_process(char *path)
 
 void	display_prompt(t_prompt *prompt)
 {
-	char	*path;
+	char	*name;
 	// char	*c_path;
 
 	while (1)
 	{
-		path = ft_strdup("\033[1;36m<<Master of universe(mini)>>$ \033[0m");
+		name = ft_strdup("\033[1;36m<<Master of universe(mini)>>$ \033[0m");
 		
 		//Yellow
 		//c_path = colours(path, "\033[1;33m", "\033[0m");
 
 		//Cyan
 		//c_path = colours(path, "\033[1;36m", "\033[0m");
-		prompt->input = readline(path);
+		prompt->input = readline(name);
 		if (!prompt->input)
 		{
 			printf("exit\n");
-			return (clear_process(path));
+			return (clear_process(name));
 		}
-		if (ft_strcmp(prompt->input, "exit") == 0)
-			return (clear_process(path));
+		if (ft_strncmp(prompt->input, "exit", 4) == 0)
+			return (clear_process(name));
 		add_history(prompt->input);
 		exec_cmd(prompt);
 		//free(c_path);
-		ft_free(prompt->input, path);
+		ft_free(prompt->input, name);
 	}
 }

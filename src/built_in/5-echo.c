@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:01:12 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 14:14:27 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:06:06 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,7 @@ static void	clear_quotes(t_prompt *prompt)
 
 static void	print_echo(t_prompt *prompt)
 {
-	int		i;
-
-	i = 5;
-	printf("%s", prompt->input + i);
-	printf("\n");
+	printf("%s\n", prompt->input + 5);
 }
 
 void	ft_echo(t_prompt *prompt)

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 11:56:32 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:09:25 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,17 @@
 # include <termios.h>
 # include <termcap.h>
 #include <readline/history.h>
+
+typedef struct s_ast
+{
+	char	*cmd;
+	char	**argv;
+	
+	struct s_ast	*parent;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}	t_ast;
+
 
 typedef struct s_prompt
 {
