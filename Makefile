@@ -10,7 +10,6 @@ SRCS = main/2-events.c \
 		built_in/1-cd.c \
 		built_in/5-echo.c \
 		built_in/5.1-echo_utils.c
-
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJ = $(SRC:.c=.o)
