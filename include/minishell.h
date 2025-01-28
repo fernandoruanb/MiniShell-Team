@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 11:30:47 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:56:32 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_data
 
 //	0-utils.c
 void	*clear_split(char **str);
+char	*ft_strndup(char *str, int n);
 
 //	main/2-events.c
 void	create(t_data *data, char **envp);
