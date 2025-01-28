@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 11:45:20 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:55:43 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	display_prompt(t_prompt *prompt)
 			printf("exit\n");
 			return (clear_process(path));
 		}
-		if (ft_strcmp(prompt->input, "exit") == 0)
+		if (ft_strncmp(prompt->input, "exit", 4) == 0)
 			return (clear_process(path));
 		add_history(prompt->input);
 		exec_cmd(prompt);
