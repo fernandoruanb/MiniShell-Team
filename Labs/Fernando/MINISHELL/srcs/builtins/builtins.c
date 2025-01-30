@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:03:49 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/01/29 14:39:23 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:34:01 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/mini.h"
 
 int	builtins(t_data *data)
 {

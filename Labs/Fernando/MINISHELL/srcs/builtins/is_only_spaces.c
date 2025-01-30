@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 19:02:21 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/01/29 19:48:56 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:33:02 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/mini.h"
 
 int	is_only_spaces(t_data *data)
 {

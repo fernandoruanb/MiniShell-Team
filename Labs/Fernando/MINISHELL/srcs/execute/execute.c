@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:26:26 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/01/29 13:13:24 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:32:33 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/mini.h"
 
 static void	find_pipes(t_data *data)
 {

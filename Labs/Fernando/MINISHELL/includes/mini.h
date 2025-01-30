@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 14:07:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/01/29 19:07:29 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/01/30 11:29:27 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/01/30 15:39:25 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef  MINISHELL_H
-# define MINISHELL_H 
+#ifndef  MINI_H
+# define MINI_H 
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -32,6 +32,8 @@ typedef struct s_data
 	int		file_stdin;
 	int		file_stdout;
 	int		file_stderr;
+	int		cmds;
+	int		args;
 	int		pipes;
 	int		status;
 	int		redirect_in;
@@ -40,7 +42,32 @@ typedef struct s_data
 	int		redirect_in_heredoc;
 	int		redirect_in_triple;
 	int		redirect_out_triple;
+	struct t_tokens	*tokens;
 }	t_data;
+
+typedef enum e_id
+{
+	PIPE,
+	CMD,
+	ARG,
+	BRACKET,
+	REDIRECT_IN,
+	REDIRECT_OUT,
+	REDIRECT_OUT_APPEND,
+	REDIRECT_IN_HEREDOC,
+	LOGICAL_AND_OPERATOR,
+	LOGICAL_OR_OPERATOR,
+}	t_id;
+
+typedef struct s_token
+{
+	char	*value;
+	t_id	type;
+	int	index;
+	char	**args;
+	struct s_token	*next;
+	struct s_token	*prev;
+}	t_tokens;
 
 void	execute(t_data *data, char **envp);
 int		builtins(t_data *data);

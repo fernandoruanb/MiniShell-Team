@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:49:14 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/01/29 19:01:34 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:33:14 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/mini.h"
 
 static void	print_variables(t_data *data)
 {

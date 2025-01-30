@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:34:25 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/01/29 18:47:17 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:32:18 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/mini.h"
 
 void	free_shell(t_data *data)
 {
