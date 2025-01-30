@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:08 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/30 10:53:41 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:13:24 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,17 @@ t_token	*new_token(char *input)
 	return (new);
 }
 
+void	print_argv(char **str){
+	int	i;
+
+	i = 0;
+	
+}
+
 int	main(void){
 	char		*cmd;
 	t_token		*tokens;
 
 	cmd = ft_strdup("ls -l | wc -l");
-	
 	return (0);
 }
