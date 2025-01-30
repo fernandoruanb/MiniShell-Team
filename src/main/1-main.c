@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:08 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 19:46:32 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:16:33 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return (1);
 	create(&data, envp);
+	printf("hello world\n");
 	return (0);
 }
