@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/01/31 19:37:03 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:49:50 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,6 @@ void	get_paths(char **envp, t_utils *data)
 	while (envp[index] && (!ft_strnstr(envp[index], "PATH", 4)))
 		index++;
 	data->paths = ft_split(envp[index] + 5, ':');
-	if (!data->paths)
-		return ;
 }
 
 void	get_full_path(t_tokens *root, int index, t_utils *data)
