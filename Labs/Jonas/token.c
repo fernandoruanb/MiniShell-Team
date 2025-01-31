@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 15:48:06 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/31 14:13:21 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:05:27 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,39 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+
+#pragma region Utils
+
+char	*ft_strndup(char *str, int n)
+{
+	int		i;
+	char	*dup;
+
+	if (!str)
+		return (NULL);
+	dup = calloc(n + 1, 1);
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (str[i] && i < n)
+	{
+		dup[i] = str[i];
+		i++;
+	}
+	return (dup);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+#pragma endregion
 
 #pragma region Token
 
@@ -40,25 +73,6 @@ typedef struct s_token
 
 	struct s_token	*next;
 }	t_token;
-
-char	*ft_strndup(char *str, int n)
-{
-	int		i;
-	char	*dup;
-
-	if (!str)
-		return (NULL);
-	dup = calloc(n + 1, 1);
-	if (!dup)
-		return (NULL);
-	i = 0;
-	while (str[i] && i < n)
-	{
-		dup[i] = str[i];
-		i++;
-	}
-	return (dup);
-}
 
 t_token	*token_create(char *str,int n, int index,  t_id id)
 {
@@ -133,6 +147,21 @@ int	is_quote(char c)
 	return (c == '\'' || c == '\"');
 }
 
+int	is_pipe(char c)
+{
+	return (c == '|');
+}
+
+int	is_great(char c)
+{
+	return (c == '>');
+}
+
+int	is_less(char c)
+{
+	return (c == '<');
+}
+
 #pragma endregion
 
 #pragma region Handles 
@@ -143,8 +172,11 @@ int	handle_word(char *str, t_token **token, int index)
 
 	i = 0;
 	while (str[i])
-		if (!is_alpha(str[i++]))
+	{
+		if (!is_alpha(str[i]))
 			break ;
+		i++;
+	}
 	(*token) = token_add((*token), token_create(str, i, index, CMD));
 	return (i);
 }
@@ -153,7 +185,7 @@ int	handle_quote(char *str, t_token **token, int index)
 {
 	char	quote;
 	int		i;
-
+	
 	i = 0;
 	quote = str[i++];
 	while (str[i])
@@ -168,20 +200,107 @@ int	handle_quote(char *str, t_token **token, int index)
 	return (-1);
 }
 
+int	handle_or(char *str, t_token **token, int index)
+{
+	(*token) = token_add((*token), token_create(str, 2, index, OPERATOR_OR));
+	return (2);
+}
+
+int	handle_pipe(char *str, t_token **token, int index)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		if (!is_pipe(str[i++]))
+			break ;
+	if (i == 3)
+		return (handle_or(str, token, index));
+	if (i > 3)
+	{
+		token_clean(*token);
+		return (-1);
+	}
+	else
+		(*token) = token_add((*token), token_create(str, i, index, PIPE));
+	return (i);
+}
+
+int	handle_append(char *str, t_token **token, int index)
+{
+	(*token) = token_add((*token), token_create(str, 2, index, APPEND));
+	return (2);
+}
+
+int	handle_great(char *str, t_token **token, int index)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		if (!is_great(str[i++]))
+			break ;
+	if (i == 3)
+		return (handle_append(str, token, index));
+	if (i > 3)
+	{
+		token_clean(*token);
+		return (-1);
+	}
+	else
+		(*token) = token_add((*token), token_create(str, i, index, REDIRECT_OUT));
+	return (i);
+}
+
+int	handle_heredoc(char *str, t_token **token, int index)
+{
+	(*token) = token_add((*token), token_create(str, 2, index, HEREDOC));
+	return (2);
+}
+
+int	handle_less(char *str, t_token **token, int index)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		if (!is_less(str[i++]))
+			break ;
+	if (i == 3)
+		return (handle_heredoc(str, token, index));
+	if (i > 3)
+	{
+		token_clean(*token);
+		return (-1);
+	}
+	else
+		(*token) = token_add((*token), token_create(str, i, index, REDIRECT_IN));
+	return (i);
+}
+
 #pragma endregion
 
 #pragma region lexer
 
-static int	handler(char *str, int *i, int index, t_token **token)
+static int	handler(char *str, int *i, int *index, t_token **token)
 {
 	int	__return__;
 
 	__return__ = 0;
 	if (is_alpha(str[*i]))
-		 __return__ = handle_word(&str[*i], token, index);
+		 __return__ = handle_word(&str[*i], token, (*index)++);
 	if (is_quote(str[*i]))
-		__return__ = handle_quote(&str[*i], token, index);
-	*i += __return__;
+		__return__ = handle_quote(&str[*i], token, (*index)++);
+	if (is_pipe(str[*i]))
+		__return__ = handle_pipe(&str[*i], token, (*index)++);
+	if (is_great(str[*i]))
+		__return__ = handle_great(&str[*i], token, (*index)++);
+	if (is_less(str[*i]))
+		__return__ = handle_less(&str[*i], token, (*index)++);
+	if (__return__ != 0)
+		*i += __return__;
+	else
+		(*i)++;
 	return (__return__);
 }
 
@@ -195,7 +314,7 @@ t_token	*lexer(char *str)
 	index = 0;
 	token = NULL;
 	while (str[i])
-		if (handler(str, &i, index++, &token) < 0)
+		if (handler(str, &i, &index, &token) < 0)
 			return (NULL);
 	return (token);
 }
