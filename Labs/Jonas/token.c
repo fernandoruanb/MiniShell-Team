@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 15:48:06 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/31 10:40:01 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:13:21 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,20 @@
 #include <string.h>
 #include <strings.h>
 
+#pragma region Token
+
 typedef enum e_id
 {
 	PIPE,
 	CMD,
 	ARG,
+	BRACKET,
 	REDIRECT_IN,
 	REDIRECT_OUT,
 	HEREDOC,
-	APPEND
+	APPEND,
+	OPERATOR_OR,
+	OPERATOR_AND
 }	t_id;
 
 typedef struct s_token
@@ -55,7 +60,7 @@ char	*ft_strndup(char *str, int n)
 	return (dup);
 }
 
-t_token	*token_create(char *str, int n, int index,  t_id id)
+t_token	*token_create(char *str,int n, int index,  t_id id)
 {
 	t_token	*new;
 
@@ -77,59 +82,20 @@ t_token	*token_add(t_token *root, t_token *new)
 	return (root);
 }
 
-t_token	*tokenize(t_token *token, char *str, int i, int index)
+void	token_clean(t_token *token)
 {
-	if (str[i] == '|')
-		return (token_add(token, token_create("|", 2, index,  PIPE)));
-	if (str[i] == '>' && str[i + 1] != '<')
-		return (token_add(token, token_create(">", 2, index,  REDIRECT_OUT)));
-	if (str[i] == '<' && str[i + 1] != '>')
-		return (token_add(token, token_create("<", 2, index,  REDIRECT_IN)));
-	if (str[i] == '>' && str[i + 1] == '>')
-		return (token_add(token, token_create(">>", 3, index, APPEND)));
-	if (str[i] == '<' && str[i + 1] == '<')
-		return (token_add(token, token_create("<<", 3, index, HEREDOC)));
-	return (NULL);
+	if (!token)
+		return ;
+	token_clean(token->next);
+	free(token->str);
+	free(token);
 }
 
-t_token	*tokenize2(t_token *token, char *str, int i, int start, int index)
+int	token_len(t_token *token)
 {
-	if (str[start - 1] == '<' || str[start - 1] == '>' && i > start)
-		return (token_add(token, token_create(str + start, i - start, index, ARG)));
-	return (token_add(token, token_create(str + start, i - start, index, CMD)));
-}
-
-static int	is_sep(char c)
-{
-	return (c == '|' || c == '<' || c == '>');
-}
-
-static int	word(char *str, int i, t_token **token);
-
-t_token	*lexer(char *str)
-{
-	t_token	*token;
-	int		i;
-	int		start;
-	int		index;
-
-	token = NULL;
-	start = 0;
-	i = 0;
-	index = 0;
-	while (str[i]){
-		if (is_sep(str[i]))
-		{
-			if (i > start)
-				token = tokenize2(token, str, i, start, index++);
-			token = tokenize(token, &str[i], i, index++);
-			start = i + 1;
-		}
-		i++;
-	}
-	if (i > start)
-		token = tokenize2(token, str, i, start, index++);
-	return (token);
+	if (!token)
+		return (0);
+	return (1 + token_len(token->next));
 }
 
 void	token_print(t_token *token)
@@ -153,31 +119,98 @@ void	token_print(t_token *token)
 	token_print(token->next);
 }
 
-void	token_clean(t_token *token)
+#pragma endregion
+
+#pragma region Check
+
+int	is_alpha(char c)
 {
-	if (!token)
-		return ;
-	token_clean(token->next);
-	free(token->str);
-	free(token);
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }
 
-int	token_len(t_token *token)
+int	is_quote(char c)
 {
-	if (!token)
-		return (0);
-	return (1 + token_len(token->next));
+	return (c == '\'' || c == '\"');
 }
+
+#pragma endregion
+
+#pragma region Handles 
+
+int	handle_word(char *str, t_token **token, int index)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		if (!is_alpha(str[i++]))
+			break ;
+	(*token) = token_add((*token), token_create(str, i, index, CMD));
+	return (i);
+}
+
+int	handle_quote(char *str, t_token **token, int index)
+{
+	char	quote;
+	int		i;
+
+	i = 0;
+	quote = str[i++];
+	while (str[i])
+	{
+		if (str[i++] == quote)
+		{
+			(*token) = token_add((*token), token_create(str, i, index, CMD));
+			return (i);
+		}
+	}
+	token_clean(*token);
+	return (-1);
+}
+
+#pragma endregion
+
+#pragma region lexer
+
+static int	handler(char *str, int *i, int index, t_token **token)
+{
+	int	__return__;
+
+	__return__ = 0;
+	if (is_alpha(str[*i]))
+		 __return__ = handle_word(&str[*i], token, index);
+	if (is_quote(str[*i]))
+		__return__ = handle_quote(&str[*i], token, index);
+	*i += __return__;
+	return (__return__);
+}
+
+t_token	*lexer(char *str)
+{
+	int		i;
+	t_token	*token;
+	int		index;
+
+	i = 0;
+	index = 0;
+	token = NULL;
+	while (str[i])
+		if (handler(str, &i, index++, &token) < 0)
+			return (NULL);
+	return (token);
+}
+
+#pragma endregion
 
 int	main(int argc, char **argv)
 {
-	t_token	*tokens;
+	t_token	*token;
 
 	if (argc != 2)
 		return (1);
-	tokens = lexer(argv[1]);
-	token_print(tokens);
-	printf("Tamanho do token: %d\n", token_len(tokens));
-	token_clean(tokens);
+	token = lexer(argv[1]);
+	token_print(token);
+	printf("Tamanho do token: %d\n", token_len(token));
+	token_clean(token);
 	return (0);
 }
