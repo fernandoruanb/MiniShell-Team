@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   test1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/01/31 19:37:03 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:27:09 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 typedef struct s_utils
 {
@@ -288,7 +288,7 @@ int	case_fd(t_tokens *root, t_utils *data)
 	if (root->type == FD && root->previous == NULL)
 	       return (show_error_fd("Isolated redirect", 0, data, 0));
 	else if ((root->type == FD) && (root->previous->type == REDIRECT_OUT
-		|| root->previous->type == APPEND || root->previous->type == REDIRECT_IN))
+		|| root->previous->type == APPEND))
 		return (1);
 	return (show_error_fd("Invalid case of files", 0, data, 0));
 }
@@ -317,7 +317,6 @@ int	get_command(t_tokens *root, t_utils *data)
 
 int	check_syntax(t_tokens *root, char **envp, t_utils *data)
 {
-	int	index;
 	int	flag;
 
 	get_paths(envp, data);
@@ -370,19 +369,7 @@ int	main(int argc, char **argv, char **envp)
 	root = create_token(argv[1], CMD);
 	if (!root)
 		return (1);
-	add_token(&root, "-l", ARG);
-	add_token(&root, "|", PIPE);
-	add_token(&root, "cat", CMD);
-	add_token(&root, "-n", ARG);
-	add_token(&root, "|", PIPE);
-	add_token(&root, "grep", CMD);
-	add_token(&root, "LAB", ARG);
-	add_token(&root, "|", PIPE);
-	add_token(&root, "env", CMD);
-	add_token(&root, "|", PIPE);
-	add_token(&root, "cat", CMD);
-	add_token(&root, ">", REDIRECT_OUT);
-	add_token(&root, "file.txt", FD);
+	add_token(&root, "Hello World", ARG);
 	show_tokens(root);
 	if (check_syntax(root, envp, &data))
 		printf("OK\n");

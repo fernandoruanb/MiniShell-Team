@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/01/31 18:35:13 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:37:03 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,7 @@ int	case_fd(t_tokens *root, t_utils *data)
 	if (root->type == FD && root->previous == NULL)
 	       return (show_error_fd("Isolated redirect", 0, data, 0));
 	else if ((root->type == FD) && (root->previous->type == REDIRECT_OUT
-		|| root->previous->type == APPEND))
+		|| root->previous->type == APPEND || root->previous->type == REDIRECT_IN))
 		return (1);
 	return (show_error_fd("Invalid case of files", 0, data, 0));
 }
