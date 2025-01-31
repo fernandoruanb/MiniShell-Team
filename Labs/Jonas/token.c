@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 15:48:06 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/30 15:46:32 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/31 10:40:01 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,29 +77,22 @@ t_token	*token_add(t_token *root, t_token *new)
 	return (root);
 }
 
-t_token	*tag_operator(t_token *token, char *str, int index)
+t_token	*tokenize(t_token *token, char *str, int i, int index)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] && i < 2)
-	{
-		if (str[i] == '|')
-			return (token_add(token, token_create("|", 2, index,  PIPE)));
-		if (str[i] == '>' && str[i + 1] != '<')
-			return (token_add(token, token_create(">", 2, index,  REDIRECT_OUT)));
-		if (str[i] == '<' && str[i + 1] != '>')
-			return (token_add(token, token_create("<", 2, index,  REDIRECT_IN)));
-		if (str[i] == '>' && str[i + 1] == '>')
-			return (token_add(token, token_create(">>", 3, index, APPEND)));
-		if (str[i] == '<' && str[i + 1] == '<')
-			return (token_add(token, token_create("<<", 3, index, HEREDOC)));
-		i++;
-	}
+	if (str[i] == '|')
+		return (token_add(token, token_create("|", 2, index,  PIPE)));
+	if (str[i] == '>' && str[i + 1] != '<')
+		return (token_add(token, token_create(">", 2, index,  REDIRECT_OUT)));
+	if (str[i] == '<' && str[i + 1] != '>')
+		return (token_add(token, token_create("<", 2, index,  REDIRECT_IN)));
+	if (str[i] == '>' && str[i + 1] == '>')
+		return (token_add(token, token_create(">>", 3, index, APPEND)));
+	if (str[i] == '<' && str[i + 1] == '<')
+		return (token_add(token, token_create("<<", 3, index, HEREDOC)));
 	return (NULL);
 }
 
-t_token	*tag_text(t_token *token, char *str, int i, int start, int index)
+t_token	*tokenize2(t_token *token, char *str, int i, int start, int index)
 {
 	if (str[start - 1] == '<' || str[start - 1] == '>' && i > start)
 		return (token_add(token, token_create(str + start, i - start, index, ARG)));
@@ -110,6 +103,8 @@ static int	is_sep(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
 }
+
+static int	word(char *str, int i, t_token **token);
 
 t_token	*lexer(char *str)
 {
@@ -126,14 +121,14 @@ t_token	*lexer(char *str)
 		if (is_sep(str[i]))
 		{
 			if (i > start)
-				token = tag_text(token, str, i, start, index++);
-			token = tag_operator(token, &str[i], index++);
+				token = tokenize2(token, str, i, start, index++);
+			token = tokenize(token, &str[i], i, index++);
 			start = i + 1;
 		}
 		i++;
 	}
 	if (i > start)
-		token = tag_text(token, str, i, start, index++);
+		token = tokenize2(token, str, i, start, index++);
 	return (token);
 }
 
