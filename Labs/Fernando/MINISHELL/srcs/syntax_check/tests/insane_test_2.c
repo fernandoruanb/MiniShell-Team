@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/01 19:02:46 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:19:44 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,20 +308,6 @@ int	case_fd(t_tokens *root, t_utils *data)
 	return (show_error_fd("Invalid case of files", 0, data, 0));
 }
 
-int	check_invalid_things(t_tokens *root)
-{
-	if ((root->type == OPERATOR_AND || root->type == OPERATOR_OR)
-		&& (root->next->type == PIPE || root->previous->type == PIPE
-		|| root->next->type == OPERATOR_AND || root->previous->type == OPERATOR_AND
-		|| root->next->type == OPERATOR_OR || root->previous->type == OPERATOR_OR
-		|| root->next->type == APPEND || root->previous->type == APPEND
-		|| root->next->type == HEREDOC || root->previous->type == HEREDOC
-		|| root->next->type == REDIRECT_IN || root->previous->type == REDIRECT_IN
-		|| root->next->type == REDIRECT_OUT || root->previous->type == REDIRECT_OUT))
-		return (1);
-	return (0);
-}
-
 int	extra_cases(t_tokens *root, t_utils *data)
 {
 	if (root->type == LIMITER && data->status != 0
@@ -332,8 +318,9 @@ int	extra_cases(t_tokens *root, t_utils *data)
 	if (root->type == OPERATOR_OR && data->status == 0)
 		return (show_error_fd("Operator_OR was the first", 0, data, 0));
 	data->status = 2;
-	if (check_invalid_things(root))
-		return (show_error_fd("Operators and delimiters are joking", 0, data, 0));
+	if ((root->type == OPERATOR_AND || root->type == OPERATOR_OR)
+		&& (root->next->type == PIPE || root->previous->type == PIPE))
+		return (show_error_fd("Operators and pipes are joking", 0, data, 0));
 	if ((root->type == OPERATOR_AND) && (root->previous == NULL
 		|| root->next == NULL))
 		return (show_error_fd("Operator_AND without complements", 0, data, 0));

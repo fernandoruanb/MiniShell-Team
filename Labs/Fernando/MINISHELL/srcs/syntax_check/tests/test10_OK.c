@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   test10.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/01 19:02:46 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/01 15:19:11 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 typedef struct s_utils
 {
@@ -273,13 +273,8 @@ int	case_pipe(t_tokens *root, t_utils *data)
 
 int	case_redirect(t_tokens *root, t_utils *data)
 {
-	if (root->type == HEREDOC && root->next != NULL && root->next->type == LIMITER)
-	{
-		data->status = 2;
-		return (1);
-	}
 	if (data->status == 0)
-		return (show_error_fd("An invalid redirect first position", 0, data, 0));
+		return (show_error_fd("Redirect is the first to appear", 0, data, 0));
 	data->status = 2;
 	if (root->type == REDIRECT_IN && root->previous->type == CMD)
 		return (1);
@@ -308,48 +303,10 @@ int	case_fd(t_tokens *root, t_utils *data)
 	return (show_error_fd("Invalid case of files", 0, data, 0));
 }
 
-int	check_invalid_things(t_tokens *root)
-{
-	if ((root->type == OPERATOR_AND || root->type == OPERATOR_OR)
-		&& (root->next->type == PIPE || root->previous->type == PIPE
-		|| root->next->type == OPERATOR_AND || root->previous->type == OPERATOR_AND
-		|| root->next->type == OPERATOR_OR || root->previous->type == OPERATOR_OR
-		|| root->next->type == APPEND || root->previous->type == APPEND
-		|| root->next->type == HEREDOC || root->previous->type == HEREDOC
-		|| root->next->type == REDIRECT_IN || root->previous->type == REDIRECT_IN
-		|| root->next->type == REDIRECT_OUT || root->previous->type == REDIRECT_OUT))
-		return (1);
-	return (0);
-}
-
-int	extra_cases(t_tokens *root, t_utils *data)
-{
-	if (root->type == LIMITER && data->status != 0
-		&& root->previous->type == HEREDOC)
-		return (1);
-	if (root->type == OPERATOR_AND && data->status == 0)
-		return (show_error_fd("Operator_AND was the first", 0, data, 0));
-	if (root->type == OPERATOR_OR && data->status == 0)
-		return (show_error_fd("Operator_OR was the first", 0, data, 0));
-	data->status = 2;
-	if (check_invalid_things(root))
-		return (show_error_fd("Operators and delimiters are joking", 0, data, 0));
-	if ((root->type == OPERATOR_AND) && (root->previous == NULL
-		|| root->next == NULL))
-		return (show_error_fd("Operator_AND without complements", 0, data, 0));
-	if ((root->type == OPERATOR_OR) && (root->previous == NULL
-		|| root->next == NULL))
-		return (show_error_fd("Operator_OR without complements", 0, data, 0));
-	return (1);
-}
-
 int	get_command(t_tokens *root, t_utils *data)
 {
 	if (root->type == PIPE)
 		return (case_pipe(root, data));
-	else if (root->type == LIMITER || root->type == OPERATOR_AND
-		|| root->type == OPERATOR_OR)
-		return (extra_cases(root, data));
 	else if (root->type == CMD && check_absolute_path(root, data))
 		return (1);
 	else if (root->type == REDIRECT_IN || root->type == REDIRECT_OUT
@@ -420,27 +377,13 @@ int	main(int argc, char **argv, char **envp)
 	t_utils	data;
 	t_tokens	*root;
 
-	(void)argv;
 	if (argc != 2)
 		return (1);
 	init_utils(&data);
-	root = create_token("cat", CMD);
+	root = create_token(argv[1], CMD);
 	if (!root)
 		return (1);
-	add_token(&root, "/var/log/syslog", ARG);
-	add_token(&root, "|", PIPE);
-	add_token(&root, "grep", CMD);
-	add_token(&root, "ERROR", ARG);
-	add_token(&root, "|", PIPE);
-	add_token(&root, "sort", CMD);
-	add_token(&root, "|", PIPE);
-	add_token(&root, "uniq", CMD);
-	add_token(&root, "-c", ARG);
 	add_token(&root, ">", REDIRECT_OUT);
-	add_token(&root, "/home/user/log_summary.txt", FD);
-	add_token(&root, "&&", OPERATOR_AND);
-	add_token(&root, "echo", CMD);
-	add_token(&root, "Resumo de log gerado", ARG);
 	show_tokens(root);
 	if (check_syntax(root, envp, &data))
 		printf("OK\n");
