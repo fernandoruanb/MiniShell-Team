@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/02 19:53:54 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:04:37 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
 typedef struct s_utils
 {
@@ -323,7 +323,6 @@ int	case_fd(t_tokens *root, t_utils *data)
 int	check_invalid_things(t_tokens *root)
 {
 	if ((root->type == OPERATOR_AND || root->type == OPERATOR_OR)
-		&& (root->next != NULL) && (root->previous != NULL)
 		&& (root->next->type == PIPE || root->previous->type == PIPE
 		|| root->next->type == OPERATOR_AND || root->previous->type == OPERATOR_AND
 		|| root->next->type == OPERATOR_OR || root->previous->type == OPERATOR_OR
@@ -342,13 +341,10 @@ int	check_brackets(t_tokens *root, t_utils *data)
 	else if (root->type == BRACKET_O)
 		data->brackets_o++;
 	data->status = 2;
-	if (root->type == BRACKET_O && root->next != NULL 
-		&& root->next->type == BRACKET_C)
+	if (root->type == BRACKET_O && root->next->type == BRACKET_C)
 		return (show_error_fd("You forgot to put things inside brackets", 0, data, 0));
-	if (root->type == BRACKET_O && root->next != NULL && root->next->type == ARG)
+	if (root->type == BRACKET_O && root->next->type == ARG)
 		return (show_error_fd("You forgot to put a CMD inside BRACKET_O", 0, data, 0));
-	if (root->type == BRACKET_C && root->next == NULL && data->brackets_o != data->brackets_c)
-		return (show_error_fd("Isolated BRACKET_C", 0, data, 0));
 	return (1);
 }
 
@@ -497,14 +493,10 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 2)
 		return (1);
 	init_utils(&data);
-	root = create_token("(", BRACKET_O);
+	root = create_token("&&", OPERATOR_AND);
 	if (!root)
 		return (1);
-	add_token(&root, "(", BRACKET_O);
 	add_token(&root, "ls", CMD);
-	add_token(&root, "-l", ARG);
-	add_token(&root, ")", BRACKET_C);
-	add_token(&root, ")", BRACKET_C);
 	show_tokens(root);
 	if (check_syntax(root, envp, &data))
 		printf("OK\n");

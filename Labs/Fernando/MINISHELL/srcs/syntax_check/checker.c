@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/01 19:02:46 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/02 19:53:41 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ typedef struct s_utils
 	char	*path;
 	char	**paths;
 	int	status;
+	int	brackets_c;
+	int	brackets_o;
 }	t_utils;
 
 typedef enum e_id
@@ -27,7 +29,8 @@ typedef enum e_id
 	CMD,
 	ARG,
 	FD,
-	BRACKET,
+	BRACKET_O,
+	BRACKET_C,
 	REDIRECT_IN,
 	REDIRECT_OUT,
 	HEREDOC,
@@ -106,7 +109,8 @@ char	*get_token(t_id type)
 		"CMD",
 		"ARG",
 		"FD",
-		"BRACKET",
+		"BRACKET_O",
+		"BRACKET_C",
 		"REDIRECT_IN",
 		"REDIRECT_OUT",
 		"HEREDOC",
@@ -281,7 +285,11 @@ int	case_redirect(t_tokens *root, t_utils *data)
 	if (data->status == 0)
 		return (show_error_fd("An invalid redirect first position", 0, data, 0));
 	data->status = 2;
-	if (root->type == REDIRECT_IN && root->previous->type == CMD)
+	if (root->type == REDIRECT_IN && root->previous->type == CMD
+		&& root->next != NULL && root->next->type == FD)
+		return (1);
+	if (root->type == REDIRECT_IN && root->next != NULL
+		&& root->next->type == FD)
 		return (1);
 	if (root->type == HEREDOC && root->next->type == LIMITER
 		&& root->previous->type == CMD)
@@ -297,12 +305,16 @@ int	case_redirect(t_tokens *root, t_utils *data)
 
 int	case_fd(t_tokens *root, t_utils *data)
 {
-	if (data->status == 0)
+	if ((data->status == 0) && ((ft_strcmp(root->value, "2") != 0)
+		&& (ft_strcmp(root->value, "1") != 0)))
 		return (show_error_fd("Isolated fd", 0, data, 0));
 	data->status = 2;
+	if (root->type == FD && root->next != NULL && root->next->type == REDIRECT_OUT)
+		return (1);
 	if (root->type == FD && root->previous == NULL)
-	       return (show_error_fd("Isolated redirect", 0, data, 0));
-	else if ((root->type == FD) && (root->previous->type == REDIRECT_OUT
+	       return (show_error_fd("Isolated FD without redirect", 0, data, 0));
+	else if ((root->type == FD) && (root->previous != NULL)
+		&& (root->previous->type == REDIRECT_OUT
 		|| root->previous->type == APPEND || root->previous->type == REDIRECT_IN))
 		return (1);
 	return (show_error_fd("Invalid case of files", 0, data, 0));
@@ -311,6 +323,7 @@ int	case_fd(t_tokens *root, t_utils *data)
 int	check_invalid_things(t_tokens *root)
 {
 	if ((root->type == OPERATOR_AND || root->type == OPERATOR_OR)
+		&& (root->next != NULL) && (root->previous != NULL)
 		&& (root->next->type == PIPE || root->previous->type == PIPE
 		|| root->next->type == OPERATOR_AND || root->previous->type == OPERATOR_AND
 		|| root->next->type == OPERATOR_OR || root->previous->type == OPERATOR_OR
@@ -322,8 +335,29 @@ int	check_invalid_things(t_tokens *root)
 	return (0);
 }
 
+int	check_brackets(t_tokens *root, t_utils *data)
+{
+	if (root->type == BRACKET_C)
+		data->brackets_c++;
+	else if (root->type == BRACKET_O)
+		data->brackets_o++;
+	data->status = 2;
+	if (root->type == BRACKET_O && root->next != NULL 
+		&& root->next->type == BRACKET_C)
+		return (show_error_fd("You forgot to put things inside brackets", 0, data, 0));
+	if (root->type == BRACKET_O && root->next != NULL && root->next->type == ARG)
+		return (show_error_fd("You forgot to put a CMD inside BRACKET_O", 0, data, 0));
+	if (root->type == BRACKET_C && root->next == NULL && data->brackets_o != data->brackets_c)
+		return (show_error_fd("Isolated BRACKET_C", 0, data, 0));
+	return (1);
+}
+
 int	extra_cases(t_tokens *root, t_utils *data)
 {
+	if (root->type == BRACKET_O || root->type == BRACKET_C)
+		return (check_brackets(root, data));
+	if (root->next == NULL && data->brackets_o != data->brackets_c)
+		return (show_error_fd("You forgot to close brackets", 0, data, 0));
 	if (root->type == LIMITER && data->status != 0
 		&& root->previous->type == HEREDOC)
 		return (1);
@@ -343,30 +377,67 @@ int	extra_cases(t_tokens *root, t_utils *data)
 	return (1);
 }
 
-int	get_command(t_tokens *root, t_utils *data)
+int	case_builtins(t_tokens *root)
 {
-	if (root->type == PIPE)
-		return (case_pipe(root, data));
-	else if (root->type == LIMITER || root->type == OPERATOR_AND
-		|| root->type == OPERATOR_OR)
-		return (extra_cases(root, data));
-	else if (root->type == CMD && check_absolute_path(root, data))
+	if (ft_strcmp(root->value, "cd") == 0)
 		return (1);
-	else if (root->type == REDIRECT_IN || root->type == REDIRECT_OUT
-			|| root->type == APPEND || root->type == HEREDOC)
-			return (case_redirect(root, data));
-	else if (root->type == FD)
-		return (case_fd(root, data));
-	else if ((root->type == CMD && data->status > 1) && (exist_command(root, data)
+	else if (ft_strcmp(root->value, "export") == 0)
+		return (1);
+	else if (ft_strcmp(root->value, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(root->value, "pwd") == 0)
+		return (1);
+	else if (ft_strcmp(root->value, "env") == 0)
+		return (1);
+	else if (ft_strcmp(root->value, "echo") == 0)
+		return (1);
+	else if (ft_strcmp(root->value, "exit") == 0)
+		return (1);
+	return (0);
+}
+
+int	case_command(t_tokens *root, t_utils *data)
+{
+	if ((root->type == CMD && data->status > 1) && (exist_command(root, data)
 			|| check_absolute_path(root, data)))
 		return (decrement_status(data));
-	else if (root->type != CMD && data->status == 0)
-		return (show_error_fd("The first argument isn't a CMD", 0, data, 0));
+	else if (case_builtins(root))
+	{
+		data->status = 1;
+		return (1);
+	}
+	else if (root->previous != NULL && ft_strcmp(root->previous->value, "xargs") == 0)
+		return (1);
+	else if (root->type == CMD && check_absolute_path(root, data))
+		return (1);
+	else if (root->type == CMD && root->next != NULL &&
+		root->previous != NULL && root->previous->type == PIPE
+		&& root->next->type == PIPE)
+		return (1);
 	else if (root->type == CMD && data->status == 1)
 		return (show_error_fd("CMD received in ARG mode", 0, data, 0));
 	else if ((root->type == CMD && exist_command(root, data))
 		|| check_absolute_path(root, data))
 		return (1);
+	return (show_error_fd("Unknown CMD syntax", 0, data, 0));
+}
+
+int	get_command(t_tokens *root, t_utils *data)
+{
+	if (root->type == PIPE)
+		return (case_pipe(root, data));
+	else if (root->type == LIMITER || root->type == OPERATOR_AND 
+		|| root->type == OPERATOR_OR || root->type == BRACKET_O || root->type == BRACKET_C)
+		return (extra_cases(root, data));
+	else if (root->type == REDIRECT_IN || root->type == REDIRECT_OUT
+			|| root->type == APPEND || root->type == HEREDOC)
+			return (case_redirect(root, data));
+	else if (root->type == FD)
+		return (case_fd(root, data));
+	else if (root->type == CMD)
+		return (case_command(root, data));
+	else if (root->type != CMD && data->status == 0)
+		return (show_error_fd("The first argument isn't a CMD", 0, data, 0));
 	else if (root->type == ARG && data->status == 1)
 		return (1);
 	return (show_error_fd("Unfortunately, we don't know what we need to do", 0, data, 0));
@@ -409,6 +480,8 @@ void	clean_program(t_tokens *root, t_utils *data)
 
 void	init_utils(t_utils *data)
 {
+	data->brackets_o = 0;
+	data->brackets_c = 0;
 	data->path = NULL;
 	data->paths = NULL;
 	data->temp = NULL;
@@ -424,23 +497,14 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 2)
 		return (1);
 	init_utils(&data);
-	root = create_token("cat", CMD);
+	root = create_token("(", BRACKET_O);
 	if (!root)
 		return (1);
-	add_token(&root, "/var/log/syslog", ARG);
-	add_token(&root, "|", PIPE);
-	add_token(&root, "grep", CMD);
-	add_token(&root, "ERROR", ARG);
-	add_token(&root, "|", PIPE);
-	add_token(&root, "sort", CMD);
-	add_token(&root, "|", PIPE);
-	add_token(&root, "uniq", CMD);
-	add_token(&root, "-c", ARG);
-	add_token(&root, ">", REDIRECT_OUT);
-	add_token(&root, "/home/user/log_summary.txt", FD);
-	add_token(&root, "&&", OPERATOR_AND);
-	add_token(&root, "echo", CMD);
-	add_token(&root, "Resumo de log gerado", ARG);
+	add_token(&root, "(", BRACKET_O);
+	add_token(&root, "ls", CMD);
+	add_token(&root, "-l", ARG);
+	add_token(&root, ")", BRACKET_C);
+	add_token(&root, ")", BRACKET_C);
 	show_tokens(root);
 	if (check_syntax(root, envp, &data))
 		printf("OK\n");
