@@ -53,17 +53,21 @@ int	ft_strlen(char *str)
 
 typedef enum e_id
 {
-	PIPE,
-	CMD,
-	ARG,
-	BRACKET,
-	REDIRECT_IN,
-	REDIRECT_OUT,
-	HEREDOC,
-	APPEND,
-	OPERATOR_OR,
-	OPERATOR_AND
-}	t_id;
+	NOONE,
+    PIPE,
+    LIMITER,
+    CMD,
+    ARG,
+    FD,
+    BRACKET_O,
+    BRACKET_C,
+    REDIRECT_IN,
+    REDIRECT_OUT,
+    HEREDOC,
+    APPEND,
+    OPERATOR_OR,
+    OPERATOR_AND
+}    t_id;
 
 typedef struct s_token
 {
@@ -130,6 +134,14 @@ void	token_print(t_token *token)
 		printf("Token %d: %s Tipo: HEREDOC\n", token->index, token->str);
 	else if (token->id == APPEND)
 		printf("Token %d: %s Tipo: APPEND\n", token->index, token->str);
+	else if (token->id == FD)
+		printf("Token %d: %s Tipo: FD\n", token->index, token->str);
+	else if (token->id == LIMITER)
+		printf("Token %d: %s Tipo: LIMITER\n", token->index, token->str);
+	else if (token->id == OPERATOR_AND)
+		printf("Token %d: %s Tipo: OPERATOR_AND\n", token->index, token->str);
+	else if (token->id == OPERATOR_OR)
+		printf("Token %d: %s Tipo: OPERATOR_OR\n", token->index, token->str);
 	token_print(token->next);
 }
 
@@ -162,27 +174,31 @@ int	is_less(char c)
 	return (c == '<');
 }
 
-int	is_operator(char c)
-{
-	return (c == '|' || c == '>' || c == '<' || c == '&');
-}
 #pragma endregion
+
+typedef struct s_lex
+{
+	t_id	id;
+	int		index;
+}	t_lex;
 
 #pragma region Handles 
 
-int	handle_word(char *str, t_token **token, int index)
+int	handle_word(char *str, t_token **token, t_lex *lex)
 {
-	int	i;
+	int		i;
 
 	i = -1;
 	while (str[++i])
-		if (is_operator(str[i]))
+		if (!is_alpha(str[i]))
 			break ;
-	(*token) = token_add((*token), token_create(str, i, index, CMD));
+	(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id));
+	if (lex->id == CMD)
+		lex->id = ARG;
 	return (i);
 }
 
-int	handle_quote(char *str, t_token **token, int index)
+int	handle_quote(char *str, t_token **token, t_lex *lex)
 {
 	char	quote;
 	int		i;
@@ -193,21 +209,23 @@ int	handle_quote(char *str, t_token **token, int index)
 	{
 		if (str[i++] == quote)
 		{
-			(*token) = token_add((*token), token_create(str, i, index, CMD));
+			(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id));
 			return (i);
 		}
 	}
 	token_clean(*token);
+	(*token) = NULL;
 	return (-1);
 }
 
-int	handle_or(char *str, t_token **token, int index)
+int	handle_or(char *str, t_token **token, t_lex *lex)
 {
-	(*token) = token_add((*token), token_create(str, 2, index, OPERATOR_OR));
+	(*token) = token_add((*token), token_create(str, 2, lex->index++, OPERATOR_OR));
+	lex->id = CMD;
 	return (2);
 }
 
-int	handle_pipe(char *str, t_token **token, int index)
+int	handle_pipe(char *str, t_token **token, t_lex *lex)
 {
 	int	i;
 
@@ -216,30 +234,26 @@ int	handle_pipe(char *str, t_token **token, int index)
 		if (!is_pipe(str[i]))
 			break ;
 	if (i == 2)
-		return (handle_or(str, token, index));
+		return (handle_or(str, token, lex));
 	if (i > 2)
 	{
 		token_clean(*token);
 		return (-1);
 	}
 	else
-		(*token) = token_add((*token), token_create(str, i, index, PIPE));
+		(*token) = token_add((*token), token_create(str, i, lex->index++, PIPE));
+	lex->id = CMD;
 	return (i);
 }
 
-int	handle_append(char *str, t_token **token, int index)
+int	handle_append(char *str, t_token **token, t_lex *lex)
 {
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		if (!is_great(str[i]))
-			break ;
-	(*token) = token_add((*token), token_create(str, i, index, APPEND));
-	return (i);
+	(*token) = token_add((*token), token_create(str, 2, lex->index++, APPEND));
+	lex->id = FD;
+	return (2);
 }
 
-int	handle_great(char *str, t_token **token, int index)
+int	handle_great(char *str, t_token **token, t_lex *lex)
 {
 	int	i;
 
@@ -248,24 +262,26 @@ int	handle_great(char *str, t_token **token, int index)
 		if (!is_great(str[i]))
 			break ;
 	if (i == 2)
-		return (handle_append(str, token, index));
+		return (handle_append(str, token, lex));
 	if (i > 2)
 	{
 		token_clean(*token);
 		return (-1);
 	}
 	else
-		(*token) = token_add((*token), token_create(str, i, index, REDIRECT_OUT));
+		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_OUT));
+	lex->id = FD;
 	return (i);
 }
 
-int	handle_heredoc(char *str, t_token **token, int index)
+int	handle_heredoc(char *str, t_token **token, t_lex *lex)
 {
-	(*token) = token_add((*token), token_create(str, 2, index, HEREDOC));
+	(*token) = token_add((*token), token_create(str, 2, lex->index++, HEREDOC));
+	lex->id = LIMITER;
 	return (2);
 }
 
-int	handle_less(char *str, t_token **token, int index)
+int	handle_less(char *str, t_token **token, t_lex *lex)
 {
 	int	i;
 
@@ -274,14 +290,35 @@ int	handle_less(char *str, t_token **token, int index)
 		if (!is_less(str[i]))
 			break ;
 	if (i == 2)
-		return (handle_heredoc(str, token, index));
+		return (handle_heredoc(str, token, lex));
 	if (i > 2)
 	{
 		token_clean(*token);
 		return (-1);
 	}
 	else
-		(*token) = token_add((*token), token_create(str, i, index, REDIRECT_IN));
+		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_IN));
+	lex->id = FD;
+	return (i);
+}
+
+int	handle_and(char *str, t_token **token, t_lex *lex)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (str[i] != '&')
+			break ;
+	if (i == 2)
+		(*token) = token_add((*token), token_create(str, i, lex->index++, OPERATOR_AND));
+	else if (i > 2)
+	{
+		token_clean(*token);
+		(*token) = NULL;
+		return (-1);
+	}
+	lex->id = CMD;
 	return (i);
 }
 
@@ -289,21 +326,23 @@ int	handle_less(char *str, t_token **token, int index)
 
 #pragma region lexer
 
-static int	handler(char *str, int *i, int *index, t_token **token)
+static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 {
 	int	__return__;
 
 	__return__ = 0;
-	if (is_alpha(str[*i]))
-		 __return__ = handle_word(&str[*i], token, (*index)++);
 	if (is_quote(str[*i]))
-		__return__ = handle_quote(&str[*i], token, (*index)++);
+		__return__ = handle_quote(&str[*i], token, lex);
 	if (is_pipe(str[*i]))
-		__return__ = handle_pipe(&str[*i], token, (*index)++);
+		__return__ = handle_pipe(&str[*i], token, lex);
 	if (is_great(str[*i]))
-		__return__ = handle_great(&str[*i], token, (*index)++);
+		__return__ = handle_great(&str[*i], token, lex);
 	if (is_less(str[*i]))
-		__return__ = handle_less(&str[*i], token, (*index)++);
+		__return__ = handle_less(&str[*i], token, lex);
+	if (str[*i] == '&')
+		__return__ = handle_and(&str[*i], token, lex);
+	if (is_alpha(str[*i]))
+		 __return__ = handle_word(&str[*i], token, lex);
 	if (__return__ != 0)
 		*i += __return__;
 	else
@@ -315,13 +354,14 @@ t_token	*lexer(char *str)
 {
 	int		i;
 	t_token	*token;
-	int		index;
+	t_lex	lex;
 
 	i = 0;
-	index = 0;
+	lex.index = 0;
+	lex.id = CMD;
 	token = NULL;
 	while (str[i])
-		if (handler(str, &i, &index, &token) < 0)
+		if (handler(str, &i, &lex, &token) < 0)
 			return (NULL);
 	return (token);
 }
