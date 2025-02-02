@@ -53,7 +53,6 @@ int	ft_strlen(char *str)
 
 typedef enum e_id
 {
-	NOONE,
     PIPE,
     LIMITER,
     CMD,
@@ -142,6 +141,10 @@ void	token_print(t_token *token)
 		printf("Token %d: %s Tipo: OPERATOR_AND\n", token->index, token->str);
 	else if (token->id == OPERATOR_OR)
 		printf("Token %d: %s Tipo: OPERATOR_OR\n", token->index, token->str);
+	else if (token->id == BRACKET_O)
+		printf("Token %d: %s Tipo: BRACKET_O\n", token->index, token->str);
+	else if (token->id == BRACKET_C)
+		printf("Token %d: %s Tipo: BRACKET_C\n", token->index, token->str);
 	token_print(token->next);
 }
 
@@ -198,6 +201,8 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 	return (i);
 }
 
+
+//orginal
 int	handle_quote(char *str, t_token **token, t_lex *lex)
 {
 	char	quote;
@@ -210,6 +215,29 @@ int	handle_quote(char *str, t_token **token, t_lex *lex)
 		if (str[i++] == quote)
 		{
 			(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id));
+			return (i);
+		}
+	}
+	token_clean(*token);
+	(*token) = NULL;
+	return (-1);
+}
+
+//alterada
+int	handle_quote(char *str, t_token **token, t_lex *lex)
+{
+	char	quote;
+	int		i;
+	int		cpy;
+	
+	i = 0;
+	quote = str[i++];
+	cpy = is_quote(str[i]);
+	while (str[i++])
+	{
+		if (str[i] == quote)
+		{
+			(*token) = token_add((*token), token_create(&str[cpy], i - cpy, lex->index++, lex->id));
 			return (i);
 		}
 	}
@@ -312,7 +340,7 @@ int	handle_and(char *str, t_token **token, t_lex *lex)
 			break ;
 	if (i == 2)
 		(*token) = token_add((*token), token_create(str, i, lex->index++, OPERATOR_AND));
-	else if (i > 2)
+	else if (i > 2 || i < 2)
 	{
 		token_clean(*token);
 		(*token) = NULL;
@@ -320,6 +348,16 @@ int	handle_and(char *str, t_token **token, t_lex *lex)
 	}
 	lex->id = CMD;
 	return (i);
+}
+
+int	handle_bracket(char *str, t_token **token, t_lex *lex)
+{
+	if (str[0] == '(')
+		(*token) = token_add((*token), token_create(str, 1, lex->index++, BRACKET_O));
+	if (str[0] == ')')
+		(*token) = token_add((*token), token_create(str, 1, lex->index++, BRACKET_C));
+	lex->id = CMD;
+	return (1);
 }
 
 #pragma endregion
@@ -332,7 +370,7 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 
 	__return__ = 0;
 	if (is_quote(str[*i]))
-		__return__ = handle_quote(&str[*i], token, lex);
+		__return__ = handle_quote(str, token, lex);
 	if (is_pipe(str[*i]))
 		__return__ = handle_pipe(&str[*i], token, lex);
 	if (is_great(str[*i]))
@@ -343,6 +381,8 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 		__return__ = handle_and(&str[*i], token, lex);
 	if (is_alpha(str[*i]))
 		 __return__ = handle_word(&str[*i], token, lex);
+	if (str[*i] == '(' || str[*i] == ')')
+		__return__ = handle_bracket(&str[*i], token, lex);		
 	if (__return__ != 0)
 		*i += __return__;
 	else
