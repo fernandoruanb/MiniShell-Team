@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/03 13:30:18 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:00:05 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
 typedef struct s_utils
 {
@@ -282,12 +282,6 @@ int	heredoc_or_append(t_tokens *root, t_utils *data)
 		data->status = 2;
 		return (1);
 	}
-	if (root->type == HEREDOC && root->previous != NULL && root->previous->type == CMD
-		&& root->next != NULL && root->next->type == LIMITER)
-		return (1);
-	if (root->type == HEREDOC && root->previous != NULL && root->previous->type == ARG
-		&& root->next != NULL && root->next->type == LIMITER)
-		return (1);
 	if (root->type == APPEND && root->next != NULL && root->next->type == FD)
 		return (1);
 	if (root->type == HEREDOC && root->next != NULL 
@@ -552,11 +546,12 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	root = NULL;
 	init_utils(&data);
-	root = create_token("cat", CMD);
+	root = create_token("ls", CMD);
 	if (!root)
 		return (1);
-	add_token(&root, "<<", HEREDOC);
-	add_token(&root, "EOF", LIMITER);
+	add_token(&root, "|", PIPE);
+	add_token(&root, ">", REDIRECT_OUT);
+	add_token(&root, "output.txt", FD);
 	show_tokens(root);
 	if (check_syntax(root, envp, &data))
 		printf("OK\n");
