@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/03 10:21:22 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:30:18 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,12 +282,19 @@ int	heredoc_or_append(t_tokens *root, t_utils *data)
 		data->status = 2;
 		return (1);
 	}
+	if (root->type == HEREDOC && root->previous != NULL && root->previous->type == CMD
+		&& root->next != NULL && root->next->type == LIMITER)
+		return (1);
+	if (root->type == HEREDOC && root->previous != NULL && root->previous->type == ARG
+		&& root->next != NULL && root->next->type == LIMITER)
+		return (1);
 	if (root->type == APPEND && root->next != NULL && root->next->type == FD)
 		return (1);
 	if (root->type == HEREDOC && root->next != NULL 
-		&& root->next->type == LIMITER && root->previous->type == CMD)
+		&& root->next->type == LIMITER && root->previous != NULL
+		&& root->previous->type == CMD)
 		return (1);
-	return (show_error_fd("Invalid case of heredoc or append", 0, data, 0));
+	return (show_error_fd("Invalid case of heredoc, append", 0, data, 0));
 }
 
 int	case_redirect(t_tokens *root, t_utils *data)
@@ -390,9 +397,6 @@ int	extra_cases(t_tokens *root, t_utils *data)
 		return (check_brackets(root, data));
 	if (root->next == NULL && data->brackets_o != data->brackets_c)
 		return (show_error_fd("You forgot to close brackets", 0, data, 0));
-	if (root->type == LIMITER && data->status != 0
-		&& root->previous->type == HEREDOC)
-		return (1);
 	if (root->type == OPERATOR_AND && data->status == 0)
 		return (show_error_fd("Operator_AND was the first", 0, data, 0));
 	if (root->type == OPERATOR_OR && data->status == 0)
@@ -456,11 +460,27 @@ int	case_command(t_tokens *root, t_utils *data)
 	return (show_error_fd("Unknown CMD syntax", 0, data, 0));
 }
 
+int	case_limiter(t_tokens *root, t_utils *data)
+{
+	if (data->status == 0)
+		return (show_error_fd("LIMITER is the first to appear!", 0, data, 0));
+	data->status = 2;
+	if (root->type == LIMITER && root->previous != NULL && root->previous->type == HEREDOC
+		&& root->next != NULL && root->next->type != LIMITER)
+		return (1);
+	if (root->type == LIMITER && root->previous != NULL && root->previous->type == HEREDOC
+		&& root->next == NULL)
+		return (1);
+	return (show_error_fd("Invalid LIMITER Case", 0, data, 0));
+}
+
 int	get_command(t_tokens *root, t_utils *data)
 {
 	if (root->type == PIPE)
 		return (case_pipe(root, data));
-	else if (root->type == LIMITER || root->type == OPERATOR_AND 
+	else if (root->type == LIMITER)
+		return (case_limiter(root, data));
+	else if (root->type == OPERATOR_AND 
 		|| root->type == OPERATOR_OR || root->type == BRACKET_O || root->type == BRACKET_C)
 		return (extra_cases(root, data));
 	else if (root->type == REDIRECT_IN || root->type == REDIRECT_OUT
@@ -532,15 +552,11 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	root = NULL;
 	init_utils(&data);
-	root = create_token("(", BRACKET_O);
+	root = create_token("cat", CMD);
 	if (!root)
 		return (1);
-	add_token(&root, "grep", CMD);
-	add_token(&root, "error", ARG);
-	add_token(&root, "log.txt", ARG);
-	add_token(&root, ">", REDIRECT_OUT);
-	add_token(&root, "errors.txt", FD);
-	add_token(&root, ")", BRACKET_C);
+	add_token(&root, "<<", HEREDOC);
+	add_token(&root, "EOF", LIMITER);
 	show_tokens(root);
 	if (check_syntax(root, envp, &data))
 		printf("OK\n");
