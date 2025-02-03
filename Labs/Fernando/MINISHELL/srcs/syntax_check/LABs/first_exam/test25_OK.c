@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/03 10:21:22 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/03 10:12:32 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
 typedef struct s_utils
 {
@@ -530,17 +530,15 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc != 2)
 		return (1);
-	root = NULL;
 	init_utils(&data);
-	root = create_token("(", BRACKET_O);
+	root = create_token("cat", CMD);
 	if (!root)
 		return (1);
+	add_token(&root, "<<", HEREDOC);
+	add_token(&root, "EOF", LIMITER);
+	add_token(&root, "|", PIPE);
 	add_token(&root, "grep", CMD);
-	add_token(&root, "error", ARG);
-	add_token(&root, "log.txt", ARG);
-	add_token(&root, ">", REDIRECT_OUT);
-	add_token(&root, "errors.txt", FD);
-	add_token(&root, ")", BRACKET_C);
+	add_token(&root, "pattern", ARG);
 	show_tokens(root);
 	if (check_syntax(root, envp, &data))
 		printf("OK\n");

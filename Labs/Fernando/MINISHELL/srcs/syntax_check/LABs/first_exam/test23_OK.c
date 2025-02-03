@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/03 10:21:22 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/03 09:31:23 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
 typedef struct s_utils
 {
@@ -339,8 +339,6 @@ int	case_fd(t_tokens *root, t_utils *data)
 	if ((data->status == 0) && (!is_number(root)))
 		return (show_error_fd("Isolated fd", 0, data, 0));
 	data->status = 2;
-	if (is_number(root) && root->next != NULL && root->next->type == REDIRECT_IN)
-		return (1);
 	if (root->type == FD && root->next != NULL && root->next->type == REDIRECT_OUT)
 		return (1);
 	if (root->type == FD && root->previous == NULL)
@@ -530,17 +528,11 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc != 2)
 		return (1);
-	root = NULL;
 	init_utils(&data);
-	root = create_token("(", BRACKET_O);
+	root = create_token(">", REDIRECT_OUT);
 	if (!root)
 		return (1);
-	add_token(&root, "grep", CMD);
-	add_token(&root, "error", ARG);
-	add_token(&root, "log.txt", ARG);
-	add_token(&root, ">", REDIRECT_OUT);
-	add_token(&root, "errors.txt", FD);
-	add_token(&root, ")", BRACKET_C);
+	add_token(&root, "output.txt", FD);
 	show_tokens(root);
 	if (check_syntax(root, envp, &data))
 		printf("OK\n");
