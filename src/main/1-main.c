@@ -16,6 +16,8 @@ static void	handle_signal(int signal)
 {
 	if (signal == SIGINT)
 		printf("\n\033[1;36m<<Master of universe(mini)>>$ \033[0m");
+	if (signal == SIGQUIT)
+		return ;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -24,6 +26,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	signal(SIGINT, handle_signal);
+	signal(SIGQUIT, handle_signal);
 	if (argc != 1)
 		return (1);
 	create(&data, envp);
