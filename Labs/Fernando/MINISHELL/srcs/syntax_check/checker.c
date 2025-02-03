@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/03 15:34:48 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:06:47 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,7 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 		if (!is_alpha(str[i]))
 			break ;
 	(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
-	if (lex->id == CMD && diff_cmd(str))
+	if ((lex->id == CMD || lex->id == FD) && diff_cmd(str) )
 		lex->id = ARG;
 	return (i);
 }
@@ -951,7 +951,7 @@ int	main(int argc, char **argv, char **envp)
 		init_utils(&data);
 		//show_tokens(root);
 		token_print(root);
-		if (check_syntax(root, envp, &data))
+		if (root && check_syntax(root, envp, &data))
 			printf("OK\n");
 		else
 			printf("KO\n");
