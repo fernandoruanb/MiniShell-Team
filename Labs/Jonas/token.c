@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 15:48:06 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/31 17:08:24 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:10:07 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,22 @@
 #include <strings.h>
 
 #pragma region Utils
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	index;
+
+	index = 0;
+	while (s1[index] != '\0' && s2[index] != '\0' && index < n)
+	{
+		if (s1[index] != s2[index])
+			return ((unsigned char)s1[index] - (unsigned char)s2[index]);
+		index++;
+	}
+	if (index < n)
+		return ((unsigned char)s1[index] - (unsigned char)s2[index]);
+	return (0);
+}
 
 char	*ft_strndup(char *str, int n)
 {
@@ -75,6 +91,7 @@ typedef struct s_token
 	int				index;
 
 	struct s_token	*next;
+	struct s_token *previous;
 }	t_token;
 
 t_token	*token_create(char *str,int n, int index,  t_id id)
@@ -87,15 +104,19 @@ t_token	*token_create(char *str,int n, int index,  t_id id)
 	new->str = ft_strndup(str, n);
 	new->id = id;
 	new->next = NULL;
+	new->previous = NULL;
 	new->index = index;
 	return (new);
 }
 
-t_token	*token_add(t_token *root, t_token *new)
+t_token	*token_add(t_token *root, t_token *new, t_token *prev)
 {
 	if (!root)
+	{
+		new->previous = prev;
 		return (new);
-	root->next = token_add(root->next, new);
+	}
+	root->next = token_add(root->next, new, root);
 	return (root);
 }
 
@@ -154,7 +175,9 @@ void	token_print(t_token *token)
 
 int	is_alpha(char c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '.' || c == '-'));
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+		|| c == '.' || c == '-' || c == '$' || (c >= '0' && c <= '9') || c == '/' || c == '_'
+		|| c == '!' || c == '*' || c == '%' || c == '{' || c == '}');
 }
 
 int	is_quote(char c)
@@ -187,6 +210,11 @@ typedef struct s_lex
 
 #pragma region Handles 
 
+int	diff_cmd(char *str)
+{
+	return (ft_strncmp(str, "xargs", 5) != 0);
+}
+
 int	handle_word(char *str, t_token **token, t_lex *lex)
 {
 	int		i;
@@ -195,8 +223,8 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 	while (str[++i])
 		if (!is_alpha(str[i]))
 			break ;
-	(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id));
-	if (lex->id == CMD)
+	(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
+	if (lex->id == CMD && diff_cmd(str))
 		lex->id = ARG;
 	return (i);
 }
@@ -214,7 +242,7 @@ int	handle_quote(char *str, t_token **token, t_lex *lex)
 	{
 		if (str[i++] == quote)
 		{
-			(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id));
+			(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
 			return (i);
 		}
 	}
@@ -224,31 +252,31 @@ int	handle_quote(char *str, t_token **token, t_lex *lex)
 }
 
 //alterada
-int	handle_quote(char *str, t_token **token, t_lex *lex)
-{
-	char	quote;
-	int		i;
-	int		cpy;
+// int	handle_quote(char *str, t_token **token, t_lex *lex)
+// {
+// 	char	quote;
+// 	int		i;
+// 	int		cpy;
 	
-	i = 0;
-	quote = str[i++];
-	cpy = is_quote(str[i]);
-	while (str[i++])
-	{
-		if (str[i] == quote)
-		{
-			(*token) = token_add((*token), token_create(&str[cpy], i - cpy, lex->index++, lex->id));
-			return (i);
-		}
-	}
-	token_clean(*token);
-	(*token) = NULL;
-	return (-1);
-}
+// 	i = 0;
+// 	quote = str[i++];
+// 	cpy = is_quote(str[i]);
+// 	while (str[i++])
+// 	{
+// 		if (str[i] == quote)
+// 		{
+// 			(*token) = token_add((*token), token_create(&str[cpy], i - cpy, lex->index++, lex->id));
+// 			return (i);
+// 		}
+// 	}
+// 	token_clean(*token);
+// 	(*token) = NULL;
+// 	return (-1);
+// }
 
 int	handle_or(char *str, t_token **token, t_lex *lex)
 {
-	(*token) = token_add((*token), token_create(str, 2, lex->index++, OPERATOR_OR));
+	(*token) = token_add((*token), token_create(str, 2, lex->index++, OPERATOR_OR), NULL);
 	lex->id = CMD;
 	return (2);
 }
@@ -269,14 +297,14 @@ int	handle_pipe(char *str, t_token **token, t_lex *lex)
 		return (-1);
 	}
 	else
-		(*token) = token_add((*token), token_create(str, i, lex->index++, PIPE));
+		(*token) = token_add((*token), token_create(str, i, lex->index++, PIPE), NULL);
 	lex->id = CMD;
 	return (i);
 }
 
 int	handle_append(char *str, t_token **token, t_lex *lex)
 {
-	(*token) = token_add((*token), token_create(str, 2, lex->index++, APPEND));
+	(*token) = token_add((*token), token_create(str, 2, lex->index++, APPEND), NULL);
 	lex->id = FD;
 	return (2);
 }
@@ -297,14 +325,14 @@ int	handle_great(char *str, t_token **token, t_lex *lex)
 		return (-1);
 	}
 	else
-		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_OUT));
+		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_OUT), NULL);
 	lex->id = FD;
 	return (i);
 }
 
 int	handle_heredoc(char *str, t_token **token, t_lex *lex)
 {
-	(*token) = token_add((*token), token_create(str, 2, lex->index++, HEREDOC));
+	(*token) = token_add((*token), token_create(str, 2, lex->index++, HEREDOC), NULL);
 	lex->id = LIMITER;
 	return (2);
 }
@@ -325,7 +353,7 @@ int	handle_less(char *str, t_token **token, t_lex *lex)
 		return (-1);
 	}
 	else
-		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_IN));
+		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_IN), NULL);
 	lex->id = FD;
 	return (i);
 }
@@ -339,7 +367,7 @@ int	handle_and(char *str, t_token **token, t_lex *lex)
 		if (str[i] != '&')
 			break ;
 	if (i == 2)
-		(*token) = token_add((*token), token_create(str, i, lex->index++, OPERATOR_AND));
+		(*token) = token_add((*token), token_create(str, i, lex->index++, OPERATOR_AND), NULL);
 	else if (i > 2 || i < 2)
 	{
 		token_clean(*token);
@@ -353,9 +381,9 @@ int	handle_and(char *str, t_token **token, t_lex *lex)
 int	handle_bracket(char *str, t_token **token, t_lex *lex)
 {
 	if (str[0] == '(')
-		(*token) = token_add((*token), token_create(str, 1, lex->index++, BRACKET_O));
+		(*token) = token_add((*token), token_create(str, 1, lex->index++, BRACKET_O), NULL);
 	if (str[0] == ')')
-		(*token) = token_add((*token), token_create(str, 1, lex->index++, BRACKET_C));
+		(*token) = token_add((*token), token_create(str, 1, lex->index++, BRACKET_C), NULL);
 	lex->id = CMD;
 	return (1);
 }
@@ -370,12 +398,12 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 
 	__return__ = 0;
 	if (is_quote(str[*i]))
-		__return__ = handle_quote(str, token, lex);
-	if (is_pipe(str[*i]))
+		__return__ = handle_quote(&str[*i], token, lex);
+	if (str[*i] == '|')
 		__return__ = handle_pipe(&str[*i], token, lex);
-	if (is_great(str[*i]))
+	if (str[*i] == '>')
 		__return__ = handle_great(&str[*i], token, lex);
-	if (is_less(str[*i]))
+	if (str[*i] == '<')
 		__return__ = handle_less(&str[*i], token, lex);
 	if (str[*i] == '&')
 		__return__ = handle_and(&str[*i], token, lex);

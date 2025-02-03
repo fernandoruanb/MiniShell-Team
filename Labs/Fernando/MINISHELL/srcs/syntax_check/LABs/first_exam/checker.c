@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/03 10:18:38 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/03 10:59:32 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -532,7 +532,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	root = NULL;
 	init_utils(&data);
-	root = create_token("(", BRACKET_O);
+	root = create_token("dfsdf", PIPE);
 	if (!root)
 		return (1);
 	add_token(&root, "grep", CMD);
