@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/03 15:16:26 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:34:48 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -938,17 +938,25 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_utils	data;
 	t_token	*root;
+	char	*input;
 
-	if (argc != 2)
+	(void)argv;
+	if (argc != 1)
 		return (1);
-	root = lexer(argv[1]);
-	init_utils(&data);
-	//show_tokens(root);
-	token_print(root);
-	if (check_syntax(root, envp, &data))
-		printf("OK\n");
-	else
-		printf("KO\n");
+	while (1)
+	{
+		input = readline("\033[1;33m<<Master>>$ \033[0m");
+		root = lexer(input);
+		add_history(input);
+		init_utils(&data);
+		//show_tokens(root);
+		token_print(root);
+		if (check_syntax(root, envp, &data))
+			printf("OK\n");
+		else
+			printf("KO\n");
+		free(input);
+	}
 	clean_program(NULL, &data);
 	token_clean(root);
 	return (0);
