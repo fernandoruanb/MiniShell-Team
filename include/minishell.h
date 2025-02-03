@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 11:30:47 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:38:11 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@
 # include <termcap.h>
 #include <readline/history.h>
 
+typedef struct s_ast
+{
+	char	*cmd;
+	char	**argv;
+	
+	struct s_ast	*parent;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}	t_ast;
+
+
+
 typedef struct s_prompt
 {
 	char	*input;
@@ -49,6 +61,7 @@ typedef struct s_data
 
 //	0-utils.c
 void	*clear_split(char **str);
+char	*ft_strndup(char *str, int n);
 
 //	main/2-events.c
 void	create(t_data *data, char **envp);

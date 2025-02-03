@@ -6,104 +6,111 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 12:01:12 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/27 15:56:32 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:06:06 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	find_quotes_couples(char *cmd)
+static int	find_quotes(char *cmd)
 {
-	int	cnt;
+	int	single_cnt;
+	int	double_cnt;
 	int	i;
 
 	i = 0;
-	cnt = 0;
+	single_cnt = 0;
+	double_cnt = 0;
 	while (cmd[i])
 	{
-		if (cmd[i] == '\'' || cmd[i] == '\"')
-			cnt++;
+		if (cmd[i] == '\'')
+			single_cnt++;
+		if (cmd[i] == '\"')
+			double_cnt++;
 		i++;
 	}
-	return (cnt >= 2);
+	return ((single_cnt % 2 == 0) || (double_cnt % 2 == 0));
 }
 
-static int	get_len(char *cmd)
+static void	clear_quotes_aux(t_prompt *prompt, char *quote, int *i, int *j)
 {
-	int	i;
-	int	len;
+	int		k;
+	int		l;
+	char	*dup;
+	int		len;
 
-	len = ft_strlen(cmd);
-	i = 0;
-	while (cmd[i])
+	len = ft_strlen(prompt->input) - 2;
+	dup = ft_calloc(len + 1, 1);
+	if (!dup)
+		return ;
+	k = 0;
+	l = 0;
+	while(prompt->input[k])
 	{
-		if (cmd[i] == '\'' || cmd[i] == '\"')
-			len--;
-		i++;
+		if ((k == *i || k == *j) && prompt->input[k] == *quote)
+		{
+			k++;
+			continue ;
+		}
+		else
+			dup[l++] = prompt->input[k++];
 	}
-	return (len);
+	free(prompt->input);
+	prompt->input = dup;
+	*i = 0;
+	*j = ft_strlen(prompt->input) - 1;
+	*quote = '\0';
 }
 
-static char	*cpy_without_quotes(char *cmd)
+static void	clear_quotes(t_prompt *prompt)
 {
+	char	quote;
 	int		i;
 	int		j;
-	int		len;
-	char	*cpy;
 
-	len = get_len(cmd);
-	cpy = ft_calloc(len + 1, 1);
-	if (!cpy)
-		return (NULL);
+	quote = '\0';
+	if (!prompt->input)
+		return ;
 	i = 0;
-	j = 0;
-	while (cmd[i])
+	j = ft_strlen(prompt->input) - 1;
+	while (i < j)
 	{
-		if (cmd[i] != '\'' && cmd[i] != '\"')
-			cpy[j++] = cmd[i];
-		i++;
+		if (!quote && (prompt->input[i] == '\'' || prompt->input[i] == '\"'))
+			quote = prompt->input[i];
+		if (quote && prompt->input[j] == quote)
+			clear_quotes_aux(prompt, &quote, &i, &j);
+		if (!quote)
+			i++;
+		else
+			j--;
 	}
-	cpy[len] = '\0';
-	return (cpy);
 }
 
-static void	clear_quotes(t_prompt *prompt, int index)
+static void	print_echo(t_prompt *prompt)
 {
-	char	*temp;
-
-	temp = ft_strdup(prompt->cmdset[index]);
-	if (!temp)
-		return ;
-	free(prompt->cmdset[index]);
-	prompt->cmdset[index] = cpy_without_quotes(temp);
-	free(temp);
+	printf("%s\n", prompt->input + 5);
 }
 
 void	ft_echo(t_prompt *prompt)
 {
-	int		i;
-	char	*tmp;
-	int		quotes;
 
-	i = 1;
-	while (prompt->cmdset[i])
+	char	*tmp;
+
+	if (!prompt->input)
+		return ;
+	tmp = enviroment_var(prompt->input, prompt->exit_status);
+	if (tmp)
 	{
-		tmp = enviroment_var(prompt->cmdset[i], prompt->exit_status);
-		if (tmp)
-		{
-			free(prompt->cmdset[i]);
-			prompt->cmdset[i] = ft_strdup(tmp);
-			free(tmp);
-		}
-		quotes = find_quotes_couples(prompt->cmdset[i]);
-		if (quotes)
-		{
-			clear_quotes(prompt, i);
-			if (!prompt->cmdset[i])
-				return ;
-		}
-		quotes = 0;
-		i++;
+		free(prompt->input);
+		prompt->input = ft_strdup(tmp);
+		free(tmp);
+	}
+	if (find_quotes(prompt->input))
+	{
+		clear_quotes(prompt);
+		if (!prompt->input)
+			return ;
+		return (print_echo(prompt));
 	}
 	child(prompt);
 }

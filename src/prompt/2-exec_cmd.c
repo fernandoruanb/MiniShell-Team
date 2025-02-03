@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 11:44:35 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:06:15 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	execute_proccess(t_prompt *prompt)
 
 int	child(t_prompt *prompt)
 {
+	prompt->cmdset = ft_split(prompt->input, ' ');
 	prompt->path = find_path(prompt->cmdset[0], prompt->envp);
 	if (!prompt->path)
 		return (1);
@@ -92,8 +93,7 @@ void	exec_cmd(t_prompt *prompt)
 
 	if (ft_strncmp(prompt->input, "cd", 2) == 0)
 		ft_cd(prompt->input);
-	prompt->cmdset = ft_split(prompt->input, ' ');
-	if (ft_strncmp(prompt->cmdset[0], "echo", 5) == 0)
+	if (ft_strncmp(prompt->input, "echo", 4) == 0)
 		return (ft_echo(prompt));
 	if (prompt->input != NULL)
 		child(prompt);
