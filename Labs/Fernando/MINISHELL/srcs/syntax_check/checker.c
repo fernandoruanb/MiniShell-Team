@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/03 15:08:38 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:16:26 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -943,7 +943,8 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	root = lexer(argv[1]);
 	init_utils(&data);
-	show_tokens(root);
+	//show_tokens(root);
+	token_print(root);
 	if (check_syntax(root, envp, &data))
 		printf("OK\n");
 	else
