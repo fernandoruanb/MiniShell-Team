@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:04:26 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 17:14:55 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:05:47 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ t_ast	*ast_add(t_ast *root, char *input)
 	
 	/*
 		Criar as condições para decidir o lado da lista
+		    |
+	       / \
+	     cmd >>
+	         / \
+		   cmd FD
 	*/
 	root->left = add_node(root->left, input);
 	root->right = add_node(root->right, input);

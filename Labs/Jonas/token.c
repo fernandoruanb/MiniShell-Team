@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 15:48:06 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/03 15:15:56 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:07:21 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+
 
 #pragma region Utils
 
