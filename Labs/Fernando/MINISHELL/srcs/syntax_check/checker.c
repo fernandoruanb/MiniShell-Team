@@ -6,7 +6,11 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/02/03 16:12:19 by jopereir         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/03 16:22:53 by fruan-ba         ###   ########.fr       */
+>>>>>>> 6e33de294b61935fdb8bfafc45e32e768f401444
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -884,6 +888,8 @@ int	get_command(t_token *root, t_utils *data)
 		return (case_command(root, data));
 	else if (root->id != CMD && data->status == 0)
 		return (show_error_fd("The first argument isn't a CMD", 0, data, 0));
+	else if (root->next == NULL && data->brackets_o != data->brackets_c)
+		return (show_error_fd("You forgot to close brackets", 0, data, 0));
 	else if (root->id == ARG && data->status == 1)
 		return (1);
 	return (show_error_fd("Unfortunately, we don't know what we need to do", 0, data, 0));
