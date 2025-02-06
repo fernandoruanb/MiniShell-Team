@@ -910,10 +910,11 @@ int	is_num(unsigned char c)
 typedef struct s_lex
 {
 	t_id	id;
+	char	*path;
 	int		index;
 
-	unsigned char	**envp;
-	unsigned char	*word;
+	char	**envp;
+	char	*word;
 }	t_lex;
 
 #pragma region Handles 
@@ -923,10 +924,72 @@ int	diff_cmd(char *str)
 	return (ft_strncmp(str, "xargs", 5) != 0);
 }
 
+
+void	*clear_split(char **str)
+{
+	int	i;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (str[i])
+		free(str[i++]);
+	free(str);
+	return (NULL);
+}
+
+static	int	find_my_path(char *cmd, char **env)
+{
+	int		i;
+	char	**paths;
+	char	*path;
+
+	if (!cmd)
+		return (0);
+	i = 0;
+	while (!ft_strnstr(env[i], "PATH=", 5))
+		i++;
+	if (!env)
+		return (0);
+	paths = ft_split(env[i] + 5, ':');
+	i = 0;
+	while (paths[i])
+	{
+		path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd);
+		if (access(path, X_OK) == 0)
+		{
+			clear_split(paths);
+			free(path);
+			return (1);
+		}
+		free(path);
+		i++;
+	}
+	clear_split(paths);
+	return (0);
+}
+
+int	is_cmd(char *str, t_lex *lex)
+{
+	if (ft_strcmp(str, "cd") == 0 || ft_strcmp(str, "export") == 0
+		|| ft_strcmp(str, "unset") == 0 || ft_strcmp(str, "pwd") == 0
+		|| ft_strcmp(str, "env") == 0 || ft_strcmp(str, "echo") == 0
+		|| ft_strcmp(str, "exit") == 0 || ft_strcmp(str, "clear") == 0)
+		return (1);
+	if (access(str, F_OK | X_OK) == 0)
+		return (1);
+	if (find_my_path(str, lex->envp))
+		return (1);
+	return (0);
+}
+
 int	handle_word(char *str, t_token **token, t_lex *lex)
 {
 	int	i;
 
+	//printf("token: %s %d\n", lex->word, (is_cmd(lex->word, lex)));
+	if ((is_cmd(lex->word, lex) && lex->id != FD) || lex->id == NONE)
+		lex->id = CMD;
 	i = 0;	
 	while (str[i] && is_word(str[i]))
 		i++;
@@ -945,6 +1008,10 @@ int	handle_quote(char *str, t_token **token, t_lex *lex)
 	int		i;
 
 	i = 0;
+	if (lex->id == NONE)
+		lex->id = CMD;
+	else if (lex->id == CMD)
+		lex->id = ARG;
 	if (str[i] == '\\')
 		i++;
 	quote = str[i++];
@@ -953,7 +1020,6 @@ int	handle_quote(char *str, t_token **token, t_lex *lex)
 		if (str[i++] == quote)
 		{
 			(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
-			lex->id = ARG;
 			return (i);
 		}
 	}
@@ -1020,9 +1086,13 @@ int	handle_pipe(char *str, t_token **token, t_lex *lex)
 
 int	handle_append(char *str, t_token **token, t_lex *lex)
 {
-	(*token) = token_add((*token), token_create(str, 2, lex->index++, APPEND), NULL);
+	int	i;
+
+	i = 2;
+	(*token) = token_add((*token), token_create(str, i, lex->index++, APPEND), NULL);
 	lex->id = FD;
-	return (2);
+	i += handle_word(&str[i + 1], token, lex) + 1;
+	return (i);
 }
 
 int	handle_great(char *str, t_token **token, t_lex *lex)
@@ -1043,14 +1113,19 @@ int	handle_great(char *str, t_token **token, t_lex *lex)
 	else
 		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_OUT), NULL);
 	lex->id = FD;
+	i += handle_word(&str[i + 1], token, lex) + 1;
 	return (i);
 }
 
 int	handle_heredoc(char *str, t_token **token, t_lex *lex)
 {
-	(*token) = token_add((*token), token_create(str, 2, lex->index++, HEREDOC), NULL);
+	int	i;
+
+	i = 2;
+	(*token) = token_add((*token), token_create(str, i, lex->index++, HEREDOC), NULL);
 	lex->id = LIMITER;
-	return (2);
+	i += handle_word(&str[i + 1], token, lex) + 1;
+	return (i);
 }
 
 int	handle_less(char *str, t_token **token, t_lex *lex)
@@ -1071,6 +1146,7 @@ int	handle_less(char *str, t_token **token, t_lex *lex)
 	else
 		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_IN), NULL);
 	lex->id = FD;
+	i += handle_word(&str[i + 1], token, lex) + 1;
 	return (i);
 }
 
@@ -1118,36 +1194,18 @@ unsigned char	*get_str(char *str)
 	return (ft_strndup(str, i));
 }
 
-int	is_cmd(char *str)
-{
-	// printf("%s\n", str);
-	if (ft_strcmp(str, "cd") == 0 || ft_strcmp(str, "export") == 0
-		|| ft_strcmp(str, "unset") == 0 || ft_strcmp(str, "pwd") == 0
-		|| ft_strcmp(str, "env") == 0 || ft_strcmp(str, "echo") == 0
-		|| ft_strcmp(str, "exit") == 0 || ft_strcmp(str, "clear") == 0)
-		return (1);
-	if (access(str, F_OK | X_OK) == 0)
-		return (1);
-	// unsigned char *temp = ft_strjoin("/bin/", str);
-	// if (access(temp, F_OK) == 0)
-	// 	return (1);
-	return (0);
-}
 //|| command_exits(&str[*i], lex->data)
 static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 {
 	int	__return__;
-
 	__return__ = 0;
 	lex->word = get_str(&str[*i]);
-	if (lex->id != CMD && is_cmd(lex->word) || lex->id == NONE)
-		lex->id = CMD;
 	if((str[*i + 1] == '>' || str[*i + 1] == '<') && ft_isdigit(str[*i]))
 		lex->id = FD;
-	if (is_word(str[*i]))
-		 __return__ = handle_word(&str[*i], token, lex);
 	if (is_quote(str[*i]))
 		__return__ = handle_quote(&str[*i], token, lex);
+	if (is_word(str[*i]))
+		 __return__ = handle_word(&str[*i], token, lex);
 	if (str[*i] == '|')
 		__return__ = handle_pipe(&str[*i], token, lex);
 	if (str[*i] == '>')
@@ -1165,7 +1223,7 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 	return (__return__);
 }
 
-t_token	*lexer(char *str)
+t_token	*lexer(char *str, char **envp)
 {
 	int		i;
 	t_token	*token;
@@ -1175,6 +1233,7 @@ t_token	*lexer(char *str)
 	lex.index = 0;
 	lex.id = NONE;
 	lex.word = NULL;
+	lex.envp = envp;
 	token = NULL;
 	while (str[i])
 	{
@@ -1202,7 +1261,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = readline("\033[1;33m<<Master>>$ \033[0m");
-		token = lexer(input);
+		token = lexer(input, envp);
 		add_history(input);
 		init_utils(&data);
 		//show_tokens(token);
