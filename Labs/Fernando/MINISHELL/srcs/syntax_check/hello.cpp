@@ -7,8 +7,8 @@ int	main (void)
 {
 	string	name;
 
-	cout << "Type your name: ";
+	cout << "Type a sum: ";
 	cin >> name;
-	cout << "hello world" << endl;
+	cout << "Hello world" << endl;
 	return (0);
 }

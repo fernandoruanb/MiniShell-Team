@@ -941,11 +941,12 @@ int	handle_quote(char *str, t_token **token, t_lex *lex)
 	if (str[i] == '\\')
 		i++;
 	quote = str[i++];
-	while (str[i] && str[i] != ' ')
+	while (str[i])
 	{
 		if (str[i++] == quote)
 		{
 			(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
+			lex->id = ARG;
 			return (i);
 		}
 	}

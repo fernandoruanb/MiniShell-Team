@@ -30,31 +30,31 @@ typedef struct s_utils
 	struct stat	stat_check;
 }	t_utils;
 
-typedef enum e_id
-{
-	PIPE,
-	LIMITER,
-	CMD,
-	ARG,
-	FD,
-	BRACKET_O,
-	BRACKET_C,
-	REDIRECT_IN,
-	REDIRECT_OUT,
-	HEREDOC,
-	APPEND,
-	OPERATOR_OR,
-	OPERATOR_AND,
-}	t_id;
+// typedef enum e_id
+// {
+// 	PIPE,
+// 	LIMITER,
+// 	CMD,
+// 	ARG,
+// 	FD,
+// 	BRACKET_O,
+// 	BRACKET_C,
+// 	REDIRECT_IN,
+// 	REDIRECT_OUT,
+// 	HEREDOC,
+// 	APPEND,
+// 	OPERATOR_OR,
+// 	OPERATOR_AND,
+// }	t_id;
 
-typedef struct s_tokens
-{
-	char	*value;
-	int	index;
-	t_id	type;
-	struct s_tokens	*next;
-	struct s_tokens *previous;
-}	t_tokens;
+// typedef struct s_tokens
+// {
+// 	char	*value;
+// 	int	index;
+// 	t_id	type;
+// 	struct s_tokens	*next;
+// 	struct s_tokens *previous;
+// }	t_tokens;
 
 t_tokens	*create_token(char *value, t_id type)
 {
