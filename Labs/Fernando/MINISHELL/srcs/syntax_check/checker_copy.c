@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/04 16:07:52 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:02:43 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -732,7 +732,7 @@ int	case_arg(t_token *token, t_utils *data)
 		return (1);
 	else if (token->id == ARG && token->previous != NULL && (token->previous->id == FD
 		|| token->previous->id == REDIRECT_OUT || token->previous->id == REDIRECT_IN
-		|| token->previous->id == APPEND))
+		|| token->previous->id == APPEND || token->previous->id == ARG))
 		return (1);
 	else if (token->id == ARG && token->next != NULL && (token->next->id == ARG
 			|| token->next->id == FD))
