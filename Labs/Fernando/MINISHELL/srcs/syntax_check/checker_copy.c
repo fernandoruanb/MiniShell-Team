@@ -1070,13 +1070,13 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 	//printf("token: %s %d\n", lex->word, (is_cmd(lex->word, lex)));
 	if ((is_cmd(lex->word, lex) && lex->id != FD) || lex->id == NONE)
 		lex->id = CMD;
-	else if (lex->id != FD)
+	else if (lex->id != FD && lex->id != LIMITER && lex->id != CMD)
 		lex->id = ARG;
 	i = 0;	
 	while (str[i] && is_word(str[i]))
 		i++;
 	(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
-	if (lex->id == CMD || (lex->id == FD && str[i + 1] == '-'))
+	if ((lex->id == CMD || lex->id == FD || lex->id == LIMITER) || str[i + 1] == '-')
 		lex->id = ARG;
 	else if (lex->id == FD)
 		lex->id = CMD;
@@ -1102,12 +1102,16 @@ int	handle_quote(char *str, t_token **token, t_lex *lex)
 		if (str[i++] == quote)
 		{
 			(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
+			if (lex->id == FD || lex->id == LIMITER)
+				lex->id = ARG;
 			return (i);
 		}
 	}
 	if (str[0] == '\\')
 	{
 		(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
+		if (lex->id == FD || lex->id == LIMITER)
+			lex->id = ARG;
 		return (i);
 	}
 	token_clean(*token);
@@ -1173,7 +1177,7 @@ int	handle_append(char *str, t_token **token, t_lex *lex)
 	i = 2;
 	(*token) = token_add((*token), token_create(str, i, lex->index++, APPEND), NULL);
 	lex->id = FD;
-	i += handle_word(&str[i + 1], token, lex) + 1;
+	//i += handle_word(&str[i + 1], token, lex) + 1;
 	return (i);
 }
 
@@ -1195,7 +1199,7 @@ int	handle_great(char *str, t_token **token, t_lex *lex)
 	else
 		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_OUT), NULL);
 	lex->id = FD;
-	i += handle_word(&str[i + 1], token, lex) + 1;
+	//i += handle_word(&str[i], token, lex);
 	return (i);
 }
 
@@ -1206,7 +1210,7 @@ int	handle_heredoc(char *str, t_token **token, t_lex *lex)
 	i = 2;
 	(*token) = token_add((*token), token_create(str, i, lex->index++, HEREDOC), NULL);
 	lex->id = LIMITER;
-	i += handle_word(&str[i + 1], token, lex) + 1;
+	//i += handle_word(&str[i + 1], token, lex) + 1;
 	return (i);
 }
 
@@ -1228,7 +1232,7 @@ int	handle_less(char *str, t_token **token, t_lex *lex)
 	else
 		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_IN), NULL);
 	lex->id = FD;
-	i += handle_word(&str[i + 1], token, lex) + 1;
+	//i += handle_word(&str[i], token, lex);
 	return (i);
 }
 
