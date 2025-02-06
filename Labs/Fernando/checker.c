@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/06 10:35:32 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:59:34 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/includes/minishell.h"
+#include "../../includes/minishell.h"
 
 typedef struct s_utils
 {
