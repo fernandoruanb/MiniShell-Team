@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/06 15:02:43 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:45:41 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -686,12 +686,19 @@ int	case_builtins(t_token *token)
 	return (0);
 }
 
+int	is_environment(t_token *token)
+{
+	if (ft_strncmp(token->str, "$", 1) == 0)
+		return (1);
+	return (0);
+}
+
 int	case_command(t_token *token, t_utils *data)
 {
 	if ((token->id == CMD && data->status > 1) && (exist_command(token, data)
 			|| check_absolute_path(token, data)))
 		return (decrement_status(data));
-	else if (case_builtins(token))
+	else if (case_builtins(token) || is_environment(token))
 	{
 		data->status = 1;
 		return (1);
