@@ -1070,6 +1070,8 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 	//printf("token: %s %d\n", lex->word, (is_cmd(lex->word, lex)));
 	if ((is_cmd(lex->word, lex) && lex->id != FD) || lex->id == NONE)
 		lex->id = CMD;
+	else if (lex->id != FD)
+		lex->id = ARG;
 	i = 0;	
 	while (str[i] && is_word(str[i]))
 		i++;
