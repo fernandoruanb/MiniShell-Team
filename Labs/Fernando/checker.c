@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/05 10:47:22 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/06 10:35:32 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "MINISHELL/includes/minishell.h"
 
 typedef struct s_utils
 {
@@ -302,8 +302,7 @@ int	heredoc_or_append(t_tokens *root, t_utils *data)
 	if (root->type == HEREDOC && root->previous != NULL && root->previous->type == ARG
 		&& root->next != NULL && root->next->type == LIMITER)
 		return (1);
-	if (root->type == APPEND && root->next != NULL && (root->next->type == FD
-		|| root->next->type == ARG))
+	if (root->type == APPEND && root->next != NULL && (root->next->type == FD))
 	{
 		data->status = 2;
 		return (1);
@@ -318,7 +317,7 @@ int	heredoc_or_append(t_tokens *root, t_utils *data)
 int	extra_redirect_cases(t_tokens *root, t_utils *data)
 {
 	if ((root->type == REDIRECT_IN || root->type == REDIRECT_OUT || root->type == APPEND)
-		&& root->next != NULL && root->next->type == ARG)
+		&& root->next != NULL && root->next->type == FD)
 		return (1);
 	return (show_error_fd("Invalid case of redirects", 0, data, 0));
 }
@@ -344,7 +343,7 @@ int	case_redirect(t_tokens *root, t_utils *data)
 	if (root->type == REDIRECT_OUT && root->next == NULL)
 		return (show_error_fd("Forgot a file after red_out", 0, data, 0));
 	if (root->type == REDIRECT_OUT && root->next != NULL 
-		&& root->next->type != FD && root->next->type != ARG)
+		&& root->next->type != FD)
 		return (show_error_fd("Forgot a file after red_out", 0, data, 0));
 	if (root->type == REDIRECT_OUT && root->next->type == FD)
 		return (1);
@@ -366,12 +365,12 @@ int	is_number(t_tokens *root, t_utils *data)
 	return (1);
 }
 
-int	check_is_valid_pid(t_tokens *root, t_utils *data)
+int	check_is_valid_fd(t_tokens *root, t_utils *data)
 {
-	int	check_fd;
+	long	check_fd;
 
 	check_fd = ft_atoi(root->value);
-	if (check_fd > 4194304)
+	if (check_fd > 2147483647)
 		return (show_error_fd("Too extreme file descriptor", 0, data, 0));
 	return (1);
 }
@@ -389,7 +388,7 @@ int	check_is_directory(t_tokens *root, t_utils *data)
 int	case_fd(t_tokens *root, t_utils *data)
 {
 	if (is_number(root, data))
-		return (check_is_valid_pid(root, data));
+		return (check_is_valid_fd(root, data));
 	if (check_is_directory(root, data))
 		return (show_error_fd("You put a directory as file", 0, data, 0));
 	if ((data->status == 0) && (!is_number(root, data)))
@@ -532,6 +531,8 @@ int	case_arg(t_tokens *root, t_utils *data)
 	else if (root->type == ARG && root->next != NULL && (root->next->type == ARG
 			|| root->next->type == FD))
 		return (1);
+	else if (root->type == ARG && root->previous != NULL && root->previous->type == LIMITER)
+		return (1);
 	return (show_error_fd("Invalid case of args", 0, data, 0));
 }
 
@@ -670,8 +671,8 @@ int	main(int argc, char **argv, char **envp)
 	if (!root)
 		return (1);
 	add_token(&root, ">>", APPEND);
-	add_token(&root, "-a", ARG);
 	add_token(&root, "infile", FD);
+	add_token(&root, "-n", ARG);
 	show_tokens(root);
 	if (check_syntax(root, envp, &data))
 		printf("OK\n");

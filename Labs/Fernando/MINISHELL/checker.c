@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/04 18:15:34 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/05 13:02:39 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../../includes/minishell.h"
 
 typedef struct s_utils
 {
@@ -302,8 +302,12 @@ int	heredoc_or_append(t_tokens *root, t_utils *data)
 	if (root->type == HEREDOC && root->previous != NULL && root->previous->type == ARG
 		&& root->next != NULL && root->next->type == LIMITER)
 		return (1);
-	if (root->type == APPEND && root->next != NULL && root->next->type == FD)
+	if (root->type == APPEND && root->next != NULL && (root->next->type == FD
+		|| root->next->type == ARG))
+	{
+		data->status = 2;
 		return (1);
+	}
 	if (root->type == HEREDOC && root->next != NULL 
 		&& root->next->type == LIMITER && root->previous != NULL
 		&& root->previous->type == CMD)
@@ -362,12 +366,12 @@ int	is_number(t_tokens *root, t_utils *data)
 	return (1);
 }
 
-int	check_is_valid_pid(t_tokens *root, t_utils *data)
+int	check_is_valid_fd(t_tokens *root, t_utils *data)
 {
-	int	check_fd;
+	long	check_fd;
 
 	check_fd = ft_atoi(root->value);
-	if (check_fd > 4194304)
+	if (check_fd > 9223372036854775807)
 		return (show_error_fd("Too extreme file descriptor", 0, data, 0));
 	return (1);
 }
@@ -385,7 +389,7 @@ int	check_is_directory(t_tokens *root, t_utils *data)
 int	case_fd(t_tokens *root, t_utils *data)
 {
 	if (is_number(root, data))
-		return (check_is_valid_pid(root, data));
+		return (check_is_valid_fd(root, data));
 	if (check_is_directory(root, data))
 		return (show_error_fd("You put a directory as file", 0, data, 0));
 	if ((data->status == 0) && (!is_number(root, data)))
@@ -610,7 +614,7 @@ int	check_syntax(t_tokens *root, char **envp, t_utils *data)
 	flag = 1;
 	while (root)
 	{
-		//printf("TOKEN PASSED: %d\n", root->index);
+	//	printf("TOKEN PASSED: %d\n", root->index);
 		if (get_command(root, data))
 			root = root->next;
 		else
@@ -662,12 +666,13 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	root = NULL;
 	init_utils(&data);
-	root = create_token("2", FD);
+	root = create_token("cat", CMD);
 	if (!root)
 		return (1);
-	add_token(&root, ">", REDIRECT_IN);
+	add_token(&root, ">>", APPEND);
+	add_token(&root, "-a", ARG);
+	add_token(&root, "-n", ARG);
 	add_token(&root, "infile", FD);
-	add_token(&root, "cat", CMD);
 	show_tokens(root);
 	if (check_syntax(root, envp, &data))
 		printf("OK\n");
