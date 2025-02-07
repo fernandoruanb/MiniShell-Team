@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/07 11:37:33 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:05:09 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,11 @@ void	display_prompt(t_data *data)
 	char	*temp = ft_strdup("<infile cat> outfile -e");
 	data->token = lexer(temp, data->prompt->envp);
 	token_print(data->token);
-	token_clean(data->token);
+	if (check_syntax(data->token, data->prompt->envp, &data->utils))
+		ft_printf("OK\n");
+	else
+		ft_printf("KO\n");
 	free(temp);
 	free(name);
+	clean_program(data->token, &data->utils);
 }

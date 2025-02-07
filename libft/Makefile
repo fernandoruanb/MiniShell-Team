@@ -18,6 +18,7 @@ INCDIR = .
 # Archives .c
 
 SRCS =  $(SRCDIR)/ft_isalpha.c\
+	$(SRCDIR)/free_splits.c\
 	$(SRCDIR)/ft_isdigit.c\
 	$(SRCDIR)/ft_isalnum.c\
 	$(SRCDIR)/ft_isprint.c\

@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_token.c                                        :+:      :+:    :+:   */
+/*   check_invalid_brackets_position.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 12:58:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 13:51:50 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/07 13:46:16 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/07 13:46:53 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*get_token(t_id id)
+int	check_invalid_brackets_position(t_utils *data)
 {
-	static char	*ids[] = {
-		"PIPE",
-		"LIMITER",
-		"CMD",
-		"ARG",
-		"FD",
-		"BRACKET_O",
-		"BRACKET_C",
-		"REDIRECT_IN",
-		"REDIRECT_OUT",
-		"HEREDOC",
-		"APPEND",
-		"OPERATOR_OR",
-		"OPERATOR_AND"
-	};
-
-	if (id >= 0 && id <= OPERATOR_AND)
-		return (ids[id]);
-	else
-		return (NULL);
+	if (data->index_bra_o != -1 && data->index_bra_c != -1)
+	{
+		if (data->index_bra_o > data->index_bra_c)
+			return (1);
+		else
+		{
+			data->index_bra_o = -1;
+			data->index_bra_c = -1;
+		}
+	}
+	return (0);
 }

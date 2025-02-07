@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:18:58 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 12:19:15 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:00:32 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,4 @@ int	case_arg(t_token *root, t_utils *data)
 		&& root->previous->id == LIMITER)
 		return (1);
 	return (show_error_fd("Invalid case of args", 0, data, 0));
-}
-
-int	check_invalid_brackets_position(t_utils *data)
-{
-	if (data->index_bra_o != -1 && data->index_bra_c != -1)
-	{
-		if (data->index_bra_o > data->index_bra_c)
-			return (1);
-		else
-		{
-			data->index_bra_o = -1;
-			data->index_bra_c = -1;
-		}
-	}
-	return (0);
 }

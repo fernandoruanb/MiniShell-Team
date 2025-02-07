@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:10:52 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 12:11:08 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:04:09 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void	clean_program(t_token *root, t_utils *data)
 		free_splits(NULL, data->paths, NULL, NULL);
 	if (data->new_str)
 		free(data->new_str);
-	free_tokens(root);
+	token_clean(root);
 }

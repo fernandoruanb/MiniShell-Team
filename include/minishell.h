@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/07 13:30:30 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:50:39 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,10 +187,10 @@ int		heredoc_or_append(t_token *root, t_utils *data);
 int		case_pipe(t_token *root, t_utils *data);
 int		decrement_status(t_utils *data);
 int		show_error_fd(char *message, int flag, t_utils *data, int signal);
-int		free_each_split(char *split1, char *split2, int flag);
+int		free_each_split(char **split1, char **split2, int flag);
 int		exist_command(t_token *root, t_utils *data);
 int		check_absolute_path(t_token *root, t_utils *data);
-int		get_full_path(t_token *root, int index, t_utils *data);
+void	get_full_path(t_token *root, int index, t_utils *data);
 void	get_paths(char **envp, t_utils *data);
 void	show_paths(t_utils *data);
 int		free_strs_flag(char *str1, char *str2, int flag);
