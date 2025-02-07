@@ -16,6 +16,46 @@ SRCS = main/2-events.c \
 		lexer/3-handle_quotes.c \
 		lexer/4-handle_word.c \
 		lexer/5-handle_pipe.c \
+		src/syntax_check/init_utils.c\
+		src/syntax_check/clean_program.c\
+		src/syntax_check/check_syntax.c\
+		src/syntax_check/get_command.c\
+		src/syntax_check/final_case.c\
+		src/syntax_check/check_invalid_brackets_position.c\
+		src/syntax_check/case_arg.c\
+		src/syntax_check/case_limiter.c\
+		src/syntax_check/case_command.c\
+		src/syntax_check/is_insider_quotes.c\
+		src/syntax_check/test_all_paths.c\
+		src/syntax_check/is_absolute_path_quotes.c\
+		src/syntax_check/case_builtins_quotes.c\
+		src/syntax_check/is_environment.c\
+		src/syntax_check/case_builtins.c\
+		src/syntax_check/extra_cases.c\
+		src/syntax_check/check_brackets.c\
+		src/syntax_check/check_invalid_things.c\
+		src/syntax_check/case_fd.c\
+		src/syntax_check/check_is_directory.c\
+		src/syntax_check/check_is_valid_fd.c\
+		src/syntax_check/is_number.c\
+		src/syntax_check/case_redirect.c\
+		src/syntax_check/extra_redirect_cases.c\
+		src/syntax_check/heredoc_or_append.c\
+		src/syntax_check/case_pipe.c\
+		src/syntax_check/decrement_status.c\
+		src/syntax_check/show_error_fd.c\
+		src/syntax_check/free_each_split.c\
+		src/syntax_check/exist_command.c\
+		src/syntax_check/check_absolute_path.c\
+		src/syntax_check/get_full_path.c\
+		src/syntax_check/get_paths.c\
+		src/syntax_check/show_paths.c\
+		src/syntax_check/free_strs_flag.c\
+		src/syntax_check/show_tokens.c\
+		src/syntax_check/get_token.c\
+		src/syntax_check/free_tokens.c\
+		src/syntax_check/add_token.c\
+		src/syntax_check/create_token.c
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
