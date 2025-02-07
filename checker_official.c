@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_official.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 11:51:59 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:29:35 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 typedef struct s_utils
 {
-	char	*temp;
-	char	*path;
-	char	**paths;
-	int	status;
-	int	redirects;
-	int	files;
-	int	commands;
-	int	pipes;
-	int	args;
-	int	brackets_c;
-	int	brackets_o;
-	int	index_bra_c;
-	int	index_bra_o;
-	char	*new_str;
+	char		*temp;
+	char		*path;
+	char		**paths;
+	int			status;
+	int			redirects;
+	int			files;
+	int			commands;
+	int			pipes;
+	int			args;
+	int			brackets_c;
+	int			brackets_o;
+	int			index_bra_c;
+	int			index_bra_o;
+	char		*new_str;
 	struct stat	stat_check;
 }	t_utils;
 

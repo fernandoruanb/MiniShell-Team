@@ -3,6 +3,7 @@
 		"type_traits": "c",
 		"iostream": "cpp",
 		"minishell.h": "c",
-		"memory_resource": "c"
+		"memory_resource": "c",
+		"ranges": "c"
 	}
 }

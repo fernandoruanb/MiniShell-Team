@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/07 13:23:33 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:30:30 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,30 @@ typedef struct s_prompt
 	int		exit_status;
 }	t_prompt;
 
+typedef struct s_utils
+{
+	char		*temp;
+	char		*path;
+	char		**paths;
+	int			status;
+	int			redirects;
+	int			files;
+	int			commands;
+	int			pipes;
+	int			args;
+	int			brackets_c;
+	int			brackets_o;
+	int			index_bra_c;
+	int			index_bra_o;
+	char		*new_str;
+	struct stat	stat_check;
+}	t_utils;
+
 typedef struct s_data
 {
 	t_prompt	*prompt;
-	t_token		*token;	
+	t_token		*token;
+	t_utils		utils;
 }	t_data;
 
 //	0-utils.c
