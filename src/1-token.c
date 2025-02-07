@@ -6,13 +6,13 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:13:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/07 11:16:30 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:46:09 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*token_create(char *str,int n, int index,  t_id id)
+t_token	*token_create(char *str, int n, int index, t_id id)
 {
 	t_token	*new;
 
