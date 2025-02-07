@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/06 17:55:49 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/07 10:49:30 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1083,6 +1083,14 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 	return (i);
 }
 
+static int	make_token(t_token **token, char *str, t_lex *lex, int *i)
+{
+	(*token) = token_add((*token), token_create(str, *i, lex->index++, lex->id), NULL);
+	if (lex->id == FD || lex->id == LIMITER)
+		lex->id = ARG;
+	return (*i);
+}
+
 //orginal
 int	handle_quote(char *str, t_token **token, t_lex *lex)
 {
@@ -1098,15 +1106,8 @@ int	handle_quote(char *str, t_token **token, t_lex *lex)
 		i++;
 	quote = str[i++];
 	while (str[i])
-	{
 		if (str[i++] == quote)
-		{
-			(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
-			if (lex->id == FD || lex->id == LIMITER)
-				lex->id = ARG;
-			return (i);
-		}
-	}
+			return (make_token(token, str, lex, &i));
 	if (str[0] == '\\')
 	{
 		(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);

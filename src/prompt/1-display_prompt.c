@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 15:53:13 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:37:33 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@
 // 	return (dst);
 // }
 
-static void	ft_free(void *a, void *b)
-{
-	free(a);
-	free(b);
-}
+// static void	ft_free(void *a, void *b)
+// {
+// 	free(a);
+// 	free(b);
+// }
 
 // static char	*colours(char *str, char *c1, char *c2)
 // {
@@ -62,38 +62,26 @@ static void	ft_free(void *a, void *b)
 // 	return (yellow_text);
 // }
 
-static void	clear_process(char *path)
-{
-	rl_clear_history();
-	//free(c_path);
-	ft_free(path, NULL);
-}
-
-void	display_prompt(t_prompt *prompt)
+void	display_prompt(t_data *data)
 {
 	char	*name;
-	// char	*c_path;
 
-	while (1)
-	{
-		name = ft_strdup("\033[1;36m<<Master of universe(mini)>>$ \033[0m");
-		
-		//Yellow
-		//c_path = colours(path, "\033[1;33m", "\033[0m");
-
-		//Cyan
-		//c_path = colours(path, "\033[1;36m", "\033[0m");
-		prompt->input = readline(name);
-		if (!prompt->input)
-		{
-			printf("exit\n");
-			return (clear_process(name));
-		}
-		if (ft_strncmp(prompt->input, "exit", 4) == 0)
-			return (clear_process(name));
-		add_history(prompt->input);
-		exec_cmd(prompt);
-		//free(c_path);
-		ft_free(prompt->input, name);
-	}
+	name = ft_strdup("\033[1;36m<<Master of universe(mini)>>$ \033[0m");
+	// while (1)
+	// {
+	// 	data->prompt->input = readline(name);
+	// 	if (!prompt->input)
+	// 		return (ft_exit(name, data, 0));
+	// 	if (ft_strncmp(prompt->input, "exit", 4) == 0)
+	// 		return (ft_exit(name, data, 0));
+	// 	add_history(prompt->input);
+	// 	exec_cmd(prompt);
+	// 	ft_free(prompt->input, name);
+	// }
+	char	*temp = ft_strdup("<infile cat> outfile -e");
+	data->token = lexer(temp, data->prompt->envp);
+	token_print(data->token);
+	token_clean(data->token);
+	free(temp);
+	free(name);
 }

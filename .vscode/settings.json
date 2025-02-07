@@ -1,6 +1,8 @@
 {
 	"files.associations": {
 		"type_traits": "c",
-		"iostream": "cpp"
+		"iostream": "cpp",
+		"minishell.h": "c",
+		"memory_resource": "c"
 	}
 }

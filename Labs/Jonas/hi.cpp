@@ -36,7 +36,7 @@ void	make_count(string input)
 		case '/':
 			if (b == 0)
 			{
-				cout << "Division to 0 is forbiden." << endl;
+				cout << "\033[33mDivision to 0 is forbiden.\033[0m" << endl;
 				break;
 			}
 			cout << a / b << endl;
@@ -48,10 +48,10 @@ int	main(void)
 {
 	string	temp;
 
-	cout << "Welcome to the calculator!" << endl;
+	cout << "\033[33mWelcome to the calculator!\033[0m" << endl;
 	while (temp != "exit")
 	{
-		cout << "Enter the calculation: ";
+		cout << "\033[33mEnter the calculation: \033[0m";
 		cin >> temp;
 		make_count(temp);
 	}

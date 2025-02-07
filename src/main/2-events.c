@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:32 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/27 13:24:13 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:35:31 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	create(t_data *data, char **envp)
 
 void	execute(t_data *data)
 {
-	display_prompt(data->prompt);
+	display_prompt(data);
 	destroy(data, NULL, 0);
 }
 

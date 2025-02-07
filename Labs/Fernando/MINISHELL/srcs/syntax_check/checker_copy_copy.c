@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker_copy.c                                     :+:      :+:    :+:   */
+/*   checker_copy_copy.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 09:08:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/04 16:07:52 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:10:15 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@
 // 	struct s_token *previous;
 // }	t_token;
 
-unsigned char	*ft_strndup(unsigned char *str, int n)
+char	*ft_strndup(char *str, int n)
 {
 	int		i;
-	unsigned char	*dup;
+	char	*dup;
 
 	if (!str)
 		return (NULL);
@@ -233,6 +233,7 @@ typedef struct s_utils
 	int	brackets_o;
 	int	index_bra_c;
 	int	index_bra_o;
+	char	*new_str;
 	struct stat	stat_check;
 }	t_utils;
 
@@ -685,13 +686,98 @@ int	case_builtins(t_token *token)
 		return (1);
 	return (0);
 }
+int	case_builtins_quotes(t_utils *data)
+{
+	if (ft_strcmp(data->new_str, "cd") == 0)
+		return (1);
+	else if (ft_strcmp(data->new_str, "export") == 0)
+		return (1);
+	else if (ft_strcmp(data->new_str, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(data->new_str, "pwd") == 0)
+		return (1);
+	else if (ft_strcmp(data->new_str, "env") == 0)
+		return (1);
+	else if (ft_strcmp(data->new_str, "echo") == 0)
+		return (1);
+	else if (ft_strcmp(data->new_str, "exit") == 0)
+		return (1);
+	else if (ft_strcmp(data->new_str, "clear") == 0)
+		return (1);
+	return (0);
+}
+
+int	is_absolute_path_quotes(t_utils *data)
+{
+	if (access(data->new_str, F_OK | X_OK) == 0)
+		return (1);
+	return (0);
+}
+
+int	test_all_paths(t_utils *data)
+{
+	int	index;
+
+	index = 0;
+	while (data->paths[index] != NULL)
+	{
+		if (data->temp)
+			free(data->temp);
+		if (data->path)
+			free(data->path);
+		data->temp = ft_strjoin(data->paths[index], "/");
+		if (!data->temp)
+			return (0);
+		data->path = ft_strjoin(data->temp, data->new_str);
+		if (!data->path)
+			return (0);
+		if (access(data->path, F_OK | X_OK) == 0)
+			return (1);
+		index++;
+	}
+	if (case_builtins_quotes(data))
+		return (1);
+	if (is_absolute_path_quotes(data))
+		return (1);
+	return (0);
+}
+
+int	is_insider_quotes(t_token *root, t_utils *data)
+{
+	size_t	length;
+
+	if (data->new_str)
+		free(data->new_str);
+	if (!root)
+		return (0);
+	length = ft_strlen(root->str);
+	if ((root->str[0] == '\'' && root->str[length - 1] == '\'')
+		|| (root->str[0] == '\"' && root->str[length - 1] == '\"'))
+	{
+		data->new_str = ft_substr(root->str, 1, length - 2);
+		if (!data->new_str)
+			return (0);
+		ft_printf("A new_str: %s\n", data->new_str);
+		if (test_all_paths(data))
+			return (1);
+	}
+	return (0);
+}
+
+int	is_environment(t_token *token)
+{
+	if (ft_strncmp(token->str, "$", 1) == 0)
+		return (1);
+	return (0);
+}
 
 int	case_command(t_token *token, t_utils *data)
 {
 	if ((token->id == CMD && data->status > 1) && (exist_command(token, data)
 			|| check_absolute_path(token, data)))
 		return (decrement_status(data));
-	else if (case_builtins(token))
+	else if (case_builtins(token) || is_environment(token)
+			|| is_insider_quotes(token, data))
 	{
 		data->status = 1;
 		return (1);
@@ -732,7 +818,7 @@ int	case_arg(t_token *token, t_utils *data)
 		return (1);
 	else if (token->id == ARG && token->previous != NULL && (token->previous->id == FD
 		|| token->previous->id == REDIRECT_OUT || token->previous->id == REDIRECT_IN
-		|| token->previous->id == APPEND))
+		|| token->previous->id == APPEND || token->previous->id == ARG))
 		return (1);
 	else if (token->id == ARG && token->next != NULL && (token->next->id == ARG
 			|| token->next->id == FD))
@@ -841,6 +927,8 @@ void	clean_program(t_token *token, t_utils *data)
 		free(data->temp);
 	if (data->path)
 		free(data->path);
+	if (data->new_str)
+		free(data->new_str);
 	if (data->paths)
 		free_splits(NULL, data->paths, NULL, NULL);
 	free_tokens(token);
@@ -852,6 +940,7 @@ void	init_utils(t_utils *data)
 	data->index_bra_o = -1;
 	data->brackets_o = 0;
 	data->brackets_c = 0;
+	data->new_str = NULL;
 	data->path = NULL;
 	data->paths = NULL;
 	data->temp = NULL;
@@ -903,10 +992,11 @@ int	is_num(unsigned char c)
 typedef struct s_lex
 {
 	t_id	id;
+	char	*path;
 	int		index;
 
-	unsigned char	**envp;
-	unsigned char	*word;
+	char	**envp;
+	char	*word;
 }	t_lex;
 
 #pragma region Handles 
@@ -916,19 +1006,103 @@ int	diff_cmd(char *str)
 	return (ft_strncmp(str, "xargs", 5) != 0);
 }
 
+
+void	*clear_split(char **str)
+{
+	int	i;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (str[i])
+		free(str[i++]);
+	free(str);
+	return (NULL);
+}
+
+
+static int	free_me(char **split, char *s1, char *s2, int exit)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+		free(split[i++]);
+	free(split);
+	free(s1);
+	free(s2);
+	return (exit);
+}
+
+static	int	find_my_path(char *cmd, char **env)
+{
+	int		i;
+	char	**paths;
+	char	*path;
+	char	*temp;
+
+	if (!cmd)
+		return (0);
+	i = 0;
+	while (!ft_strnstr(env[i], "PATH=", 5))
+		i++;
+	if (!env)
+		return (0);
+	paths = ft_split(env[i] + 5, ':');
+	i = 0;
+	while (paths[i])
+	{
+		temp = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(temp, cmd);
+		if (access(path, X_OK) == 0)
+			return (free_me(paths, path, temp, 1));
+		free(path);
+		free(temp);
+		i++;
+	}
+	return (free_me(paths, NULL, NULL, 0));
+}
+
+int	is_cmd(char *str, t_lex *lex)
+{
+	if (ft_strcmp(str, "cd") == 0 || ft_strcmp(str, "export") == 0
+		|| ft_strcmp(str, "unset") == 0 || ft_strcmp(str, "pwd") == 0
+		|| ft_strcmp(str, "env") == 0 || ft_strcmp(str, "echo") == 0
+		|| ft_strcmp(str, "exit") == 0 || ft_strcmp(str, "clear") == 0)
+		return (1);
+	if (access(str, F_OK | X_OK) == 0)
+		return (1);
+	if (find_my_path(str, lex->envp))
+		return (1);
+	return (0);
+}
+
 int	handle_word(char *str, t_token **token, t_lex *lex)
 {
 	int	i;
 
+	//printf("token: %s %d\n", lex->word, (is_cmd(lex->word, lex)));
+	if ((is_cmd(lex->word, lex) && lex->id != FD) || lex->id == NONE)
+		lex->id = CMD;
+	else if (lex->id != FD && lex->id != LIMITER && lex->id != CMD)
+		lex->id = ARG;
 	i = 0;	
 	while (str[i] && is_word(str[i]))
 		i++;
 	(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
-	if (lex->id == CMD || (lex->id == FD && str[i + 1] == '-'))
+	if ((lex->id == CMD || lex->id == FD || lex->id == LIMITER))
 		lex->id = ARG;
 	else if (lex->id == FD)
 		lex->id = CMD;
 	return (i);
+}
+
+static int	make_token(t_token **token, char *str, t_lex *lex, int *i)
+{
+	(*token) = token_add((*token), token_create(str, *i, lex->index++, lex->id), NULL);
+	if (lex->id == FD || lex->id == LIMITER)
+		lex->id = ARG;
+	return (*i);
 }
 
 //orginal
@@ -938,22 +1112,18 @@ int	handle_quote(char *str, t_token **token, t_lex *lex)
 	int		i;
 
 	i = 0;
+	if (lex->id == NONE)
+		lex->id = CMD;
+	else if (lex->id == CMD)
+		lex->id = ARG;
 	if (str[i] == '\\')
 		i++;
 	quote = str[i++];
-	while (str[i] && str[i] != ' ')
-	{
+	while (str[i])
 		if (str[i++] == quote)
-		{
-			(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
-			return (i);
-		}
-	}
+			return (make_token(token, str, lex, &i));
 	if (str[0] == '\\')
-	{
-		(*token) = token_add((*token), token_create(str, i, lex->index++, lex->id), NULL);
-		return (i);
-	}
+		return (make_token(token, str, lex, &i));
 	token_clean(*token);
 	(*token) = NULL;
 	return (-1);
@@ -1012,9 +1182,13 @@ int	handle_pipe(char *str, t_token **token, t_lex *lex)
 
 int	handle_append(char *str, t_token **token, t_lex *lex)
 {
-	(*token) = token_add((*token), token_create(str, 2, lex->index++, APPEND), NULL);
+	int	i;
+
+	i = 2;
+	(*token) = token_add((*token), token_create(str, i, lex->index++, APPEND), NULL);
 	lex->id = FD;
-	return (2);
+	//i += handle_word(&str[i + 1], token, lex) + 1;
+	return (i);
 }
 
 int	handle_great(char *str, t_token **token, t_lex *lex)
@@ -1035,14 +1209,19 @@ int	handle_great(char *str, t_token **token, t_lex *lex)
 	else
 		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_OUT), NULL);
 	lex->id = FD;
+	//i += handle_word(&str[i], token, lex);
 	return (i);
 }
 
 int	handle_heredoc(char *str, t_token **token, t_lex *lex)
 {
-	(*token) = token_add((*token), token_create(str, 2, lex->index++, HEREDOC), NULL);
+	int	i;
+
+	i = 2;
+	(*token) = token_add((*token), token_create(str, i, lex->index++, HEREDOC), NULL);
 	lex->id = LIMITER;
-	return (2);
+	//i += handle_word(&str[i + 1], token, lex) + 1;
+	return (i);
 }
 
 int	handle_less(char *str, t_token **token, t_lex *lex)
@@ -1063,6 +1242,7 @@ int	handle_less(char *str, t_token **token, t_lex *lex)
 	else
 		(*token) = token_add((*token), token_create(str, i, lex->index++, REDIRECT_IN), NULL);
 	lex->id = FD;
+	//i += handle_word(&str[i], token, lex);
 	return (i);
 }
 
@@ -1100,7 +1280,7 @@ int	handle_bracket(char *str, t_token **token, t_lex *lex)
 
 #pragma region lexer
 
-unsigned char	*get_str(char *str)
+char	*get_str(char *str)
 {
 	int	i;
 
@@ -1110,36 +1290,18 @@ unsigned char	*get_str(char *str)
 	return (ft_strndup(str, i));
 }
 
-int	is_cmd(char *str)
-{
-	// printf("%s\n", str);
-	if (ft_strcmp(str, "cd") == 0 || ft_strcmp(str, "export") == 0
-		|| ft_strcmp(str, "unset") == 0 || ft_strcmp(str, "pwd") == 0
-		|| ft_strcmp(str, "env") == 0 || ft_strcmp(str, "echo") == 0
-		|| ft_strcmp(str, "exit") == 0 || ft_strcmp(str, "clear") == 0)
-		return (1);
-	if (access(str, F_OK | X_OK) == 0)
-		return (1);
-	// unsigned char *temp = ft_strjoin("/bin/", str);
-	// if (access(temp, F_OK) == 0)
-	// 	return (1);
-	return (0);
-}
 //|| command_exits(&str[*i], lex->data)
 static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 {
 	int	__return__;
-
 	__return__ = 0;
 	lex->word = get_str(&str[*i]);
-	if (lex->id != CMD && is_cmd(lex->word) || lex->id == NONE)
-		lex->id = CMD;
 	if((str[*i + 1] == '>' || str[*i + 1] == '<') && ft_isdigit(str[*i]))
 		lex->id = FD;
-	if (is_word(str[*i]))
-		 __return__ = handle_word(&str[*i], token, lex);
 	if (is_quote(str[*i]))
 		__return__ = handle_quote(&str[*i], token, lex);
+	if (is_word(str[*i]))
+		 __return__ = handle_word(&str[*i], token, lex);
 	if (str[*i] == '|')
 		__return__ = handle_pipe(&str[*i], token, lex);
 	if (str[*i] == '>')
@@ -1157,7 +1319,7 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 	return (__return__);
 }
 
-t_token	*lexer(char *str)
+t_token	*lexer(char *str, char **envp)
 {
 	int		i;
 	t_token	*token;
@@ -1167,6 +1329,7 @@ t_token	*lexer(char *str)
 	lex.index = 0;
 	lex.id = NONE;
 	lex.word = NULL;
+	lex.envp = envp;
 	token = NULL;
 	while (str[i])
 	{
@@ -1186,30 +1349,29 @@ int	main(int argc, char **argv, char **envp)
 	t_token	*token;
 	char	*input;
 
-	(void)argv;
-	if (argc != 1)
+	//(void)argv;
+	if (argc != 2)
 		return (1);
-	init_utils(&data);
-	get_paths(envp, &data);
-	while (1)
-	{
-		input = readline("\033[1;33m<<Master>>$ \033[0m");
-		token = lexer(input);
-		add_history(input);
-		init_utils(&data);
+	//init_utils(&data);
+	//get_paths(envp, &data);
+	// while (1)
+	// {
+		//input = readline("\033[1;33m<<Master>>$ \033[0m");
+		token = lexer(argv[1], envp);
+		//add_history(input);
+		// init_utils(&data);
 		//show_tokens(token);
 		token_print(token);
-		if (token == NULL)
-			printf("Invalid input.\n");
-		if (token && check_syntax(token, envp, &data))
-			printf("OK\n");
-		else if (token)
-			printf("KO\n");
-		free(input);
-	}
-	clean_program(NULL, &data);
+		// if (token == NULL)
+		// 	printf("Invalid input.\n");
+		// if (token && check_syntax(token, envp, &data))
+		// 	printf("OK\n");
+		// else if (token)
+		// 	printf("KO\n");
+		//free(input);
+	//}
+	//clean_program(NULL, &data);
 	token_clean(token);
-	return (0);
 }
 
 // int	main(int argc, char **argv, char **envp)

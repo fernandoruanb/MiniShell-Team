@@ -9,7 +9,14 @@ SRCS = main/2-events.c \
 		prompt/2-exec_cmd.c \
 		built_in/1-cd.c \
 		built_in/5-echo.c \
-		built_in/5.1-echo_utils.c
+		built_in/5.1-echo_utils.c \
+		built_in/2-exit.c \
+		lexer/1-lexer.c \
+		lexer/2-handles.c \
+		lexer/3-handle_quotes.c \
+		lexer/4-handle_word.c \
+		lexer/5-handle_pipe.c \
+		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJ = $(SRC:.c=.o)
