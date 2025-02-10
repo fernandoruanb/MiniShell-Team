@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 11:00:16 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:09:09 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void	analysis(t_data *data)
 {
 	data->token = lexer(data->prompt->input, data->prompt->envp);
 	token_print(data->token);
+	if (!data->token)
+		return ;
 	if (check_syntax(data->token, data->prompt->envp, &data->utils))
 		ft_printf("OK\n");
 	else if (data->token)
