@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:04:26 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/04 11:05:47 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:11:02 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*get_cmd(char *str)
 	char	*temp;
 
 	i = 0;
-	while(str[i] && str[i] != ' ')
+	while (str[i] && str[i] != ' ')
 		i++;
 	temp = ft_calloc(i + 1, 1);
 	if (!temp)
@@ -29,7 +29,7 @@ static char	*get_cmd(char *str)
 		temp[i] = str[i];
 		i++;
 	}
-	return (str[i]);	
+	return (str[i]);
 }
 
 static char	**get_args(char *str)
@@ -57,7 +57,7 @@ t_ast	*ast_create(char *input, t_ast *parent)
 	new->right = NULL;
 	new->parent = parent;
 	new->cmd = get_cmd(input);
-	new->argv = get_args(input);	
+	new->argv = get_args(input);
 	return (new);
 }
 
@@ -86,4 +86,17 @@ void	ast_destroy(t_ast *root)
 	ast_destroy(root->left);
 	ast_destroy(root->right);
 	free(root);
+}
+
+/*
+	excluir futuramente
+*/
+void print_tree(t_ast *root, int level){
+    if (!root)
+        return ;
+	print_tree(root->left, level + 1);
+	for (int i = 0; i < level; i++)
+		printf("     ");
+	printf("%d\n", root->value);
+	print_tree(root->right, level + 1);
 }

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 13:23:21 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:17:53 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@
 
 typedef struct s_ast
 {
-	char			*cmd;
-	char			**argv;
+	char			**cmd;
 
 	struct s_ast	*parent;
 	struct s_ast	*left;
