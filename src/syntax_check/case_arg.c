@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:18:58 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 13:28:24 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:32:38 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	case_arg(t_token *root, t_utils *data)
 {
 	if (!special_check_quotes(root, data))
 		return (0);
-	else if (root->id == ARG && data->status == 1)
+	if (root->id == ARG && data->status == 1)
 		return (1);
 	else if (root->id == ARG && root->previous != NULL
 		&& (root->previous->id == FD || root->previous->id == REDIRECT_OUT
