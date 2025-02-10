@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 08:57:33 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/10 10:20:46 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,12 +141,12 @@ int		init_data(t_data *data, char **envp);
 void	exec_cmd(t_prompt *prompt);
 int		child(t_prompt *prompt);
 void	display_prompt(t_data *data);
-
+void	analysis(t_data *data);
 //	built_in/
 void	ft_cd(char *input);
 void	ft_echo(t_prompt *prompt);
 char	*enviroment_var(char *cmd, int exit_status);
-int		ft_exit(char *name, t_data *data, char *exit_status);
+void	ft_exit(char *name, t_data *data, char *exit_status);
 
 //	lexer
 t_token	*lexer(char *str, char **envp);

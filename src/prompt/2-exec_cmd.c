@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 12:06:15 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 10:19:31 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,17 @@ int	child(t_prompt *prompt)
 // 	}
 // 	return (0);
 // }
+
+void	analysis(t_data *data)
+{
+	data->token = lexer(data->prompt->input, data->prompt->envp);
+	token_print(data->token);
+	if (check_syntax(data->token, data->prompt->envp, &data->utils))
+		ft_printf("OK\n");
+	else if (data->token)
+		ft_printf("KO\n");
+	clean_program(data->token, &data->utils);
+}
 
 void	exec_cmd(t_prompt *prompt)
 {

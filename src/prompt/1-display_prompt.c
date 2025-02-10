@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/07 14:05:09 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/10 10:23:05 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,15 @@ void	display_prompt(t_data *data)
 	char	*name;
 
 	name = ft_strdup("\033[1;36m<<Master of universe(mini)>>$ \033[0m");
-	// while (1)
-	// {
-	// 	data->prompt->input = readline(name);
-	// 	if (!prompt->input)
-	// 		return (ft_exit(name, data, 0));
-	// 	if (ft_strncmp(prompt->input, "exit", 4) == 0)
-	// 		return (ft_exit(name, data, 0));
-	// 	add_history(prompt->input);
-	// 	exec_cmd(prompt);
-	// 	ft_free(prompt->input, name);
-	// }
-	char	*temp = ft_strdup("<infile cat> outfile -e");
-	data->token = lexer(temp, data->prompt->envp);
-	token_print(data->token);
-	if (check_syntax(data->token, data->prompt->envp, &data->utils))
-		ft_printf("OK\n");
-	else
-		ft_printf("KO\n");
-	free(temp);
-	free(name);
-	clean_program(data->token, &data->utils);
+	while (1)
+	{
+		data->prompt->input = readline(name);
+		if (!data->prompt->input)
+			return (ft_exit(name, data, NULL));
+		if (ft_strncmp(data->prompt->input, "exit", 4) == 0)
+			return (ft_exit(name, data, &data->prompt->input[5]));
+		add_history(data->prompt->input);
+		analysis(data);
+		free(data->prompt->input);
+	}
 }
