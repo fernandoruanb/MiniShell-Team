@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 13:14:03 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:23:52 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 	return (__return__);
 }
 
-t_token	*lexer(char *str, char **envp, t_prompt *prompt)
+t_token	*lexer(char *str, char **envp)
 {
 	int		i;
 	t_token	*token;
@@ -66,13 +66,9 @@ t_token	*lexer(char *str, char **envp, t_prompt *prompt)
 	while (str[i])
 	{
 		if (handler(str, &i, &lex, &token) < 0)
-		{
-			prompt->exit_status = 1;
 			return (NULL);
-		}
 		if (lex.word)
 			free(lex.word);
 	}
-	prompt->exit_status = 0;
 	return (token);
 }
