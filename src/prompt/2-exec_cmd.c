@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 13:17:44 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:26:57 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,27 @@ int	child(t_prompt *prompt)
 
 void	analysis(t_data *data)
 {
-	data->token = lexer(data->prompt->input, data->prompt->envp, data->prompt);
-	printf("exit: %d\n", data->prompt->exit_status);
+	data->token = lexer(data->prompt->input, data->prompt->envp);
 	token_print(data->token);
 	if (!data->token)
+	{
+		data->prompt->exit_status = 1;
+		printf("exit: %d\n", data->prompt->exit_status);
 		return ;
+	}
+	data->prompt->exit_status = 0;
+	printf("exit: %d\n", data->prompt->exit_status);
 	if (check_syntax(data->token, data->prompt->envp, &data->utils))
+	{
+		data->prompt->exit_status = 0;
 		ft_printf("OK\n");
+	}	
 	else if (data->token)
+	{
+		data->prompt->exit_status = 1;
 		ft_printf("KO\n");
+	}
+	printf("exit: %d\n", data->prompt->exit_status);
 }
 
 void	exec_cmd(t_prompt *prompt)
