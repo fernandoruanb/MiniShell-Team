@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 10:54:04 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:56:55 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int	is_word(unsigned char c, int flag)
 {
-	if (flag)
+	if (flag == 1)
 		return ((c != ' ' && c != '&' && c != '|' && c != '(' && c != ')'
+			&& c != '<' && c != '>') || is_quote(c));
+	if (flag == 2)
+		return ((c != '&' && c != '|' && c != '(' && c != ')'
 			&& c != '<' && c != '>') || is_quote(c));
 	return ((c != ' ' && c != '&' && c != '|' && c != '(' && c != ')'
 			&& c != '<' && c != '>') && !(is_quote(c)));
@@ -80,13 +83,17 @@ static int	is_cmd(char *str, t_lex *lex)
 int	handle_word(char *str, t_token **token, t_lex *lex)
 {
 	int	i;
+	int	flag;
 
+	i = 0;
 	if ((is_cmd(lex->word, lex) && lex->id != FD) || lex->id == NONE)
 		lex->id = CMD;
 	else if (lex->id != FD && lex->id != LIMITER && lex->id != CMD)
 		lex->id = ARG;
-	i = 0;
-	while (str[i] && is_word(str[i], 1))
+	flag = 1;
+	if (lex->id != CMD && (is_quote(str[i]) || str[i] == '\\'))
+		flag = 2;
+	while (str[i] && is_word(str[i], flag))
 		i++;
 	(*token) = token_add((*token),
 			token_create(str, i, lex->index++, lex->id), NULL);

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 10:26:04 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:08:08 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*get_str(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && is_word(str[i], 0))
+	while (str[i] && is_word(str[i], 1))
 		i++;
 	return (ft_strndup(str, i));
 }
@@ -30,9 +30,7 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 	lex->word = get_str(&str[*i]);
 	if ((str[*i + 1] == '>' || str[*i + 1] == '<') && ft_isdigit(str[*i]))
 		lex->id = FD;
-	if (is_quote(str[*i]))
-		__return__ = handle_quote(&str[*i], token, lex);
-	if (is_word(str[*i], 0))
+	if (is_word(str[*i], 1))
 		__return__ = handle_word(&str[*i], token, lex);
 	if (str[*i] == '|')
 		__return__ = handle_pipe(&str[*i], token, lex);
@@ -63,6 +61,8 @@ t_token	*lexer(char *str, char **envp)
 	lex.word = NULL;
 	lex.envp = envp;
 	token = NULL;
+	if (!handle_quote(str, &token))
+		return (NULL);
 	while (str[i])
 	{
 		if (handler(str, &i, &lex, &token) < 0)

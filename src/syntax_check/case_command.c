@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   case_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:21:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 13:48:22 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:59:45 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	case_command(t_token *root, t_utils *data)
 			|| check_absolute_path(root, data)))
 		return (decrement_status(data));
 	else if (case_builtins(root) || is_environment(root)
-		|| is_insider_quotes(root, data))
+		|| is_insider_quotes(root, data) || special(root, data))
 	{
 		data->status = 1;
 		return (1);
