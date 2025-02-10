@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/07 11:44:55 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 10:26:04 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*get_str(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && is_word(str[i]))
+	while (str[i] && is_word(str[i], 0))
 		i++;
 	return (ft_strndup(str, i));
 }
@@ -32,7 +32,7 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 		lex->id = FD;
 	if (is_quote(str[*i]))
 		__return__ = handle_quote(&str[*i], token, lex);
-	if (is_word(str[*i]))
+	if (is_word(str[*i], 0))
 		__return__ = handle_word(&str[*i], token, lex);
 	if (str[*i] == '|')
 		__return__ = handle_pipe(&str[*i], token, lex);

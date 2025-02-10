@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 10:19:31 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:00:16 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	analysis(t_data *data)
 		ft_printf("OK\n");
 	else if (data->token)
 		ft_printf("KO\n");
-	clean_program(data->token, &data->utils);
 }
 
 void	exec_cmd(t_prompt *prompt)
