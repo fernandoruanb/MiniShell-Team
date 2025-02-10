@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:09:27 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 11:01:43 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:40:30 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	init_data(t_data *data, char **envp)
 {
-
 	data->prompt = ft_calloc(1, sizeof(t_prompt));
 	if (!data->prompt)
 		return (1);
