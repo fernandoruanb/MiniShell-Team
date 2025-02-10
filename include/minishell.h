@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/07 13:50:39 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/10 08:57:33 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ typedef struct s_utils
 	int			files;
 	int			commands;
 	int			pipes;
+	int			simple_quotes;
+	int			double_quotes;
 	int			args;
 	int			brackets_c;
 	int			brackets_o;
@@ -199,5 +201,15 @@ char	*get_token(t_id id);
 void	free_tokens(t_token *root);
 void	add_token(t_token **root, char *str, t_id id);
 t_token	*create_token(char *str, t_id id);
+int		special(t_token *root, t_utils *data);
+int		get_check_command(t_token *root, t_utils *data);
+int		final_check(t_utils *data);
+int		check_order_letters_quotes(t_token *root, t_utils *data);
+int		case_quotes_syntax(char *quote, int marker, int *flag);
+void	create_variables_order(t_token *root, int *index, int *flag);
+int		special_check_letters_quotes(t_token *root, t_utils *data);
+int		how_many_quotes(t_token *root, t_utils *data, int letters);
+int		ft_isalpha_special_2(char letter);
+int		ft_isalpha_special(char letter);
 
 #endif

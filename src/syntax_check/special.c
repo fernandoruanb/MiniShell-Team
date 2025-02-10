@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_utils.c                                       :+:      :+:    :+:   */
+/*   special.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 08:40:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 08:56:45 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/10 08:41:40 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/10 08:58:00 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	init_utils(t_utils *data)
+int	special(t_token *root, t_utils *data)
 {
-	data->index_bra_c = -1;
-	data->index_bra_o = -1;
-	data->brackets_o = 0;
-	data->brackets_c = 0;
-	data->path = NULL;
+	if (data->new_str)
+	{
+		free(data->new_str);
+		data->new_str = NULL;
+	}
 	data->simple_quotes = 0;
 	data->double_quotes = 0;
-	data->paths = NULL;
-	data->temp = NULL;
-	data->new_str = NULL;
-	data->status = 0;
-	data->redirects = 0;
-	data->pipes = 0;
-	data->args = 0;
-	data->commands = 0;
-	data->files = 0;
+	if (!special_check_letters_quotes(root, data))
+		return (0);
+	if (!check_order_letters_quotes(root, data))
+		return (0);
+	if (!get_check_command(root, data))
+		return (0);
+	return (1);
 }

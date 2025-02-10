@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_utils.c                                       :+:      :+:    :+:   */
+/*   how_many_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 08:40:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 08:56:45 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/10 08:45:28 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/10 09:02:25 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	init_utils(t_utils *data)
+int	how_many_quotes(t_token *root, t_utils *data, int letters)
 {
-	data->index_bra_c = -1;
-	data->index_bra_o = -1;
-	data->brackets_o = 0;
-	data->brackets_c = 0;
-	data->path = NULL;
-	data->simple_quotes = 0;
-	data->double_quotes = 0;
-	data->paths = NULL;
-	data->temp = NULL;
-	data->new_str = NULL;
-	data->status = 0;
-	data->redirects = 0;
-	data->pipes = 0;
-	data->args = 0;
-	data->commands = 0;
-	data->files = 0;
+	if (root->str[0] == '/')
+		letters--;
+	if (root->str[0] == '\'' || root->str[0] == '\"')
+		letters++;
+	if (data->simple_quotes % 2 != 0 || data->double_quotes % 2 != 0)
+		return (0);
+	if (letters == (data->simple_quotes + data->double_quotes))
+		return (1);
+	else
+		return (show_error_fd("letters != quotes", 0, data, 0));
 }

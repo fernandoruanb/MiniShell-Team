@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_utils.c                                       :+:      :+:    :+:   */
+/*   case_quotes_syntax.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 08:40:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 08:56:45 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/10 08:43:56 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/10 08:59:00 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	init_utils(t_utils *data)
+int	case_quotes_syntax(char	*quote, int marker, int *flag)
 {
-	data->index_bra_c = -1;
-	data->index_bra_o = -1;
-	data->brackets_o = 0;
-	data->brackets_c = 0;
-	data->path = NULL;
-	data->simple_quotes = 0;
-	data->double_quotes = 0;
-	data->paths = NULL;
-	data->temp = NULL;
-	data->new_str = NULL;
-	data->status = 0;
-	data->redirects = 0;
-	data->pipes = 0;
-	data->args = 0;
-	data->commands = 0;
-	data->files = 0;
+	static char	buffer[2];
+	static int	index = 0;
+
+	if (index > 1)
+		index = 0;
+	if (index == 0)
+		buffer[0] = quote[marker];
+	else if (index == 1)
+		buffer[1] = quote[marker];
+	if (index == 1 || quote[marker + 1] == '\0')
+	{
+		if (buffer[0] != buffer[1])
+			return (0);
+	}
+	index++;
+	*flag = 0;
+	return (1);
 }

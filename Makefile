@@ -56,6 +56,16 @@ SRCS = main/2-events.c \
 		syntax_check/free_tokens.c\
 		syntax_check/add_token.c\
 		syntax_check/create_token.c\
+		syntax_check/special.c\
+		syntax_check/get_check_command.c\
+		syntax_check/final_check.c\
+		syntax_check/check_order_letters_quotes.c\
+		syntax_check/case_quotes_syntax.c\
+		syntax_check/create_variables_order.c\
+		syntax_check/special_check_letters_quotes.c\
+		syntax_check/how_many_quotes.c\
+		syntax_check/ft_isalpha_special_2.c\
+		syntax_check/ft_isalpha_special.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))

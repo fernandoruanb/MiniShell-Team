@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_utils.c                                       :+:      :+:    :+:   */
+/*   special_check_letters_quotes.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 08:40:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 08:56:45 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/10 08:45:02 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/10 09:02:11 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	init_utils(t_utils *data)
+int	special_check_letters_quotes(t_token *root, t_utils *data)
 {
-	data->index_bra_c = -1;
-	data->index_bra_o = -1;
-	data->brackets_o = 0;
-	data->brackets_c = 0;
-	data->path = NULL;
-	data->simple_quotes = 0;
-	data->double_quotes = 0;
-	data->paths = NULL;
-	data->temp = NULL;
-	data->new_str = NULL;
-	data->status = 0;
-	data->redirects = 0;
-	data->pipes = 0;
-	data->args = 0;
-	data->commands = 0;
-	data->files = 0;
+	int	letters;
+	int	index;
+
+	letters = 0;
+	index = 0;
+	while (root->str[index] != '\0')
+	{
+		if (ft_isalpha_special(root->str[index]))
+			letters++;
+		else if ((root->str[index] == '\'' || root->str[index] == '\"'))
+		{
+			if (root->str[index] == '\'')
+				data->simple_quotes++;
+			else
+				data->double_quotes++;
+		}
+		index++;
+	}
+	return (how_many_quotes(root, data, letters));
 }
