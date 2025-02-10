@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 12:54:04 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:17:26 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ char	*enviroment_var(char *cmd, int exit_status);
 void	ft_exit(char *name, t_data *data, char *exit_status);
 
 //	lexer
-t_token	*lexer(char *str, char **envp);
+t_token	*lexer(char *str, char **envp, t_prompt *prompt);
 int		handle_bracket(char *str, t_token **token, t_lex *lex);
 int		handle_and(char *str, t_token **token, t_lex *lex);
 int		handle_less(char *str, t_token **token, t_lex *lex);

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 11:09:09 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:17:44 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int	child(t_prompt *prompt)
 
 void	analysis(t_data *data)
 {
-	data->token = lexer(data->prompt->input, data->prompt->envp);
+	data->token = lexer(data->prompt->input, data->prompt->envp, data->prompt);
+	printf("exit: %d\n", data->prompt->exit_status);
 	token_print(data->token);
 	if (!data->token)
 		return ;
