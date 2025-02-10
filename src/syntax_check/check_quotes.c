@@ -1,20 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   how_many_quotes.c                                  :+:      :+:    :+:   */
+/*   check_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 12:50:50 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 12:51:05 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/10 12:47:09 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/10 12:48:09 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	how_many_quotes(t_utils *data)
+int	check_quotes(t_token *root)
 {
-	if (data->simple_quotes % 2 != 0 || data->double_quotes % 2 != 0)
-		return (show_error_fd("Quotes open/close error", 0, data, 0));
+	int	index;
+	char	quote;
+	int	flag;
+
+	index = 0;
+	flag = 0;
+	while (root->str[index] != '\0')
+	{
+		if ((flag == 1) && (root->str[index] == '\'' || root->str[index] == '\"'))
+		{
+			if (quote != root->str[index])
+				return (0);
+			flag = 0;
+		}
+		else if (root->str[index] == '\'' || root->str[index] == '\"')
+		{
+			flag = 1;
+			quote = root->str[index];
+		}
+		index++;
+	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 11:42:11 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:54:04 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,12 +204,13 @@ t_token	*create_token(char *str, t_id id);
 int		special(t_token *root, t_utils *data);
 int		get_check_command(t_token *root, t_utils *data);
 int		final_check(t_utils *data);
-int		check_order_letters_quotes(t_token *root, t_utils *data);
+int		check_order_quotes(t_token *root);
 int		case_quotes_syntax(char *quote, int marker, int *flag);
 void	create_variables_order(t_token *root, int *index, int *flag);
-int		special_check_letters_quotes(t_token *root, t_utils *data);
-int		how_many_quotes(t_token *root, t_utils *data, int letters);
+int		special_check_quotes(t_token *root, t_utils *data);
+int		how_many_quotes(t_utils *data);
 int		ft_isalpha_special_2(char letter);
 int		ft_isalpha_special(char letter);
+int		check_quotes(t_token *root);
 
 #endif

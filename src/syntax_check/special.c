@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 08:41:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 08:58:00 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/10 12:46:04 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/10 12:46:55 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	special(t_token *root, t_utils *data)
 	}
 	data->simple_quotes = 0;
 	data->double_quotes = 0;
-	if (!special_check_letters_quotes(root, data))
+	if (!special_check_quotes(root, data))
 		return (0);
-	if (!check_order_letters_quotes(root, data))
+	if (!check_quotes(root))
 		return (0);
 	if (!get_check_command(root, data))
 		return (0);
