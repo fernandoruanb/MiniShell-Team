@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:13:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 11:36:00 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:28:46 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	token_clean(t_token *token)
 		free(token->str);
 	if (token)
 		free(token);
+	token = NULL;
 }
 
 /*
