@@ -14,7 +14,7 @@
 
 static int	extra_cases_commands(t_token *root, t_utils *data)
 {
-	if ((root->id == CMD) && (exist_command(root,data)
+	if ((root->id == CMD) && (exist_command(root, data)
 			|| check_absolute_path(root, data)
 			|| is_insider_quotes(root, data) || special(root, data)))
 	{
@@ -23,6 +23,7 @@ static int	extra_cases_commands(t_token *root, t_utils *data)
 	}
 	return (0);
 }
+
 int	case_command(t_token *root, t_utils *data)
 {
 	if ((root->id == CMD && data->status > 1) && (exist_command(root, data)
