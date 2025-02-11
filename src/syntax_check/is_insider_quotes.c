@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:24:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 12:57:36 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:34:14 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	is_insider_quotes(t_token *root, t_utils *data)
 		free(data->new_str);
 		data->new_str = NULL;
 	}
+	check_copy_new(data);
 	if (!root)
 		return (0);
 	length = ft_strlen(root->str);
@@ -30,6 +31,9 @@ int	is_insider_quotes(t_token *root, t_utils *data)
 		data->new_str = ft_substr(root->str, 1, length - 2);
 		if (!data->new_str)
 			return (0);
+		data->copy_new = ft_strdup(data->new_str);
+		if (!data->copy_new)
+			return (1);
 		if (test_all_paths(data))
 			return (1);
 	}

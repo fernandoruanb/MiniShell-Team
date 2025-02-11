@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 11:18:38 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:36:47 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_utils
 	int			pipes;
 	int			simple_quotes;
 	int			double_quotes;
+	char		*copy_new;
 	int			args;
 	int			brackets_c;
 	int			brackets_o;
@@ -211,5 +212,5 @@ int		how_many_quotes(t_utils *data);
 int		ft_isalpha_special_2(char letter);
 int		ft_isalpha_special(char letter);
 int		check_quotes(t_token *root);
-
+void	check_copy_new(t_utils *data);
 #endif

@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:48:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 13:38:29 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:43:32 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	special_check_quotes(t_token *root, t_utils *data)
 	{
 		if ((root->str[index] == '\'' || root->str[index] == '\"'))
 		{
-			if (root->str[index] == '\'')
+			if (root->str[index] == '\'' && root->str[index - 1] != '\\')
 				data->simple_quotes++;
-			else
+			else if (root->str[index - 1] != '\\')
 				data->double_quotes++;
 		}
 		index++;
