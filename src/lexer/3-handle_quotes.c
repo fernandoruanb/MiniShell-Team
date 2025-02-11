@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:28 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 16:21:22 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:55:09 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,31 +63,23 @@ int	special_char(char c)
 	return (c == '?' || c == '$' || c == '\\' || c == '/' || is_quote(c) || c == '*');
 }
 
-static int	bad_quotes(t_token **token)
-{
-	token_clean(*token);
-		(*token) = NULL;
-	return (0);
-}
+// int	handle_quote(char *str, t_token **token)
+// {
+// 	int		i;
 
-int	handle_quote(char *str, t_token **token)
-{
-	int		i;
-	int		cnt;
-
-	i = -1;
-	cnt = 0;
-	while (str[++i])
-		if (str[i + 1] == '\0')
-			return (1);
-	i = -1;
-	while (str[++i])
-		if (special_char(str[i]) || str[i] == '\\')
-			cnt++;
-	if (cnt % 2 != 0)
-		return (bad_quotes(token));
-	return (1);
-}
+// 	i = -1;
+// 	while (str[++i])
+// 	{
+// 		i = quote_close(&str[i]);
+// 		if (i < 0)
+// 			return (bad_quotes(token));
+// 	}
+// 	i = -1;
+// 	while (str[++i])
+// 		if (str[i] == '\\' && !special_char(str[i + 1]))
+// 			return (bad_quotes(token));
+// 	return (1);
+// }
 
 int	handle_bracket(char *str, t_token **token, t_lex *lex)
 {

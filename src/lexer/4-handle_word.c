@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 16:12:42 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:40:36 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 		flag = 2;
 	while (str[i] && is_word(str[i], flag))
 		if (i++ - 1 >= 0 && flag == 2
-			&& (str[i] == ' ' && is_quote(str[i - 1])))
+			&& ((str[i] == ' ' && is_quote(str[i - 1]))
+			|| (i > quote_close(str) && str[i] == ' ')))
 			break ;
 	(*token) = token_add((*token),
 			token_create(str, i, lex->index++, lex->id), NULL);

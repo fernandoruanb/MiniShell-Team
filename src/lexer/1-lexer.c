@@ -6,11 +6,29 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 11:13:06 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:00:19 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	bad_char(t_token **token)
+{
+	token_clean(*token);
+		(*token) = NULL;
+	return (1);
+}
+
+static int	handle_special(char *str, t_token **token)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (str[i] == '\\' && !str[i + 1])
+			return (bad_char(token));
+	return (0);
+}
 
 static char	*get_str(char *str)
 {
@@ -61,7 +79,7 @@ t_token	*lexer(char *str, char **envp)
 	lex.word = NULL;
 	lex.envp = envp;
 	token = NULL;
-	if (!handle_quote(str, &token))
+	if (handle_special(str, &token))
 		return (NULL);
 	while (str[i])
 	{
