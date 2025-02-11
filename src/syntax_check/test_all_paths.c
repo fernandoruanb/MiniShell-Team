@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:25:07 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/11 13:45:47 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:46:59 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	test_all_paths(t_utils *data)
 		if (!data->temp)
 			return (0);
 		data->path = ft_strjoin(data->temp, data->copy_new);
-		if (!data->path)
+		if (!data->path || ft_strcmp(data->temp, data->path) == 0)
 			return (0);
 		if (access(data->path, F_OK | X_OK) == 0)
 			return (1);

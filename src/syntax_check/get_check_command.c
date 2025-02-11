@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 08:42:15 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/11 17:12:02 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:47:45 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	get_check_command(t_token *root, t_utils *data)
 		index++;
 	}
 	buffer[count] = '\0';
-	printf("BUFFER: %s\n", buffer);
 	check_copy_new(data);
 	data->copy_new = ft_strdup(buffer);
 	if (!data->copy_new)
