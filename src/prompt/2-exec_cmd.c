@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 14:32:10 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:42:48 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ void	analysis(t_data *data)
 		ft_printf("\033[38;5;214mKO\033[0m\n");
 	}
 	printf("\033[31mexit:\033[0m %d\n", data->prompt->exit_status);
-	//token_clean(data->token);
-	//clean_program(data->token, &data->utils);
+	token_clean(data->token);
+	clean_program(&data->utils);
 }
 
 void	exec_cmd(t_prompt *prompt)

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 13:36:47 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:39:38 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ int		handle_pipe(char *str, t_token **token, t_lex *lex);
 
 // syntax checker
 void	init_utils(t_utils *data);
-void	clean_program(t_token *root, t_utils *data);
+void	clean_program(t_utils *data);
 int		check_syntax(t_token *root, char **envp, t_utils *data);
 int		get_command(t_token *root, t_utils *data);
 int		final_case(t_token *root, t_utils *data);
