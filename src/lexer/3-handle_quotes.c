@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:28 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 11:18:33 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:28:25 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	handle_quote(char *str, t_token **token)
 	i = -1;
 	cnt = 0;
 	while (str[++i])
-		if (is_quote(str[i]))
+		if (is_quote(str[i]) || str[i] == '\\')
 			cnt++;
 	if (cnt % 2 != 0)
 		return (bad_quotes(token));
