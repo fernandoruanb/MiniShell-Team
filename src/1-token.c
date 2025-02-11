@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:13:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 13:17:17 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:36:00 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,30 +57,30 @@ void	token_print(t_token *token)
 	if (!token)
 		return ;
 	if (token->id == CMD)
-		printf("Token %d: %s Tipo: CMD\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m CMD\n", token->index, token->str);
 	else if (token->id == PIPE)
-		printf("Token %d: %s Tipo: PIPE\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m PIPE\n", token->index, token->str);
 	else if (token->id == REDIRECT_IN)
-		printf("Token %d: %s Tipo: REDIRECT_IN\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m REDIRECT_IN\n", token->index, token->str);
 	else if (token->id == REDIRECT_OUT)
-		printf("Token %d: %s Tipo: REDIRECT_OUT\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m REDIRECT_OUT\n", token->index, token->str);
 	else if (token->id == ARG)
-		printf("Token %d: %s Tipo: ARG\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m ARG\n", token->index, token->str);
 	else if (token->id == HEREDOC)
-		printf("Token %d: %s Tipo: HEREDOC\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m HEREDOC\n", token->index, token->str);
 	else if (token->id == APPEND)
-		printf("Token %d: %s Tipo: APPEND\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m APPEND\n", token->index, token->str);
 	else if (token->id == FD)
-		printf("Token %d: %s Tipo: FD\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m FD\n", token->index, token->str);
 	else if (token->id == LIMITER)
-		printf("Token %d: %s Tipo: LIMITER\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m LIMITER\n", token->index, token->str);
 	else if (token->id == OPERATOR_AND)
-		printf("Token %d: %s Tipo: OPERATOR_AND\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m OPERATOR_AND\n", token->index, token->str);
 	else if (token->id == OPERATOR_OR)
-		printf("Token %d: %s Tipo: OPERATOR_OR\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m OPERATOR_OR\n", token->index, token->str);
 	else if (token->id == BRACKET_O)
-		printf("Token %d: %s Tipo: BRACKET_O\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m BRACKET_O\n", token->index, token->str);
 	else if (token->id == BRACKET_C)
-		printf("Token %d: %s Tipo: BRACKET_C\n", token->index, token->str);
+		printf("\033[33mToken\033[0m %d: %s \033[33mTipo:\033[0m BRACKET_C\n", token->index, token->str);
 	token_print(token->next);
 }
