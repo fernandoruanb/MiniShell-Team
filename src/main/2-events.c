@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:32 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 10:35:29 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:42:36 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	destroy(t_data *data, char *message, int exit_code)
 			clear_split(data->prompt->cmdset);
 		free(data->prompt);
 	}
-	clean_program(data->token, &data->utils);
+	// clean_program(&data->utils);
 	set_null(data);
 	if (message)
 		printf("%s\n", message);
