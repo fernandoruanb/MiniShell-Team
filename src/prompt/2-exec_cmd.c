@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 10:58:29 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 12:10:25 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,18 @@ void	analysis(t_data *data)
 		return ;
 	}
 	data->prompt->exit_status = 0;
-	printf("exit: %d\n", data->prompt->exit_status);
+	printf("\033[31mexit:\033[0m %d\n", data->prompt->exit_status);
 	if (check_syntax(data->token, data->prompt->envp, &data->utils))
 	{
 		data->prompt->exit_status = 0;
-		ft_printf("OK\n");
+		ft_printf("\033[32mOK\033[0m\n");
 	}	
 	else if (data->token)
 	{
 		data->prompt->exit_status = 1;
-		ft_printf("KO\n");
+		ft_printf("\033[38;5;214mKO\033[0m\n");
 	}
-	printf("exit: %d\n", data->prompt->exit_status);
+	printf("\033[31mexit:\033[0m %d\n", data->prompt->exit_status);
 }
 
 void	exec_cmd(t_prompt *prompt)
