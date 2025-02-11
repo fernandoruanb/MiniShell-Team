@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:28 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 11:28:25 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:21:22 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ int	is_quote(unsigned char c)
 // 	return (1);
 // }
 
+int	special_char(char c)
+{
+	return (c == '?' || c == '$' || c == '\\' || c == '/' || is_quote(c) || c == '*');
+}
+
 static int	bad_quotes(t_token **token)
 {
 	token_clean(*token);
@@ -73,7 +78,11 @@ int	handle_quote(char *str, t_token **token)
 	i = -1;
 	cnt = 0;
 	while (str[++i])
-		if (is_quote(str[i]) || str[i] == '\\')
+		if (str[i + 1] == '\0')
+			return (1);
+	i = -1;
+	while (str[++i])
+		if (special_char(str[i]) || str[i] == '\\')
 			cnt++;
 	if (cnt % 2 != 0)
 		return (bad_quotes(token));
