@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:28 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 13:41:48 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:18:33 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_quote(unsigned char c)
 {
-	return (c == '\'' || c == '\"' || c == '\\');
+	return (c == '\'' || c == '\"');
 }
 
 // static int	make_token(t_token **token, char *str, t_lex *lex, int *i)
@@ -26,24 +26,18 @@ int	is_quote(unsigned char c)
 // 	return (*i);
 // }
 
-// int	handle_quote(char *str, t_token **token, t_lex *lex)
+// int	handle_quote2(char *str, t_token **token)
 // {
 // 	char	quote;
 // 	int		i;
 
 // 	i = 0;
-// 	if (lex->id == NONE)
-// 		lex->id = CMD;
-// 	else if (lex->id == CMD)
-// 		lex->id = ARG;
 // 	if (str[i] == '\\')
 // 		i++;
 // 	quote = str[i++];
 // 	while (str[i])
 // 		if (str[i++] == quote)
-// 			return (make_token(token, str, lex, &i));
-// 	if (str[0] == '\\')
-// 		return (make_token(token, str, lex, &i));
+// 			return (i - 1);
 // 	token_clean(*token);
 // 	(*token) = NULL;
 // 	return (-1);
@@ -78,16 +72,9 @@ int	handle_quote(char *str, t_token **token)
 
 	i = -1;
 	cnt = 0;
-	while (str[i])
-	{
-		if (str[i] == '\\')
-		{
-			i++;
-			continue ;
-		}
-		if (is_quote(str[i++]))
+	while (str[++i])
+		if (is_quote(str[i]))
 			cnt++;
-	}
 	if (cnt % 2 != 0)
 		return (bad_quotes(token));
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:04:26 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 14:11:02 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:19:36 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_ast	*ast_create(char *input, t_ast *parent)
 	new->right = NULL;
 	new->parent = parent;
 	new->cmd = get_cmd(input);
-	new->argv = get_args(input);
 	return (new);
 }
 
