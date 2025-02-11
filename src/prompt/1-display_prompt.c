@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 10:23:05 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 12:44:30 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	display_prompt(t_data *data)
 	char	*name;
 
 	name = ft_strdup("\033[1;36m<<Master of universe(mini)>>$ \033[0m");
+	if (!name)
+		return ;
 	while (1)
 	{
 		data->prompt->input = readline(name);
@@ -74,8 +76,10 @@ void	display_prompt(t_data *data)
 			return (ft_exit(name, data, NULL));
 		if (ft_strncmp(data->prompt->input, "exit", 4) == 0)
 			return (ft_exit(name, data, &data->prompt->input[5]));
-		add_history(data->prompt->input);
+		if (data->prompt->input && data->prompt->input[0] != '\0') 
+			add_history(data->prompt->input);
 		analysis(data);
 		free(data->prompt->input);
 	}
+	free(name);
 }
