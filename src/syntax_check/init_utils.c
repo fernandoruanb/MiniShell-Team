@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 08:40:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 08:56:45 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/11 13:28:30 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/11 13:28:42 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_utils(t_utils *data)
 	data->brackets_c = 0;
 	data->path = NULL;
 	data->simple_quotes = 0;
+	data->copy_new = NULL;
 	data->double_quotes = 0;
 	data->paths = NULL;
 	data->temp = NULL;

@@ -21,6 +21,7 @@ SRCS = main/2-events.c \
 		syntax_check/check_syntax.c\
 		syntax_check/get_command.c\
 		syntax_check/final_case.c\
+		syntax_check/check_copy_new.c\
 		syntax_check/check_invalid_brackets_position.c\
 		syntax_check/case_arg.c\
 		syntax_check/case_limiter.c\
