@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:08 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/30 11:48:19 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/11 12:59:59 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	handle_signal(int signal)
 {
-	if (signal == SIGINT)
-		printf("\n\033[1;36m<<Master of universe(mini)>>$ \033[0m");
+	// if (signal == SIGINT)
+	// 	printf("\n\033[1;36m<<Master of universe(mini)>>$ \033[0m");
 	if (signal == SIGQUIT)
 		return ;
 }

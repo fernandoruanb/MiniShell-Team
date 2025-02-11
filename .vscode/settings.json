@@ -4,6 +4,7 @@
 		"iostream": "cpp",
 		"minishell.h": "c",
 		"memory_resource": "c",
-		"ranges": "c"
+		"ranges": "c",
+		"typeinfo": "c"
 	}
 }
