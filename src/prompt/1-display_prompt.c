@@ -66,7 +66,7 @@ void	display_prompt(t_data *data)
 {
 	char	*name;
 
-	name = ft_strdup("\033[1;36m<<Master of universe(mini)>>$ \033[0m");
+	name = ft_strdup("<<Master of universe(mini)>>$ ");
 	//name = ft_strdup("<<Master of universe(mini)>>$ ");
 	if (!name)
 		return ;

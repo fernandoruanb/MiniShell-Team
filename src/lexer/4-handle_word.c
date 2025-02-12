@@ -87,7 +87,8 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 	int	j;
 
 	i = 0;
-	if ((is_cmd(lex->word, lex) && lex->id != FD) || lex->id == NONE)
+	if (((is_cmd(lex->word, lex) && lex->id != FD) || lex->id == NONE || ft_strncmp(lex->word, "./", 2) == 0)
+		&& ft_strcmp(lex->word, ".") != 0 && ft_strncmp(lex->word, "../", 3) != 0)
 		lex->id = CMD;
 	else if (lex->id != FD && lex->id != LIMITER && lex->id != CMD)
 		lex->id = ARG;
