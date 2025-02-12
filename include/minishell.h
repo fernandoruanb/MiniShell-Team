@@ -161,6 +161,7 @@ int		handle_quote(char *str, t_token **token);
 int		handle_pipe(char *str, t_token **token, t_lex *lex);
 int		special_char(char c);
 int		quote_close(char *str);
+int		count_quotes(char *str, t_token **token);
 
 // syntax checker
 void	init_utils(t_utils *data);
