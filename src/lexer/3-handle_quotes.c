@@ -17,14 +17,6 @@ int	is_quote(unsigned char c)
 	return (c == '\'' || c == '\"');
 }
 
-// static int	make_token(t_token **token, char *str, t_lex *lex, int *i)
-// {
-// 	(*token) = token_add((*token),
-// 			token_create(str, *i, lex->index++, lex->id), NULL);
-// 	if (lex->id == FD || lex->id == LIMITER)
-// 		lex->id = ARG;
-// 	return (*i);
-// }
 
 // int	handle_quote2(char *str, t_token **token)
 // {
@@ -81,6 +73,23 @@ int	special_char(char c)
 // 	return (1);
 // }
 
+int	quote_close(char *str)
+{
+	int		i;
+	char	quote;
+
+	if (!str)
+		return (0);
+	i = 0;
+	quote = '\0';
+	if (is_quote(str[i]))
+		quote = str[i++];
+	while (str[i++] && quote)
+		if (str[i] == quote)
+			return (i);
+	return (0);
+}
+
 int	handle_bracket(char *str, t_token **token, t_lex *lex)
 {
 	if (str[0] == '(')
@@ -91,4 +100,40 @@ int	handle_bracket(char *str, t_token **token, t_lex *lex)
 				token_create(str, 1, lex->index++, BRACKET_C), NULL);
 	lex->id = CMD;
 	return (1);
+}
+
+
+// static int	make_token(t_token **token, char *str, t_lex *lex, int *i)
+// {
+// 	(*token) = token_add((*token),
+// 			token_create(str, *i, lex->index++, lex->id), NULL);
+// 	if (lex->id == FD || lex->id == LIMITER)
+// 		lex->id = ARG;
+// 	return (*i);
+// }
+
+int	count_quotes(char *str, t_token **token)
+{
+	int	i;
+	int	cnt;
+
+	i = -1;
+	cnt = 0;
+	while (str[++i])
+	{
+		if (str[i] == '\\')
+		{
+			i++;
+			continue ;
+ 		}
+		if (is_quote(str[i]))
+			cnt++;
+	}
+	if (cnt % 2 != 0)
+	{
+		token_clean(*token);
+		(*token) = NULL;
+		return (1);
+	}
+	return (0);
 }
