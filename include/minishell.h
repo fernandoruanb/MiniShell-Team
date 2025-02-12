@@ -162,7 +162,7 @@ int		handle_pipe(char *str, t_token **token, t_lex *lex);
 int		special_char(char c);
 int		quote_close(char *str);
 int		count_quotes(char *str, t_token **token);
-
+void	get_label(t_lex *lex);
 // syntax checker
 void	init_utils(t_utils *data);
 void	clean_program(t_utils *data);
