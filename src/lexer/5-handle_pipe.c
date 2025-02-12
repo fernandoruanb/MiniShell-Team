@@ -12,29 +12,6 @@
 
 #include "minishell.h"
 
-int	quote_close(char *str)
-{
-	int		i;
-	char	quote;
-
-	i = -1;
-	quote = '\0';
-	while (str[++i])
-	{
-		if (is_quote(str[i]))
-		{
-			quote = str[i];
-			break ;
-		}
-	}
-	if (!quote)
-		return (i);
-	while (str[i])
-		if (str[i++] == quote)
-			return (i);
-	return (-1);
-}
-
 static int	handle_or(char *str, t_token **token, t_lex *lex)
 {
 	(*token) = token_add((*token),
