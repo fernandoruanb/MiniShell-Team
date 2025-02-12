@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:32:18 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 12:32:35 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:50:37 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	check_brackets(t_token *root, t_utils *data)
 	data->status = 2;
 	if (root->id == BRACKET_O && root->next != NULL
 		&& root->next->id == BRACKET_C)
-		return (show_error_fd("Void brackets", 0, data, 0));
+		return (show_error_fd("Syntax: BRACKET Error", 0, data, 0));
 	if (root->id == BRACKET_O && root->next != NULL && root->next->id == ARG)
-		return (show_error_fd("Where is the CMD in brackets?", 0, data, 0));
+		return (show_error_fd("Syntax: BRACKET Error", 0, data, 0));
 	if (root->id == BRACKET_C && root->next == NULL
 		&& data->brackets_o != data->brackets_c)
-		return (show_error_fd("Isolated BRACKET_C", 0, data, 0));
+		return (show_error_fd("Syntax: BRACKET Error", 0, data, 0));
 	return (1);
 }

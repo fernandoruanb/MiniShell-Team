@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 08:43:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 09:01:57 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:56:27 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_order_letters_quotes(t_token *root, t_utils *data)
 			index++;
 		}
 		else
-			return (show_error_fd("Invalid character", 0, data, 0));
+			return (show_error_fd("Syntax: Invalid input", 0, data, 0));
 	}
 	return (1);
 }

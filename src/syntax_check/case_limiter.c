@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:47:56 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 13:48:09 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:48:08 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	case_limiter(t_token *root, t_utils *data)
 {
 	if (data->status == 0)
-		return (show_error_fd("LIMITER is the first to appear!", 0, data, 0));
+		return (show_error_fd("Syntax: LIMITER Error", 0, data, 0));
 	data->status = 2;
 	if (root->id == LIMITER && root->previous != NULL
 		&& root->previous->id == HEREDOC
@@ -25,5 +25,5 @@ int	case_limiter(t_token *root, t_utils *data)
 		&& root->previous->id == HEREDOC
 		&& root->next == NULL)
 		return (1);
-	return (show_error_fd("Invalid LIMITER Case", 0, data, 0));
+	return (show_error_fd("Syntax: LIMITER Error", 0, data, 0));
 }

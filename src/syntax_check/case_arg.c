@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:18:58 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/10 13:32:38 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:44:32 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ int	case_arg(t_token *root, t_utils *data)
 	else if (root->id == ARG && root->previous != NULL
 		&& root->previous->id == LIMITER)
 		return (1);
-	return (show_error_fd("Invalid case of args", 0, data, 0));
+	return (show_error_fd("Syntax: ARG Error", 0, data, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:41:09 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 12:41:46 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:49:45 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	case_redirect(t_token *root, t_utils *data)
 		&& root->next->id == FD)
 		return (1);
 	if (root->id == REDIRECT_OUT && root->next == NULL)
-		return (show_error_fd("Forgot a file after red_out", 0, data, 0));
+		return (show_error_fd("Syntax: REDIRECT Error", 0, data, 0));
 	if (root->id == REDIRECT_OUT && root->next != NULL
 		&& root->next->id != FD)
-		return (show_error_fd("Forgot a file after red_out", 0, data, 0));
+		return (show_error_fd("Syntax: REDIRECT Error", 0, data, 0));
 	if (root->id == REDIRECT_OUT && root->next->id == FD)
 		return (1);
 	return (extra_redirect_cases(root, data));

@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:12:00 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 12:12:17 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:52:38 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	get_command(t_token *root, t_utils *data)
 {
 	if (final_case(root, data))
-		return (show_error_fd("Final case Error", 0, data, 0));
+		return (show_error_fd("Syntax: Invalid input", 0, data, 0));
 	if (root->id == PIPE)
 		return (case_pipe(root, data));
 	else if (root->id == LIMITER)
@@ -32,10 +32,10 @@ int	get_command(t_token *root, t_utils *data)
 	else if (root->id == CMD)
 		return (case_command(root, data));
 	else if (root->id != CMD && data->status == 0)
-		return (show_error_fd("The first argument isn't a CMD", 0, data, 0));
+		return (show_error_fd("Syntax: Invalid input", 0, data, 0));
 	if (root->next == NULL && data->brackets_o != data->brackets_c)
-		return (show_error_fd("You forgot to close brackets", 0, data, 0));
+		return (show_error_fd("Syntax: Invalid input", 0, data, 0));
 	if (root->id == ARG)
 		return (case_arg(root, data));
-	return (show_error_fd("Error", 0, data, 0));
+	return (show_error_fd("Syntax: Invalid input", 0, data, 0));
 }

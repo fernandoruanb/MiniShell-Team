@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:16:30 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 12:16:46 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:58:11 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	final_case(t_token *root, t_utils *data)
 	if (root->next == NULL && data->redirects != data->files)
 		return (1);
 	if (root->next == NULL && data->commands == 0 && data->args > 0)
-		return (show_error_fd("You put args but never a command", 1, data, 0));
+		return (0);
 	if (root->next == NULL && data->commands < data->pipes)
-		return (show_error_fd("You have so many pipes.", 1, data, 0));
+		return (0);
 	if (check_invalid_brackets_position(data))
-		return (show_error_fd("You inverted brackets", 1, data, 0));
+		return (0);
 	return (0);
 }
