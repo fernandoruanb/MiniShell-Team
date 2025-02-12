@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:57:58 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 12:58:11 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:15:47 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	show_tokens(t_token *root)
 {
-	int	index;
-
-	index = 1;
 	while (root)
 	{
 		printf("TOKEN %d\n", root->index);
