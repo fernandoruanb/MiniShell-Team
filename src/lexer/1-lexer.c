@@ -80,7 +80,10 @@ t_token	*lexer(char *str, char **envp)
 	lex.envp = envp;
 	token = NULL;
 	if (handle_special(str, &token))
+	{
+		printf("Lexer: Escape on the wrong place.\n");
 		return (NULL);
+	}
 	while (str[i])
 	{
 		if (handler(str, &i, &lex, &token) < 0)

@@ -35,6 +35,7 @@ int	handle_great(char *str, t_token **token, t_lex *lex)
 		return (handle_append(str, token, lex));
 	if (i > 2)
 	{
+		printf("Lexer: Too many great signs.\n");
 		token_clean(*token);
 		return (-1);
 	}
@@ -68,6 +69,7 @@ int	handle_less(char *str, t_token **token, t_lex *lex)
 		return (handle_heredoc(str, token, lex));
 	if (i > 2)
 	{
+		printf("Lexer: Too many less signs.\n");
 		token_clean(*token);
 		return (-1);
 	}
@@ -91,6 +93,7 @@ int	handle_and(char *str, t_token **token, t_lex *lex)
 				token_create(str, i, lex->index++, OPERATOR_AND), NULL);
 	else if (i > 2 || i < 2)
 	{
+		printf("Lexer: Invalid number of ampersands.\n");
 		token_clean(*token);
 		(*token) = NULL;
 		return (-1);

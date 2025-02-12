@@ -32,6 +32,7 @@ int	handle_pipe(char *str, t_token **token, t_lex *lex)
 		return (handle_or(str, token, lex));
 	if (i > 2)
 	{
+		printf("Lexer: Too many pipes.\n");
 		token_clean(*token);
 		return (-1);
 	}
