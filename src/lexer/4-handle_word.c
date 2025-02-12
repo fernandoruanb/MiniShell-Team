@@ -84,6 +84,7 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 {
 	int	i;
 	int	flag;
+	int	j;
 
 	i = 0;
 	if ((is_cmd(lex->word, lex) && lex->id != FD) || lex->id == NONE)
@@ -93,10 +94,11 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 	flag = 1;
 	if ((is_quote(str[i]) || str[i] == '\\'))
 		flag = 2;
+	j = quote_close(str);
 	while (str[i] && is_word(str[i], flag))
 		if (i++ - 1 >= 0 && flag == 2
 			&& ((str[i] == ' ' && is_quote(str[i - 1]))
-			|| (i > quote_close(str) && str[i] == ' ')))
+			|| (i >= j && str[i] == ' ')))
 			break ;
 	(*token) = token_add((*token),
 			token_create(str, i, lex->index++, lex->id), NULL);
