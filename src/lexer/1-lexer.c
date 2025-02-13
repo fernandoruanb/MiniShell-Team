@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 17:00:19 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:14:26 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ t_token	*lexer(char *str, char **envp)
 	t_token	*token;
 	t_lex	lex;
 
+	if (!str)
+		return (NULL);
 	i = 0;
 	lex.index = 0;
 	lex.id = NONE;

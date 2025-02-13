@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 14:42:48 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:13:35 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,26 +88,18 @@ int	child(t_prompt *prompt)
 void	analysis(t_data *data)
 {
 	data->token = lexer(data->prompt->input, data->prompt->envp);
+	data->prompt->exit_status = 2 * !data->token;
 	token_print(data->token);
+	printf("\033[31mLexer exit:\033[0m %d\n", data->prompt->exit_status);
 	if (!data->token)
-	{
-		data->prompt->exit_status = 1;
 		return ;
-	}
-	data->prompt->exit_status = 0;
-	printf("\033[31mexit:\033[0m %d\n", data->prompt->exit_status);
 	init_utils(&data->utils);
-	if (check_syntax(data->token, data->prompt->envp, &data->utils))
-	{
-		data->prompt->exit_status = 0;
+	data->prompt->exit_status = 2 * !check_syntax(data->token, data->prompt->envp, &data->utils);
+	if (!data->prompt->exit_status)
 		ft_printf("\033[32mOK\033[0m\n");
-	}	
 	else if (data->token)
-	{
-		data->prompt->exit_status = 1;
 		ft_printf("\033[38;5;214mKO\033[0m\n");
-	}
-	printf("\033[31mexit:\033[0m %d\n", data->prompt->exit_status);
+	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
 	token_clean(data->token);
 	clean_program(&data->utils);
 }
