@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 17:53:45 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:03:54 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,10 +159,10 @@ int		is_word(unsigned char c, int flag);
 int		is_quote(unsigned char c);
 int		handle_quote(char *str, t_token **token);
 int		handle_pipe(char *str, t_token **token, t_lex *lex);
-int		special_char(char c);
 int		quote_close(char *str);
-int		count_quotes(char *str, t_token **token);
 void	get_label(t_lex *lex);
+int		error_message(char *message, int __return__, t_token **token);
+
 // syntax checker
 void	init_utils(t_utils *data);
 void	clean_program(t_utils *data);

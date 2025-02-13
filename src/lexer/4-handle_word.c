@@ -6,11 +6,19 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 16:40:36 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:00:45 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	error_message(char *message, int __return__, t_token **token)
+{
+	if (message)
+		printf("%s\n", message);
+	token_clean(*token);
+	return (__return__);
+}
 
 int	is_word(unsigned char c, int flag)
 {
@@ -24,6 +32,12 @@ int	is_word(unsigned char c, int flag)
 			&& c != '<' && c != '>') && !(is_quote(c)));
 }
 
+static int	conditiontobreak(char *str, int j, int i)
+{
+	return (((i >= j && str[i] == ' ')
+			|| (j == 0 && str[i] == ' ' && is_quote(str[i - 1]))));
+}
+
 int	handle_word(char *str, t_token **token, t_lex *lex)
 {
 	int	i;
@@ -32,14 +46,10 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 
 	i = 0;
 	get_label(lex);
-	flag = 1;
-	if ((is_quote(str[i]) || str[i] == '\\'))
-		flag = 2;
+	flag = 1 + (is_quote(str[i]) || str[i] == '\\');
 	j = quote_close(str);
 	while (str[i] && is_word(str[i], flag))
-		if (i++ - 1 >= 0 && flag == 2
-			&& ((str[i] == ' ' && is_quote(str[i - 1]))
-			|| (i >= j && str[i] == ' ')))
+		if (i++ - 1 >= 0 && flag == 2 && conditiontobreak(str, j, i))
 			break ;
 	(*token) = token_add((*token),
 			token_create(str, i, lex->index++, lex->id), NULL);
