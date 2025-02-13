@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/13 11:38:35 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:14:40 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int	bad_char(t_token **token)
 {
 	token_clean(*token);
-		(*token) = NULL;
 	return (1);
 }
 
