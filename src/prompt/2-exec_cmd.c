@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/13 11:27:10 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:31:53 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void	analysis(t_data *data)
 	if (!data->token)
 		return ;
 	init_utils(&data->utils);
-	data->prompt->exit_status = 2 * !check_syntax(data->token, data->prompt->envp, &data->utils);
+	data->prompt->exit_status = 2
+		* !check_syntax(data->token, data->prompt->envp, &data->utils);
 	if (!data->prompt->exit_status)
 		ft_printf("\033[32mOK\033[0m\n");
 	else

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/13 11:20:06 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:32:04 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	display_prompt(t_data *data)
 			return (ft_exit(name, data, NULL));
 		if (ft_strncmp(data->prompt->input, "exit", 4) == 0)
 			return (ft_exit(name, data, &data->prompt->input[5]));
-		if (data->prompt->input[0] != '\0') 
+		if (data->prompt->input[0] != '\0')
 		{
 			add_history(data->prompt->input);
 			analysis(data);
