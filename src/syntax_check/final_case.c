@@ -6,11 +6,20 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:16:30 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/12 16:58:11 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:46:45 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	extra_case_cmds(t_token *root)
+{
+	if (root->id == CMD && ft_strcmp(root->str, "./") == 0)
+		return (1);
+	if (root->id == CMD && !check_quotes(root))
+		return (1);
+	return (0);
+}
 
 int	final_case(t_token *root, t_utils *data)
 {
@@ -37,5 +46,5 @@ int	final_case(t_token *root, t_utils *data)
 		return (0);
 	if (check_invalid_brackets_position(data))
 		return (0);
-	return (0);
+	return (extra_case_cmds(root));
 }

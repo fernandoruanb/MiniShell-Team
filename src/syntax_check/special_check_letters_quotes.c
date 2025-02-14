@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:48:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/13 14:31:03 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:02:16 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ int	special_check_quotes(t_token *root, t_utils *data)
 		}
 		index++;
 	}
-	printf("Simple: %d\n Double: %d\n", data->simple_quotes, data->double_quotes);
 	return (how_many_quotes(root, data));
 }

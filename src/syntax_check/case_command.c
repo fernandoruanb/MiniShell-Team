@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:21:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/12 16:45:04 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:42:14 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 static int	extra_cases_commands(t_token *root, t_utils *data)
 {
-	if ((root->id == CMD) && (exist_command(root, data)
+	if ((root->id == CMD) && root->str[0] == '.' && root->str[1] == '/')
+	{
+		return (special_check_quotes(root, data)
+			&& !check_is_directory(root, data));
+	}
+	else if ((root->id == CMD) && (exist_command(root, data)
 			|| check_absolute_path(root, data)
 			|| is_insider_quotes(root, data) || special(root, data)))
 	{
