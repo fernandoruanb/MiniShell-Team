@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:50:50 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/14 17:14:30 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/15 17:01:13 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	check_final_quotes(t_token *root)
 			if (root->str[index] == '\0')
 				return (0);
 		}
-		index++;
+		if (root->str[index] != '\'' || root->str[index] != '\"')
+			index++;
 	}
 	return (1);
 }
