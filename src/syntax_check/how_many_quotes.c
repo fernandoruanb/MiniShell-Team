@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:50:50 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/15 17:01:13 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/15 17:57:48 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ int	check_final_quotes(t_token *root)
 			if (root->str[index] == '\0')
 				return (0);
 		}
-		if (root->str[index] != '\'' || root->str[index] != '\"')
-			index++;
+		index++;
 	}
 	return (1);
 }
@@ -41,5 +40,5 @@ int	how_many_quotes(t_token *root, t_utils *data)
 		return (1);
 	if (data->simple_quotes % 2 != 0 || data->double_quotes % 2 != 0)
 		return (show_error_fd("Syntax: QUOTES Error", 0, data, 0));
-	return (1);
+	return (0);
 }
