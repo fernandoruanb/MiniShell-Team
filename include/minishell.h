@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/13 12:03:54 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:33:40 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ int		check_invalid_things(t_token *root);
 int		case_fd(t_token *root, t_utils *data);
 int		check_is_directory(t_token *root, t_utils *data);
 int		check_is_valid_fd(t_token *root, t_utils *data);
-int		is_number(t_token *root, t_utils *data);
+int		is_number(t_token *root);
 int		case_redirect(t_token *root, t_utils *data);
 int		extra_redirect_cases(t_token *root, t_utils *data);
 int		heredoc_or_append(t_token *root, t_utils *data);
@@ -216,4 +216,9 @@ int		ft_isalpha_special_2(char letter);
 int		ft_isalpha_special(char letter);
 int		check_quotes(t_token *root);
 void	check_copy_new(t_utils *data);
+int		godness_decision(int flag, t_utils *data);
+int		pipes_case(t_token *root, t_utils *data);
+int		start_case(t_token *root, t_utils *data);
+int		check_local_environment(t_token *root);
+
 #endif
