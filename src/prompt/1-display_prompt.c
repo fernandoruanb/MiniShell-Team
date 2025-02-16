@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/16 16:21:04 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/16 16:24:25 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,12 @@ void	display_prompt(t_data *data)
 				ft_export(&data->prompt->input[7], &data->export_vars);
 			else
 				ft_export(NULL, &data->export_vars);
+			t_export *last = export_last(&data->export_vars);
+			export_print(&last);
+		}
+		if (ft_strncmp(data->prompt->input, "unset", 5) == 0)
+		{
+			ft_unset(&data->export_vars, &data->prompt->input[6]);
 			t_export *last = export_last(&data->export_vars);
 			export_print(&last);
 		}
