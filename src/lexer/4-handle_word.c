@@ -26,8 +26,7 @@ int	is_word(unsigned char c, int flag)
 		return ((c != ' ' && c != '&' && c != '|' && c != '(' && c != ')'
 				&& c != '<' && c != '>'));
 	if (flag == 2)
-		return ((c != '&' && c != '|' && c != '(' && c != ')'
-				&& c != '<' && c != '>'));
+		return (1);
 	return ((c != ' ' && c != '&' && c != '|' && c != '(' && c != ')'
 			&& c != '<' && c != '>') && !(is_quote(c)));
 }
