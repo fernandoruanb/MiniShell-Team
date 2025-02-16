@@ -71,6 +71,7 @@ SRCS = main/2-events.c \
 		lexer/4.1-handle_word.c\
 		built_in/3-export.c\
 		built_in/4-unset.c\
+		built_in/6-local_var.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))

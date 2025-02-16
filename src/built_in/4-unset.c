@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:26 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/16 15:49:00 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/16 15:59:48 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_export	*search_var(t_export **var, char *name)
 	temp = *var;
 	while (temp)
 	{
-		if (strcmp(temp->name, name) == 0)
+		if (ft_strcmp(temp->name, name) == 0)
 			return (temp);
 		temp = temp->next;
 	}

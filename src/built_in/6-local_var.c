@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 15:47:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/16 15:51:30 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/16 16:05:58 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int	ft_localvar(char *input, t_localvar **var)
     len = namevalidation(input);
     if (!len)
         return (1);
-    new = calloc(sizeof(t_export), 1);
+    new = ft_calloc(sizeof(t_export), 1);
     if (!new)
         return (1);
     new->name = ft_strndup(input, len);
     new->value = get_var(&input[len + 1]);
     if (!new->name || !new->value)
         return (my_free_my_life(new->name, new->value, new, 1));
-	if (!(*var))
+	else if (!(*var))
 		*var = new;
 	else
 	{

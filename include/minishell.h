@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/16 15:51:50 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/16 16:18:42 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct s_data
 //	0-utils.c
 void		*clear_split(char **str);
 char		*ft_strndup(char *str, int n);
+int			my_free_my_life(void *s1, void *s2, void *s3, int __return__);
 
 //	1-token
 t_token		*token_create(char *str, int n, int index, t_id id);
@@ -175,6 +176,10 @@ void		export_clean(t_export **var);
 void		export_init(char **envp, t_export **var);
 int			ft_localvar(char *input, t_localvar **var);
 void		clean_locals(t_localvar	*var);
+int			namevalidation(char *input);
+char		*get_var(char *input);
+int			export_print(t_export **var);
+t_export	*export_last(t_export **var);
 
 //	lexer
 t_token		*lexer(char *str, char **envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-display_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/13 11:32:04 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 16:21:04 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,15 @@ void	display_prompt(t_data *data)
 			return (ft_exit(name, data, NULL));
 		if (ft_strncmp(data->prompt->input, "exit", 4) == 0)
 			return (ft_exit(name, data, &data->prompt->input[5]));
+		if (ft_strncmp(data->prompt->input, "export", 6) == 0)
+		{
+			if (ft_strlen(data->prompt->input) > 6)
+				ft_export(&data->prompt->input[7], &data->export_vars);
+			else
+				ft_export(NULL, &data->export_vars);
+			t_export *last = export_last(&data->export_vars);
+			export_print(&last);
+		}
 		if (data->prompt->input[0] != '\0')
 		{
 			add_history(data->prompt->input);

@@ -6,13 +6,13 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:19 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/16 13:26:45 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/16 16:18:31 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	namevalidation(char *input)
+int	namevalidation(char *input)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ static int	namevalidation(char *input)
 	return (i);
 }
 
-static char	*get_var(char *input)
+char	*get_var(char *input)
 {
 	char	*var;
 	int		i;
@@ -34,7 +34,7 @@ static char	*get_var(char *input)
 	while (input[i])
 		if (input[i++] == ' ' && !is_quote(input[0]))
 			break ;
-	var = calloc(i + 1, 1);
+	var = ft_calloc(i + 1, 1);
 	if (!var)
 		return (NULL);
 	i = 0;
@@ -48,15 +48,7 @@ static char	*get_var(char *input)
 	return (var);
 }
 
-static int	my_free_my_life(void *s1, void *s2, void *s3, int __return__)
-{
-	free(s1);
-	free(s2);
-	free(s3);
-	return (__return__);
-}
-
-static t_export	*export_last(t_export **var)
+t_export	*export_last(t_export **var)
 {
 	t_export	*temp;
 
@@ -66,6 +58,19 @@ static t_export	*export_last(t_export **var)
 	return (temp);
 }
 
+int	export_print(t_export **var)
+{
+	t_export	*temp;
+
+	temp = *var;
+	while(temp)
+	{
+		printf("declare -x %s=%s\n", temp->name, temp->value);
+		temp = temp->next;
+	}
+	return (0);
+}
+
 int	ft_export(char *input, t_export **var)
 {
 	int 		len;
@@ -73,7 +78,7 @@ int	ft_export(char *input, t_export **var)
 	t_export	*temp;
 
     if (!input)
-        return (1);
+        return (export_print(var));
     len = namevalidation(input);
     if (!len)
         return (1);
@@ -84,7 +89,7 @@ int	ft_export(char *input, t_export **var)
     new->value = get_var(&input[len + 1]);
     if (!new->name || !new->value)
         return (my_free_my_life(new->name, new->value, new, 1));
-	if (!(*var))
+	else if (!(*var))
 		*var = new;
 	else
 	{
