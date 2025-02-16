@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 15:47:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/16 16:05:58 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/16 16:30:02 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ int	ft_localvar(char *input, t_localvar **var)
 		new->prev = temp;
 	}
     return (0);
+}
+
+void	locals_print(t_localvar **var)
+{
+	t_localvar	*temp;
+
+	temp = *var;
+	while(temp)
+	{
+		printf("local: %s=%s\n", temp->name, temp->value);
+		temp = temp->next;
+	}
 }
 
 void	clean_locals(t_localvar	*var)

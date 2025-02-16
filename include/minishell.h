@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/16 16:18:42 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/16 16:28:22 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ int			namevalidation(char *input);
 char		*get_var(char *input);
 int			export_print(t_export **var);
 t_export	*export_last(t_export **var);
+void		locals_print(t_localvar **var);
 
 //	lexer
 t_token		*lexer(char *str, char **envp);
