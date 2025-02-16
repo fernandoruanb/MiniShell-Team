@@ -242,6 +242,8 @@ void	ft_unset(t_export **var, char *name)
 		temp->prev->next = temp->next;
 	if (temp->next)
 		temp->next->prev = temp->prev;
+	if (!temp->next)
+		temp->prev->next = NULL;
 	free(temp->name);
 	free(temp->value);
 	free(temp);
