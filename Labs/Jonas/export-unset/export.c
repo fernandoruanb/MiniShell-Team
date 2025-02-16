@@ -11,7 +11,17 @@ typedef struct s_export
 	char			*value;
 
 	struct s_export	*next;
+	struct s_export	*prev;
 }	t_export;
+
+typedef struct	s_var
+{
+	char			*name;
+	char			*value;
+
+	struct s_var	*next;
+	struct s_var	*prev;
+}	t_localvar;
 
 /*
 	the flag if to define if the first letter is valid
@@ -105,11 +115,63 @@ static t_export	*export_last(t_export **var)
 	return (temp);
 }
 
+static int	export_print(t_export **var)
+{
+	t_export	*temp;
+
+	temp = *var;
+	while(temp)
+	{
+		printf("declare -x %s=%s\n", temp->name, temp->value);
+		temp = temp->next;
+	}
+	return (0);
+}
+
 static int	ft_export(char *input, t_export **var)
 {
 	int 		len;
 	t_export	*new;
 	t_export	*temp;
+
+    if (!input)
+        return (export_print(var));
+    len = namevalidation(input);
+    if (!len)
+        return (1);
+    new = calloc(sizeof(t_export), 1);
+    if (!new)
+        return (1);
+    new->name = ft_strndup(input, len);
+    new->value = get_var(&input[len + 1]);
+    if (!new->name || !new->value)
+        return (my_free_my_life(new->name, new->value, new, 1));
+	if (!(*var))
+		*var = new;
+	else
+	{
+		temp = export_last(var);
+		temp->next = new;
+		new->prev = temp;
+	}
+    return (0);
+}
+
+static t_localvar	*local_last(t_localvar **var)
+{
+	t_localvar	*temp;
+
+	temp = *var;
+	while (temp && temp->next)
+		temp = temp->next;
+	return (temp);
+}
+
+static int	ft_localvar(char *input, t_localvar **var)
+{
+	int 		len;
+	t_localvar	*new;
+	t_localvar	*temp;
 
     if (!input)
         return (1);
@@ -127,8 +189,9 @@ static int	ft_export(char *input, t_export **var)
 		*var = new;
 	else
 	{
-		temp = export_last(var);
+		temp = local_last(var);
 		temp->next = new;
+		new->prev = temp;
 	}
     return (0);
 }
@@ -164,20 +227,59 @@ t_export	*search_var(t_export **var, char *name)
 	return (NULL);
 }
 
-int	main(int argc, char **argv)
+void	ft_unset(t_export **var, char *name)
+{
+	t_export	*temp;
+
+	if (!name)
+		return ;
+	temp = search_var(var, name);
+	if (!temp)
+		return ;
+	if (*var == temp)
+		*var = temp->next;
+	if (temp->prev)
+		temp->prev->next = temp->next;
+	if (temp->next)
+		temp->next->prev = temp->prev;
+	free(temp->name);
+	free(temp->value);
+	free(temp);
+}
+
+void	export_clean(t_export **var)
+{
+	while (*var)
+		ft_unset(var, (*var)->name);
+}
+
+void	export_init(char **envp, t_export **var)
+{
+	int	i;
+
+	i = -1;
+	while (envp[++i])
+		ft_export(envp[i], var);
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	t_export	*var = NULL;
 	t_export	*temp;
+	t_localvar		*temp_var = NULL;
+	int	i;
 
-	for (int i = 1; argv[i]; i++)
+	export_init(envp, &var);
+	// ft_unset(&var, "VAR");
+	if (argc == 1)
+		ft_export(NULL, &var);
+	for (i = 1; i < argc - 1; i++)
 		if (ft_export(argv[i], &var))
 			return (1);
-	temp = search_var(&var, "VAR");
-	printf("value: %s\n", temp->value);
-	while(var)
-	{
-		printf("%s = %s\n", var->name, var->value);
-		var = var->next;
-	}
+	temp = search_var(&var, "var");
+	export_print(&temp);
+	ft_localvar(argv[i], &temp_var);
+	printf("\nLocal\n%s=%s\n", temp_var->name, temp_var->value);
+	export_clean(&var);
 	return (0);
 }

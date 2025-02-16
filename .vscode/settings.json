@@ -5,6 +5,7 @@
 		"minishell.h": "c",
 		"memory_resource": "c",
 		"ranges": "c",
-		"typeinfo": "c"
+		"typeinfo": "c",
+		"string.h": "c"
 	}
 }

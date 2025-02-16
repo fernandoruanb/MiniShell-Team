@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-init.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:09:27 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/11 14:15:12 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:29:40 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int	init_data(t_data *data, char **envp)
 	data->prompt->path = NULL;
 	data->prompt->exit_status = 0;
 	data->token = NULL;
+	data->export_vars = NULL;
 	return (0);
 }

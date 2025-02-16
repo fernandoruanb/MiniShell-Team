@@ -69,6 +69,8 @@ SRCS = main/2-events.c \
 		syntax_check/ft_isalpha_special.c\
 		syntax_check/check_quotes.c\
 		lexer/4.1-handle_word.c\
+		built_in/3-export.c\
+		built_in/4-unset.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
