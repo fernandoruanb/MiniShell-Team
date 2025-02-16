@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:50:50 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/16 19:56:07 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/16 20:56:02 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,32 @@ int	check_final_quotes(t_token *root)
 	return (1);
 }
 
+static int	check_quotes_cmd_special_case(t_token *root)
+{
+	size_t	index;
+	size_t	length;
+
+	index = 0;
+	length = ft_strlen(root->str);
+	if ((root->str[0] == '\'' || root->str[0] == '\"')
+		&& (root->str[length - 1] == '\''
+			|| root->str[length - 1] == '\"'))
+	{
+		while (root->str[index] != '\0')
+		{
+			if (root->str[index] == ' '
+				|| root->str[index] == '\t')
+				return (1);
+			index++;
+		}
+	}
+	return (0);
+}
+
 int	how_many_quotes(t_token *root, t_utils *data)
 {
+	if (root->id == CMD && check_quotes_cmd_special_case(root))
+		return (0);
 	if ((root->id == CMD || root->id == ARG)
 		&& check_final_quotes(root))
 		return (1);
