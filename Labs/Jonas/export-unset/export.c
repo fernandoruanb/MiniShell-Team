@@ -196,6 +196,17 @@ static int	ft_localvar(char *input, t_localvar **var)
     return (0);
 }
 
+void	clean_locals(t_localvar	*var)
+{
+	if (!var)
+		return ;
+	if (var->next)
+		clean_locals(var->next);
+	free(var->name);
+	free(var->value);
+	free(var);
+}
+
 /*
 	input must recieve a pointer after the command
 	ex:
@@ -242,8 +253,6 @@ void	ft_unset(t_export **var, char *name)
 		temp->prev->next = temp->next;
 	if (temp->next)
 		temp->next->prev = temp->prev;
-	if (!temp->next)
-		temp->prev->next = NULL;
 	free(temp->name);
 	free(temp->value);
 	free(temp);
@@ -271,17 +280,21 @@ int	main(int argc, char **argv, char **envp)
 	t_localvar		*temp_var = NULL;
 	int	i;
 
+	i = 0;
 	export_init(envp, &var);
-	// ft_unset(&var, "VAR");
 	if (argc == 1)
 		ft_export(NULL, &var);
-	for (i = 1; i < argc - 1; i++)
-		if (ft_export(argv[i], &var))
-			return (1);
-	temp = search_var(&var, "var");
-	export_print(&temp);
-	ft_localvar(argv[i], &temp_var);
-	printf("\nLocal\n%s=%s\n", temp_var->name, temp_var->value);
+	else
+		for (i = 1; i < argc - 1; i++)
+			if (ft_export(argv[i], &var))
+				return (1);
+	export_print(&var);
+	if (argc > 1)
+	{
+		ft_localvar(argv[i], &temp_var);
+		printf("\nLocal\n%s=%s\n", temp_var->name, temp_var->value);
+		clean_locals(temp_var);
+	}
 	export_clean(&var);
 	return (0);
 }

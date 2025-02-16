@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:09:27 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/16 13:29:40 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/16 15:50:25 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	init_data(t_data *data, char **envp)
 	data->prompt->path = NULL;
 	data->prompt->exit_status = 0;
 	data->token = NULL;
-	data->export_vars = NULL;
+	data->local_vars = NULL;
+	export_init(envp, &data->export_vars);
 	return (0);
 }

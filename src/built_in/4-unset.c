@@ -6,11 +6,20 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:26 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/16 13:38:07 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/16 15:49:00 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	export_init(char **envp, t_export **var)
+{
+	int	i;
+
+	i = -1;
+	while (envp[++i])
+		ft_export(envp[i], var);
+}
 
 /*
 	the flag if to define if the first letter is valid

@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:32 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/16 13:38:27 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/16 15:52:45 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	set_null(t_data *data)
 	data->prompt = NULL;
 	data->export_vars = NULL;
 	data->token = NULL;
+	data->local_vars = NULL;
 }
 
 void	create(t_data *data, char **envp)
@@ -46,6 +47,8 @@ int	destroy(t_data *data, char *message, int exit_code)
 	}
 	if (data->export_vars)
 		export_clean(&data->export_vars);
+	if (data->local_vars)
+		clean_locals(data->local_vars);
 	// clean_program(&data->utils);
 	set_null(data);
 	if (message)

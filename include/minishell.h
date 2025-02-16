@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/16 13:37:59 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/16 15:51:50 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,22 @@ typedef struct s_export
 	struct s_export	*prev;
 }	t_export;
 
+typedef struct	s_var
+{
+	char			*name;
+	char			*value;
+
+	struct s_var	*next;
+	struct s_var	*prev;
+}	t_localvar;
+
 typedef struct s_data
 {
 	t_prompt	*prompt;
 	t_token		*token;
 	t_utils		utils;
 	t_export	*export_vars;
+	t_localvar	*local_vars;
 }	t_data;
 
 //	0-utils.c
@@ -162,6 +172,10 @@ int			ft_export(char *input, t_export **var);
 t_export	*search_var(t_export **var, char *name);
 void		ft_unset(t_export **var, char *name);
 void		export_clean(t_export **var);
+void		export_init(char **envp, t_export **var);
+int			ft_localvar(char *input, t_localvar **var);
+void		clean_locals(t_localvar	*var);
+
 //	lexer
 t_token		*lexer(char *str, char **envp);
 int			handle_bracket(char *str, t_token **token, t_lex *lex);
