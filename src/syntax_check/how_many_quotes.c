@@ -6,11 +6,37 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:50:50 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/16 20:56:02 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:41:38 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	correct_index(t_token *root, int *index, char *quote)
+{
+	if (root->str[0] == '\\')
+		*index += 2;
+	if (*index == 2)
+		return (1);
+	if (root->str[0] == '\'' || root->str[0] == '\"')
+	{
+		*quote = root->str[0];
+		*index = 1;
+		while (root->str[*index] != '\0' && root->str[*index] != *quote)
+		{
+			if (root->str[*index] == '\\')
+				(*index)++;
+			(*index)++;
+		}
+		if (root->str[*index] == '\0')
+			return (0);
+	}
+	else
+		*index = 1;
+	if (root->str[*index] == '\'' || root->str[*index] == '\"')
+		(*index)++;
+	return (1);
+}
 
 int	check_final_quotes(t_token *root)
 {
@@ -18,8 +44,8 @@ int	check_final_quotes(t_token *root)
 	char	quote;
 
 	index = 0;
-	if (root->str[0] == '\\')
-		index += 2;
+	if (!correct_index(root, &index, &quote))
+		return (0);
 	while (root->str[index] != '\0')
 	{
 		if ((root->str[index - 1] != '\\') && (root->str[index] == '\''
