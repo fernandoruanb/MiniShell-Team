@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   0-utils.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:15:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/28 11:51:14 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 16:11:58 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,12 @@ char	*ft_strndup(char *str, int n)
 		i++;
 	}
 	return (dup);
+}
+
+int	my_free_my_life(void *s1, void *s2, void *s3, int __return__)
+{
+	free(s1);
+	free(s2);
+	free(s3);
+	return (__return__);
 }

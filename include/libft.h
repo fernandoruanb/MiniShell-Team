@@ -138,6 +138,7 @@ void		str_capitalizer(char *str);
 int			ft_strcmp(const char *s1, const char *s2);
 void		*ft_double_free(void *a, void *b);
 int			free_splits(char *l, char **split1, char **split2, char **split3);
+int			ft_atoi_but_better(const char *nptr);
 int			ft_putendl_fd_1(char *message, int fd);
 int			ft_putendl_fd_0(char *message, int fd);
 

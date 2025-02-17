@@ -120,7 +120,8 @@ SRCS =  $(SRCDIR)/ft_isalpha.c\
 	$(SRCDIR)/str_capitalizer.c\
 	$(SRCDIR)/get_next_line_utils.c\
 	$(SRCDIR)/ft_strcmp.c\
-	$(SRCDIR)/ft_double_free.c
+	$(SRCDIR)/ft_double_free.c\
+	$(SRCDIR)/ft_atoi_but_better.c
 
 # BONUS SRCS
 

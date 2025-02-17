@@ -1,15 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   3-alias.c                                          :+:      :+:    :+:   */
+/*   1-converttosplit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 15:51:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/01/27 15:52:16 by jopereir         ###   ########.fr       */
+/*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
+/*   Updated: 2025/02/17 11:32:22 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_alias(void);
+
+
+char	**converttosplit(t_token **token)
+{
+	//int		len;
+
+		
+	return (NULL);
+}

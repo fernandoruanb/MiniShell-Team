@@ -1,0 +1,24 @@
+total 260
+-rw-r--r-- 1 jopereir candidate  19538 fev 13 11:09 checker.c
+-rw-r--r-- 1 jopereir candidate  19459 fev 13 11:09 checker_official.c
+drwxr-xr-x 2 jopereir candidate   4096 fev 17 10:31 include
+drwxr-xr-x 4 jopereir candidate   4096 fev 17 10:31 Labs
+drwxr-xr-x 2 jopereir candidate  12288 fev 14 13:33 libft
+-rw-r--r-- 1 jopereir candidate   3674 fev 17 10:31 Makefile
+-rwxr-xr-x 1 jopereir candidate 181624 fev 17 10:43 minishell
+-rw-r--r-- 1 jopereir candidate     90 fev 13 11:09 readline.sup
+-rw-r--r-- 1 jopereir candidate   1027 fev 13 11:09 README.md
+drwxr-xr-x 8 jopereir candidate   4096 fev 17 10:43 src
+-rw-r--r-- 1 jopereir candidate      0 fev 17  2025 text
+total 264
+-rw-r--r-- 1 jopereir candidate  19538 fev 13 11:09 checker.c
+-rw-r--r-- 1 jopereir candidate  19459 fev 13 11:09 checker_official.c
+drwxr-xr-x 2 jopereir candidate   4096 fev 17 10:31 include
+drwxr-xr-x 4 jopereir candidate   4096 fev 17 10:31 Labs
+drwxr-xr-x 2 jopereir candidate  12288 fev 14 13:33 libft
+-rw-r--r-- 1 jopereir candidate   3674 fev 17 10:31 Makefile
+-rwxr-xr-x 1 jopereir candidate 181624 fev 17 10:43 minishell
+-rw-r--r-- 1 jopereir candidate     90 fev 13 11:09 readline.sup
+-rw-r--r-- 1 jopereir candidate   1027 fev 13 11:09 README.md
+drwxr-xr-x 8 jopereir candidate   4096 fev 17 10:43 src
+-rw-r--r-- 1 jopereir candidate    681 fev 17 10:45 text
