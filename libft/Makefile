@@ -20,6 +20,8 @@ INCDIR = .
 SRCS =  $(SRCDIR)/ft_isalpha.c\
 	$(SRCDIR)/free_splits.c\
 	$(SRCDIR)/ft_isdigit.c\
+	$(SRCDIR)/ft_putendl_fd_1.c\
+	$(SRCDIR)/ft_putendl_fd_0.c\
 	$(SRCDIR)/ft_isalnum.c\
 	$(SRCDIR)/ft_isprint.c\
 	$(SRCDIR)/ft_isascii.c\

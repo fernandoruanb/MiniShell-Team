@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:46:55 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/12 16:51:27 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:50:42 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	case_pipe(t_token *root, t_utils *data)
 	if (data->status == 0)
 		return (show_error_fd("Syntax: PIPE Error", 0, data, 0));
 	data->status = 2;
+	if (root->next != NULL && root->next->id == FD && is_number(root->next))
+		return (1);
 	if (root->next != NULL && root->next->id == BRACKET_O)
 		return (1);
 	if (root->next != NULL && (root->next->id == REDIRECT_OUT

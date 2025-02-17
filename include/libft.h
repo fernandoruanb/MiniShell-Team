@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 12:41:02 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/17 11:12:18 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 09:41:51 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,7 @@ int			ft_strcmp(const char *s1, const char *s2);
 void		*ft_double_free(void *a, void *b);
 int			free_splits(char *l, char **split1, char **split2, char **split3);
 int			ft_atoi_but_better(const char *nptr);
+int			ft_putendl_fd_1(char *message, int fd);
+int			ft_putendl_fd_0(char *message, int fd);
 
 #endif /* LIBFT_H */

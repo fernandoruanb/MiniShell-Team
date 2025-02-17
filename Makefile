@@ -68,6 +68,10 @@ SRCS = main/2-events.c \
 		syntax_check/ft_isalpha_special_2.c\
 		syntax_check/ft_isalpha_special.c\
 		syntax_check/check_quotes.c\
+		syntax_check/pipes_case.c\
+		syntax_check/godness_decision.c\
+		syntax_check/start_case.c\
+		syntax_check/check_local_environment.c\
 		lexer/4.1-handle_word.c\
 		built_in/3-export.c\
 		built_in/4-unset.c\

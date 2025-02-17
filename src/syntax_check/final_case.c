@@ -6,14 +6,20 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:16:30 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/14 16:46:45 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/16 10:56:42 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	extra_case_cmds(t_token *root)
+int	extra_case_cmds(t_token *root, t_utils *data)
 {
+	if (root->next == NULL && data->commands == 0 && data->args > 0)
+		return (0);
+	if (root->next == NULL && data->commands < data->pipes)
+		return (0);
+	if (check_invalid_brackets_position(data))
+		return (0);
 	if (root->id == CMD && ft_strcmp(root->str, "./") == 0)
 		return (1);
 	if (root->id == CMD && !check_quotes(root))
@@ -38,13 +44,5 @@ int	final_case(t_token *root, t_utils *data)
 		data->index_bra_c = root->index;
 	if (root->id == BRACKET_O)
 		data->index_bra_o = root->index;
-	if (root->next == NULL && data->redirects != data->files)
-		return (1);
-	if (root->next == NULL && data->commands == 0 && data->args > 0)
-		return (0);
-	if (root->next == NULL && data->commands < data->pipes)
-		return (0);
-	if (check_invalid_brackets_position(data))
-		return (0);
-	return (extra_case_cmds(root));
+	return (extra_case_cmds(root, data));
 }
