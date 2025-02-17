@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 11:27:29 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:45:29 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ int			check_invalid_things(t_token *root);
 int			case_fd(t_token *root, t_utils *data);
 int			check_is_directory(t_token *root, t_utils *data);
 int			check_is_valid_fd(t_token *root, t_utils *data);
-int			is_number(t_token *root, t_utils *data);
+int			is_number(t_token *root);
 int			case_redirect(t_token *root, t_utils *data);
 int			extra_redirect_cases(t_token *root, t_utils *data);
 int			heredoc_or_append(t_token *root, t_utils *data);
