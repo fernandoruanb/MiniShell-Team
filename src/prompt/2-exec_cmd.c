@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/16 15:54:08 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/17 11:28:15 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	analysis(t_data *data)
 	else
 		ft_printf("\033[38;5;214mKO\033[0m\n");
 	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
+	data->prompt->cmdset = converttosplit(&data->token);
 	token_clean(data->token);
 	clean_program(&data->utils);
 }

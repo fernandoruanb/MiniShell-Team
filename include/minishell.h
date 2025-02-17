@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 10:52:06 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:27:29 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,5 +251,9 @@ int			ft_isalpha_special_2(char letter);
 int			ft_isalpha_special(char letter);
 int			check_quotes(t_token *root);
 void		check_copy_new(t_utils *data);
+
+//	Parsing
+char		**converttosplit(t_token **token);
+
 
 #endif
