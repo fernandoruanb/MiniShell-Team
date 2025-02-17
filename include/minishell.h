@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/02/17 16:03:27 by fruan-ba         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/17 16:20:45 by jopereir         ###   ########.fr       */
->>>>>>> 0ea50161bb754e4de0e3bfd8a01e1a4b57baa358
+/*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/17 16:36:56 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +99,7 @@ typedef struct s_utils
 	int			files;
 	int			commands;
 	int			pipes;
+	int			exit_status;
 	int			simple_quotes;
 	int			double_quotes;
 	char		*copy_new;
