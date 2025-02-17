@@ -6,43 +6,25 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 12:50:15 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:18:21 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	cmdlen(t_token **token)
+static int	get_arraylen(t_token **token)
 {
-	t_token	*temp;
 	int		cnt;
+	t_token	*temp;
 
+	temp = (*token);
 	cnt = 0;
-	temp = *token;
 	while (temp)
 	{
-		cnt += 1 * (temp->id == CMD || temp->id == ARG);
+		cnt += 1 * temp->id != ARG;
 		temp = temp->next;
 	}
 	return (cnt);
-}
-
-static char	**get_elements(char **split, t_token **token)
-{
-	t_token	*temp;
-	int		i;
-	
-	temp = *token;
-	i = 0;
-	while (temp && (temp->id == CMD || temp->id == ARG))
-	{
-		split[i] = ft_strdup(temp->str);
-		if (!split)
-			return (clear_split(split));
-		i++;
-		temp = temp->next;
-	}
-	return (split);
 }
 
 void	print_split(char **split)
@@ -55,14 +37,81 @@ void	print_split(char **split)
 	printf("\n");
 }
 
-char	**converttokentosplit(t_token **token)
+void	print_array(char ***array)
+{
+	int	i;
+
+	if (!array)
+		return ;
+	i = -1;
+	while (array[++i])
+		print_split(array[i]);
+}
+
+void	*clean_array(char ***array)
+{
+	int	i;
+
+	if (!array)
+		return (NULL);
+	i = -1;
+	while (array[++i])
+		clear_split(array[i]);
+	return (NULL);
+}
+
+static int	cmdlen(t_token **token)
+{
+	int		cnt;
+	t_token	*temp;
+
+	cnt = 1;
+	temp = (*token)->next;
+	while (temp && (temp->id == ARG))
+	{
+		cnt++;
+		temp = temp->next;
+	}		
+	return (cnt);
+}
+
+static char	**make_cmd(t_token **token)
 {
 	char	**split;
+	t_token	*temp;
+	int		i;
 
 	split = ft_calloc(cmdlen(token) + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
-	split = get_elements(split, token);
-	print_split(split);
+	temp = *token;
+	i = 0;
+	split[i++] = ft_strdup(temp->str);
+	temp = temp->next; 
+	while (temp && (temp->id == ARG))
+	{
+		split[i++] = ft_strdup(temp->str);
+		temp = temp->next;
+	}
 	return (split);
+}
+
+char	***converttokentosplit(t_token **token)
+{
+	char	***array;
+	int		i;
+	t_token	*temp;
+
+	array = ft_calloc(get_arraylen(token) + 1, sizeof(char **));
+	if (!array)
+		return (NULL);
+	temp = *token;
+	i = 0;
+	while (temp)
+	{
+		if (temp->id == CMD)
+			array[i++] = make_cmd(&temp);
+		temp = temp->next;
+	}
+	return (array);
 }

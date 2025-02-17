@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 12:48:12 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:18:38 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	child(t_prompt *prompt)
 
 void	analysis(t_data *data)
 {
+	char	***array;
 	data->token = lexer(data->prompt->input, data->prompt->envp);
 	data->prompt->exit_status = 2 * !data->token;
 	token_print(data->token);
@@ -101,7 +102,9 @@ void	analysis(t_data *data)
 	else
 		ft_printf("\033[38;5;214mKO\033[0m\n");
 	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
-	data->prompt->cmdset = converttokentosplit(&data->token);
+	array = converttokentosplit(&data->token);
+	print_array(array);
+	clean_array(array);
 	token_clean(data->token);
 	clean_program(&data->utils);
 }
