@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 15:16:54 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:03:27 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_utils
 	int			status;
 	int			redirects;
 	int			files;
+	int			exit_status;
 	int			commands;
 	int			pipes;
 	int			simple_quotes;
