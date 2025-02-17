@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 15:18:21 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:44:42 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ void	print_split(char **split)
 {
 	int	i;
 
-	i = -1;
-	while (split[++i])
-		printf("%s ", split[i]);
+	if (!split)
+		return ;
+	i = 0;
+	while (split[i])
+		printf("%s ", split[i++]);
 	printf("\n");
 }
 
@@ -43,9 +45,9 @@ void	print_array(char ***array)
 
 	if (!array)
 		return ;
-	i = -1;
-	while (array[++i])
-		print_split(array[i]);
+	i = 0;
+	while (array[i])
+		print_split(array[i++]);
 }
 
 void	*clean_array(char ***array)
@@ -78,21 +80,31 @@ static int	cmdlen(t_token **token)
 static char	**make_cmd(t_token **token)
 {
 	char	**split;
-	t_token	*temp;
 	int		i;
 
 	split = ft_calloc(cmdlen(token) + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
-	temp = *token;
 	i = 0;
-	split[i++] = ft_strdup(temp->str);
-	temp = temp->next; 
-	while (temp && (temp->id == ARG))
+	split[i++] = ft_strdup((*token)->str);
+	(*token) = (*token)->next; 
+	while ((*token) && (*token)->id == ARG)
 	{
-		split[i++] = ft_strdup(temp->str);
-		temp = temp->next;
+		split[i++] = ft_strdup((*token)->str);
+		(*token) = (*token)->next;
 	}
+	return (split);
+}
+
+char	**make_op(t_token **token)
+{
+	char	**split;
+
+	split = ft_calloc(2, sizeof(char *));
+	if (!split)
+		return (NULL);
+	split[0] = ft_strdup((*token)->str);
+	(*token) = (*token)->next;
 	return (split);
 }
 
@@ -111,7 +123,9 @@ char	***converttokentosplit(t_token **token)
 	{
 		if (temp->id == CMD)
 			array[i++] = make_cmd(&temp);
-		temp = temp->next;
+		else
+			array[i++] = make_op(&temp);
 	}
+	array[i] = NULL;
 	return (array);
 }
