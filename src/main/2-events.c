@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-events.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:32 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/16 15:52:45 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/17 13:08:37 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	destroy(t_data *data, char *message, int exit_code)
 		export_clean(&data->export_vars);
 	if (data->local_vars)
 		clean_locals(data->local_vars);
-	// clean_program(&data->utils);
 	set_null(data);
 	if (message)
 		printf("%s\n", message);
