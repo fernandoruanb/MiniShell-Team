@@ -3,15 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< HEAD
-/*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 17:13:20 by jopereir         ###   ########.fr       */
-=======
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/17 16:36:56 by fruan-ba         ###   ########.fr       */
->>>>>>> ad29e8ac765b78a4decb94b3dc1dfdf4812e8a04
+/*   Updated: 2025/02/17 17:58:53 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +30,10 @@
 # include <termios.h>
 # include <termcap.h>
 # include <readline/history.h>
+
+# define BLUE "\033[0;36m"
+# define YELLOW "\033[33m"
+# define RESET	"\033[0m"
 
 typedef struct s_ast
 {
