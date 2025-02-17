@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/17 16:36:56 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:58:53 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 # include <termios.h>
 # include <termcap.h>
 # include <readline/history.h>
+
+# define BLUE "\033[0;36m"
+# define YELLOW "\033[33m"
+# define RESET	"\033[0m"
 
 typedef struct s_ast
 {
@@ -315,5 +319,6 @@ char		***converttokentosplit(t_token **token);
 void		print_array(char ***array);
 void		print_split(char **split);
 void		*clean_array(char ***array);
+int			parser(t_token **token);
 
 #endif

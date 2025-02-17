@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 16:22:22 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:48:08 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static char	**make_cmd(t_token **token)
 	char	**split;
 	int		i;
 
+	if (!(*token))
+		return (NULL);
 	split = ft_calloc(cmdlen(token) + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
@@ -65,6 +67,8 @@ char	**make_op(t_token **token)
 {
 	char	**split;
 
+	if (!(*token))
+		return (NULL);
 	split = ft_calloc(2, sizeof(char *));
 	if (!split)
 		return (NULL);
@@ -79,6 +83,8 @@ char	***converttokentosplit(t_token **token)
 	int		i;
 	t_token	*temp;
 
+	if (!(*token))
+		return (NULL);
 	array = ft_calloc(get_arraylen(token) + 1, sizeof(char **));
 	if (!array)
 		return (NULL);
@@ -87,9 +93,10 @@ char	***converttokentosplit(t_token **token)
 	while (temp)
 	{
 		if (temp->id == CMD)
-			array[i++] = make_cmd(&temp);
+			array[i] = make_cmd(&temp);
 		else
-			array[i++] = make_op(&temp);
+			array[i] = make_op(&temp);
+		i++;
 	}
 	array[i] = NULL;
 	return (array);

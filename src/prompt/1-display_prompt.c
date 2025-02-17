@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 12:14:55 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:02:55 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	display_prompt(t_data *data)
 	int		space;
 
 	space = 0;
-	name = ft_strdup("<<\033[0;36mMaster of universe(mini)\033[0m>>$ ");
+	name = ft_strdup(BLUE"Master of universe(mini)$ "RESET);
 	//name = ft_strdup("<<Master of universe(mini)>>$ ");
 	if (!name)
 		return ;
