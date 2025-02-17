@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   how_many_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 13:03:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/17 13:07:18 by jopereir         ###   ########.fr       */
+/*   Created: 2025/02/17 13:27:16 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/17 13:27:28 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	correct_index(t_token *root, int *index, char *quote)
 {
 	if (root->str[0] == '\\')
-		*index += 2;
+		*index = 2;
 	if (*index == 2)
 		return (1);
 	if (root->str[0] == '\'' || root->str[0] == '\"')
 	{
 		*quote = root->str[0];
-		*index = 1;
+		(*index)++;
 		while (root->str[*index] != '\0' && root->str[*index] != *quote)
 		{
 			if (root->str[*index] == '\\')
@@ -32,7 +32,10 @@ int	correct_index(t_token *root, int *index, char *quote)
 			return (0);
 	}
 	else
+	{
 		*index = 1;
+		return (1);
+	}
 	if (root->str[*index] == '\'' || root->str[*index] == '\"')
 		(*index)++;
 	return (1);
@@ -48,7 +51,7 @@ int	check_final_quotes(t_token *root)
 		return (0);
 	while (root->str[index] != '\0')
 	{
-		if ((root->str[index + 1] && root->str[index] != '\\') && (root->str[index + 1] == '\''
+		if (root->str[index - 1] != '\\' && (root->str[index] == '\''
 			|| root->str[index] == '\"'))
 		{
 			quote = root->str[index];
