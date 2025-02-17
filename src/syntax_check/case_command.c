@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:21:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/16 18:33:23 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:15:39 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	check_file_descriptor(t_token *root, char *file)
 	return (0);
 }
 
-static int	escaping_case(t_token *root)
+static int	escaping_case(t_token *root, t_utils *data)
 {
 	int	index;
 
@@ -52,7 +52,10 @@ static int	escaping_case(t_token *root)
 	{
 		if (root->str[index] == '\\' && (root->str[index + 1] == '\''
 				|| root->str[index + 1] == '\"'))
-			return (1);
+		{
+			if (!pipes_case(root, data) && !start_case(root, data))
+				return (1);
+		}
 		index++;
 	}
 	return (0);
@@ -88,7 +91,7 @@ int	case_command(t_token *root, t_utils *data)
 	if ((root->id == CMD && data->status > 1) && (exist_command(root, data)
 			|| check_absolute_path(root, data)))
 		return (decrement_status(data));
-	else if (escaping_case(root))
+	else if (escaping_case(root, data))
 		return (show_error_fd("Syntax Error: CMD Error", 0, data, 0));
 	else if (case_builtins(root) || is_environment(root)
 		|| is_insider_quotes(root, data) || special(root, data))
