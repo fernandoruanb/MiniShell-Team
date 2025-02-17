@@ -6,7 +6,11 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/02/17 16:03:27 by fruan-ba         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/17 16:20:45 by jopereir         ###   ########.fr       */
+>>>>>>> 0ea50161bb754e4de0e3bfd8a01e1a4b57baa358
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +101,6 @@ typedef struct s_utils
 	int			status;
 	int			redirects;
 	int			files;
-	int			exit_status;
 	int			commands;
 	int			pipes;
 	int			simple_quotes;
@@ -312,7 +315,8 @@ int			check_local_environment(t_token *root);
 
 //	Parsing
 char		***converttokentosplit(t_token **token);
-void	print_array(char ***array);
-void	print_split(char **split);
-void	*clean_array(char ***array);
+void		print_array(char ***array);
+void		print_split(char **split);
+void		*clean_array(char ***array);
+
 #endif
