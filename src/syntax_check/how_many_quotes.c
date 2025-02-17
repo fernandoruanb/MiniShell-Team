@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   how_many_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:50:50 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/16 20:56:02 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:30:16 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	check_final_quotes(t_token *root)
 	int		index;
 	char	quote;
 
-	index = 0;
+	index = -1;
 	if (root->str[0] == '\\')
 		index += 2;
-	while (root->str[index] != '\0')
+	while (root->str[++index] != '\0')
 	{
-		if ((root->str[index - 1] != '\\') && (root->str[index] == '\''
-				|| root->str[index] == '\"'))
+		if ((root->str[index + 1] && root->str[index] != '\\') && (root->str[index + 1] == '\''
+			|| root->str[index] == '\"'))
 		{
 			quote = root->str[index];
 			index++;
@@ -36,7 +36,6 @@ int	check_final_quotes(t_token *root)
 			if (root->str[index] == '\0')
 				return (0);
 		}
-		index++;
 	}
 	return (1);
 }

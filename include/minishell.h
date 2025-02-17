@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 12:00:38 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:47:49 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,6 +310,6 @@ int			start_case(t_token *root, t_utils *data);
 int			check_local_environment(t_token *root);
 
 //	Parsing
-char		**converttosplit(t_token **token);
+char		**converttokentosplit(t_token **token);
 
 #endif

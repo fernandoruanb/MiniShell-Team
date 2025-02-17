@@ -1,34 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   2-exit.c                                           :+:      :+:    :+:   */
+/*   camel_to_snake.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 11:47:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 12:15:02 by jopereir         ###   ########.fr       */
+/*   Created: 2025/02/17 12:20:22 by jopereir          #+#    #+#             */
+/*   Updated: 2025/02/17 12:31:00 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stdio.h>
 
-static int	is_all_num(char *str)
+int	ft_isupper(char c)
 {
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		if (!ft_isdigit(str[i]))
-			return (0);
-	return (1);
+	return (c >= 'A' && c <= 'Z');
 }
 
-void	ft_exit(char *name, t_data *data, char *exit_status)
+void	camel_to_snake(char *str)
 {
-	rl_clear_history();
-	free(name);
-	data->prompt->exit_status = 0;
-	if (exit_status && is_all_num(exit_status))
-		destroy(data, "Exit", ft_atoi(exit_status));
-	destroy(data, "Exit", data->prompt->exit_status);
+	int		i;
+	int		convert;
+	char	*temp;
+
+	temp = str;
+	i = -1;
+	convert = 0;
+	while (temp[++i])
+	{
+		convert = ft_isupper(temp[i]) * 32;
+		if (convert)
+			printf("_");
+		printf("%c", temp[i] + convert);
+	}	
+	printf("\n");
+}
+
+int	main(int argc, char **argv)
+{
+	if (argc != 2)
+		return (1);
+	camel_to_snake(argv[1]);
+	return (0);
 }

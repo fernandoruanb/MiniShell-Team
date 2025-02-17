@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 11:28:15 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:48:12 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	analysis(t_data *data)
 	else
 		ft_printf("\033[38;5;214mKO\033[0m\n");
 	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
-	data->prompt->cmdset = converttosplit(&data->token);
+	data->prompt->cmdset = converttokentosplit(&data->token);
 	token_clean(data->token);
 	clean_program(&data->utils);
 }

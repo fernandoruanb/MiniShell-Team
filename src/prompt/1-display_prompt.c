@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 10:42:19 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:14:55 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	display_prompt(t_data *data)
 			analysis(data);
 		}
 		free(data->prompt->input);
+		data->prompt->input = NULL;
 	}
 	free(name);
 }
