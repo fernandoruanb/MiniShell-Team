@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   0-utils.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:15:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/16 16:11:58 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/17 11:59:54 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,14 @@ int	my_free_my_life(void *s1, void *s2, void *s3, int __return__)
 	free(s2);
 	free(s3);
 	return (__return__);
+}
+
+int	splitlen(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+		i++;
+	return (i);
 }

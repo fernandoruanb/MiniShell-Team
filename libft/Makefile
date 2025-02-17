@@ -121,7 +121,8 @@ SRCS =  $(SRCDIR)/ft_isalpha.c\
 	$(SRCDIR)/get_next_line_utils.c\
 	$(SRCDIR)/ft_strcmp.c\
 	$(SRCDIR)/ft_double_free.c\
-	$(SRCDIR)/ft_atoi_but_better.c
+	$(SRCDIR)/ft_atoi_but_better.c\
+	$(SRCDIR)/ft_quick_sort.c
 
 # BONUS SRCS
 

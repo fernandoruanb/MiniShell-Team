@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4-unset.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:26 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/16 15:59:48 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/17 12:05:24 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	export_init(char **envp, t_export **var)
 {
 	int	i;
 
+	ft_quicksort(envp, 0, splitlen(envp) - 1);
 	i = -1;
 	while (envp[++i])
 		ft_export(envp[i], var);
@@ -52,7 +53,9 @@ t_export	*search_var(t_export **var, char *name)
 void	ft_unset(t_export **var, char *name)
 {
 	t_export	*temp;
-
+/*
+	unset deve liberar variaveis locais
+*/
 	if (!name)
 		return ;
 	temp = search_var(var, name);
