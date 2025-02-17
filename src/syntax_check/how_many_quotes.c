@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   how_many_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 12:50:50 by fruan-ba          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/02/17 12:30:16 by jopereir         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/17 12:41:38 by fruan-ba         ###   ########.fr       */
->>>>>>> f3e62c3120b058ffc9dd0fc740ff5e785a918367
+/*   Created: 2025/02/17 13:03:40 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/17 13:04:20 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +43,14 @@ int	check_final_quotes(t_token *root)
 	int		index;
 	char	quote;
 
-<<<<<<< HEAD
 	index = -1;
 	if (root->str[0] == '\\')
 		index += 2;
 	while (root->str[++index] != '\0')
-=======
 	index = 0;
 	if (!correct_index(root, &index, &quote))
 		return (0);
 	while (root->str[index] != '\0')
->>>>>>> f3e62c3120b058ffc9dd0fc740ff5e785a918367
 	{
 		if ((root->str[index + 1] && root->str[index] != '\\') && (root->str[index + 1] == '\''
 			|| root->str[index] == '\"'))
