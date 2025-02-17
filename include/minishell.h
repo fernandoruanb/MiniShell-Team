@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/16 16:28:22 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/17 10:34:36 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void		exec_cmd(t_prompt *prompt);
 int			child(t_prompt *prompt);
 void		display_prompt(t_data *data);
 void		analysis(t_data *data);
+
 //	built_in/
 void		ft_cd(char *input);
 void		ft_echo(t_prompt *prompt);
