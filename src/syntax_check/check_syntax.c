@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:11:23 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/15 20:09:28 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:23:54 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,19 @@ int	check_syntax(t_token *root, char **envp, t_utils *data)
 	int	flag;
 
 	if (!check_brackets_start(root))
-		return (show_error_fd("Syntax Error: BRACKETS", 0, data, 0));
+		return (show_error_fd("Syntax Error: BRACKETS", 0, data, 2));
 	get_paths(envp, data);
 	if (!data->paths)
 		return (0);
 	flag = 1;
-	while (root)
+	while (flag && root)
 	{
-		if (get_command(root, data))
-			root = root->next;
-		else
-		{
-			flag = 0;
-			break ;
-		}
+		flag = get_command(root, data);
+		root = root->next;
 	}
 	if (flag != 1)
 		return (0);
 	if (data->brackets_o != data->brackets_c)
-		return (show_error_fd("Syntax: BRACKET Error", 0, data, 0));
+		return (show_error_fd("Syntax: BRACKET Error", 0, data, 2));
 	return (1);
 }
