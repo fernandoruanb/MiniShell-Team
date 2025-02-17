@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:28 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/13 12:03:49 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:16:41 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,16 @@ int	handle_bracket(char *str, t_token **token, t_lex *lex)
 				token_create(str, 1, lex->index++, BRACKET_C), NULL);
 	lex->id = CMD;
 	return (1);
+}
+
+int	handle_fd(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] && ft_isdigit(str[i]))
+		i++;
+	if (str[i] == '<' || str[i] == '>')
+		return (ft_atoi_but_better(str) >= 0);
+	return (0);
 }

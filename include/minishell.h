@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:08:19 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 10:34:36 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:52:06 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ int			handle_pipe(char *str, t_token **token, t_lex *lex);
 int			quote_close(char *str);
 void		get_label(t_lex *lex);
 int			error_message(char *message, int __return__, t_token **token);
+int			handle_fd(char *str);
 
 // syntax checker
 void		init_utils(t_utils *data);

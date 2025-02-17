@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/13 12:14:40 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:52:30 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 
 	__return__ = 0;
 	lex->word = get_str(&str[*i]);
-	if ((str[*i + 1] == '>' || str[*i + 1] == '<') && ft_isdigit(str[*i]))
+	if (handle_fd(&str[*i]))
 		lex->id = FD;
 	if (is_word(str[*i], 1))
 		__return__ = handle_word(&str[*i], token, lex);
