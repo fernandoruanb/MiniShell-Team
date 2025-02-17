@@ -6,16 +6,39 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:34:42 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/16 17:06:45 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 09:34:56 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	invalid_fd(t_token *root)
+static int	check_pipes_cases_fd(t_token *root)
 {
 	t_token	*last;
 
+	last = root;
+	while (last->previous)
+	{
+		if (last->id == PIPE)
+			return (1);
+		last = last->previous;
+	}
+	last = root;
+	while (last->next)
+	{
+		if (last->id == PIPE)
+			return (1);
+		last = last->next;
+	}
+	return (0);
+}
+
+static int	invalid_fd(t_token *root)
+{
+	t_token	*last;
+
+	if (check_pipes_cases_fd(root))
+		return (0);
 	last = root;
 	if (last->previous)
 		last = last->previous;
