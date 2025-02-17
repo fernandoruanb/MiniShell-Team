@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:25:45 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/11 16:59:29 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:21:33 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_absolute_path_quotes(t_utils *data)
 {
-	if (access(data->copy_new, F_OK | X_OK) == 0)
+	if (access(data->copy_new, F_OK) == 0)
 		return (1);
 	return (0);
 }
