@@ -52,7 +52,7 @@ int	check_final_quotes(t_token *root)
 	while (root->str[index] != '\0')
 	{
 		if (root->str[index - 1] != '\\' && (root->str[index] == '\''
-			|| root->str[index] == '\"'))
+				|| root->str[index] == '\"'))
 		{
 			quote = root->str[index];
 			index++;

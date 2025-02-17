@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:54:22 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 12:54:44 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:07:25 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_absolute_path(t_token *root, t_utils *data)
 {
-	if (access(root->str, F_OK | X_OK) == 0)
+	if (access(root->str, F_OK) == 0)
 	{
 		data->status = 1;
 		return (1);

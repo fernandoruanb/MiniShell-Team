@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:45:31 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/12 16:55:02 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:52:01 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ int	heredoc_or_append(t_token *root, t_utils *data)
 		&& root->next->id == LIMITER && root->previous != NULL
 		&& root->previous->id == CMD)
 		return (1);
-	return (show_error_fd("Syntax: HEREDOC/APPEND Error", 0, data, 0));
+	return (show_error_fd("Syntax: HEREDOC/APPEND Error", 0, data, 2));
 }

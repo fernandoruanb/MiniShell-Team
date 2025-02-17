@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 16:33:21 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:38:43 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	analysis(t_data *data)
 		ft_printf("\033[32mOK\033[0m\n");
 	else
 		ft_printf("\033[38;5;214mKO\033[0m\n");
-	//data->prompt->exit_status = data->utils.status;
+	data->prompt->exit_status = data->utils.exit_status;
 	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
 	array = converttokentosplit(&data->token);
 	print_array(array);

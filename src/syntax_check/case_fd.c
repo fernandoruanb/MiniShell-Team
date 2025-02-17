@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:34:42 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/17 09:34:56 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:26:42 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	check_pipes_cases_fd(t_token *root)
 	while (last->previous)
 	{
 		if (last->id == PIPE)
-			return (1);
+			break ;
 		last = last->previous;
 	}
 	last = root;
@@ -33,7 +33,7 @@ static int	check_pipes_cases_fd(t_token *root)
 	return (0);
 }
 
-static int	invalid_fd(t_token *root)
+static int	invalid_fd(t_token *root, t_utils *data)
 {
 	t_token	*last;
 
@@ -44,7 +44,8 @@ static int	invalid_fd(t_token *root)
 		last = last->previous;
 	while (last->previous)
 	{
-		if (last->id == FD)
+		if ((last->previous != NULL) && (last->previous->id == REDIRECT_OUT
+				|| last->previous->id == APPEND) && (last->id == FD))
 		{
 			if (ft_strcmp(last->str, root->str) == 0)
 				return (0);
@@ -53,20 +54,20 @@ static int	invalid_fd(t_token *root)
 	}
 	if (root->previous != NULL && root->previous->id == REDIRECT_IN)
 		if (access(root->str, F_OK) != 0)
-			return (1);
+			return (show_error_fd("Syntax: FD Error", 1, data, 1));
 	return (0);
 }
 
 int	case_fd(t_token *root, t_utils *data)
 {
-	if (invalid_fd(root))
-		return (show_error_fd("Syntax: FD Error", 0, data, 0));
+	if (invalid_fd(root, data))
+		return (0);
 	if (is_number(root))
 		return (check_is_valid_fd(root, data));
 	if (check_is_directory(root, data))
-		return (show_error_fd("Syntax: FD Error", 0, data, 0));
+		return (show_error_fd("Syntax: FD Error", 0, data, 1));
 	if ((data->status == 0) && (!is_number(root)))
-		return (show_error_fd("Syntax: FD Error", 0, data, 0));
+		return (show_error_fd("Syntax: FD Error", 0, data, 127));
 	data->status = 2;
 	if (is_number(root) && root->next != NULL
 		&& root->next->id == REDIRECT_IN)
@@ -80,7 +81,5 @@ int	case_fd(t_token *root, t_utils *data)
 			|| root->previous->id == APPEND
 			|| root->previous->id == REDIRECT_IN))
 		return (1);
-	else if (root->previous != NULL && root->previous->id == ARG)
-		return (1);
-	return (show_error_fd("Syntax: FD Error", 0, data, 0));
+	return (show_error_fd("Syntax: FD Error", 0, data, 127));
 }

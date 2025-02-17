@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:21:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/17 15:15:39 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:13:46 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ static int	check_file_descriptor(t_token *root, char *file)
 		last = last->previous;
 	while (last->next)
 	{
-		if (last->id == FD && (ft_strcmp(last->str, file) == 0))
+		if (last->previous != NULL && last->previous->id != REDIRECT_IN
+			&& last->previous->id != HEREDOC && last->id == FD
+			&& (ft_strcmp(last->str, file) == 0))
 			return (1);
 		last = last->next;
 	}
@@ -92,7 +94,7 @@ int	case_command(t_token *root, t_utils *data)
 			|| check_absolute_path(root, data)))
 		return (decrement_status(data));
 	else if (escaping_case(root, data))
-		return (show_error_fd("Syntax Error: CMD Error", 0, data, 0));
+		return (show_error_fd("Syntax Error: CMD Error", 0, data, 127));
 	else if (case_builtins(root) || is_environment(root)
 		|| is_insider_quotes(root, data) || special(root, data))
 	{
@@ -109,8 +111,8 @@ int	case_command(t_token *root, t_utils *data)
 		&& root->next->id == PIPE)
 		return (1);
 	else if (root->id == CMD && data->status == 1)
-		return (show_error_fd("Syntax: CMD Error", 0, data, 0));
+		return (show_error_fd("Syntax: CMD Error", 0, data, 1));
 	else if (extra_cases_commands(root, data))
 		return (1);
-	return (show_error_fd("Syntax: CMD Error", 0, data, 0));
+	return (show_error_fd("Syntax: CMD Error", 0, data, 127));
 }

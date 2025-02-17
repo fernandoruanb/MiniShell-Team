@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:18:58 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/16 15:34:33 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:45:13 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	case_arg(t_token *root, t_utils *data)
 {
 	if (!special_check_quotes(root, data))
-		return (0);
+		return (show_error_fd("Syntax Error: QUOTES", 0, data, 2));
 	if (root->id == ARG && data->status == 1)
 		return (1);
 	else if (root->id == ARG && root->previous != NULL

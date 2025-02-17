@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:53:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/07 12:54:02 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:49:44 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	exist_command(t_token *root, t_utils *data)
 		get_full_path(root, index, data);
 		if (!data->path)
 			return (0);
-		if (access(data->path, F_OK | X_OK) == 0)
+		if (access(data->path, F_OK) == 0)
 		{
 			data->status = 1;
 			return (1);
