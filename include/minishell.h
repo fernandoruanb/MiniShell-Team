@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/18 11:48:11 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:03:33 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ char		*get_var(char *input);
 int			export_print(t_export **var);
 t_export	*export_last(t_export **var);
 void		locals_print(t_localvar **var);
+t_localvar	*search_locals(t_localvar **var, char *name);
 
 //	lexer
 t_token		*lexer(char *str, char **envp);

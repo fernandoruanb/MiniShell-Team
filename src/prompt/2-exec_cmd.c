@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 11:48:05 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:06:50 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,22 @@
 // 	return (0);
 // }
 
+void	aplly_parser(t_token **token, t_data *data)
+{
+	t_token	*temp;
+
+	temp = *token;
+	while (temp)
+	{
+		parser(&temp, data);
+		temp = temp->next;
+	}
+}
+
 void	analysis(t_data *data)
 {
 	data->token = lexer(data->prompt->input, data->prompt->envp);
 	data->prompt->exit_status = 2 * !data->token;
-	token_print(data->token);
 	printf("\033[31mLexer exit:\033[0m %d\n", data->prompt->exit_status);
 	if (!data->token)
 		return ;
@@ -100,7 +111,8 @@ void	analysis(t_data *data)
 		ft_printf("\033[38;5;214mKO\033[0m\n");
 	data->prompt->exit_status = data->utils.exit_status;
 	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
-	parser(&data->token, data);
+	aplly_parser(&data->token, data);
+	token_print(data->token);
 	token_clean(data->token);
 	clean_program(&data->utils);
 }

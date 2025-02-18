@@ -6,6 +6,7 @@
 		"memory_resource": "c",
 		"ranges": "c",
 		"typeinfo": "c",
-		"string.h": "c"
+		"string.h": "c",
+		"array": "c"
 	}
 }

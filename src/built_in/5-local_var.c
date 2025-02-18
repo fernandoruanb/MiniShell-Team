@@ -1,17 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   6-local_var.c                                      :+:      :+:    :+:   */
+/*   5-local_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 15:47:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/16 16:30:02 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/18 14:00:36 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_localvar	*search_locals(t_localvar **var, char *name)
+{
+	t_localvar	*temp;
+
+	temp = *var;
+	while (temp)
+	{
+		if (ft_strcmp(temp->name, name) == 0)
+			return (temp);
+		temp = temp->next;
+	}
+	return (NULL);
+}
 
 static t_localvar	*local_last(t_localvar **var)
 {
