@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 17:48:08 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:38:03 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static char	**make_cmd(t_token **token)
 {
 	char	**split;
 	int		i;
+	t_token	*fd;
 
 	if (!(*token))
 		return (NULL);
@@ -53,13 +54,22 @@ static char	**make_cmd(t_token **token)
 	if (!split)
 		return (NULL);
 	i = 0;
-	split[i++] = ft_strdup((*token)->str);
-	(*token) = (*token)->next;
-	while ((*token) && (*token)->id == ARG)
+	if ((*token)->id == CMD)
 	{
 		split[i++] = ft_strdup((*token)->str);
 		(*token) = (*token)->next;
 	}
+	fd = NULL;
+	while ((*token) && (*token)->id != CMD && !is_operator((*token)->id))
+	{
+		if ((*token)->id == ARG)
+			split[i++] = ft_strdup((*token)->str);
+		else if ((*token)->id == FD)
+			fd = *token;
+		(*token) = (*token)->next;
+	}
+	if (fd)
+		(*token) = fd;
 	return (split);
 }
 
@@ -74,6 +84,9 @@ char	**make_op(t_token **token)
 		return (NULL);
 	split[0] = ft_strdup((*token)->str);
 	(*token) = (*token)->next;
+	if ((*token)->id == ARG)
+		while (*token && (*token)->id == ARG)
+			*token = (*token)->next;
 	return (split);
 }
 
@@ -85,6 +98,7 @@ char	***converttokentosplit(t_token **token)
 
 	if (!(*token))
 		return (NULL);
+	printf("%d\n", get_arraylen(token));
 	array = ft_calloc(get_arraylen(token) + 1, sizeof(char **));
 	if (!array)
 		return (NULL);

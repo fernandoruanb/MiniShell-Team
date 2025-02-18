@@ -6,11 +6,16 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:21:36 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 16:22:42 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:36:58 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_operator(t_id id)
+{
+	return (id == PIPE || id == OPERATOR_AND || id == OPERATOR_OR);
+}
 
 void	print_split(char **split)
 {
@@ -41,8 +46,8 @@ void	*clean_array(char ***array)
 
 	if (!array)
 		return (NULL);
-	i = -1;
-	while (array[++i])
-		clear_split(array[i]);
+	i = 0;
+	while (array[i])
+		clear_split(array[i++]);
 	return (NULL);
 }

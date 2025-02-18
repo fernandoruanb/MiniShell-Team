@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/17 17:58:53 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:27:27 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,5 +320,6 @@ void		print_array(char ***array);
 void		print_split(char **split);
 void		*clean_array(char ***array);
 int			parser(t_token **token);
+int			is_operator(t_id id);
 
 #endif
