@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 14:18:46 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:17:53 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,22 +106,30 @@ char	*domain_expantion(char *str, t_export **export, t_localvar **local)
 		return (str);
 	i = -1;
 	cnt = 0;
+	new = NULL;
 	while (str[++i])
 	{
 		if (str[i] == '$')
 		{
-			while (str[i] && str[i++] != ' ')
+			while (str[i] && str[i] != ' ' && str[i] != '\"')
+			{
 				cnt++;
+				i++;
+			}
 			find = ft_strndup(&str[i - cnt + 1], cnt);
 			if (search_var(export, find))
-				new = search_var(export, find)->value;
+				new = ft_strdup(search_var(export, find)->value);
 			else if (search_locals(local, find))
-				new = search_locals(local, find)->value;
+				new = ft_strdup(search_locals(local, find)->value);
 			free(find);
-			free(str);
+			if (new)
+			{
+				free(str);
+				return (new);
+			}
 		}
 	}
-	return (new);
+	return (str);
 }
 
 int	parser(t_token **token, t_data *data)
@@ -131,9 +139,9 @@ int	parser(t_token **token, t_data *data)
 	temp = *token;
 	if (find_var(temp->str))
 		temp->str = domain_expantion(temp->str, &data->export_vars, &data->local_vars);
-	else if (is_quote(temp->str[0]))
+	if (is_quote(temp->str[0]))
 		temp->str = remove_quotes(temp->str);
-	else if (find_escape(temp->str))
+	if (find_escape(temp->str))
 		temp->str = remove_escape(temp->str);
 	return (0);
 }
