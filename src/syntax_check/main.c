@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_copy_new.c                                   :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 13:32:59 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/18 16:19:22 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/18 16:15:18 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/18 16:18:32 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	check_copy_new(t_utils *data)
+int	main(int argc, char **argv, char **envp)
 {
-	if (data->new_str)
-	{
-		free(data->new_str);
-		data->new_str = NULL;
-	}
-	if (data->copy_new)
-	{
-		free(data->copy_new);
-		data->copy_new = NULL;
-	}
+	t_utils	data;
+	t_token	*root;
+
+	(void)argv;
+	if (argc < 1)
+		return (1);
+	root = NULL;
+	init_utils(&data);
+	root = create_token("\'echo\'", CMD);
+	if (!root)
+		return (1);
+	show_tokens(root);
+	if (check_syntax(root, envp, &data))
+		printf("OK\n");
+	else
+		printf("KO\n");
+	clean_program(&data);
+	return (0);
 }
+
