@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:32 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 13:08:37 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:07:25 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	destroy(t_data *data, char *message, int exit_code)
 		if (data->prompt->input)
 			free(data->prompt->input);
 		if (data->prompt->cmdset)
-			clear_split(data->prompt->cmdset);
+			(void)clean_array(data->prompt->cmdset);
 		free(data->prompt);
 	}
 	if (data->export_vars)

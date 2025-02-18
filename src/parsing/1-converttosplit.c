@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 10:38:03 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:22:42 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	get_arraylen(t_token **token)
 	cnt = 0;
 	while (temp)
 	{
-		cnt += 1 * temp->id != ARG;
+		cnt += temp->id != ARG;
 		temp = temp->next;
 	}
 	return (cnt);
@@ -54,18 +54,15 @@ static char	**make_cmd(t_token **token)
 	if (!split)
 		return (NULL);
 	i = 0;
-	if ((*token)->id == CMD)
-	{
-		split[i++] = ft_strdup((*token)->str);
-		(*token) = (*token)->next;
-	}
+	split[i++] = ft_strdup((*token)->str);
+	(*token) = (*token)->next;
 	fd = NULL;
 	while ((*token) && (*token)->id != CMD && !is_operator((*token)->id))
 	{
 		if ((*token)->id == ARG)
 			split[i++] = ft_strdup((*token)->str);
-		else if ((*token)->id == FD)
-			fd = *token;
+		else if ((*token)->id == FD || (*token)->id == LIMITER)
+			fd = (*token)->previous;
 		(*token) = (*token)->next;
 	}
 	if (fd)
@@ -84,7 +81,7 @@ char	**make_op(t_token **token)
 		return (NULL);
 	split[0] = ft_strdup((*token)->str);
 	(*token) = (*token)->next;
-	if ((*token)->id == ARG)
+	if (*token && (*token)->id == ARG)
 		while (*token && (*token)->id == ARG)
 			*token = (*token)->next;
 	return (split);
@@ -107,10 +104,9 @@ char	***converttokentosplit(t_token **token)
 	while (temp)
 	{
 		if (temp->id == CMD)
-			array[i] = make_cmd(&temp);
+			array[i++] = make_cmd(&temp);
 		else
-			array[i] = make_op(&temp);
-		i++;
+			array[i++] = make_op(&temp);
 	}
 	array[i] = NULL;
 	return (array);

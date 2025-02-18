@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 18:20:06 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:08:51 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,54 +15,54 @@
 /*
 	OBS: env[i] + 5 is for ignore "PATH=" before the paths
 */
-static	char	*find_path(char *cmd, char **env)
-{
-	int		i;
-	char	**paths;
-	char	*path;
+// static	char	*find_path(char *cmd, char **env)
+// {
+// 	int		i;
+// 	char	**paths;
+// 	char	*path;
 
-	if (!cmd)
-		return (NULL);
-	i = 0;
-	while (!ft_strnstr(env[i], "PATH", 4))
-		i++;
-	paths = ft_split(env[i] + 5, ':');
-	i = 0;
-	while (paths[i])
-	{
-		path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd);
-		if (access(path, F_OK | X_OK) == 0)
-		{
-			clear_split(paths);
-			return (path);
-		}
-		free(path);
-		i++;
-	}
-	clear_split(paths);
-	return (NULL);
-}
+// 	if (!cmd)
+// 		return (NULL);
+// 	i = 0;
+// 	while (!ft_strnstr(env[i], "PATH", 4))
+// 		i++;
+// 	paths = ft_split(env[i] + 5, ':');
+// 	i = 0;
+// 	while (paths[i])
+// 	{
+// 		path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd);
+// 		if (access(path, F_OK | X_OK) == 0)
+// 		{
+// 			clear_split(paths);
+// 			return (path);
+// 		}
+// 		free(path);
+// 		i++;
+// 	}
+// 	clear_split(paths);
+// 	return (NULL);
+// }
 
-static void	execute_proccess(t_prompt *prompt)
-{
-	if (execve(prompt->path, prompt->cmdset, prompt->envp) == -1)
-		exit(1);
-}
+// static void	execute_proccess(t_prompt *prompt)
+// {
+// 	if (execve(prompt->path, prompt->cmdset, prompt->envp) == -1)
+// 		exit(1);
+// }
 
-int	child(t_prompt *prompt)
-{
-	prompt->cmdset = ft_split(prompt->input, ' ');
-	prompt->path = find_path(prompt->cmdset[0], prompt->envp);
-	if (!prompt->path)
-		return (1);
-	prompt->pid = fork();
-	if (prompt->pid < 0)
-		return (1);
-	if (prompt->pid == 0)
-		execute_proccess(prompt);
-	waitpid(prompt->pid, &prompt->exit_status, 0);
-	return (0);
-}
+// int	child(t_prompt *prompt)
+// {
+// 	prompt->cmdset = ft_split(prompt->input, ' ');
+// 	prompt->path = find_path(prompt->cmdset[0], prompt->envp);
+// 	if (!prompt->path)
+// 		return (1);
+// 	prompt->pid = fork();
+// 	if (prompt->pid < 0)
+// 		return (1);
+// 	if (prompt->pid == 0)
+// 		execute_proccess(prompt);
+// 	waitpid(prompt->pid, &prompt->exit_status, 0);
+// 	return (0);
+// }
 
 // static int	luke_i_am_your_father(t_prompt *prompt)
 // {
@@ -100,23 +100,23 @@ void	analysis(t_data *data)
 		ft_printf("\033[38;5;214mKO\033[0m\n");
 	data->prompt->exit_status = data->utils.exit_status;
 	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
-	parser(&data->token);
+	parser(&data->token, data);
 	token_clean(data->token);
 	clean_program(&data->utils);
 }
 
-void	exec_cmd(t_prompt *prompt)
-{
-	// if (ft_strchr(prompt->input, '|'))
-	// 	if (luke_i_am_your_father(prompt))
-	// 		return ;
+// void	exec_cmd(t_prompt *prompt)
+// {
+// 	// if (ft_strchr(prompt->input, '|'))
+// 	// 	if (luke_i_am_your_father(prompt))
+// 	// 		return ;
 
-	if (ft_strncmp(prompt->input, "cd", 2) == 0)
-		ft_cd(prompt->input);
-	if (ft_strncmp(prompt->input, "echo", 4) == 0)
-		return (ft_echo(prompt));
-	if (prompt->input != NULL)
-		child(prompt);
-}
+// 	if (ft_strncmp(prompt->input, "cd", 2) == 0)
+// 		ft_cd(prompt->input);
+// 	if (ft_strncmp(prompt->input, "echo", 4) == 0)
+// 		return (ft_echo(prompt));
+// 	if (prompt->input != NULL)
+// 		child(prompt);
+// }
 
 
