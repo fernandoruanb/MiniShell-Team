@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 11:22:42 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:07:24 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static int	cmdlen(t_token **token)
 
 	cnt = 1;
 	temp = (*token)->next;
-	while (temp && (temp->id == ARG))
+	while (temp && (temp->id != CMD))
 	{
-		cnt++;
+		cnt += temp->id == ARG;
 		temp = temp->next;
 	}		
 	return (cnt);

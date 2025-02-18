@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:21:36 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 11:45:05 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:53:02 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	print_array(char ***array)
 	while (array[++i])
 	{
 		j = -1;
-		printf("%d | ", i);
+		printf(GREEN"%d | "RESET, i);
 		while (array[i][++j])
-			printf("%s[%d]\t", array[i][j], j);
+			printf("%s\033[38;5;214m[%d]\t"RESET, array[i][j], j);
 		printf("\n");
 	}
 }

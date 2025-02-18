@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 11:29:56 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:01:15 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	parser(t_token **token, t_data *data)
 
 	array = data->prompt->cmdset;
 	array = converttokentosplit(token);
-	if (!array)
+	if (!array || !*array)
 		return (1);
 	print_array(array);
 	(void)clean_array(array);

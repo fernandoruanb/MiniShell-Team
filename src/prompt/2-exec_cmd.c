@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 11:08:51 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:48:05 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	analysis(t_data *data)
 		return ;
 	init_utils(&data->utils);
 	if (check_syntax(data->token, data->prompt->envp, &data->utils))
-		ft_printf("\033[32mOK\033[0m\n");
+		ft_printf(GREEN"OK\n"RESET);
 	else
 		ft_printf("\033[38;5;214mKO\033[0m\n");
 	data->prompt->exit_status = data->utils.exit_status;
