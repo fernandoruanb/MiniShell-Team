@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/19 12:58:41 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/19 13:27:21 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,8 +323,11 @@ int			my_tree_my_life(t_token *root, t_utils *data);
 char		***converttokentosplit(t_token **token);
 void		print_array(char ***array);
 void		print_split(char **split);
+char		*remove_quotes(char *str);
 void		*clean_array(char ***array);
 int			parser(t_token **token, t_data *data);
 int			is_operator(t_id id);
+char		*domain_expantion(char *str, t_export **export, t_localvar **local);
+char		*remove_escape(char *str);
 
 #endif
