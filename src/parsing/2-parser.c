@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-parser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 15:17:53 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:41:53 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,40 @@
 // 	return (0);	
 // }
 
+static int	get_nonquoteslen(char *str)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (str[i])
+	{
+		len += !is_quote(str[i]);
+		i += 1 + (str[i] == '\\');
+	}
+	return (len);
+}
+
 static char	*remove_quotes(char *str)
 {
 	int		i;
+	int		j;
 	char	*new;
 
 	if (!str)
 		return (NULL);
-	i = 1;
-	while (str[i] && !is_quote(str[i]))
-		i++;
-	new = ft_strndup(&str[1], i - 1);
+	new = ft_calloc (get_nonquoteslen(str) + 1, 1);
 	if (!new)
-		return (NULL);
+		return (str);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (!is_quote(str[i]))
+			new[j++] = str[i];
+		i += 1 + (str[i] == '\\');
+	}
 	free(str);
 	return (new);
 }
