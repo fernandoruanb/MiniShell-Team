@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/19 12:34:09 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/19 14:06:08 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	analysis(t_data *data)
 	data->prompt->exit_status = data->utils.exit_status;
 	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
 	aplly_parser(&data->token, data);
-	my_tree_my_life(data->token, &data->utils);
+	//my_tree_my_life(data->token, &data->utils);
 	token_print(data->token);
 	token_clean(data->token);
 	clean_program(&data->utils);

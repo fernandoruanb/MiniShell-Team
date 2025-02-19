@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/19 13:48:11 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/19 14:22:42 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 // 	return (str);
 // }
 
-static char	*search_content(char *str, t_export **export, t_localvar **local, int *i)
+static char	*search_content(char *str, t_export **export, t_localvar **local, int i)
 {
 	char		*find;
 	int			j;
@@ -57,12 +57,12 @@ static char	*search_content(char *str, t_export **export, t_localvar **local, in
 	t_localvar	*temp2;
 
 	j = 0;
-	while (str[*i] && str[*i] != ' ' && str[*i] != '\"' && str[*i] != '\\')
+	while (str[i] && str[i] != ' ' && str[i] != '\"' && str[i] != '\\')
 	{
-		(*i)++;
+		i++;
 		j++;
 	}
-	find = ft_strndup(&str[*i - j + 1], j);
+	find = ft_strndup(&str[i - j + 1], j - 1);
 	if (!find)
 		return (str);
 	temp = search_var(export, find);
@@ -78,26 +78,50 @@ static char	*search_content(char *str, t_export **export, t_localvar **local, in
 	return (str);
 }
 
+static char	*complete_str(char *str, char *expand)
+{
+	int		i;
+	char	*prev;
+	char	*next;
+	char	*new;
+
+	i = 0;
+	while (str[i] && str[i] != '$')
+		i++;
+	prev = ft_strndup(str, i);
+	if (!prev)
+		return (NULL);
+	while (str[i] && str[i] != ' ' && str[i] != '\"' && str[i] != '\\')
+		i++;
+	new = ft_strjoin(prev, expand);
+	ft_double_free(prev, expand);
+	if (!new)
+		return (NULL);
+	next = ft_strdup(&str[i]);
+	prev = ft_strjoin(new, next);
+	ft_double_free(next, new);
+	return (prev);
+}
+
 char	*domain_expantion(char *str, t_export **export, t_localvar **local)
 {
 	int		i;
+	char	*expand;
 	char	*new;
 
+	printf("domain expansion!!\n");
 	if (str[0] == '\'')
 		return (str);
 	i = -1;
 	new = NULL;
+	expand = NULL;
 	while (str[++i])
-	{
 		if (str[i] == '$')
 		{
-			new = search_content(str, export, local, &i);
-			if (new)
-			{
-				free(str);
-				return (new);
-			}
+			expand = search_content(str, export, local, i);
+			if (expand)
+				new = complete_str(str, expand);
 		}
-	}
-	return (str);
+	free(str);
+	return (new);
 }
