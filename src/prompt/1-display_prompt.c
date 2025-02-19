@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-display_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 18:02:55 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:16:17 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ static int	handle_space(char *str)
 void	display_prompt(t_data *data)
 {
 	char	*name;
-	int		space;
+	// int		space;
 
-	space = 0;
+	// space = 0;
 	name = ft_strdup(BLUE"Master of universe(mini)$ "RESET);
 	//name = ft_strdup("<<Master of universe(mini)>>$ ");
 	if (!name)
