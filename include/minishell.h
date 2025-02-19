@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/19 13:56:42 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/19 16:07:09 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,6 +319,7 @@ int			check_local_environment(t_token *root);
 //	Binary Executor
 
 int			my_tree_my_life(t_token *root, t_utils *data);
+
 //	Parsing
 char		***converttokentosplit(t_token **token);
 void		print_array(char ***array);

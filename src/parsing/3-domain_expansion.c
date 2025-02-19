@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/19 14:22:42 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/19 16:07:37 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,12 @@ static char	*complete_str(char *str, char *expand)
 	while (str[i] && str[i] != ' ' && str[i] != '\"' && str[i] != '\\')
 		i++;
 	new = ft_strjoin(prev, expand);
-	ft_double_free(prev, expand);
+	(void)ft_double_free(prev, expand);
 	if (!new)
 		return (NULL);
 	next = ft_strdup(&str[i]);
 	prev = ft_strjoin(new, next);
-	ft_double_free(next, new);
+	(void)ft_double_free(next, new);
 	return (prev);
 }
 
