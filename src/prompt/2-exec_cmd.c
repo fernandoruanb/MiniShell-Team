@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 19:08:31 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:02:39 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,13 @@ void	analysis(t_data *data)
 		ft_printf(GREEN"OK\n"RESET);
 	else
 	{
+		ft_printf("\033[31mExit code:\033[0m %d\n", data->utils.exit_status);
 		ft_printf("\033[38;5;214mKO\033[0m\n");
 		return ;
 	}
 	data->prompt->exit_status = data->utils.exit_status;
 	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
-	//aplly_parser(&data->token, data);
+	aplly_parser(&data->token, data);
 	my_tree_my_life(data->token, &data->utils);
 	token_print(data->token);
 	token_clean(data->token);

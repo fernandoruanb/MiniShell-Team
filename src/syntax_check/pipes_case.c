@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 13:41:58 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/16 14:01:40 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:04:39 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	pipes_case(t_token *root, t_utils *data)
 	{
 		if (last->id == PIPE)
 		{
-			flag++;
+			flag = 2;
 			break ;
 		}
 		last = last->previous;
 	}
-	last = root;
+	/*last = root;
 	while (last->next)
 	{
 		if (last->id == PIPE)
@@ -37,6 +37,6 @@ int	pipes_case(t_token *root, t_utils *data)
 			break ;
 		}
 		last = last->next;
-	}
+	}*/
 	return (godness_decision(flag, data));
 }
