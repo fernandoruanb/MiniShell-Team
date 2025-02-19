@@ -73,11 +73,15 @@ SRCS = main/2-events.c \
 		tree_binary_executor/my_tree_my_life.c\
 		lexer/4.1-handle_word.c\
 		built_in/3-export.c\
+		built_in/3-export_utils.c\
 		built_in/4-unset.c\
 		built_in/5-local_var.c\
 		parsing/1-converttosplit.c\
 		parsing/1.5-converttosplit_utils.c\
 		parsing/2-parser.c\
+		parsing/3-domain_expansion.c\
+		parsing/4-remove_quotes.c\
+		parsing/5-remove_escape.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))

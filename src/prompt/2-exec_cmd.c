@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/19 12:28:22 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:38:40 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ void	analysis(t_data *data)
 	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
 	//aplly_parser(&data->token, data);
 	my_tree_my_life(data->token, &data->utils);
+	aplly_parser(&data->token, data);
+	//my_tree_my_life(data->token, &data->utils);
 	token_print(data->token);
 	token_clean(data->token);
 	clean_program(&data->utils);
