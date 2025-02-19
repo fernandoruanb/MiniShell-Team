@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/18 19:05:39 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:58:41 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ void		ft_exit(char *name, t_data *data, char *exit_status);
 int			valid_name(char c, int flag);
 int			ft_export(char *input, t_export **var);
 t_export	*search_var(t_export **var, char *name);
-void		ft_unset(t_export **var, char *name);
+void		ft_unset(t_export **var, t_localvar **local, char *name);
 void		export_clean(t_export **var);
 void		export_init(char **envp, t_export **var);
 int			ft_localvar(char *input, t_localvar **var);

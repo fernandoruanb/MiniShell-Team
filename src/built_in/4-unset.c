@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   4-unset.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:26 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/17 12:05:24 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:15:41 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	export_init(char **envp, t_export **var)
-{
-	int	i;
-
-	ft_quicksort(envp, 0, splitlen(envp) - 1);
-	i = -1;
-	while (envp[++i])
-		ft_export(envp[i], var);
-}
 
 /*
 	the flag if to define if the first letter is valid
@@ -50,15 +40,8 @@ t_export	*search_var(t_export **var, char *name)
 	return (NULL);
 }
 
-void	ft_unset(t_export **var, char *name)
+static void	clean_export(t_export **var, t_export *temp)
 {
-	t_export	*temp;
-/*
-	unset deve liberar variaveis locais
-*/
-	if (!name)
-		return ;
-	temp = search_var(var, name);
 	if (!temp)
 		return ;
 	if (*var == temp)
@@ -72,8 +55,32 @@ void	ft_unset(t_export **var, char *name)
 	free(temp);
 }
 
-void	export_clean(t_export **var)
+static void	clean_local(t_localvar **local, t_localvar *temp)
 {
-	while (*var)
-		ft_unset(var, (*var)->name);
+	if (!temp)
+		return ;
+	if (*local == temp)
+		*local = temp->next;
+	if (temp->prev)
+		temp->prev->next = temp->next;
+	if (temp->next)
+		temp->next->prev = temp->prev;
+	free(temp->name);
+	free(temp->value);
+	free(temp);
+}
+
+void	ft_unset(t_export **var, t_localvar **local, char *name)
+{
+	t_export	*temp;
+	t_localvar	*temp2;
+
+	if (!name)
+		return ;
+	temp = search_var(var, name);
+	if (temp)
+		return (clean_export(var, temp));
+	temp2 = search_locals(local, name);
+	if (temp2)
+		return (clean_local(local, temp2));
 }
