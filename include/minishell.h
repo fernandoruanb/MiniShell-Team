@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/20 09:12:23 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/20 10:02:18 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,5 +331,6 @@ int			is_operator(t_id id);
 char		*domain_expansion(char *str, t_export **export, t_localvar **local);
 char		*remove_escape(char *str);
 int			find_var(char *str);
+char		*expand_tilde(char *str);
 
 #endif

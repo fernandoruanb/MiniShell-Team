@@ -82,6 +82,7 @@ SRCS = main/2-events.c \
 		parsing/3-domain_expansion.c\
 		parsing/4-remove_quotes.c\
 		parsing/5-remove_escape.c\
+		parsing/6-expand_tilde.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
