@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/20 09:13:26 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/20 09:17:24 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,7 @@ char	*domain_expansion(char *str, t_export **export, t_localvar **local)
 		{
 			expand = search_content(str, export, local, &i);
 			if (expand)
-			{
-				if (new)
-					free(new);
 				new = complete_str(str, expand, export, local);
-			}
 		}
 	free(str);
 	return (new);
