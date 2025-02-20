@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/19 16:07:09 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/20 09:12:23 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,7 +328,8 @@ char		*remove_quotes(char *str);
 void		*clean_array(char ***array);
 int			parser(t_token **token, t_data *data);
 int			is_operator(t_id id);
-char		*domain_expantion(char *str, t_export **export, t_localvar **local);
+char		*domain_expansion(char *str, t_export **export, t_localvar **local);
 char		*remove_escape(char *str);
+int			find_var(char *str);
 
 #endif

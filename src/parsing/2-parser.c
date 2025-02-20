@@ -6,13 +6,13 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/19 16:16:31 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/20 09:12:12 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	find_var(char *str)
+int	find_var(char *str)
 {
 	int	i;
 
@@ -42,6 +42,8 @@ static int	find_quote(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i])
 	{
@@ -58,7 +60,7 @@ int	parser(t_token **token, t_data *data)
 
 	temp = *token;
 	if (find_var(temp->str))
-		temp->str = domain_expantion(temp->str, &data->export_vars, &data->local_vars);
+		temp->str = domain_expansion(temp->str, &data->export_vars, &data->local_vars);
 	if (find_quote(temp->str))
 		temp->str = remove_quotes(temp->str);
 	if (find_escape(temp->str))
