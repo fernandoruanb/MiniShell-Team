@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/21 13:05:40 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:37:53 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,52 +78,75 @@ static char	*search_content(char *str, t_export **export, t_localvar **local, in
 	return (NULL);
 }
 
-static char	*complete_str(char *str, char *expand, t_export **export, t_localvar **local)
+// static char	*complete_str(char *str, char *expand, t_export **export, t_localvar **local)
+// {
+// 	char	*prev;
+// 	char	*next;
+// 	char	*new;
+// 	int		i;
+
+// 	i = 0;
+// 	while (str[i] && str[i] != '$')
+// 		i++;
+// 	prev = ft_strndup(str, i);
+// 	if (!prev)
+// 		return (NULL);
+// 	while (str[i] && str[i] != ' ' && str[i] != '\"' && str[i] != '\\')
+// 		i++;
+// 	new = ft_strjoin(prev, expand);
+// 	(void)ft_double_free(prev, expand);
+// 	if (!new)
+// 		return (NULL);
+// 	next = ft_strdup(&str[i]);
+// 	prev = ft_strjoin(new, next);
+// 	(void)ft_double_free(next, new);
+// 	if (find_var(&prev[i]))
+// 		prev = domain_expansion(prev, export, local);
+// 	return (prev);
+// }
+
+static int	get_varcnt(char **str)
 {
-	char	*prev;
-	char	*next;
-	char	*new;
-	int		i;
+	int	i;
+	int	cnt;
 
 	i = 0;
-	while (str[i] && str[i] != '$')
-		i++;
-	prev = ft_strndup(str, i);
-	if (!prev)
-		return (NULL);
-	while (str[i] && str[i] != ' ' && str[i] != '\"' && str[i] != '\\')
-		i++;
-	new = ft_strjoin(prev, expand);
-	(void)ft_double_free(prev, expand);
-	if (!new)
-		return (NULL);
-	next = ft_strdup(&str[i]);
-	prev = ft_strjoin(new, next);
-	(void)ft_double_free(next, new);
-	if (find_var(&prev[i]))
-		prev = domain_expansion(prev, export, local);
-	return (prev);
+	cnt = 0;
+	while (str[i])
+		if (str[i++] == '$')
+			cnt++;
+	return (cnt);
+}
+
+static void	print_expand(char **expand)
+{
+	int	i;
+
+	i = 0;
+	while (expand[i])
+		printf("%s\n", expand[])
 }
 
 char	*domain_expansion(char *str, t_export **export, t_localvar **local)
 {
 	int		i;
-	char	*expand;
+	char	**expand;
 	char	*new;
-	int		len;
+	int		j;
 
 	if (str[0] == '\'')
 		return (str);
 	i = -1;
-	len = ft_strlen(str);
+	j = 0;
 	new = NULL;
-	expand = NULL;
-	while (++i < len)
+	expand = ft_calloc(get_varcnt(str), 1);
+	while (++i < int_ft_strlen(str))
 		if (str[i] == '$')
 		{
-			expand = search_content(str, export, local, &i);
-			if (expand)
-				new = complete_str(str, expand, export, local);
+			expand[j++] = search_content(str, export, local, &i);
+			// if (expand)
+			// 	new = complete_str(str, expand, export, local);
+			
 		}
 	free(str);
 	return (new);
