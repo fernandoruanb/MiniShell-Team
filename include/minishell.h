@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/21 12:30:47 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:07:01 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <dirent.h>
 # include <string.h>
 # include <errno.h>
+# include <fcntl.h>
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <termcap.h>
@@ -338,5 +339,15 @@ char		*expand_tilde(char *str);
 //	execution
 int			minishell(t_data *data);
 int			handle_builtin(char ***cmd, t_data *data);
+
+// HANDLE_OPERATORS
+
+void	append(char *message, char *filename);
+int	handle_pipe_op(char *cmd, int flag, char **envp);
+void	handle_red_in(char *cmd1, char *filename, int *status, char **envp);
+void	handle_red_out(char *message, char *filename);
+void	heredoc(char *limiter);
+void	operator_and(char *cmd1, char *cmd2, char **envp);
+void	operator_or(char *cmd1, char *cmd2, char **envp);
 
 #endif
