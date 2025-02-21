@@ -83,6 +83,8 @@ SRCS = main/2-events.c \
 		parsing/4-remove_quotes.c\
 		parsing/5-remove_escape.c\
 		parsing/6-expand_tilde.c\
+		execute/1-minishell.c\
+		execute/2-isbuiltin.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))

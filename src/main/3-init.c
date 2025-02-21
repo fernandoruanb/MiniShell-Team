@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:09:27 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 10:35:34 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/21 10:38:09 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	init_data(t_data *data, char **envp)
 	if (!data->prompt)
 		return (1);
 	data->prompt->envp = envp;
-	data->prompt->pid = -1;
 	data->prompt->input = NULL;
 	data->prompt->cmdset = NULL;
 	data->prompt->path = NULL;

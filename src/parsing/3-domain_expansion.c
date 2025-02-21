@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-domain_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/20 09:25:08 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/21 12:50:28 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,13 @@
 // 	return (str);
 // }
 
-static char	*search_content(char *str, t_export **export, t_localvar **local, int *i)
+static char	*is_return(t_data *data, char *find)
+{
+	free(find);
+	return (ft_strdup(ft_itoa(data->prompt->exit_status)));
+}
+
+static char	*search_content(char *str, t_data *data, int *i)
 {
 	char		*find;
 	int			j;
@@ -63,22 +69,22 @@ static char	*search_content(char *str, t_export **export, t_localvar **local, in
 		j++;
 	}
 	find = ft_strndup(&str[*i - j + 1], j - 1);
-	if (!find)
-		return (NULL);
-	temp = search_var(export, find);
+	if (!ft_strcmp(find, "?"))
+		return (is_return(data, find));
+	temp = search_var(&data->export_vars, find);
 	if (temp)
 	{
 		free(find);
 		return (ft_strdup(temp->value));
 	}
-	temp2 = search_locals(local, find);
+	temp2 = search_locals(&data->local_vars, find);
 	free(find);
 	if (temp2)
 		return (ft_strdup(temp2->value));
 	return (NULL);
 }
 
-static char	*complete_str(char *str, char *expand, t_export **export, t_localvar **local)
+static char	*complete_str(char *str, char *expand, t_data *data)
 {
 	char	*prev;
 	char	*next;
@@ -101,17 +107,18 @@ static char	*complete_str(char *str, char *expand, t_export **export, t_localvar
 	prev = ft_strjoin(new, next);
 	(void)ft_double_free(next, new);
 	if (find_var(prev))
-		prev = domain_expansion(prev, export, local);
+		prev = domain_expansion(prev, data);
 	return (prev);
 }
 
-char	*domain_expansion(char *str, t_export **export, t_localvar **local)
+char	*domain_expansion(char *str, t_data *data)
 {
 	int		i;
 	char	*expand;
 	char	*new;
 	int		len;
 
+	printf("str[0] %c\n", str[0]);
 	if (str[0] == '\'')
 		return (str);
 	i = -1;
@@ -121,9 +128,9 @@ char	*domain_expansion(char *str, t_export **export, t_localvar **local)
 	while (++i < len)
 		if (str[i] == '$')
 		{
-			expand = search_content(str, export, local, &i);
+			expand = search_content(str, data, &i);
 			if (expand)
-				new = complete_str(str, expand, export, local);
+				new = complete_str(str, expand, data);
 		}
 	free(str);
 	return (new);

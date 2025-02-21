@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 12:07:24 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:39:02 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ char	***converttokentosplit(t_token **token)
 
 	if (!(*token))
 		return (NULL);
-	printf("%d\n", get_arraylen(token));
 	array = ft_calloc(get_arraylen(token) + 1, sizeof(char **));
 	if (!array)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4-remove_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:25:35 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/19 16:14:15 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/21 12:44:30 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	*remove_quotes(char *str)
 	int		j;
 	char	*new;
 
-	printf("%d\n", get_nonquoteslen(str));
 	if (!str)
 		return (NULL);
 	new = ft_calloc (get_nonquoteslen(str) + 1, 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/20 10:02:18 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/21 12:30:47 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define BLUE "\033[0;36m"
 # define GREEN "\033[32m"
 # define YELLOW "\033[33m"
+# define RED "\033[38;5;214m"
 # define RESET	"\033[0m"
 
 typedef struct s_ast
@@ -90,7 +91,6 @@ typedef struct s_prompt
 	char	**envp;
 	char	*path;
 
-	pid_t	pid;
 	int		exit_status;
 }	t_prompt;
 
@@ -142,6 +142,9 @@ typedef struct s_data
 	t_utils		utils;
 	t_export	*export_vars;
 	t_localvar	*local_vars;
+
+	int			isPipe;
+	int			fd[2];
 }	t_data;
 
 //	0-utils.c
@@ -166,7 +169,6 @@ int			destroy(t_data *data, char *message, int exit_code);
 int			init_data(t_data *data, char **envp);
 
 //	prompt
-void		exec_cmd(t_prompt *prompt);
 int			child(t_prompt *prompt);
 void		display_prompt(t_data *data);
 void		analysis(t_data *data);
@@ -328,9 +330,13 @@ char		*remove_quotes(char *str);
 void		*clean_array(char ***array);
 int			parser(t_token **token, t_data *data);
 int			is_operator(t_id id);
-char		*domain_expansion(char *str, t_export **export, t_localvar **local);
+char		*domain_expansion(char *str, t_data *data);
 char		*remove_escape(char *str);
 int			find_var(char *str);
 char		*expand_tilde(char *str);
+
+//	execution
+int			minishell(t_data *data);
+int			handle_builtin(char ***cmd, t_data *data);
 
 #endif

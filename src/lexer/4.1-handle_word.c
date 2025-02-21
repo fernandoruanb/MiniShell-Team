@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 10:54:11 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:47:29 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ static	int	find_my_path(char *cmd, char **env)
 
 static int	is_cmd(char *str, t_lex *lex)
 {
+	struct stat	st;
+
+	if (stat(str, &st) == 0)
+        if (S_ISDIR(st.st_mode))
+            return 0;
 	if (ft_strcmp(str, "cd") == 0 || ft_strcmp(str, "export") == 0
 		|| ft_strcmp(str, "unset") == 0 || ft_strcmp(str, "pwd") == 0
 		|| ft_strcmp(str, "env") == 0 || ft_strcmp(str, "echo") == 0

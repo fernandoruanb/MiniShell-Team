@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-parser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/20 10:28:28 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/21 12:51:09 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	parser(t_token **token, t_data *data)
 	if (find_tilde(temp->str))
 		temp->str = expand_tilde(temp->str);
 	if (find_var(temp->str))
-		temp->str = domain_expansion(temp->str, &data->export_vars, &data->local_vars);
+		temp->str = domain_expansion(temp->str, data);
 	if (find_quote(temp->str))
 		temp->str = remove_quotes(temp->str);
 	if (find_escape(temp->str))
