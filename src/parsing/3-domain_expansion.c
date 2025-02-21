@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-domain_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/20 09:25:08 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/21 13:05:40 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static char	*complete_str(char *str, char *expand, t_export **export, t_localvar
 	next = ft_strdup(&str[i]);
 	prev = ft_strjoin(new, next);
 	(void)ft_double_free(next, new);
-	if (find_var(prev))
+	if (find_var(&prev[i]))
 		prev = domain_expansion(prev, export, local);
 	return (prev);
 }
