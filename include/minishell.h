@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/21 17:07:01 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:07:18 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ typedef struct s_utils
 	char		*temp;
 	char		*path;
 	char		**paths;
+	int			pipes;
+	int			*pipes_fd;
 	int			status;
 	int			redirects;
 	int			files;
