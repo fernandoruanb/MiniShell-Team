@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/22 17:16:10 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:49:14 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,15 @@ typedef struct s_utils
 	char		*temp;
 	char		*path;
 	char		**paths;
+	char		**envp;
 	int			*pipes_fd;
 	int			status;
 	int			redirects;
 	int			files;
 	int			commands;
 	int			pipes;
+	int			fd_backup;
+	int			exec_status;
 	int			exit_status;
 	int			simple_quotes;
 	int			double_quotes;
@@ -344,7 +347,7 @@ int			handle_builtin(char ***cmd, t_data *data);
 // HANDLE_OPERATORS
 
 void	append(char *message, char *filename);
-int	handle_pipe_op(char *cmd, int flag, char **envp);
+int	handle_pipe_op(char *cmd, int flag, t_utils *data);
 void	handle_red_in(char *cmd1, char *filename, int *status, char **envp);
 void	handle_red_out(char *message, char *filename);
 int    heredoc(char *cmd, char *limiter, char **envp, int *status);

@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/21 16:04:52 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:50:11 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,31 @@ void	close_descriptors(int *pipefd)
 	close(pipefd[1]);
 }
 
-void	read_mode(char **cmd, int *pipefd, char **envp, int *status)
+void	read_mode(char **cmd, int *pipefd, t_utils *data)
 {
 	int		pid;
 
-	if (dup2(pipefd[0], STDIN_FILENO) == -1)
+	if (dup2(data->fd_backup, STDIN_FILENO) == -1)
 	{
 		close_descriptors(pipefd);
 		return ;
 	}
 	close_descriptors(pipefd);
+	close(data->fd_backup);
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(cmd[0], cmd, envp) == -1)
+		if (execve(cmd[0], cmd, data->envp) == -1)
 		{
 			free_splits(NULL, cmd, NULL, NULL);
 			exit(errno);
 		}
 	}
 	free_splits(NULL, cmd, NULL, NULL);
-	waitpid(pid, status, 0);
+	waitpid(pid, &data->exec_status, 0);
 }
 
-void	write_mode(char **cmd, int *pipefd, char **envp, int *status)
+void	write_mode(char **cmd, int *pipefd, t_utils *data)
 {
 	int		pid;
 
@@ -50,25 +51,26 @@ void	write_mode(char **cmd, int *pipefd, char **envp, int *status)
 		close_descriptors(pipefd);
 		return ;
 	}
+	data->fd_backup = dup(pipefd[0]);
 	close_descriptors(pipefd);
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(cmd[0], cmd, envp) == -1)
+		if (execve(cmd[0], cmd, data->envp) == -1)
 		{
 			free_splits(NULL, cmd, NULL, NULL);
 			exit(errno);
 		}
 	}
 	free_splits(NULL, cmd, NULL, NULL);
-	waitpid(pid, status, 0);
+	waitpid(pid, &data->exec_status, 0);
 }
 
-void	write_read_mode(char **cmd, int *pipefd, char **envp, int *status)
+void	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 {
 	int	pid;
 
-	if (dup2(pipefd[0], STDIN_FILENO) == -1)
+	if (dup2(data->fd_backup, STDIN_FILENO) == -1)
 	{
 		close_descriptors(pipefd);
 		return ;
@@ -82,17 +84,17 @@ void	write_read_mode(char **cmd, int *pipefd, char **envp, int *status)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(cmd[0], cmd, envp) == -1)
+		if (execve(cmd[0], cmd, data->envp) == -1)
 		{
 			free_splits(NULL, cmd, NULL, NULL);
 			exit(errno);
 		}
 	}
 	free_splits(NULL, cmd, NULL, NULL);
-	waitpid(pid, status, 0);
+	waitpid(pid, &data->exec_status, 0);
 }
 
-int	handle_pipe_op(char *cmd, int flag, char **envp)
+int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 {
 	int		pipefd[2];
 	char	**split1;
@@ -105,15 +107,18 @@ int	handle_pipe_op(char *cmd, int flag, char **envp)
 	if (!split1)
 		return (0);
 	if (flag == 1)
-		write_mode(split1, pipefd, envp, &status);
+		write_mode(split1, pipefd, data);
 	else if (flag == 2)
-		read_mode(split1, pipefd, envp, &status);
+		read_mode(split1, pipefd, data);
 	else if (flag == 3)
-		write_read_mode(split1, pipefd, envp, &status);
+		write_read_mode(split1, pipefd, data);
 	return (1);
 }
 
 /*int	main(int argc, char **argv, char **envp)
 {
+	data->envp = envp;
+	handle_pipe_op(argv[1], 1, data->utils);
+	handle_pipe_op(argv[2], 2, data->utils);
 	return (0);
 }*/
