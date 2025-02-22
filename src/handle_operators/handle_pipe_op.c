@@ -6,19 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/22 20:03:08 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:23:20 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	close_descriptors(int *pipefd, int flag, t_utils *data)
-{
-	close(pipefd[0]);
-	close(pipefd[1]);
-	if (flag == 1)
-		close(data->fd_backup);
-}
 
 void	read_mode(char **cmd, int *pipefd, t_utils *data)
 {
@@ -69,12 +61,6 @@ void	write_mode(char **cmd, int *pipefd, t_utils *data)
 	waitpid(pid, &data->exec_status, 0);
 }
 
-void	fulfil_data_fd(int *pipefd, t_utils *data)
-{
-	close(data->fd_backup);
-	data->fd_backup = dup(pipefd[0]);
-}
-
 void	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 {
 	int	pid;
@@ -90,7 +76,6 @@ void	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 		return ;
 	}
 	fulfil_data_fd(pipefd, data);
-	close_descriptors(pipefd, 0, data);
 	pid = fork();
 	if (pid == 0)
 	{
