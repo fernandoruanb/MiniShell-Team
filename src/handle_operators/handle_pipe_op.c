@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/22 20:23:20 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/23 12:03:56 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 		read_mode(split1, pipefd, data);
 	else if (flag == 3)
 		write_read_mode(split1, pipefd, data);
+	if (flag == 2)
+		close(data->fd_backup);
 	return (1);
 }
 
@@ -116,6 +118,8 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 {
 	t_data	data;
 
+	if (argc < 3)
+		return (1);
 	data.utils.envp = envp;
 	if (handle_pipe_op(argv[1], 1, &data.utils))
 		handle_pipe_op(argv[2], 2, &data.utils);

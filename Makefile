@@ -90,10 +90,10 @@ SRCS = main/2-events.c \
 		handle_operators/handle_red_in.c\
 		handle_operators/handle_red_out.c\
 		handle_operators/heredoc.c\
-		handle_operators/utils/fulfil_data_fd.c\
-		handle_operators/utils/close_descriptors.c\
 		handle_operators/operator_and.c\
 		handle_operators/operator_or.c\
+		handle_operators/utils/close_descriptors.c\
+		handle_operators/utils/fulfil_data_fd.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
