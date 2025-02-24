@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/24 08:19:33 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 14:35:46 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,10 @@ char	*domain_expansion(char *str, t_data *data)
 		if (str[i] == '$')
 		{
 			temp = ft_strndup(str, i);
-			printf("%s\n", temp);
 			expand = search_content(str, data, &i);
-			printf("%s\n", expand);
+			if (!expand)
+				return (ft_double_free(temp, str));
 			str = complete_str(str, expand, temp, i);
-			printf("%s\n", str);
 		}
 	return (str);
 }
