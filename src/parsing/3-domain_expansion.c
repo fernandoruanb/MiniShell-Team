@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/24 15:51:46 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 17:08:51 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,21 @@ static char	*search_content(char *str, t_data *data, int *i)
 	return (NULL);
 }
 
-static char	*complete_str(char *str, char *expand, char *prev, int i)
+static char	*complete_str(char *str, char *expand, char *prev, int *i)
 {
 	char	*tmp;
 	char	*temp;
-	
+
+	if (!expand)
+	{
+		tmp = ft_strjoin(prev, &str[*i]);
+		ft_double_free(str, prev);
+		*i = 0;
+		return (tmp);
+	}
 	tmp = ft_strjoin(prev, expand);
 	ft_double_free(prev, expand);
-	temp = ft_strjoin(tmp, &str[i]);
+	temp = ft_strjoin(tmp, &str[*i]);
 	ft_double_free(tmp, str);
 	return (temp);
 }
@@ -110,9 +117,7 @@ char	*domain_expansion(char *str, t_data *data)
 		{
 			temp = ft_strndup(str, i);
 			expand = search_content(str, data, &i);
-			if (!expand)
-				return (ft_double_free(temp, str));
-			str = complete_str(str, expand, temp, i);
+			str = complete_str(str, expand, temp, &i);
 		}
 	return (str);
 }
