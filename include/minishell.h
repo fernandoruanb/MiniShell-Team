@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/24 15:39:59 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 17:17:08 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ typedef struct s_data
 	t_localvar	*local_vars;
 
 	char		**envp;
-	int			isPipe;
+	int			is_pipe;
 	int			fd[2];
 }	t_data;
 

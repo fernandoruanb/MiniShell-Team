@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:09:27 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 15:11:37 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 17:20:44 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	init_data(t_data *data, char **envp)
 	data->token = NULL;
 	data->local_vars = NULL;
 	data->envp = NULL;
+	data->is_pipe = 0;
 	data->root = NULL;
 	data->export_vars = NULL;
 	export_init(envp, &data->export_vars);
