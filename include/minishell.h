@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/24 08:16:00 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 11:22:06 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 typedef struct s_ast
 {
 	char			**cmd;
+	int				index;
 
-	struct s_ast	*parent;
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast;
@@ -87,7 +87,7 @@ typedef struct s_token
 typedef struct s_prompt
 {
 	char	*input;
-	char	***cmdset;
+	char	**cmdset;
 	char	**envp;
 	char	*path;
 
@@ -137,6 +137,7 @@ typedef struct	s_var
 
 typedef struct s_data
 {
+	t_ast		*root;
 	t_prompt	*prompt;
 	t_token		*token;
 	t_utils		utils;
@@ -323,8 +324,7 @@ int			check_local_environment(t_token *root);
 int			my_tree_my_life(t_token *root, t_utils *data);
 
 //	Parsing
-char		***converttokentosplit(t_token **token);
-void		print_array(char ***array);
+char		**convert_to_cmd(t_token **token);
 void		print_split(char **split);
 char		*remove_quotes(char *str);
 void		*clean_array(char ***array);
@@ -338,6 +338,13 @@ int			count_var(char *str);
 
 //	execution
 int			minishell(t_data *data);
+char		**make_op(t_token **token);
 int			handle_builtin(char ***cmd, t_data *data);
+
+//	ast
+t_ast		*create_node(char **cmd, int index);
+t_ast		*add_node(t_ast *root, t_token **token);
+void		print_node(t_ast *root);
+void		clean_node(t_ast *root);
 
 #endif

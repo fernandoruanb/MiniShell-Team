@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 07:44:32 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 13:13:10 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,33 @@ void	aplly_parser(t_token **token, t_data *data)
 	temp = *token;
 	while (temp)
 	{
-		printf("%s\n", temp->str);
-		parser(&temp, data, count_var(temp->str));
+		parser(&temp, data);
 		temp = temp->next;
 	}
+}
+
+t_ast	*make_ast(t_token **token)
+{
+	t_token *temp;
+	t_ast	*new;
+
+	temp = *token;
+	new = NULL;
+	while (temp->next)
+		temp = temp->next;
+	while (temp->previous)
+	{
+		if (temp->id == PIPE)
+			new = add_node(new, &temp);
+		temp = temp->previous;
+	}
+	while (temp)
+	{
+		if (temp->id == CMD)
+			new = add_node(new, &temp);
+		temp = temp->next;
+	}
+	return (new);
 }
 
 void	analysis(t_data *data)
@@ -125,8 +148,14 @@ void	analysis(t_data *data)
 	//data->prompt->cmdset = converttokentosplit(&data->token);
 	token_print(data->token);
 	//print_array(data->prompt->cmdset);
-	//minishell(data);
+	data->root = make_ast(&data->token);
+	printf(RED"AST\n"RESET);
+	print_node(data->root);
+	printf("\n");
+	//data->prompt->cmdset = convert_to_cmd(&data->token);
+	//print_split(data->prompt->cmdset);
 	token_clean(data->token);
+	clean_node(data->root);
 	clean_program(&data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 }

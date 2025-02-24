@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 07:50:14 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 09:00:55 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,15 @@ int	count_var(char *str)
 	return (cnt);
 }
 
-int	parser(t_token **token, t_data *data, int cnt)
+int	parser(t_token **token, t_data *data)
 {
 	t_token	*temp;
 
 	temp = *token;
 	if (find_tilde(temp->str))
 		temp->str = expand_tilde(temp->str);
-	if (cnt)
-		temp->str = domain_expansion(temp->str, data, cnt);
+	if (find_var(temp->str))
+		temp->str = domain_expansion(temp->str, data);
 	if (find_quote(temp->str))
 		temp->str = remove_quotes(temp->str);
 	if (find_escape(temp->str))
