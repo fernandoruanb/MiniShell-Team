@@ -6,45 +6,40 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:33:31 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/21 18:03:23 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:18:16 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
-static void	close_descriptors(int *pipefd)
+static void	clean_all_pipes(t_utils *data, int index)
 {
-	close(pipefd[0]);
-	close(pipefd[1]);
-}
+	int	stop;
 
-static void	clean_all_pipes(t_utils *data)
-{
-	int	index;
-
-	index = 0;
-	while (index < data->pipes)
+	if (index < 0)
+		return ;
+	stop = 0;
+	while (stop < index)
 	{
-		free(data->pipes_fd[index]);
-		index++;
+		close(data->pipes_fd[index][0]);
+		close(data->pipes_fd[index][1]);
+		stop++;
 	}
 }
 
-int	init_pipes(t_token *root, t_utils *data)
+int	init_pipes(t_utils *data)
 {
-	int	pipes;
 	int	index;
 
-	data->pipes = get_pipes(root);
-	data->pipes_fd = malloc(data->pipes * sizeof(int [2]));
+	data->pipes_fd = (int **)malloc(data->pipes * sizeof(int *));
 	if (!data->pipes_fd)
 		return (0);
 	index = 0;
-	while (index < pipes)
+	while (index < data->pipes)
 	{
 		if (pipe(data->pipes_fd[index]) == -1)
 		{
-			clean_all_pipes(data);
+			clean_all_pipes(data, --index);
 			return (0);
 		}
 		index++;

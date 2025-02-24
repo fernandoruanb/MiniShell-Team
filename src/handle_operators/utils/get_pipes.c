@@ -6,11 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:29:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/21 17:33:23 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:26:44 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
 int	get_pipes(t_token *root)
 {

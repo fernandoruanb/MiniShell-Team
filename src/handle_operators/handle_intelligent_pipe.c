@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handle_intelligent_pipe.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 16:15:18 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/18 16:18:32 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/24 09:56:12 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/24 12:00:55 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	handle_intelligent_pipe(t_token *root, t_utils *data)
 {
-	t_utils	data;
-	t_token	*root;
+	t_token *last;
 
-	(void)argv;
-	if (argc < 1)
-		return (1);
-	root = NULL;
-	init_utils(&data);
-	root = create_token("\'echo\'", CMD);
-	if (!root)
-		return (1);
-	show_tokens(root);
-	if (check_syntax(root, envp, &data))
-		printf("OK\n");
-	else
-		printf("KO\n");
-	clean_program(&data);
-	return (0);
+	data->pipes = get_pipes(root);
+	if (data->pipes != 0)
+		init_pipes(data);
+	last = root;
 }
 
+int	main(int argc, char **argv, char **envp)
+{
+	t_data	*data;
+
+	handle_intelligent_pipe(data->token, &data->utils, "/bin/echo oi");
+	return (0);
+}
