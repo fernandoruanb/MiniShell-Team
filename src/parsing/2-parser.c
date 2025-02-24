@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-parser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/21 12:51:09 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/24 07:50:14 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,28 @@ static int	find_tilde(char *str)
 	return (0); 
 }
 
-int	parser(t_token **token, t_data *data)
+int	count_var(char *str)
+{
+	int	i;
+	int	cnt;
+
+	i = 0;
+	cnt = 0;
+	while (str[i])
+		if (str[i++] == '$')
+			cnt++;
+	return (cnt);
+}
+
+int	parser(t_token **token, t_data *data, int cnt)
 {
 	t_token	*temp;
 
 	temp = *token;
 	if (find_tilde(temp->str))
 		temp->str = expand_tilde(temp->str);
-	if (find_var(temp->str))
-		temp->str = domain_expansion(temp->str, data);
+	if (cnt)
+		temp->str = domain_expansion(temp->str, data, cnt);
 	if (find_quote(temp->str))
 		temp->str = remove_quotes(temp->str);
 	if (find_escape(temp->str))

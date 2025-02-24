@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-events.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:32 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/21 12:41:07 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/24 07:32:09 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ void	execute(t_data *data)
 
 int	destroy(t_data *data, char *message, int exit_code)
 {
-	int	i;
-
-	i = 0;
 	if (data->prompt)
 	{
 		if (data->prompt->path)
