@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 14:37:24 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 15:04:10 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ t_ast	*make_ast(t_token **token)
 
 void	analysis(t_data *data)
 {
+	data->envp = updateenvp(&data->export_vars);
+	print_split(data->envp);
 	data->token = lexer(data->prompt->input, data->prompt->envp);
 	// data->prompt->exit_status = 2 * !data->token;
 	//printf("\033[31mLexer exit:\033[0m %d\n", data->prompt->exit_status);
@@ -156,6 +158,7 @@ void	analysis(t_data *data)
 	//print_split(data->prompt->cmdset);
 	token_clean(data->token);
 	clean_node(data->root);
+	clear_split(data->envp);
 	clean_program(&data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 }

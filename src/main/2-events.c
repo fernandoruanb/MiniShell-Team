@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:32 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 07:32:09 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 15:03:35 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	destroy(t_data *data, char *message, int exit_code)
 	}
 	if (data->export_vars)
 		export_clean(&data->export_vars);
+	if(data->envp)
+		clear_split(data->envp);
 	if (data->local_vars)
 		clean_locals(data->local_vars);
 	set_null(data);

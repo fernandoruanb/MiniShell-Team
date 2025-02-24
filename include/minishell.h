@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/24 11:22:06 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 15:02:42 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ typedef struct s_data
 	t_export	*export_vars;
 	t_localvar	*local_vars;
 
+	char		**envp;
 	int			isPipe;
 	int			fd[2];
 }	t_data;
@@ -337,9 +338,7 @@ char		*expand_tilde(char *str);
 int			count_var(char *str);
 
 //	execution
-int			minishell(t_data *data);
-char		**make_op(t_token **token);
-int			handle_builtin(char ***cmd, t_data *data);
+char		**updateenvp(t_export **export);
 
 //	ast
 t_ast		*create_node(char **cmd, int index);

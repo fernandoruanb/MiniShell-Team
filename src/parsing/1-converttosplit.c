@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 13:17:41 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 15:08:29 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,10 @@ void	print_split(char **split)
 {
 	int	i;
 
+	if (!split || !*split)
+		return ;
 	i = 0;
 	while (split[i])
-		printf("%s ", split[i++]);
+		printf("%s\n", split[i++]);
 	printf("\n");
 }
