@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 14:33:33 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 15:38:34 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,26 +95,26 @@ void	display_prompt(t_data *data)
 		}
 		if (ft_strncmp(data->prompt->input, "exit", 4) == 0)
 			return (ft_exit(name, data, &data->prompt->input[5]));
-		if (ft_strncmp(data->prompt->input, "export", 6) == 0)
-		{
-			if (ft_strlen(data->prompt->input) > 6)
-				ft_export(&data->prompt->input[7], &data->export_vars);
-			else
-				ft_export(NULL, &data->export_vars);
-			t_export *last = export_last(&data->export_vars);
-			export_print(&last);
-		}
-		else if (ft_strnstr(data->prompt->input, "=", ft_strlen(data->prompt->input)))
-		{
-			ft_localvar(data->prompt->input, &data->local_vars);
-			locals_print(&data->local_vars);
-		}
-		if (ft_strncmp(data->prompt->input, "unset", 5) == 0)
-		{
-			ft_unset(&data->export_vars, &data->local_vars, &data->prompt->input[6]);
-			t_export *last = export_last(&data->export_vars);
-			export_print(&last);
-		}
+		// if (ft_strncmp(data->prompt->input, "export", 6) == 0)
+		// {
+		// 	if (ft_strlen(data->prompt->input) > 6)
+		// 		ft_export(&data->prompt->input[7], &data->export_vars);
+		// 	else
+		// 		ft_export(NULL, &data->export_vars);
+		// 	t_export *last = export_last(&data->export_vars);
+		// 	export_print(&last);
+		// }
+		// else if (ft_strnstr(data->prompt->input, "=", ft_strlen(data->prompt->input)))
+		// {
+		// 	ft_localvar(data->prompt->input, &data->local_vars);
+		// 	locals_print(&data->local_vars);
+		// }
+		// if (ft_strncmp(data->prompt->input, "unset", 5) == 0)
+		// {
+		// 	ft_unset(&data->export_vars, &data->local_vars, &data->prompt->input[6]);
+		// 	t_export *last = export_last(&data->export_vars);
+		// 	export_print(&last);
+		// }
 		if (data->prompt->input[0] != '\0')
 		{
 			add_history(data->prompt->input);

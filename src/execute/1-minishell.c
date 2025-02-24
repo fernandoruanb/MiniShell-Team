@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 11:01:36 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/24 15:39:47 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,3 +110,13 @@
 // 	}
 // 	return (0);
 // }
+
+int	minishell(t_ast **root, t_data *data)
+{
+	t_ast	*ast;
+
+	ast = *root;
+	if (handle_builtin(ast->cmd, data))
+		return (0);
+	return (0);
+}
