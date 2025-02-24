@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/21 12:30:47 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/24 08:16:00 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,6 +334,7 @@ char		*domain_expansion(char *str, t_data *data);
 char		*remove_escape(char *str);
 int			find_var(char *str);
 char		*expand_tilde(char *str);
+int			count_var(char *str);
 
 //	execution
 int			minishell(t_data *data);

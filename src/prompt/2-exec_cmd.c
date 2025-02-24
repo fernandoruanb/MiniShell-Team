@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/21 16:56:07 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/24 07:44:32 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ void	aplly_parser(t_token **token, t_data *data)
 	temp = *token;
 	while (temp)
 	{
-		parser(&temp, data);
+		printf("%s\n", temp->str);
+		parser(&temp, data, count_var(temp->str));
 		temp = temp->next;
 	}
 }
