@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/25 18:06:05 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:30:42 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,16 +143,24 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	return (data->exec_status);
 }
 
-/*int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
+	int	index;
 
+	if (argc < 2)
+		return (1);
 	data.utils.exec_status = 0;
+	index = 1;
 	(void)argc;
 	data.utils.envp = envp;
-	handle_pipe_op(argv[1], 1, &data.utils);
-	handle_pipe_op(argv[2], 3, &data.utils);
-	handle_pipe_op(argv[3], 3, &data.utils);
-	handle_pipe_op(argv[4], 2, &data.utils);
+	handle_pipe_op(argv[index], 1, &data.utils);
+	index++;
+	while (index < argc - 1)
+	{
+		handle_pipe_op(argv[index], 3, &data.utils);
+		index++;
+	}
+	handle_pipe_op(argv[argc - 1], 2, &data.utils);
 	return (0);
-}*/
+}
