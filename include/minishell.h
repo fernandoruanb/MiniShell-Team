@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/24 12:18:35 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:59:24 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -353,7 +353,7 @@ void		handle_red_out(char *message, char *filename);
 int			heredoc(char *cmd, char *limiter, char **envp, int *status);
 void		operator_and(char *cmd1, char *cmd2, char **envp);
 void		operator_or(char *cmd1, char *cmd2, char **envp);
-void		close_descriptors(int *pipefd, int flag, t_utils *data);
+int			close_descriptors(int *pipefd, int flag, t_utils *data);
 void		fulfil_data_fd(int *pipefd, t_utils *data);
 int			get_pipes(t_token *root);
 int			init_pipes(t_utils *data);
