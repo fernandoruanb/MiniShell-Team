@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/21 16:56:07 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:24:19 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	analysis(t_data *data)
 	clean_program(&data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 }
-
+ 
 // void	exec_cmd(t_prompt *prompt)
 // {
 // 	// if (ft_strchr(prompt->input, '|'))
