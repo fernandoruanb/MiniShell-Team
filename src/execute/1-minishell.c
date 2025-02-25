@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-minishell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 17:37:04 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/25 15:20:59 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,26 @@
 // 	}
 // }
 
-// static void	init_pipe(t_data *data)
-// {
-// 	if (!data->isPipe)
-// 		return ;
-// 	if (pipe(data->fd) < 0)
-// 		exit (1);
-// }
+static void	close_fd(int fd[2])
+{
+	close(fd[1]);
+	close(fd[0]);
+}
+
+static void	init_pipe(t_data *data)
+{
+	if (pipe(data->fd) < 0)
+		exit (1);
+	dup2(data->fd[1], STDOUT_FILENO);
+	close(data->fd[0]);
+}
+
+static void	read_pipe(t_data *data)
+{
+	dup2(data->fd[0], STDIN_FILENO);
+	close (data->fd[1]);
+}
+
 
 /*
 	OBS: env[i] + 5 is for ignore "PATH=" before the paths
@@ -72,23 +85,14 @@ static void	exec_cmd(t_ast **root, t_data *data)
 	path = find_path((*root)->cmd[0], data->envp);
 	if (!pid)
 	{
-		if (data->is_pipe)
-		{
-			dup2(data->fd[1], 1);
-			close(data->fd[1]);
-			close(data->fd[0]);
-		}
 		execve(path, (*root)->cmd, data->envp);
+		perror("Erro no execve");
 		exit(1);
-	}
-	else if (data->is_pipe)
-	{
-		dup2(data->fd[0], 0);
-		close(data->fd[0]);
-		close(data->fd[1]);
 	}
 	free(path);
 	waitpid(pid, &data->prompt->exit_status, 0);
+	if (data->is_pipe)
+		close_fd(data->fd);
 }
 
 // int	minishell(t_data *data)
@@ -112,21 +116,13 @@ static void	exec_cmd(t_ast **root, t_data *data)
 // 	return (0);
 // }
 
-static void	find_cmd(t_data *data, t_ast *root)
+static int	find_pipe(t_ast *root, t_data *data)
 {
 	if (!root || !root->cmd)
-		return ;
+		return (0);
 	if (!ft_strcmp(root->cmd[0], "|"))
 		data->is_pipe = 1;
-}
-
-static int	init_pipe(t_data *data)
-{
-	if (!data->is_pipe)
-		return (0);
-	if (pipe(data->fd) < 1)
-		exit (1);
-	return (0);
+	return (data->is_pipe);
 }
 
 int	minishell(t_ast **root, t_data *data)
@@ -136,12 +132,18 @@ int	minishell(t_ast **root, t_data *data)
 	if (!*root)
 		return (0);
 	ast = *root;
+
 	if (handle_builtin(ast->cmd, data))
 		return (0);
-	minishell(&ast->left, data);
-	find_cmd(data, ast);
-	init_pipe(data);
-	exec_cmd(&ast, data);
-	minishell(&ast->right, data);
+	if (find_pipe(ast, data))
+	{
+		init_pipe(data);
+		exec_cmd(&ast->left, data);
+		read_pipe(data);
+		exec_cmd(&ast->right, data);
+		close_fd(data->fd);
+	}
+	else
+		exec_cmd(&ast, data);
 	return (0);
 }

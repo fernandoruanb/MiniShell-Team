@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-domain_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/24 17:08:51 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/25 11:33:57 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 static char	*is_return(t_data *data, char *find)
 {
 	free(find);
-	return (ft_strdup(ft_itoa(data->prompt->exit_status)));
+	return (ft_itoa(data->prompt->exit_status));
 }
 
 static char	*search_content(char *str, t_data *data, int *i)

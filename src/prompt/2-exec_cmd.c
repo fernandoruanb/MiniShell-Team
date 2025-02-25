@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 15:40:22 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/25 15:10:52 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,17 +108,30 @@ t_ast	*make_ast(t_token **token)
 		temp = temp->next;
 	while (temp->previous)
 	{
-		if (temp->id == PIPE)
+		if (temp->id != CMD && temp->id != ARG)
 			new = add_node(new, &temp);
 		temp = temp->previous;
 	}
 	while (temp)
 	{
-		if (temp->id == CMD)
+		if (temp->id == CMD || temp->id == FD || temp->id == LIMITER)
 			new = add_node(new, &temp);
 		temp = temp->next;
 	}
 	return (new);
+}
+
+void ast_print(t_ast *root, int level)
+{
+    if (!root)
+    {
+		    return ;
+	}
+	ast_print(root->left, level + 1);
+	for (int i = 0; i < level; i++)
+		printf("     ");
+	printf("%s (%d)\n", root->cmd[0], root->index);
+	ast_print(root->right, level + 1);
 }
 
 void	analysis(t_data *data)
@@ -134,16 +147,16 @@ void	analysis(t_data *data)
 		return ;
 	}
 	init_utils(&data->utils);
-	if (check_syntax(data->token, data->envp, &data->utils))
-		ft_printf(GREEN"OK\n"RESET);
-	else
+	check_syntax(data->token, data->envp, &data->utils);
+	data->prompt->exit_status = data->utils.exit_status;
+	if (data->prompt->exit_status != 0)
 	{
-		ft_printf("\033[31mExit code:\033[0m %d\n", data->utils.exit_status);
-		ft_printf("\033[38;5;214mKO\033[0m\n");
-		data->prompt->exit_status = data->utils.exit_status;
+		token_clean(data->token);
+		clear_split(data->envp);
+		clean_program(&data->utils);
 		return ;
 	}
-	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
+	//printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
 
 	aplly_parser(&data->token, data);
 	//my_tree_my_life(data->token, &data->utils);
@@ -152,6 +165,7 @@ void	analysis(t_data *data)
 	//print_array(data->prompt->cmdset);
 	data->root = make_ast(&data->token);
 	printf(RED"AST\n"RESET);
+	ast_print(data->root, 0);
 	print_node(data->root);
 	printf("\n");
 	minishell(&data->root, data);
