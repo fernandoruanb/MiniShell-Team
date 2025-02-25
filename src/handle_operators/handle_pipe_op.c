@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/25 15:18:39 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:12:39 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,22 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 		close_descriptors(pipefd, 1, data);
 		exit(EXIT_FAILURE);
 	}
-	if (data->fd_backup < 0)
-		exit(EXIT_FAILURE);
-	if (dup2(data->fd_backup, STDIN_FILENO) == -1)
-		exit(EXIT_FAILURE);
-	if (execve(cmd[0], cmd, data->envp) == -1)
+	if (pid == 0)
 	{
-		perror("CMD Error read_mode\n");
-		free_splits(NULL, cmd, NULL, NULL);
-		if (errno == ENOENT)
-			exit(127);
-		else if (errno == EACCES)
-			exit(126);
-		exit(errno);
+		if (data->fd_backup < 0)
+			exit(EXIT_FAILURE);
+		if (dup2(data->fd_backup, STDIN_FILENO) == -1)
+			exit(EXIT_FAILURE);
+		if (execve(cmd[0], cmd, data->envp) == -1)
+		{
+			perror("CMD Error read_mode\n");
+			free_splits(NULL, cmd, NULL, NULL);
+			if (errno == ENOENT)
+				exit(127);
+			else if (errno == EACCES)
+				exit(126);
+			exit(errno);
+		}
 	}
 	free_splits(NULL, cmd, NULL, NULL);
 	waitpid(pid, &data->exec_status, 0);
@@ -53,17 +56,20 @@ int	write_mode(char **cmd, int *pipefd, t_utils *data)
 		close_descriptors(pipefd, 1, data);
 		exit(EXIT_FAILURE);
 	}
-	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-		exit(EXIT_FAILURE);
-	if (execve(cmd[0], cmd, data->envp) == -1)
+	if (pid == 0)
 	{
-		perror("CMD Error write_mode\n");
-		free_splits(NULL, cmd, NULL, NULL);
-		if (errno == ENOENT)
-			exit(127);
-		else if (errno == EACCES)
-			exit(126);
-		exit(errno);
+		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+			exit(EXIT_FAILURE);
+		if (execve(cmd[0], cmd, data->envp) == -1)
+		{
+			perror("CMD Error write_mode\n");
+			free_splits(NULL, cmd, NULL, NULL);
+			if (errno == ENOENT)
+				exit(127);
+			else if (errno == EACCES)
+				exit(126);
+			exit(errno);
+		}
 	}
 	free_splits(NULL, cmd, NULL, NULL);
 	waitpid(pid, &data->exec_status, 0);
