@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/25 15:20:59 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:18:34 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,18 @@ static void	init_pipe(t_data *data)
 {
 	if (pipe(data->fd) < 0)
 		exit (1);
+}
+
+static void	write_pipe(t_data *data)
+{
 	dup2(data->fd[1], STDOUT_FILENO);
-	close(data->fd[0]);
+	close_fd(data->fd);
 }
 
 static void	read_pipe(t_data *data)
 {
 	dup2(data->fd[0], STDIN_FILENO);
-	close (data->fd[1]);
+	close_fd(data->fd);
 }
 
 
@@ -76,7 +80,7 @@ static	char	*find_path(char *cmd, char **env)
 	return (clear_split(paths));
 }
 
-static void	exec_cmd(t_ast **root, t_data *data)
+static pid_t	exec_cmd(t_ast **root, t_data *data)
 {
 	pid_t	pid;
 	char	*path;
@@ -90,9 +94,28 @@ static void	exec_cmd(t_ast **root, t_data *data)
 		exit(1);
 	}
 	free(path);
-	waitpid(pid, &data->prompt->exit_status, 0);
-	if (data->is_pipe)
-		close_fd(data->fd);
+	return (pid);
+}
+
+static pid_t	exec_cmd2(t_ast **root, t_data *data, int flag)
+{
+	pid_t	pid;
+	char	*path;
+
+	pid = fork();
+	path = find_path((*root)->cmd[0], data->envp);
+	if (!pid)
+	{
+		if (flag)
+			write_pipe(data);
+		else
+			read_pipe(data);
+		execve(path, (*root)->cmd, data->envp);
+		perror("Erro no execve");
+		exit(1);
+	}
+	free(path);
+	return (pid);
 }
 
 // int	minishell(t_data *data)
@@ -128,22 +151,26 @@ static int	find_pipe(t_ast *root, t_data *data)
 int	minishell(t_ast **root, t_data *data)
 {
 	t_ast	*ast;
+	pid_t	pid;
+	pid_t	pid2;
 
 	if (!*root)
 		return (0);
 	ast = *root;
-
+	pid = 0;
+	pid2 = 0;
 	if (handle_builtin(ast->cmd, data))
 		return (0);
 	if (find_pipe(ast, data))
 	{
 		init_pipe(data);
-		exec_cmd(&ast->left, data);
-		read_pipe(data);
-		exec_cmd(&ast->right, data);
+		pid = exec_cmd2(&ast->left, data, 1);
+		pid2 = exec_cmd2(&ast->right, data, 0);
 		close_fd(data->fd);
 	}
 	else
-		exec_cmd(&ast, data);
+		pid = exec_cmd(&ast, data);
+	waitpid(pid, &data->prompt->exit_status, 0);
+	waitpid(pid2, &data->prompt->exit_status, 0);
 	return (0);
 }
