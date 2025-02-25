@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/24 18:54:52 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:22:23 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 		exit(errno);
 	}
 	free_splits(NULL, cmd, NULL, NULL);
+	waitpid(pid, &data->exec_status, 0);
 }
 
 void	write_mode(char **cmd, int *pipefd, t_utils *data)
@@ -53,11 +54,12 @@ void	write_mode(char **cmd, int *pipefd, t_utils *data)
 		exit(errno);
 	}
 	free_splits(NULL, cmd, NULL, NULL);
+	waitpid(pid, &data->exec_status, 0);
 }
 
 int	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 {
-	if (!data->fd_backup)
+	if (data->fd_backup < 0)
 		return (0);
 	if (dup2(data->fd_backup, STDIN_FILENO) == -1)
 		exit(EXIT_FAILURE);
@@ -97,7 +99,6 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 		close_descriptors(pipefd, 0, data);
 	if (flag == 2)
 		close_descriptors(pipefd, 1, data);
-	wait(0);
 	return (data->exec_status);
 }
 
