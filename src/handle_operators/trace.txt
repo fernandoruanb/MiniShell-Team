@@ -1,2 +1,0 @@
-358779 execve("./a.out", ["./a.out", "/bin/echo oi", "/bin/wc -c"], 0x7fffc07ffc48 /* 56 vars */) = -1 ENOEXEC (Erro no formato exec)
-358779 +++ exited with 1 +++

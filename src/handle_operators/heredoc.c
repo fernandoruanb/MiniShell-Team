@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/22 17:23:46 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:27:55 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	delete_heredoc(char *filename)
 	waitpid(pid, NULL, 0);
 }
 
-static int	execute_heredoc(char *cmd, char *filename, char **envp, int *status)
+static int	execute_heredoc(char *cmd, char *filename, t_utils *data)
 {
 	char	**split1;
 	int		pid;
@@ -78,23 +78,29 @@ static int	execute_heredoc(char *cmd, char *filename, char **envp, int *status)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(split1[0], split1, envp) == -1)
+		if (execve(split1[0], split1, data->envp) == -1)
 		{
 			free_splits(NULL, split1, NULL, NULL);
-			exit(errno);
+			if (errno == ENOENT)
+				exit(127);
+			else if (errno == EACCES)
+				exit(126);
+			else
+				exit(errno);
 		}
 	}
 	close(fd);
-	waitpid(pid, status, 0);
+	waitpid(pid, &data->exec_status, 0);
 	return (free_splits(NULL, split1, NULL, NULL));
 }
 
-int	heredoc(char *cmd, char *limiter, char **envp, int *status)
+int	heredoc(char *cmd, char *limiter, t_utils *data)
 {
 	int		fd;
 	char	*line;
 	char	*filename;
 
+	data->exec_status = 0;
 	filename = ft_strjoin("/tmp/", limiter);
 	if (!filename)
 		return (0);
@@ -104,6 +110,8 @@ int	heredoc(char *cmd, char *limiter, char **envp, int *status)
 	while (1)
 	{
 		line = readline("> ");
+		if (line == NULL)
+			return (free_strs(filename, NULL, 1));
 		if (ft_strcmp(line, limiter) == 0)
 		{
 			free(line);
@@ -113,7 +121,7 @@ int	heredoc(char *cmd, char *limiter, char **envp, int *status)
 			ft_putendl_fd(line, fd);
 	}
 	close(fd);
-	if (execute_heredoc(cmd, filename, envp, status))
+	if (execute_heredoc(cmd, filename, data))
 		delete_heredoc(filename);
 	return (free_strs(filename, NULL, 1));
 }
@@ -121,10 +129,12 @@ int	heredoc(char *cmd, char *limiter, char **envp, int *status)
 /*int	main(int argc, char **argv, char **envp)
 {
 	int	status;
+	t_data	data;
 
+	data.utils.envp = envp;
 	if (argc < 2)
 		return (1);
 	status = 0;
-	heredoc(argv[1], argv[2], envp, &status);
+	heredoc(argv[1], argv[2], &data.utils);
 	return (0);
 }*/

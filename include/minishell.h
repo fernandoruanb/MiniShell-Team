@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/26 10:52:49 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:44:00 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,7 +350,7 @@ void		append(char *message, char *filename);
 int			handle_pipe_op(char *cmd, int flag, t_utils *data);
 void		handle_red_in(char *cmd1, char *filename, int *status, char **envp);
 void		handle_red_out(char *message, char *filename);
-int			heredoc(char *cmd, char *limiter, char **envp, int *status);
+int			heredoc(char *cmd, char *limiter, t_utils *data);
 void		operator_and(char *cmd1, char *cmd2, char **envp);
 void		operator_or(char *cmd1, char *cmd2, char **envp);
 int			close_descriptors(int *pipefd, int flag, t_utils *data);

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:11:23 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/25 12:12:09 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:17:29 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	check_syntax(t_token *root, char **envp, t_utils *data)
 
 	data->brackets_o = 0;
 	data->brackets_c = 0;
+	data->exit_status = 0;
 	if (!check_brackets_start(root))
 		return (show_error_fd("Syntax Error: BRACKETS", 0, data, 2));
 	get_paths(envp, data);
