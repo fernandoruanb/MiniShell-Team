@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/25 14:59:24 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:52:49 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,5 +357,8 @@ int			close_descriptors(int *pipefd, int flag, t_utils *data);
 void		fulfil_data_fd(int *pipefd, t_utils *data);
 int			get_pipes(t_token *root);
 int			init_pipes(t_utils *data);
+void		ft_write_mode(int *pipefd, char **cmd, t_utils *data);
+void		ft_read_mode(char **cmd, t_utils *data);
+void		ft_write_read_mode(int *pipefd, char **cmd, t_utils *data);
 
 #endif

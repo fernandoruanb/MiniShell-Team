@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/25 18:30:42 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:05:12 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,7 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-	{
-		if (data->fd_backup < 0)
-			exit(EXIT_FAILURE);
-		if (dup2(data->fd_backup, STDIN_FILENO) == -1)
-			exit(EXIT_FAILURE);
-		if (execve(cmd[0], cmd, data->envp) == -1)
-		{
-			perror("CMD Error read_mode\n");
-			free_splits(NULL, cmd, NULL, NULL);
-			if (errno == ENOENT)
-				exit(127);
-			else if (errno == EACCES)
-				exit(126);
-			exit(errno);
-		}
-	}
+		ft_read_mode(cmd, data);
 	free_splits(NULL, cmd, NULL, NULL);
 	waitpid(pid, &data->exec_status, 0);
 }
@@ -57,20 +42,7 @@ int	write_mode(char **cmd, int *pipefd, t_utils *data)
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-	{
-		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-			exit(EXIT_FAILURE);
-		if (execve(cmd[0], cmd, data->envp) == -1)
-		{
-			perror("CMD Error write_mode\n");
-			free_splits(NULL, cmd, NULL, NULL);
-			if (errno == ENOENT)
-				exit(127);
-			else if (errno == EACCES)
-				exit(126);
-			exit(errno);
-		}
-	}
+		ft_write_mode(pipefd, cmd, data);
 	free_splits(NULL, cmd, NULL, NULL);
 	waitpid(pid, &data->exec_status, 0);
 	return (1);
@@ -93,23 +65,7 @@ int	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-	{
-		if (dup2(data->fd_backup, STDIN_FILENO) == -1)
-			exit(EXIT_FAILURE);
-		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-			exit(EXIT_FAILURE);
-		close_descriptors(pipefd, 1, data);
-		if (execve(cmd[0], cmd, data->envp) == -1)
-		{
-			perror("CMD Error write_read_mode\n");
-			free_splits(NULL, cmd, NULL, NULL);
-			if (errno == ENOENT)
-				exit(127);
-			else if (errno == EACCES)
-				exit(126);
-			exit(errno);
-		}
-	}
+		ft_write_read_mode(pipefd, cmd, data);
 	close(data->fd_backup);
 	data->fd_backup = fd;
 	free_splits(NULL, cmd, NULL, NULL);
@@ -143,10 +99,10 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	return (data->exec_status);
 }
 
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	int	index;
+	int		index;
 
 	if (argc < 2)
 		return (1);
@@ -163,4 +119,4 @@ int	main(int argc, char **argv, char **envp)
 	}
 	handle_pipe_op(argv[argc - 1], 2, &data.utils);
 	return (0);
-}
+}*/

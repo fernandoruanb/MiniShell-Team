@@ -96,6 +96,9 @@ SRCS = main/2-events.c \
 		handle_operators/utils/fulfil_data_fd.c\
 		handle_operators/utils/get_pipes.c\
 		handle_operators/utils/init_pipes.c\
+		handle_operators/ft_write_read_mode.c\
+		handle_operators/ft_read_mode.c\
+		handle_operators/ft_write_mode.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
