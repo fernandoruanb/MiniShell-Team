@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 10:34:44 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/26 18:05:02 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:37:13 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	index;
 
-	if (!s1 || !s2)
-		return (1);
 	index = 0;
 	while (s1[index] != '\0' && s2[index] != '\0')
 	{
