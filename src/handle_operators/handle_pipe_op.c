@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/26 13:43:58 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:59:04 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	return (data->exec_status);
 }
 
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	int		index;
@@ -124,4 +124,4 @@ int	main(int argc, char **argv, char **envp)
 		data.utils.exec_status = 126;
 	printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
-}
+}*/
