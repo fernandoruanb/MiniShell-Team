@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/26 18:27:55 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:56:23 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,7 @@ static int	execute_heredoc(char *cmd, char *filename, t_utils *data)
 		return (close_fd(fd, split1, 0));
 	pid = fork();
 	if (pid == 0)
-	{
-		if (execve(split1[0], split1, data->envp) == -1)
-		{
-			free_splits(NULL, split1, NULL, NULL);
-			if (errno == ENOENT)
-				exit(127);
-			else if (errno == EACCES)
-				exit(126);
-			else
-				exit(errno);
-		}
-	}
+		check_errno(split1, data);
 	close(fd);
 	waitpid(pid, &data->exec_status, 0);
 	return (free_splits(NULL, split1, NULL, NULL));
@@ -100,6 +89,7 @@ int	heredoc(char *cmd, char *limiter, t_utils *data)
 	char	*line;
 	char	*filename;
 
+	line = NULL;
 	data->exec_status = 0;
 	filename = ft_strjoin("/tmp/", limiter);
 	if (!filename)
@@ -107,19 +97,7 @@ int	heredoc(char *cmd, char *limiter, t_utils *data)
 	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		return (free_strs(filename, NULL, 0));
-	while (1)
-	{
-		line = readline("> ");
-		if (line == NULL)
-			return (free_strs(filename, NULL, 1));
-		if (ft_strcmp(line, limiter) == 0)
-		{
-			free(line);
-			break ;
-		}
-		else
-			ft_putendl_fd(line, fd);
-	}
+	heredoc_check_mode(line, limiter, fd);
 	close(fd);
 	if (execute_heredoc(cmd, filename, data))
 		delete_heredoc(filename);
