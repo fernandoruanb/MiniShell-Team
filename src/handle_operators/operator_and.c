@@ -6,77 +6,65 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:08 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/21 16:25:55 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:34:43 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	execute_cmd1(char *cmd1, int *status, char **envp)
+static void	execute_cmd1(char *cmd1, t_utils *data)
 {
 	int		id;
 	char	**split1;
 
 	split1 = ft_split(cmd1, ' ');
 	if (!split1)
-	{
-		*status = -1;
 		return ;
-	}
 	id = fork();
 	if (id == 0)
-	{
-		if (execve(split1[0], split1, envp) == -1)
-		{
-			free_splits(NULL, split1, NULL, NULL);
-			exit(errno);
-		}
-	}
+		check_errno(split1, data);
 	if (split1 != NULL)
 		free_splits(NULL, split1, NULL, NULL);
-	waitpid(id, status, 0);
+	waitpid(id, &data->exec_status, 0);
 }
 
-static void	execute_cmd2(char *cmd2, int *status, char **envp)
+static void	execute_cmd2(char *cmd2, t_utils *data)
 {
 	int		id;
 	char	**split2;
 
 	split2 = ft_split(cmd2, ' ');
 	if (!split2)
-	{
-		*status = -1;
 		return ;
-	}
 	id = fork();
 	if (id == 0)
-	{
-		if (execve(split2[0], split2, envp) == -1)
-		{
-			free_splits(NULL, split2, NULL, NULL);
-			exit(errno);
-		}
-	}
+		check_errno(split2, data);
 	if (split2 != NULL)
 		free_splits(NULL, split2, NULL, NULL);
-	waitpid(id, status, 0);
+	waitpid(id, &data->exec_status, 0);
 }
 
-void	operator_and(char *cmd1, char *cmd2, char **envp)
+void	operator_and(char *cmd1, char *cmd2, t_utils *data)
 {
-	int	status;
-
-	status = 0;
-	execute_cmd1(cmd1, &status, envp);
-	if (status != 0)
+	execute_cmd1(cmd1, data);
+	if (data->exec_status != 0)
 		return ;
-	execute_cmd2(cmd2, &status, envp);
+	execute_cmd2(cmd2, data);
 }
 
 /*int	main(int argc, char **argv, char **envp)
 {
+	t_data	data;
+
+	data.utils.exec_status = 0;
+	data.utils.envp = envp;
 	if (argc < 2)
 		return (1);
-	operator_and(argv[1], argv[2], envp);
+	operator_and(argv[1], argv[2], &data.utils);
+	if (data.utils.exec_status == 32512)
+		data.utils.exec_status = 127;
+	else if (data.utils.exec_status == 32256)
+		data.utils.exec_status = 126;
+	ft_printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
 }*/
