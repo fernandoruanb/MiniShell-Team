@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/26 14:59:04 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:44:02 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 	if (pid == 0)
 		ft_read_mode(cmd, data);
 	free_splits(NULL, cmd, NULL, NULL);
-	waitpid(pid, &data->exec_status, 0);
+	data->pid = pid;
 }
 
 int	write_mode(char **cmd, int *pipefd, t_utils *data)
@@ -44,7 +44,7 @@ int	write_mode(char **cmd, int *pipefd, t_utils *data)
 	if (pid == 0)
 		ft_write_mode(pipefd, cmd, data);
 	free_splits(NULL, cmd, NULL, NULL);
-	waitpid(pid, &data->exec_status, 0);
+	data->pid = pid;
 	return (1);
 }
 
@@ -69,7 +69,7 @@ int	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 	close(data->fd_backup);
 	data->fd_backup = fd;
 	free_splits(NULL, cmd, NULL, NULL);
-	waitpid(pid, &data->exec_status, 0);
+	data->pid = pid;
 	return (1);
 }
 
@@ -103,25 +103,37 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 {
 	t_data	data;
 	int		index;
+	int		count;
+	int		pid[4096];
 
 	if (argc < 2)
 		return (1);
 	data.utils.exec_status = 0;
 	index = 1;
+	count = 0;
 	(void)argc;
 	data.utils.envp = envp;
 	handle_pipe_op(argv[index], 1, &data.utils);
+	pid[count] = data.utils.pid;
+	count++;
 	index++;
 	while (index < argc - 1)
 	{
 		handle_pipe_op(argv[index], 3, &data.utils);
+		pid[count] = data.utils.pid;
+		count++;
 		index++;
 	}
 	handle_pipe_op(argv[argc - 1], 2, &data.utils);
-	if (data.utils.exec_status == 32512)
-		data.utils.exec_status = 127;
-	else if (data.utils.exec_status == 32256)
-		data.utils.exec_status = 126;
+	pid[count] = data.utils.pid;
+	count++;
+	index = 0;
+	while (index < count)
+	{
+		waitpid(pid[index], &data.utils.exec_status, 0);
+		index++;
+	}
+	translate(&data.utils);
 	printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
 }*/
