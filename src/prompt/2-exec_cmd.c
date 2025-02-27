@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/27 11:51:50 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:33:22 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ void	analysis(t_data *data)
 	init_utils(&data->utils);
 	check_syntax(data->token, data->envp, &data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
+	printf("Sintax: %d\n", data->prompt->exit_status);
 	if (data->prompt->exit_status != 0)
 	{
 		token_clean(data->token);

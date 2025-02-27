@@ -95,7 +95,7 @@ OBJ = $(SRC:.c=.o)
 HEADER = include
 LIBFT = libft
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -I$(HEADER) -g
+CFLAGS = -Wall -Werror -Wextra -I$(HEADER) -g3
 
 .DEFAULT_GOAL := all
 

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/25 16:18:34 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:37:26 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,22 @@ static void	close_fd(int fd[2])
 	close(fd[0]);
 }
 
-static void	init_pipe(t_data *data)
+static void	init_pipe(int fd[2])
 {
-	if (pipe(data->fd) < 0)
+	if (pipe(fd) < 0)
 		exit (1);
 }
 
-static void	write_pipe(t_data *data)
+static void	write_pipe(int fd[2])
 {
-	dup2(data->fd[1], STDOUT_FILENO);
-	close_fd(data->fd);
+	dup2(fd[1], STDOUT_FILENO);
+	close_fd(fd);
 }
 
-static void	read_pipe(t_data *data)
+static void	read_pipe(int fd[2])
 {
-	dup2(data->fd[0], STDIN_FILENO);
-	close_fd(data->fd);
+	dup2(fd[0], STDIN_FILENO);
+	close_fd(fd);
 }
 
 
@@ -97,20 +97,23 @@ static pid_t	exec_cmd(t_ast **root, t_data *data)
 	return (pid);
 }
 
-static pid_t	exec_cmd2(t_ast **root, t_data *data, int flag)
+static pid_t	exec_cmd2(t_ast **root, t_data *data, int fd[2], int flag)
 {
 	pid_t	pid;
 	char	*path;
 
+	if (!*root)
+		return (0);
 	pid = fork();
 	path = find_path((*root)->cmd[0], data->envp);
 	if (!pid)
 	{
 		if (flag)
-			write_pipe(data);
+			write_pipe(fd);
 		else
-			read_pipe(data);
-		execve(path, (*root)->cmd, data->envp);
+			read_pipe(fd);
+		if (path)
+			execve(path, (*root)->cmd, data->envp);
 		perror("Erro no execve");
 		exit(1);
 	}
@@ -148,14 +151,30 @@ static int	find_pipe(t_ast *root, t_data *data)
 	return (data->is_pipe);
 }
 
+static int	handle_multpipe(t_ast **root, t_data *data)
+{
+	pid_t	pid;
+
+	if (!find_pipe((*root)->left, data))
+		return (0);
+	pid = fork();
+	if (!pid)
+	{
+		
+	}
+	waitpid(pid, NULL, 0);
+	return (1);
+}
+
 int	minishell(t_ast **root, t_data *data)
 {
 	t_ast	*ast;
 	pid_t	pid;
 	pid_t	pid2;
+	int		fd[2];
 
 	if (!*root)
-		return (0);
+		return (1);
 	ast = *root;
 	pid = 0;
 	pid2 = 0;
@@ -163,14 +182,17 @@ int	minishell(t_ast **root, t_data *data)
 		return (0);
 	if (find_pipe(ast, data))
 	{
-		init_pipe(data);
-		pid = exec_cmd2(&ast->left, data, 1);
-		pid2 = exec_cmd2(&ast->right, data, 0);
-		close_fd(data->fd);
+		if (handle_multpipe(root, data))
+			return (0);
+		init_pipe(fd);
+		pid = exec_cmd2(&ast->left, data, fd, 1);
+		pid2 = exec_cmd2(&ast->right, data, fd, 0);
+		close_fd(fd);
 	}
 	else
 		pid = exec_cmd(&ast, data);
 	waitpid(pid, &data->prompt->exit_status, 0);
 	waitpid(pid2, &data->prompt->exit_status, 0);
+	data->is_pipe = 0;
 	return (0);
 }
