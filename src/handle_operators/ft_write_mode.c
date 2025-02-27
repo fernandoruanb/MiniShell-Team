@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:57:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/26 10:16:54 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:55:43 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_write_mode(int *pipefd, char **cmd, t_utils *data)
 {
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 		exit(EXIT_FAILURE);
+	close_descriptors(pipefd, 0, data);
 	if (execve(cmd[0], cmd, data->envp) == -1)
 	{
 		perror("CMD Error write_mode\n");

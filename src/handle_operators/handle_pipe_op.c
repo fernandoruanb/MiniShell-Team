@@ -6,11 +6,15 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/27 13:44:02 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:58:24 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+//void    get_not_canonical_mode(struct termios *original);
+
+//void    get_canonical_mode(struct termios *original);
 
 void	read_mode(char **cmd, int *pipefd, t_utils *data)
 {
@@ -27,6 +31,35 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 	free_splits(NULL, cmd, NULL, NULL);
 	data->pid = pid;
 }
+
+/*void	get_canonical_mode(struct termios *original)
+{
+	if (tcsetattr(STDIN_FILENO, TCSANOW, original) == -1)
+	{
+		perror("Error setting original mode");
+		exit(1);
+	}
+}
+
+void	get_not_canonical_mode(struct termios *original)
+{
+	struct termios temp;
+
+	if (tcgetattr(STDIN_FILENO, original) == -1)
+	{
+		perror("Error getting information about terminal");
+		exit(1);
+	}
+	temp = *original;
+	temp.c_lflag &= ~(ICANON | ECHO);
+	temp.c_cc[VMIN] = 1;
+	temp.c_cc[VTIME] = 0;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &temp) == -1)
+	{
+		perror("Error setting not canonical mode");
+		exit(1);
+	}
+}*/
 
 int	write_mode(char **cmd, int *pipefd, t_utils *data)
 {
@@ -77,6 +110,7 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 {
 	int		pipefd[2];
 	char	**split1;
+	struct termios original;
 
 	if (pipe(pipefd) == -1)
 		return (1);
@@ -99,17 +133,25 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	return (data->exec_status);
 }
 
-/*int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	int		index;
 	int		count;
 	int		pid[4096];
+	int		num_of_processes;
+	int		old;
+	int		finished_pid;
+	int		temp;
+	int		exact;
+	int		flag;
 
 	if (argc < 2)
 		return (1);
+	exact = 0;
 	data.utils.exec_status = 0;
 	index = 1;
+	flag = 0;
 	count = 0;
 	(void)argc;
 	data.utils.envp = envp;
@@ -127,13 +169,27 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	handle_pipe_op(argv[argc - 1], 2, &data.utils);
 	pid[count] = data.utils.pid;
 	count++;
+	num_of_processes = 0;
+	old = pid[0];
 	index = 0;
-	while (index < count)
+	while (num_of_processes < count)
 	{
-		waitpid(pid[index], &data.utils.exec_status, 0);
-		index++;
+	//	while (index < count)
+	//		printf("%d \n", pid[index++]);
+//		if (num_of_processes == count - 1)
+//			exact = data.utils.exec_status;
+		finished_pid = waitpid(-1, &data.utils.exec_status, 0);
+		if (finished_pid > old)
+			temp = data.utils.exec_status;
+		if (old != -1 && kill(old, 0) == 0 && finished_pid > old)
+			kill(old, SIGPIPE);
+		old = finished_pid;
+		num_of_processes++;
 	}
+	//translate(&data.utils);
+	if (data.utils.exec_status == 13)
+		data.utils.exec_status = temp;
 	translate(&data.utils);
 	printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
-}*/
+}
