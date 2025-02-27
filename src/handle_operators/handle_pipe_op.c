@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/27 17:58:24 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:00:34 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 	if (pid == 0)
 		ft_read_mode(cmd, data);
 	free_splits(NULL, cmd, NULL, NULL);
-	data->pid = pid;
+	waitpid(pid, &data->exec_status, 0);
 }
 
 /*void	get_canonical_mode(struct termios *original)
@@ -110,7 +110,6 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 {
 	int		pipefd[2];
 	char	**split1;
-	struct termios original;
 
 	if (pipe(pipefd) == -1)
 		return (1);
@@ -133,52 +132,50 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	return (data->exec_status);
 }
 
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	int		index;
 	int		count;
-	int		pid[4096];
+	int		pid[9000];
 	int		num_of_processes;
 	int		old;
 	int		finished_pid;
 	int		temp;
-	int		exact;
-	int		flag;
 
 	if (argc < 2)
 		return (1);
-	exact = 0;
 	data.utils.exec_status = 0;
 	index = 1;
-	flag = 0;
 	count = 0;
 	(void)argc;
 	data.utils.envp = envp;
 	handle_pipe_op(argv[index], 1, &data.utils);
+//	printf("Exit status: %d\n", data.utils.exec_status);
 	pid[count] = data.utils.pid;
 	count++;
 	index++;
 	while (index < argc - 1)
 	{
 		handle_pipe_op(argv[index], 3, &data.utils);
+//		printf("Exit status: %d\n", data.utils.exec_status);
 		pid[count] = data.utils.pid;
 		count++;
 		index++;
 	}
 	handle_pipe_op(argv[argc - 1], 2, &data.utils);
-	pid[count] = data.utils.pid;
-	count++;
+//	printf("Exit status: %d\n", data.utils.exec_status);
 	num_of_processes = 0;
 	old = pid[0];
 	index = 0;
+	count--;
 	while (num_of_processes < count)
 	{
-	//	while (index < count)
-	//		printf("%d \n", pid[index++]);
+//		while (index < count)
+//			printf("%d \n", pid[index++]);
 //		if (num_of_processes == count - 1)
 //			exact = data.utils.exec_status;
-		finished_pid = waitpid(-1, &data.utils.exec_status, 0);
+		finished_pid = waitpid(-1, NULL, 0);
 		if (finished_pid > old)
 			temp = data.utils.exec_status;
 		if (old != -1 && kill(old, 0) == 0 && finished_pid > old)
@@ -192,4 +189,4 @@ int	main(int argc, char **argv, char **envp)
 	translate(&data.utils);
 	printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
-}
+}*/

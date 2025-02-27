@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:32 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/21 12:41:07 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:21:26 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ void	execute(t_data *data)
 
 int	destroy(t_data *data, char *message, int exit_code)
 {
-	int	i;
-
-	i = 0;
 	if (data->prompt)
 	{
 		if (data->prompt->path)

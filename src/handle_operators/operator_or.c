@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:13:20 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/27 10:50:38 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:24:58 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	operator_or(char *cmd1, char *cmd2, t_utils *data)
 	execute_cmd2(cmd2, data);
 }
 
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
@@ -67,4 +67,4 @@ int	main(int argc, char **argv, char **envp)
 	translate(&data.utils);
 	ft_printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
-}
+}*/
