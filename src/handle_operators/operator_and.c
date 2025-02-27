@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:08 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/26 20:34:43 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:53:42 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ void	operator_and(char *cmd1, char *cmd2, t_utils *data)
 	if (argc < 2)
 		return (1);
 	operator_and(argv[1], argv[2], &data.utils);
-	if (data.utils.exec_status == 32512)
-		data.utils.exec_status = 127;
-	else if (data.utils.exec_status == 32256)
-		data.utils.exec_status = 126;
+	translate(&data.utils);
 	ft_printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
 }*/

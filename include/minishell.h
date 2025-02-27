@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/26 20:30:25 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:47:43 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,7 +352,7 @@ void		handle_red_in(char *cmd1, char *filename, int *status, char **envp);
 void		handle_red_out(char *message, char *filename);
 int			heredoc(char *cmd, char *limiter, t_utils *data);
 void		operator_and(char *cmd1, char *cmd2, t_utils *data);
-void		operator_or(char *cmd1, char *cmd2, char **envp);
+void		operator_or(char *cmd1, char *cmd2, t_utils *data);
 int			close_descriptors(int *pipefd, int flag, t_utils *data);
 void		fulfil_data_fd(int *pipefd, t_utils *data);
 int			get_pipes(t_token *root);
@@ -362,5 +362,6 @@ void		ft_read_mode(char **cmd, t_utils *data);
 void		ft_write_read_mode(int *pipefd, char **cmd, t_utils *data);
 void		heredoc_check_mode(char *line, char *limiter, int fd);
 void		check_errno(char **split1, t_utils *data);
+void		translate(t_utils *data);
 
 #endif

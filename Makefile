@@ -101,6 +101,7 @@ SRCS = main/2-events.c \
 		handle_operators/ft_write_mode.c\
 		handle_operators/heredoc_check_mode.c\
 		handle_operators/check_errno.c\
+		handle_operators/translate.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))

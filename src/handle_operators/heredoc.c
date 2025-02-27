@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/26 18:56:23 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:54:34 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,13 @@ int	heredoc(char *cmd, char *limiter, t_utils *data)
 
 /*int	main(int argc, char **argv, char **envp)
 {
-	int	status;
 	t_data	data;
 
+	data.utils.exec_status = 0;
 	data.utils.envp = envp;
 	if (argc < 2)
 		return (1);
-	status = 0;
 	heredoc(argv[1], argv[2], &data.utils);
+	translate(&data.utils);
 	return (0);
 }*/
