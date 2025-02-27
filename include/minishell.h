@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/25 14:46:02 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:48:00 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,6 +345,7 @@ int			minishell(t_ast **root, t_data *data);
 t_ast		*create_node(char **cmd, int index);
 t_ast		*add_node(t_ast *root, t_token **token);
 void		print_node(t_ast *root);
-void		clean_node(t_ast *root);
+void		clean_node(t_ast **root);
+void		make_ast(t_token **token, t_ast **ast);
 
 #endif

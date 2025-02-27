@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 08:25:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/25 11:22:58 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:48:32 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,13 @@ void	print_node(t_ast *root)
 	print_node(root->right);
 }
 
-void	clean_node(t_ast *root)
+void	clean_node(t_ast **root)
 {
-	if (!root)
+	if (!*root)
 		return ;
-	clean_node(root->left);
-	clean_node(root->right);
-	clear_split(root->cmd);
-	free(root);
+	clean_node(&(*root)->left);
+	clean_node(&(*root)->right);
+	clear_split((*root)->cmd);
+	free(*root);
+	*root = NULL;
 }

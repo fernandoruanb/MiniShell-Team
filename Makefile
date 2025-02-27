@@ -87,6 +87,7 @@ SRCS = main/2-events.c \
 		execute/2-isbuiltin.c\
 		execute/3-updateenvp.c\
 		ast/1-ast.c\
+		ast/2-make_ast.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))

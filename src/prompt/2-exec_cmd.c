@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/25 15:10:52 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:51:50 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,29 +97,29 @@ void	aplly_parser(t_token **token, t_data *data)
 	}
 }
 
-t_ast	*make_ast(t_token **token)
-{
-	t_token *temp;
-	t_ast	*new;
+// t_ast	*make_ast(t_token **token)
+// {
+// 	t_token *temp;
+// 	t_ast	*new;
 
-	temp = *token;
-	new = NULL;
-	while (temp->next)
-		temp = temp->next;
-	while (temp->previous)
-	{
-		if (temp->id != CMD && temp->id != ARG)
-			new = add_node(new, &temp);
-		temp = temp->previous;
-	}
-	while (temp)
-	{
-		if (temp->id == CMD || temp->id == FD || temp->id == LIMITER)
-			new = add_node(new, &temp);
-		temp = temp->next;
-	}
-	return (new);
-}
+// 	temp = *token;
+// 	new = NULL;
+// 	while (temp->next)
+// 		temp = temp->next;
+// 	while (temp->previous)
+// 	{
+// 		if (temp->id != CMD && temp->id != ARG)
+// 			new = add_node(new, &temp);
+// 		temp = temp->previous;
+// 	}
+// 	while (temp)
+// 	{
+// 		if (temp->id == CMD || temp->id == FD || temp->id == LIMITER)
+// 			new = add_node(new, &temp);
+// 		temp = temp->next;
+// 	}
+// 	return (new);
+// }
 
 void ast_print(t_ast *root, int level)
 {
@@ -163,7 +163,7 @@ void	analysis(t_data *data)
 	//data->prompt->cmdset = converttokentosplit(&data->token);
 	token_print(data->token);
 	//print_array(data->prompt->cmdset);
-	data->root = make_ast(&data->token);
+	make_ast(&data->token, &data->root);
 	printf(RED"AST\n"RESET);
 	ast_print(data->root, 0);
 	print_node(data->root);
@@ -172,7 +172,7 @@ void	analysis(t_data *data)
 	//data->prompt->cmdset = convert_to_cmd(&data->token);
 	//print_split(data->prompt->cmdset);
 	token_clean(data->token);
-	clean_node(data->root);
+	clean_node(&data->root);
 	clear_split(data->envp);
 	clean_program(&data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
