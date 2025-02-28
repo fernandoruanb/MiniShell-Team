@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-domain_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/24 08:19:33 by jonas            ###   ########.fr       */
+/*   Updated: 2025/02/25 11:33:57 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 static char	*is_return(t_data *data, char *find)
 {
 	free(find);
-	return (ft_strdup(ft_itoa(data->prompt->exit_status)));
+	return (ft_itoa(data->prompt->exit_status));
 }
 
 static char	*search_content(char *str, t_data *data, int *i)
@@ -84,14 +84,21 @@ static char	*search_content(char *str, t_data *data, int *i)
 	return (NULL);
 }
 
-static char	*complete_str(char *str, char *expand, char *prev, int i)
+static char	*complete_str(char *str, char *expand, char *prev, int *i)
 {
 	char	*tmp;
 	char	*temp;
-	
+
+	if (!expand)
+	{
+		tmp = ft_strjoin(prev, &str[*i]);
+		ft_double_free(str, prev);
+		*i = 0;
+		return (tmp);
+	}
 	tmp = ft_strjoin(prev, expand);
 	ft_double_free(prev, expand);
-	temp = ft_strjoin(tmp, &str[i]);
+	temp = ft_strjoin(tmp, &str[*i]);
 	ft_double_free(tmp, str);
 	return (temp);
 }
@@ -109,11 +116,8 @@ char	*domain_expansion(char *str, t_data *data)
 		if (str[i] == '$')
 		{
 			temp = ft_strndup(str, i);
-			printf("%s\n", temp);
 			expand = search_content(str, data, &i);
-			printf("%s\n", expand);
-			str = complete_str(str, expand, temp, i);
-			printf("%s\n", str);
+			str = complete_str(str, expand, temp, &i);
 		}
 	return (str);
 }
