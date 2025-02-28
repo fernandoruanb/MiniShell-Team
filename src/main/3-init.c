@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:09:27 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/25 14:46:12 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:33:46 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	init_data(t_data *data, char **envp)
 	data->is_pipe = 0;
 	data->root = NULL;
 	data->export_vars = NULL;
+	data->fd_backup = 0;
 	export_init(envp, &data->export_vars);
 	return (0);
 }

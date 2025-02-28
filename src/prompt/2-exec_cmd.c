@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/27 13:33:22 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:56:30 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void	analysis(t_data *data)
 	ast_print(data->root, 0);
 	print_node(data->root);
 	printf("\n");
-	minishell(&data->root, data);
+	//minishell(&data->root, data);
 	//data->prompt->cmdset = convert_to_cmd(&data->token);
 	//print_split(data->prompt->cmdset);
 	token_clean(data->token);
