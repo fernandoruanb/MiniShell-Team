@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/28 10:13:33 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:04:06 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ typedef struct s_utils
 	int			files;
 	int			pid;
 	int			commands;
-	char		*cmd;
-	char		*old;
 	int			pipes;
 	int			fd_backup;
 	int			exec_status;
@@ -349,10 +347,10 @@ int			handle_builtin(char ***cmd, t_data *data);
 
 // HANDLE_OPERATORS
 
-void		append(char *message, char *filename);
+void		append(char *message, char *filename, t_utils *data);
 int			handle_pipe_op(char *cmd, int flag, t_utils *data);
-void		handle_red_in(char *cmd1, char *filename, int *status, char **envp);
-void		handle_red_out(char *message, char *filename);
+void		handle_red_in(char *cmd1, char *filename, t_utils *data);
+void		handle_red_out(char *message, char *filename, t_utils *data);
 int			heredoc(char *cmd, char *limiter, t_utils *data);
 void		operator_and(char *cmd1, char *cmd2, t_utils *data);
 void		operator_or(char *cmd1, char *cmd2, t_utils *data);
