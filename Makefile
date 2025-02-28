@@ -88,6 +88,13 @@ SRCS = main/2-events.c \
 		execute/3-updateenvp.c\
 		ast/1-ast.c\
 		ast/2-make_ast.c\
+		handle_operators/append.c\
+		handle_operators/handle_pipe_op.c\
+		handle_operators/handle_red_in.c\
+		handle_operators/handle_red_out.c\
+		handle_operators/heredoc.c\
+		handle_operators/operator_and.c\
+		handle_operators/operator_or.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))

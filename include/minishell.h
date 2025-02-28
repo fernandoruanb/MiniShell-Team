@@ -26,6 +26,7 @@
 # include <dirent.h>
 # include <string.h>
 # include <errno.h>
+# include <fcntl.h>
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <termcap.h>
@@ -347,5 +348,15 @@ t_ast		*add_node(t_ast *root, t_token **token);
 void		print_node(t_ast *root);
 void		clean_node(t_ast **root);
 void		make_ast(t_token **token, t_ast **ast);
+
+// HANDLE_OPERATORS
+
+void	append(char *message, char *filename);
+int	handle_pipe_op(char *cmd, int flag, char **envp);
+void	handle_red_in(char *cmd1, char *filename, int *status, char **envp);
+void	handle_red_out(char *message, char *filename);
+void	heredoc(char *limiter);
+void	operator_and(char *cmd1, char *cmd2, char **envp);
+void	operator_or(char *cmd1, char *cmd2, char **envp);
 
 #endif
