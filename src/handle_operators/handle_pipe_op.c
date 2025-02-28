@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/27 20:00:34 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:44:21 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,13 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 		if (finished_pid > old)
 			temp = data.utils.exec_status;
 		if (old != -1 && kill(old, 0) == 0 && finished_pid > old)
-			kill(old, SIGPIPE);
+		{
+			printf("CMD and OLD: %s\n %s\n", data.utils.cmd, data.utils.old);
+			if (isatty(STDIN_FILENO) && ft_strcmp(data.utils.old, "/bin/cat") == 0)
+				continue ;
+			else
+				kill(old, SIGPIPE);
+		}
 		old = finished_pid;
 		num_of_processes++;
 	}

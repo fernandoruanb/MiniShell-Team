@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/27 11:59:34 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:13:33 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ typedef struct s_utils
 	int			files;
 	int			pid;
 	int			commands;
+	char		*cmd;
+	char		*old;
 	int			pipes;
 	int			fd_backup;
 	int			exec_status;
