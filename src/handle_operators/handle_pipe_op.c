@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/01 20:02:30 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:19:15 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 	if (pid == 0)
 		ft_read_mode(cmd, data);
 	free_splits(NULL, cmd, NULL, NULL);
-	waitpid(pid, &data->exec_status, 0);
+	waitpid(pid, &data->exec_status, WUNTRACED); //Outros é WNOHANG , ls /proc/self/fd (files descriptors).
 }
 
 /*void	get_canonical_mode(struct termios *original)
@@ -132,7 +132,7 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	return (data->exec_status);
 }
 
-/*int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	int		index;
@@ -161,6 +161,8 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	}
 	handle_pipe_op(argv[argc - 1], 2, &data.utils);
 	pid[count] = data.utils.pid;
+	index = 0;
+//	while (index < count)
 	count++;
 	translate(&data.utils);
 	if (data.utils.exec_status == 13)
@@ -168,4 +170,4 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	translate(&data.utils);
 	printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
-}*/
+}
