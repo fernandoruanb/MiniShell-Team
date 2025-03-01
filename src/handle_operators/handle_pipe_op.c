@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/28 11:44:21 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:02:30 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,7 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	int		index;
 	int		count;
 	int		pid[9000];
-	int		num_of_processes;
 	int		old;
-	int		finished_pid;
 	int		temp;
 
 	if (argc < 2)
@@ -151,45 +149,20 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	(void)argc;
 	data.utils.envp = envp;
 	handle_pipe_op(argv[index], 1, &data.utils);
-//	printf("Exit status: %d\n", data.utils.exec_status);
 	pid[count] = data.utils.pid;
 	count++;
 	index++;
 	while (index < argc - 1)
 	{
 		handle_pipe_op(argv[index], 3, &data.utils);
-//		printf("Exit status: %d\n", data.utils.exec_status);
 		pid[count] = data.utils.pid;
 		count++;
 		index++;
 	}
 	handle_pipe_op(argv[argc - 1], 2, &data.utils);
-//	printf("Exit status: %d\n", data.utils.exec_status);
-	num_of_processes = 0;
-	old = pid[0];
-	index = 0;
-	count--;
-	while (num_of_processes < count)
-	{
-//		while (index < count)
-//			printf("%d \n", pid[index++]);
-//		if (num_of_processes == count - 1)
-//			exact = data.utils.exec_status;
-		finished_pid = waitpid(-1, NULL, 0);
-		if (finished_pid > old)
-			temp = data.utils.exec_status;
-		if (old != -1 && kill(old, 0) == 0 && finished_pid > old)
-		{
-			printf("CMD and OLD: %s\n %s\n", data.utils.cmd, data.utils.old);
-			if (isatty(STDIN_FILENO) && ft_strcmp(data.utils.old, "/bin/cat") == 0)
-				continue ;
-			else
-				kill(old, SIGPIPE);
-		}
-		old = finished_pid;
-		num_of_processes++;
-	}
-	//translate(&data.utils);
+	pid[count] = data.utils.pid;
+	count++;
+	translate(&data.utils);
 	if (data.utils.exec_status == 13)
 		data.utils.exec_status = temp;
 	translate(&data.utils);

@@ -88,7 +88,7 @@ SRCS = main/2-events.c \
 		handle_operators/append.c\
 		handle_operators/handle_pipe_op.c\
 		handle_operators/handle_red_in.c\
-		handle_operators/handle_red_out.c\
+		handle_operators/handle_redirect_out.c\
 		handle_operators/heredoc.c\
 		handle_operators/operator_and.c\
 		handle_operators/operator_or.c\
@@ -102,6 +102,7 @@ SRCS = main/2-events.c \
 		handle_operators/heredoc_check_mode.c\
 		handle_operators/check_errno.c\
 		handle_operators/translate.c\
+		handle_operators/single_command.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))

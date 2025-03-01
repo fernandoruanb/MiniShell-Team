@@ -6,13 +6,23 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:08 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/27 10:53:42 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:10:04 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	execute_cmd1(char *cmd1, t_utils *data)
+static int	redirect(t_utils *data, char **split1)
+{
+	if (dup2(data->temp_fd, STDOUT_FILENO) == -1)
+	{
+		free_splits(NULL, split1, NULL, NULL);
+		return (0);
+	}
+	return (1);
+}
+
+static void	execute_cmd1(char *cmd1, t_utils *data, int flag)
 {
 	int		id;
 	char	**split1;
@@ -20,6 +30,17 @@ static void	execute_cmd1(char *cmd1, t_utils *data)
 	split1 = ft_split(cmd1, ' ');
 	if (!split1)
 		return ;
+	if (flag == 1)
+	{
+		data->temp_fd = open("/tmp/temp_fd", O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (!data->temp_fd)
+		{
+			free_splits(NULL, split1, NULL, NULL);
+			return ;
+		}
+		if (!redirect(data, split1))
+			return ;
+	}
 	id = fork();
 	if (id == 0)
 		check_errno(split1, data);
@@ -28,7 +49,7 @@ static void	execute_cmd1(char *cmd1, t_utils *data)
 	waitpid(id, &data->exec_status, 0);
 }
 
-static void	execute_cmd2(char *cmd2, t_utils *data)
+static void	execute_cmd2(char *cmd2, t_utils *data, int flag)
 {
 	int		id;
 	char	**split2;
@@ -36,20 +57,26 @@ static void	execute_cmd2(char *cmd2, t_utils *data)
 	split2 = ft_split(cmd2, ' ');
 	if (!split2)
 		return ;
+	if (flag == 1)
+	{
+		if (!redirect(data, split2))
+			return ;
+	}
 	id = fork();
 	if (id == 0)
 		check_errno(split2, data);
 	if (split2 != NULL)
 		free_splits(NULL, split2, NULL, NULL);
+	data->fd_backup = data->temp_fd;
 	waitpid(id, &data->exec_status, 0);
 }
 
-void	operator_and(char *cmd1, char *cmd2, t_utils *data)
+void	operator_and(char *cmd1, char *cmd2, t_utils *data, int flag)
 {
-	execute_cmd1(cmd1, data);
+	execute_cmd1(cmd1, data, flag);
 	if (data->exec_status != 0)
 		return ;
-	execute_cmd2(cmd2, data);
+	execute_cmd2(cmd2, data, flag);
 }
 
 /*int	main(int argc, char **argv, char **envp)

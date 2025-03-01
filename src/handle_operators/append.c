@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:05:05 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/28 13:46:30 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:48:09 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*capture_dir(char *filename)
 	if (limit != 0)
 		detect_dir = ft_substr(filename, 0, limit);
 	else
-		detect_dir = NULL;
+		detect_dir = ft_strdup(".");
 	if (!detect_dir)
 		return (NULL);
 	return (detect_dir);
@@ -40,9 +40,10 @@ void	append(char *message, char *filename, t_utils *data)
 	int		fd;
 	char		*detect_dir;
 
+	detect_dir = NULL;
 	detect_dir = capture_dir(filename);
-	if (detect_dir == NULL)
-		detect_dir = ".";
+	if (!detect_dir)
+		detect_dir = ft_strdup(".");
 	if (detect_dir != NULL)
 	{
 		if (access(detect_dir, W_OK) == -1)

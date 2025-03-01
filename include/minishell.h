@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/28 14:04:06 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/01 17:09:31 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_utils
 	int			pid;
 	int			commands;
 	int			pipes;
+	int			temp_fd;
 	int			fd_backup;
 	int			exec_status;
 	int			exit_status;
@@ -350,9 +351,9 @@ int			handle_builtin(char ***cmd, t_data *data);
 void		append(char *message, char *filename, t_utils *data);
 int			handle_pipe_op(char *cmd, int flag, t_utils *data);
 void		handle_red_in(char *cmd1, char *filename, t_utils *data);
-void		handle_red_out(char *message, char *filename, t_utils *data);
+void		handle_redirect_out(char *message, char *filename, t_utils *data);
 int			heredoc(char *cmd, char *limiter, t_utils *data);
-void		operator_and(char *cmd1, char *cmd2, t_utils *data);
+void		operator_and(char *cmd1, char *cmd2, t_utils *data, int flag);
 void		operator_or(char *cmd1, char *cmd2, t_utils *data);
 int			close_descriptors(int *pipefd, int flag, t_utils *data);
 void		fulfil_data_fd(int *pipefd, t_utils *data);
@@ -364,5 +365,6 @@ void		ft_write_read_mode(int *pipefd, char **cmd, t_utils *data);
 void		heredoc_check_mode(char *line, char *limiter, int fd);
 void		check_errno(char **split1, t_utils *data);
 void		translate(t_utils *data);
+void		single_command(char *cmd, t_utils *data);
 
 #endif
