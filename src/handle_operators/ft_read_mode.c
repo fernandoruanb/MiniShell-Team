@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:05:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/27 14:57:13 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:45:59 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,8 @@ void	ft_read_mode(char **cmd, t_utils *data)
 		exit(EXIT_FAILURE);
 	if (execve(cmd[0], cmd, data->envp) == -1)
 	{
-		perror("CMD Error read_mode\n");
+		perror("Error: ");
 		free_splits(NULL, cmd, NULL, NULL);
-		if (errno == ENOENT)
-			exit(127);
-		else if (errno == EACCES)
-			exit(126);
-		else
-			exit(errno);
+		exit(errno);
 	}
 }

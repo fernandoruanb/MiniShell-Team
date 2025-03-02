@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/02 16:51:56 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:51:22 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 	if (pid == 0)
 		ft_read_mode(cmd, data);
 	free_splits(NULL, cmd, NULL, NULL);
+	data->pids[data->index++] = pid;
 	data->num_of_processes++;
-	//waitpid(pid, &data->exec_status, WNOHANG | WUNTRACED);
 }
 
 /*void	get_canonical_mode(struct termios *original)
@@ -90,7 +90,7 @@ int	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 	int	fd;
 
 	if (data->fd_backup < 0)
-		return (close_descriptors(pipefd, 0, data));
+		return (close_descriptors(pipefd, 1, data));
 	fd = dup(pipefd[0]);
 	if (fd == -1)
 		return (close_descriptors(pipefd, 1, data));
@@ -102,7 +102,8 @@ int	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 	}
 	if (pid == 0)
 		ft_write_read_mode(pipefd, cmd, data);
-	close(data->fd_backup);
+	if (data->fd_backup)
+		close(data->fd_backup);
 	data->fd_backup = fd;
 	free_splits(NULL, cmd, NULL, NULL);
 	data->pids[data->index++] = pid;
@@ -115,7 +116,6 @@ void	wait_all_pids(t_utils *data)
 	int	index;
 
 	index = 0;
-	data->num_of_processes--;
 	while (index < data->num_of_processes - 1)
 	{
 		waitpid(data->pids[index], NULL, 0);
@@ -165,7 +165,7 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 	data.utils.index = 0;
 	(void)argc;
 	data.utils.envp = envp;
-	index = 0;
+	index = 1;
 	handle_pipe_op(argv[index], 1, &data.utils);
 	index++;
 	while (index < argc - 1)
@@ -174,7 +174,6 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 		index++;
 	}
 	handle_pipe_op(argv[argc - 1], 2, &data.utils);
-//	while (index < count)
 	translate(&data.utils);
 	printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
