@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:12:00 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/15 20:55:40 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:15:11 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	get_command(t_token *root, t_utils *data)
 {
 	if (final_case(root, data))
-		return (show_error_fd("Syntax: Invalid input", 0, data, 0));
+		return (show_error_fd("Syntax: Invalid input", 0, data, 2));
 	if (root->id == PIPE)
 		return (case_pipe(root, data));
 	else if (root->id == LIMITER)

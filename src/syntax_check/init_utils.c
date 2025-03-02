@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:28:30 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/28 12:45:28 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:37:33 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	init_utils(t_utils *data)
 	data->temp = NULL;
 	data->new_str = NULL;
 	data->status = 0;
+	data->index = 0;
+	data->num_of_processes = 0;
 	data->exit_status = 0;
 	data->redirects = 0;
 	data->pipes = 0;

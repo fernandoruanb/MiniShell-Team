@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/01 20:19:15 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/02 16:51:56 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 	if (pid == 0)
 		ft_read_mode(cmd, data);
 	free_splits(NULL, cmd, NULL, NULL);
-	waitpid(pid, &data->exec_status, WUNTRACED); //Outros é WNOHANG , ls /proc/self/fd (files descriptors).
+	data->num_of_processes++;
+	//waitpid(pid, &data->exec_status, WNOHANG | WUNTRACED);
 }
 
 /*void	get_canonical_mode(struct termios *original)
@@ -78,6 +79,8 @@ int	write_mode(char **cmd, int *pipefd, t_utils *data)
 		ft_write_mode(pipefd, cmd, data);
 	free_splits(NULL, cmd, NULL, NULL);
 	data->pid = pid;
+	data->pids[data->index++] = pid;
+	data->num_of_processes++;
 	return (1);
 }
 
@@ -102,8 +105,24 @@ int	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 	close(data->fd_backup);
 	data->fd_backup = fd;
 	free_splits(NULL, cmd, NULL, NULL);
-	data->pid = pid;
+	data->pids[data->index++] = pid;
+	data->num_of_processes++;
 	return (1);
+}
+
+void	wait_all_pids(t_utils *data)
+{
+	int	index;
+
+	index = 0;
+	data->num_of_processes--;
+	while (index < data->num_of_processes - 1)
+	{
+		waitpid(data->pids[index], NULL, 0);
+		index++;
+	}
+	waitpid(data->pids[index], &data->exec_status, 0);
+	translate(data);
 }
 
 int	handle_pipe_op(char *cmd, int flag, t_utils *data)
@@ -129,45 +148,34 @@ int	handle_pipe_op(char *cmd, int flag, t_utils *data)
 		close_descriptors(pipefd, 0, data);
 	if (flag == 2)
 		close_descriptors(pipefd, 1, data);
+	if (flag == 2)
+		wait_all_pids(data);
 	return (data->exec_status);
 }
 
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	int		index;
-	int		count;
-	int		pid[9000];
-	int		old;
-	int		temp;
 
 	if (argc < 2)
 		return (1);
+	data.utils.num_of_processes = 0;
 	data.utils.exec_status = 0;
-	index = 1;
-	count = 0;
+	data.utils.index = 0;
 	(void)argc;
 	data.utils.envp = envp;
+	index = 0;
 	handle_pipe_op(argv[index], 1, &data.utils);
-	pid[count] = data.utils.pid;
-	count++;
 	index++;
 	while (index < argc - 1)
 	{
 		handle_pipe_op(argv[index], 3, &data.utils);
-		pid[count] = data.utils.pid;
-		count++;
 		index++;
 	}
 	handle_pipe_op(argv[argc - 1], 2, &data.utils);
-	pid[count] = data.utils.pid;
-	index = 0;
 //	while (index < count)
-	count++;
-	translate(&data.utils);
-	if (data.utils.exec_status == 13)
-		data.utils.exec_status = temp;
 	translate(&data.utils);
 	printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
-}
+}*/

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:21:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/17 18:13:46 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:07:31 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ static int	escaping_case(t_token *root, t_utils *data)
 static int	extra_cases_commands(t_token *root, t_utils *data)
 {
 	if (check_local_environment(root))
+		return (1);
+	if (ft_strcmp(root->str, ".") == 0)
 		return (1);
 	if (pipes_case(root, data) || start_case(root, data))
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/01 17:09:31 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:37:20 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,10 @@ typedef struct s_utils
 	int			double_quotes;
 	char		*copy_new;
 	int			args;
+	int			pids[9000];
+	int			index;
 	int			brackets_c;
+	int		num_of_processes;
 	int			brackets_o;
 	int			index_bra_c;
 	int			index_bra_o;
