@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/26 16:30:47 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:59:21 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void	analysis(t_data *data)
 		data->prompt->exit_status = data->utils.exit_status;
 		ft_printf("\033[31mExit code:\033[0m %d\n", data->utils.exit_status);
 		ft_printf("\033[38;5;214mKO\033[0m\n");
-		return ;
 	}
 	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
 
