@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/28 13:52:02 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/03 10:37:05 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 // 	}
 // }
 
-static void	close_fd(int fd[2])
-{
-	close(fd[1]);
-	close(fd[0]);
-}
+// static void	close_fd(int fd[2])
+// {
+// 	close(fd[1]);
+// 	close(fd[0]);
+// }
 
 static void	init_pipe(int fd[2])
 {
@@ -35,26 +35,26 @@ static void	init_pipe(int fd[2])
 		exit (1);
 }
 
-static void	write_pipe(int fd[2])
-{
-	close(fd[0]);
-	if (dup2(fd[1], 1) < 0)
-		exit(1);
-}
+// static void	write_pipe(int fd[2])
+// {
+// 	close(fd[0]);
+// 	if (dup2(fd[1], 1) < 0)
+// 		exit(1);
+// }
 
-static void	read_pipe(int fd[2])
-{
-	close(fd[1]);
-	if (dup2(fd[0], 0) < 0)
-		exit (1);
-}
+// static void	read_pipe(int fd[2])
+// {
+// 	close(fd[1]);
+// 	if (dup2(fd[0], 0) < 0)
+// 		exit (1);
+// }
 
-static void	read_write_pipe(int fd[2])
-{
-	if (dup2(fd[0], 0) < 0
-		|| dup2(fd[1], 1) < 0)
-		exit (1);
-}
+// static void	read_write_pipe(int fd[2])
+// {
+// 	if (dup2(fd[0], 0) < 0
+// 		|| dup2(fd[1], 1) < 0)
+// 		exit (1);
+// }
 
 /*
 	OBS: env[i] + 5 is for ignore "PATH=" before the paths
@@ -105,31 +105,31 @@ static pid_t	exec_cmd(t_ast **root, t_data *data)
 	return (pid);
 }
 
-static pid_t	exec_cmd2(t_ast **root, t_data *data, int fd[2], int flag)
-{
-	pid_t	pid;
-	char	*path;
+// static pid_t	exec_cmd2(t_ast **root, t_data *data, int fd[2], int flag)
+// {
+// 	pid_t	pid;
+// 	char	*path;
 
-	if (!*root)
-		return (0);
-	pid = fork();
-	path = find_path((*root)->cmd[0], data->envp);
-	if (!pid)
-	{
-		if (flag == 1)
-			write_pipe(fd);
-		else if (flag == 3)
-			read_pipe(fd);
-		else if (flag == 2)
-			read_write_pipe(fd);
-		if (path)
-			execve(path, (*root)->cmd, data->envp);
-		perror("Erro no execve");
-		exit(1);
-	}
-	free(path);
-	return (pid);
-}
+// 	if (!*root)
+// 		return (0);
+// 	pid = fork();
+// 	path = find_path((*root)->cmd[0], data->envp);
+// 	if (!pid)
+// 	{
+// 		if (flag == 1)
+// 			write_pipe(fd);
+// 		else if (flag == 3)
+// 			read_pipe(fd);
+// 		else if (flag == 2)
+// 			read_write_pipe(fd);
+// 		if (path)
+// 			execve(path, (*root)->cmd, data->envp);
+// 		perror("Erro no execve");
+// 		exit(1);
+// 	}
+// 	free(path);
+// 	return (pid);
+// }
 
 // int	minishell(t_data *data)
 // {
