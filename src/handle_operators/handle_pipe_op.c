@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/02 19:51:22 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:06:53 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,32 @@
 //void    get_not_canonical_mode(struct termios *original);
 
 //void    get_canonical_mode(struct termios *original);
+
+/*static pid_t	exec_cmd2(char *cmd, int *pipefd, int flag, t_utils *data) 
+{
+ 	pid_t	pid;
+ 	//char	*path;
+	char	**split1;
+
+	split1 = ft_split(cmd, ' ');
+	if (!split1)
+		return (1);
+ 	pid = fork();
+ 	//path = find_path((*root)->cmd[0], data->envp);
+ 	if (!pid)
+ 	{
+ 		if (flag == 1)
+ 			write_mode(split1, pipefd, data);
+ 		else if (flag == 2)
+ 			read_mode(split1, pipefd, data);
+ 		else if (flag == 3)
+ 			write_read_mode(split1, pipefd, data);
+ 		check_errno(split1, data);
+ 	}
+	free_splits(NULL, split1, NULL, NULL);
+ 	//free(path);
+ 	return (pid);
+ }*/
 
 void	read_mode(char **cmd, int *pipefd, t_utils *data)
 {
