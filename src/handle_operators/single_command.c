@@ -15,7 +15,7 @@
 void	single_command(char *cmd, t_utils *data)
 {
 	char	**split1;
-	int	pid;
+	int		pid;
 
 	split1 = ft_split(cmd, ' ');
 	if (!split1)

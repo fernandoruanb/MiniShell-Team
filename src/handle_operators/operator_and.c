@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:08 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/28 18:10:04 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:13:16 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static void	execute_cmd1(char *cmd1, t_utils *data, int flag)
 		return ;
 	if (flag == 1)
 	{
-		data->temp_fd = open("/tmp/temp_fd", O_WRONLY | O_CREAT | O_APPEND, 0644);
+		data->temp_fd = open("/tmp/temp_fd", O_WRONLY
+				| O_CREAT | O_APPEND, 0644);
 		if (!data->temp_fd)
 		{
 			free_splits(NULL, split1, NULL, NULL);

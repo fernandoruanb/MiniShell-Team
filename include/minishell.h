@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/02 12:37:20 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:16:32 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,7 +363,7 @@ void		fulfil_data_fd(int *pipefd, t_utils *data);
 int			get_pipes(t_token *root);
 int			init_pipes(t_utils *data);
 void		ft_write_mode(int *pipefd, char **cmd, t_utils *data);
-void		ft_read_mode(char **cmd, t_utils *data);
+void		ft_read_mode(char **cmd, int *pipefd, t_utils *data);
 void		ft_write_read_mode(int *pipefd, char **cmd, t_utils *data);
 void		heredoc_check_mode(char *line, char *limiter, int fd);
 void		check_errno(char **split1, t_utils *data);

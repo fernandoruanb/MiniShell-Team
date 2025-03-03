@@ -14,8 +14,8 @@
 
 static char	*capture_dir(char *filename)
 {
-	int	index;
-	int	limit;
+	int		index;
+	int		limit;
 	char	*detect_dir;
 
 	index = 0;

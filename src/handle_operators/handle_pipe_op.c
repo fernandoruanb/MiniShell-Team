@@ -6,41 +6,11 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/03 14:06:53 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:19:55 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-//void    get_not_canonical_mode(struct termios *original);
-
-//void    get_canonical_mode(struct termios *original);
-
-/*static pid_t	exec_cmd2(char *cmd, int *pipefd, int flag, t_utils *data) 
-{
- 	pid_t	pid;
- 	//char	*path;
-	char	**split1;
-
-	split1 = ft_split(cmd, ' ');
-	if (!split1)
-		return (1);
- 	pid = fork();
- 	//path = find_path((*root)->cmd[0], data->envp);
- 	if (!pid)
- 	{
- 		if (flag == 1)
- 			write_mode(split1, pipefd, data);
- 		else if (flag == 2)
- 			read_mode(split1, pipefd, data);
- 		else if (flag == 3)
- 			write_read_mode(split1, pipefd, data);
- 		check_errno(split1, data);
- 	}
-	free_splits(NULL, split1, NULL, NULL);
- 	//free(path);
- 	return (pid);
- }*/
 
 void	read_mode(char **cmd, int *pipefd, t_utils *data)
 {
@@ -53,42 +23,14 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-		ft_read_mode(cmd, data);
+		ft_read_mode(cmd, pipefd, data);
+	close_descriptors(pipefd, 1, data);
 	free_splits(NULL, cmd, NULL, NULL);
 	data->pids[data->index++] = pid;
 	data->num_of_processes++;
 }
 
-/*void	get_canonical_mode(struct termios *original)
-{
-	if (tcsetattr(STDIN_FILENO, TCSANOW, original) == -1)
-	{
-		perror("Error setting original mode");
-		exit(1);
-	}
-}
-
-void	get_not_canonical_mode(struct termios *original)
-{
-	struct termios temp;
-
-	if (tcgetattr(STDIN_FILENO, original) == -1)
-	{
-		perror("Error getting information about terminal");
-		exit(1);
-	}
-	temp = *original;
-	temp.c_lflag &= ~(ICANON | ECHO);
-	temp.c_cc[VMIN] = 1;
-	temp.c_cc[VTIME] = 0;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &temp) == -1)
-	{
-		perror("Error setting not canonical mode");
-		exit(1);
-	}
-}*/
-
-int	write_mode(char **cmd, int *pipefd, t_utils *data)
+void	write_mode(char **cmd, int *pipefd, t_utils *data)
 {
 	int	pid;
 
@@ -107,10 +49,9 @@ int	write_mode(char **cmd, int *pipefd, t_utils *data)
 	data->pid = pid;
 	data->pids[data->index++] = pid;
 	data->num_of_processes++;
-	return (1);
 }
 
-int	write_read_mode(char **cmd, int *pipefd, t_utils *data)
+void	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 {
 	int	pid;
 	int	fd;
@@ -127,14 +68,16 @@ int	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
+	{
+		close(fd);
 		ft_write_read_mode(pipefd, cmd, data);
+	}
 	if (data->fd_backup)
 		close(data->fd_backup);
 	data->fd_backup = fd;
 	free_splits(NULL, cmd, NULL, NULL);
 	data->pids[data->index++] = pid;
 	data->num_of_processes++;
-	return (1);
 }
 
 void	wait_all_pids(t_utils *data)
