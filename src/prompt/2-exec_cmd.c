@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/03 11:07:24 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:53:32 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ void	analysis(t_data *data)
 		return ;
 	}
 	init_utils(&data->utils);
+	//aplly_parser(&data->token, data);
+	token_print(data->token);	
 	check_syntax(data->token, data->envp, &data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 	printf("Sintax: %d\n", data->prompt->exit_status);
@@ -158,7 +160,7 @@ void	analysis(t_data *data)
 		return ;
 	}
 	aplly_parser(&data->token, data);
-	token_print(data->token);
+	//token_print(data->token);
 	//printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status)
 	//my_tree_my_life(data->token, &data->utils);
 	//data->prompt->cmdset = converttokentosplit(&data->token);
