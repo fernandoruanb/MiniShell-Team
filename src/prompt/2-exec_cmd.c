@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/04 11:03:25 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/04 13:01:59 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void ast_print(t_ast *root, int level)
 	ast_print(root->left, level + 1);
 	for (int i = 0; i < level; i++)
 		printf("     ");
-	printf("%s (%d)\n", root->cmd[0], root->index);
+	printf("%s (%d)(%s)\n", root->cmd[0], root->index, root->id == CMD ? "CMD" : root->id == LIMITER ? "LIMITER" : root->id == FD ? "FD" : root->id == PIPE ? "PIPE" : "REDIRECT");
 	ast_print(root->right, level + 1);
 }
 
@@ -170,7 +170,7 @@ void	analysis(t_data *data)
 	print_node(data->root);
 	printf("\n");
 	token_print(data->token);	
-	handle_builtin(data->root->cmd, data);
+	//handle_builtin(data->root->cmd, data);
 	// minishell(&data->root, data);
 	//data->prompt->cmdset = convert_to_cmd(&data->token);
 	//print_split(data->prompt->cmdset);

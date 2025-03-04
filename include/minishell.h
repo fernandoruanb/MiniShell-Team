@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 11:39:02 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:59:35 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,6 @@
 # define RED "\033[38;5;214m"
 # define RESET	"\033[0m"
 
-typedef struct s_ast t_ast;
-
-typedef struct s_ast
-{
-	char	**cmd;
-	int		index;
-
-	t_ast	*left;
-	t_ast	*right;
-}	t_ast;
-
 typedef enum e_id
 {
 	NONE,
@@ -66,6 +55,18 @@ typedef enum e_id
 	OPERATOR_OR,
 	OPERATOR_AND
 }	t_id;
+
+typedef struct s_ast t_ast;
+
+typedef struct s_ast
+{
+	char	**cmd;
+	t_id	id;
+	int		index;
+
+	t_ast	*left;
+	t_ast	*right;
+}	t_ast;
 
 typedef struct s_lex
 {
@@ -346,7 +347,7 @@ int			minishell(t_ast **root, t_data *data);
 void		call_minishell(t_ast **ast, t_data *data);
 
 //	ast
-t_ast		*create_node(char **cmd, int index);
+t_ast		*create_node(char **cmd, int index, t_id id);
 t_ast		*add_node(t_ast *root, t_token **token);
 void		print_node(t_ast *root);
 void		clean_node(t_ast **root);

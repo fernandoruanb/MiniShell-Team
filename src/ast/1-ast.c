@@ -6,13 +6,13 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 08:25:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/04 10:22:07 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:57:09 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast	*create_node(char **cmd, int index)
+t_ast	*create_node(char **cmd, int index, t_id id)
 {
 	t_ast	*new;
 
@@ -21,6 +21,7 @@ t_ast	*create_node(char **cmd, int index)
 		return (NULL);
 	new->cmd = cmd;
 	new->index = index;
+	new->id = id;
 	new->left = NULL;
 	new->right = NULL;
 	return (new);
@@ -36,9 +37,9 @@ t_ast	*add_node(t_ast *root, t_token **token)
 	t_token	*temp;
 
 	if (!root)
-		return (create_node(convert_to_cmd(token), (*token)->index));
+		return (create_node(convert_to_cmd(token), (*token)->index, (*token)->id));
 	temp = *token;
-	if (temp->index < root->index)
+	if (temp->index > root->index)
 		root->right = add_node(root->right, token);
 	else
 		root->left = add_node(root->left, token);
@@ -64,9 +65,9 @@ void	print_node(t_ast *root)
 {
 	if (!root)
 		return ;
-	print_node(root->right);
-	print_cmd(root->cmd);
 	print_node(root->left);
+	print_cmd(root->cmd);
+	print_node(root->right);
 }
 
 void	clean_node(t_ast **root)

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 10:34:17 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/04 11:00:46 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:56:36 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void handle_commands(t_token **token, t_ast **ast, t_data *data)
 		return ;
 	temp = *token;
 	handle_commands(&temp->next, ast, data);
-	// parser(&temp, data);
+	parser(&temp, data);
 	if (temp->id == CMD || temp->id == FD || temp->id == LIMITER)
 		*ast = add_node(*ast, &temp);
 }
