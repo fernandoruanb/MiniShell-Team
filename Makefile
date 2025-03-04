@@ -75,6 +75,7 @@ SRCS = main/2-events.c \
 		built_in/3-export.c\
 		built_in/3-export_utils.c\
 		built_in/4-unset.c\
+		built_in/6-clean_locals.c\
 		built_in/5-local_var.c\
 		parsing/1-converttosplit.c\
 		parsing/1.5-converttosplit_utils.c\
@@ -106,13 +107,14 @@ SRCS = main/2-events.c \
 		handle_operators/check_errno.c\
 		handle_operators/translate.c\
 		handle_operators/single_command.c\
+		ast/3-handle_redir.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJ = $(SRC:.c=.o)
 HEADER = include
 LIBFT = libft
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra -I$(HEADER) -g3
 
 .DEFAULT_GOAL := all

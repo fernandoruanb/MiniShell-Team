@@ -130,7 +130,7 @@ void ast_print(t_ast *root, int level)
 	ast_print(root->left, level + 1);
 	for (int i = 0; i < level; i++)
 		printf("     ");
-	printf("%s (%d)\n", root->cmd[0], root->index);
+	printf("%s (%d)(%s)\n", root->cmd[0], root->index, root->id == CMD ? "CMD" : root->id == LIMITER ? "LIMITER" : root->id == FD ? "FD" : root->id == PIPE ? "PIPE" : "REDIRECT");
 	ast_print(root->right, level + 1);
 }
 
@@ -147,19 +147,7 @@ void	analysis(t_data *data)
 		return ;
 	}
 	init_utils(&data->utils);
-	if (check_syntax(data->token, data->envp, &data->utils))
-	{
-		data->utils.exit_status = 0;
-		data->prompt->exit_status = 0;
-		ft_printf(GREEN"OK\n"RESET);
-	}
-	else
-	{
-		data->prompt->exit_status = data->utils.exit_status;
-		ft_printf("\033[31mExit code:\033[0m %d\n", data->utils.exit_status);
-		ft_printf("\033[38;5;214mKO\033[0m\n");
-	//aplly_parser(&data->token, data);
-	token_print(data->token);	
+	aplly_parser(&data->token, data);
 	check_syntax(data->token, data->envp, &data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 	printf("Sintax: %d\n", data->prompt->exit_status);
@@ -171,18 +159,20 @@ void	analysis(t_data *data)
 		clean_program(&data->utils);
 		return ;
 	}
-	aplly_parser(&data->token, data);
+	//aplly_parser(&data->token, data);
 	//token_print(data->token);
 	//printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status)
 	//my_tree_my_life(data->token, &data->utils);
 	//data->prompt->cmdset = converttokentosplit(&data->token);
 	//print_array(data->prompt->cmdset);
-	make_ast(&data->token, &data->root);
+	make_ast(&data->token, &data->root, data);
 	printf(RED"AST\n"RESET);
 	ast_print(data->root, 0);
 	print_node(data->root);
 	printf("\n");
-	//minishell(&data->root, data);
+	token_print(data->token);	
+	//handle_builtin(data->root->cmd, data);
+	// minishell(&data->root, data);
 	//data->prompt->cmdset = convert_to_cmd(&data->token);
 	//print_split(data->prompt->cmdset);
 	token_clean(data->token);
