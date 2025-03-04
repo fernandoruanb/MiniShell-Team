@@ -294,31 +294,31 @@
 // 	}
 // }
 
-int	minishell(t_ast **root, t_data *data)
-{
-	// t_ast	*ast;
-	// pid_t	pid;
+// int	minishell(t_ast **root, t_data *data)
+// {
+// 	// t_ast	*ast;
+// 	// pid_t	pid;
 	
-	if (!*root)
-		return (1);
-	// ast = *root;
-	if (handle_builtin((*root)->cmd, data)) // Ver quando tiver pipe
-		return (0);
-	// if (find_pipe(ast, data))
-	// 	handle_pipes(root, data);
-	// else
-	// {
-	//	pid = exec_cmd(&ast, data);
-	//	waitpid(pid, &data->prompt->exit_status, 0);
-	//}
+// 	if (!*root)
+// 		return (1);
+// 	// ast = *root;
+// 	if (handle_builtin((*root)->cmd, data)) // Ver quando tiver pipe
+// 		return (0);
+// 	// if (find_pipe(ast, data))
+// 	// 	handle_pipes(root, data);
+// 	// else
+// 	// {
+// 	//	pid = exec_cmd(&ast, data);
+// 	//	waitpid(pid, &data->prompt->exit_status, 0);
+// 	//}
 
 
-	// if (ast->type == CMD)
-	// {
-	// 	pid = exec_cmd(&ast, data);
-	// 	waitpid(pid, &data->prompt->exit_status, 0);
-	// 	// extrair return code
-	// }
+// 	// if (ast->type == CMD)
+// 	// {
+// 	// 	pid = exec_cmd(&ast, data);
+// 	// 	waitpid(pid, &data->prompt->exit_status, 0);
+// 	// 	// extrair return code
+// 	// }
 	
-	return (0);
-}
+// 	return (0);
+// }

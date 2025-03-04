@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/04 10:52:45 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:03:25 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	analysis(t_data *data)
 		return ;
 	}
 	init_utils(&data->utils);
-	//aplly_parser(&data->token, data);
+	aplly_parser(&data->token, data);
 	check_syntax(data->token, data->envp, &data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 	printf("Sintax: %d\n", data->prompt->exit_status);
@@ -158,7 +158,7 @@ void	analysis(t_data *data)
 		clean_program(&data->utils);
 		return ;
 	}
-	aplly_parser(&data->token, data);
+	//aplly_parser(&data->token, data);
 	//token_print(data->token);
 	//printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status)
 	//my_tree_my_life(data->token, &data->utils);
@@ -170,7 +170,8 @@ void	analysis(t_data *data)
 	print_node(data->root);
 	printf("\n");
 	token_print(data->token);	
-	minishell(&data->root, data);
+	handle_builtin(data->root->cmd, data);
+	// minishell(&data->root, data);
 	//data->prompt->cmdset = convert_to_cmd(&data->token);
 	//print_split(data->prompt->cmdset);
 	token_clean(data->token);

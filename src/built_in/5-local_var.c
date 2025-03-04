@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   5-local_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 15:47:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/19 13:13:43 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/04 12:34:00 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,26 @@ t_localvar	*search_locals(t_localvar **var, char *name)
 		temp = temp->next;
 	}
 	return (NULL);
+}
+
+static int	namevalidation(char *input, t_localvar **var)
+{
+	int			i;
+	t_localvar	*temp;
+	char		*name;
+
+	if (!input || !valid_name(input[0], 1))
+		return (0);
+	i = 0;
+	while (input[i] && input[i] != '=')
+		if (!valid_name(input[i++], 0))
+			return (0);
+	name = ft_strndup(input, i);
+	temp = search_locals(var, name);
+	if (temp)
+		ft_unset(NULL, var, name);
+	free(name);
+	return (i);
 }
 
 static t_localvar	*local_last(t_localvar **var)
@@ -44,12 +64,12 @@ int	ft_localvar(char *input, t_localvar **var)
 
     if (!input)
         return (1);
-    len = namevalidation(input);
+    len = namevalidation(input, var);
     if (!len)
         return (1);
-    new = ft_calloc(sizeof(t_export), 1);
-    if (!new)
-        return (1);
+    new = init_local();
+	if (!new)
+	return (1);
     new->name = ft_strndup(input, len);
     new->value = get_var(&input[len + 1]);
     if (!new->name || !new->value)
@@ -75,15 +95,4 @@ void	locals_print(t_localvar **var)
 		printf("local: %s=%s\n", temp->name, temp->value);
 		temp = temp->next;
 	}
-}
-
-void	clean_locals(t_localvar	*var)
-{
-	if (!var)
-		return ;
-	if (var->next)
-		clean_locals(var->next);
-	free(var->name);
-	free(var->value);
-	free(var);
 }

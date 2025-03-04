@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 10:24:58 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:39:02 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,11 +190,11 @@ void		export_clean(t_export **var);
 void		export_init(char **envp, t_export **var);
 int			ft_localvar(char *input, t_localvar **var);
 void		clean_locals(t_localvar	*var);
-int			namevalidation(char *input);
 char		*get_var(char *input);
 int			export_print(t_export **var);
 t_export	*export_last(t_export **var);
 void		locals_print(t_localvar **var);
+t_localvar	*init_local(void);
 t_localvar	*search_locals(t_localvar **var, char *name);
 
 //	lexer
