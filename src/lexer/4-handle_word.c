@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4-handle_word.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/19 12:19:11 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/04 13:05:28 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 			break ;
 	(*token) = token_add((*token),
 			token_create(str, i, lex->index++, lex->id), NULL);
-	if (((lex->id == CMD || lex->id == FD || lex->id == LIMITER)
-			&& ft_strncmp(str, "xargs", 5) != 0))
+	if (ft_strncmp(str, "xargs", 5) && (lex->id == CMD || lex->id == FD || lex->id == LIMITER))
 		lex->id = ARG;
 	else if (lex->id == FD)
 		lex->id = CMD;

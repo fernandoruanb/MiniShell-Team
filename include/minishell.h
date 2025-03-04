@@ -6,13 +6,15 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:01:08 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 16:01:12 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:04:57 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stddef.h>
+# include <sys/types.h>
 # include <limits.h>
 # include "libft.h"
 # include "libft.h"
@@ -38,15 +40,6 @@
 # define RED "\033[38;5;214m"
 # define RESET	"\033[0m"
 
-typedef struct s_ast
-{
-	char			**cmd;
-
-	struct s_ast	*parent;
-	struct s_ast	*left;
-	struct s_ast	*right;
-}	t_ast;
-
 typedef enum e_id
 {
 	NONE,
@@ -64,6 +57,18 @@ typedef enum e_id
 	OPERATOR_OR,
 	OPERATOR_AND
 }	t_id;
+
+typedef struct s_ast t_ast;
+
+typedef struct s_ast
+{
+	char	**cmd;
+	t_id	id;
+	int		index;
+
+	t_ast	*left;
+	t_ast	*right;
+}	t_ast;
 
 typedef struct s_lex
 {
@@ -88,8 +93,7 @@ typedef struct s_token
 typedef struct s_prompt
 {
 	char	*input;
-	char	***cmdset;
-	char	**envp;
+	char	**cmdset;
 	char	*path;
 
 	int		exit_status;
@@ -119,7 +123,7 @@ typedef struct s_utils
 	int			pids[9000];
 	int			index;
 	int			brackets_c;
-	int		num_of_processes;
+	int			num_of_processes;
 	int			brackets_o;
 	int			index_bra_c;
 	int			index_bra_o;
@@ -147,14 +151,16 @@ typedef struct s_var
 
 typedef struct s_data
 {
+	t_ast		*root;
 	t_prompt	*prompt;
 	t_token		*token;
 	t_utils		utils;
 	t_export	*export_vars;
 	t_localvar	*local_vars;
 
-	int			isPipe;
-	int			fd[2];
+	char		**envp;
+	int			is_pipe;
+	int			fd_backup;
 }	t_data;
 
 //	0-utils.c
@@ -196,11 +202,11 @@ void		export_clean(t_export **var);
 void		export_init(char **envp, t_export **var);
 int			ft_localvar(char *input, t_localvar **var);
 void		clean_locals(t_localvar	*var);
-int			namevalidation(char *input);
 char		*get_var(char *input);
 int			export_print(t_export **var);
 t_export	*export_last(t_export **var);
 void		locals_print(t_localvar **var);
+t_localvar	*init_local(void);
 t_localvar	*search_locals(t_localvar **var, char *name);
 
 //	lexer
@@ -333,8 +339,7 @@ int			check_local_environment(t_token *root);
 int			my_tree_my_life(t_token *root, t_utils *data);
 
 //	Parsing
-char		***converttokentosplit(t_token **token);
-void		print_array(char ***array);
+char		**convert_to_cmd(t_token **token);
 void		print_split(char **split);
 char		*remove_quotes(char *str);
 void		*clean_array(char ***array);
@@ -344,10 +349,21 @@ char		*domain_expansion(char *str, t_data *data);
 char		*remove_escape(char *str);
 int			find_var(char *str);
 char		*expand_tilde(char *str);
+int			count_var(char *str);
 
 //	execution
-int			minishell(t_data *data);
-int			handle_builtin(char ***cmd, t_data *data);
+char		**updateenvp(t_export **export);
+int			handle_builtin(char **cmd, t_data *data);
+int			minishell(t_ast **root, t_data *data);
+void		call_minishell(t_ast **ast, t_data *data);
+
+//	ast
+t_ast		*create_node(char **cmd, int index, t_id id);
+t_ast		*add_node(t_ast *root, t_token **token);
+void		print_node(t_ast *root);
+void		clean_node(t_ast **root);
+void		make_ast(t_token **token, t_ast **ast, t_data *data);
+void		handle_redir(t_token **token, t_ast **ast);
 
 // HANDLE_OPERATORS
 
@@ -369,5 +385,12 @@ void		heredoc_check_mode(char *line, char *limiter, int fd);
 void		check_errno(char **split1, t_utils *data);
 void		translate(t_utils *data);
 void		single_command(char *cmd, t_utils *data);
+void	append(char *message, char *filename);
+int		handle_pipe_op(char *cmd, int flag, char **envp);
+void	handle_red_in(char *cmd1, char *filename, int *status, char **envp);
+void	handle_red_out(char *message, char *filename);
+void	heredoc(char *limiter);
+void	operator_and(char *cmd1, char *cmd2, char **envp);
+void	operator_or(char *cmd1, char *cmd2, char **envp);
 
 #endif

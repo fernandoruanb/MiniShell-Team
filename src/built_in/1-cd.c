@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-cd.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 14:24:06 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/21 11:30:14 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:05:42 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,14 @@
 void	ft_cd(char *input)
 {
 	char	*path;
+	char	temp[1024];
 
 	path = NULL;
 	// if (input[3] == '~')
 	// 	path = getenv("HOME");
-	if (!ft_strcmp(input, "-"))
+	if (!input)
+		path = getenv("HOME");
+	else if (!ft_strcmp(input, "-"))
 		path = getenv("OLDPWD");
 	if (path == NULL)
 	{
@@ -46,4 +49,6 @@ void	ft_cd(char *input)
 	}
 	else
 		chdir(path);
+	getcwd(temp, 1024);
+	printf("%s\n", temp);
 }

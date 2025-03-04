@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/02 20:59:21 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/03/04 15:35:28 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,48 @@ void	aplly_parser(t_token **token, t_data *data)
 	}
 }
 
+// t_ast	*make_ast(t_token **token)
+// {
+// 	t_token *temp;
+// 	t_ast	*new;
+
+// 	temp = *token;
+// 	new = NULL;
+// 	while (temp->next)
+// 		temp = temp->next;
+// 	while (temp->previous)
+// 	{
+// 		if (temp->id != CMD && temp->id != ARG)
+// 			new = add_node(new, &temp);
+// 		temp = temp->previous;
+// 	}
+// 	while (temp)
+// 	{
+// 		if (temp->id == CMD || temp->id == FD || temp->id == LIMITER)
+// 			new = add_node(new, &temp);
+// 		temp = temp->next;
+// 	}
+// 	return (new);
+// }
+
+void ast_print(t_ast *root, int level)
+{
+    if (!root)
+    {
+		    return ;
+	}
+	ast_print(root->left, level + 1);
+	for (int i = 0; i < level; i++)
+		printf("     ");
+	printf("%s (%d)(%s)\n", root->cmd[0], root->index, root->id == CMD ? "CMD" : root->id == LIMITER ? "LIMITER" : root->id == FD ? "FD" : root->id == PIPE ? "PIPE" : "REDIRECT");
+	ast_print(root->right, level + 1);
+}
+
 void	analysis(t_data *data)
 {
-	data->token = lexer(data->prompt->input, data->prompt->envp);
+	data->envp = updateenvp(&data->export_vars);
+	//print_split(data->envp);
+	data->token = lexer(data->prompt->input, data->envp);
 	// data->prompt->exit_status = 2 * !data->token;
 	//printf("\033[31mLexer exit:\033[0m %d\n", data->prompt->exit_status);
 	if (!data->token)
@@ -108,27 +147,37 @@ void	analysis(t_data *data)
 		return ;
 	}
 	init_utils(&data->utils);
-	if (check_syntax(data->token, data->prompt->envp, &data->utils))
-	{
-		data->utils.exit_status = 0;
-		data->prompt->exit_status = 0;
-		ft_printf(GREEN"OK\n"RESET);
-	}
-	else
-	{
-		data->prompt->exit_status = data->utils.exit_status;
-		ft_printf("\033[31mExit code:\033[0m %d\n", data->utils.exit_status);
-		ft_printf("\033[38;5;214mKO\033[0m\n");
-	}
-	printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status);
-
 	aplly_parser(&data->token, data);
+	check_syntax(data->token, data->envp, &data->utils);
+	data->prompt->exit_status = data->utils.exit_status;
+	printf("Sintax: %d\n", data->prompt->exit_status);
+	}
+	if (data->prompt->exit_status != 0)
+	{
+		token_clean(data->token);
+		clear_split(data->envp);
+		clean_program(&data->utils);
+		return ;
+	}
+	//aplly_parser(&data->token, data);
+	//token_print(data->token);
+	//printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status)
 	//my_tree_my_life(data->token, &data->utils);
 	//data->prompt->cmdset = converttokentosplit(&data->token);
-	token_print(data->token);
 	//print_array(data->prompt->cmdset);
-	//minishell(data);
+	make_ast(&data->token, &data->root, data);
+	printf(RED"AST\n"RESET);
+	ast_print(data->root, 0);
+	print_node(data->root);
+	printf("\n");
+	token_print(data->token);	
+	//handle_builtin(data->root->cmd, data);
+	// minishell(&data->root, data);
+	//data->prompt->cmdset = convert_to_cmd(&data->token);
+	//print_split(data->prompt->cmdset);
 	token_clean(data->token);
+	clean_node(&data->root);
+	clear_split(data->envp);
 	clean_program(&data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 }
@@ -146,5 +195,3 @@ void	analysis(t_data *data)
 // 	if (prompt->input != NULL)
 // 		child(prompt);
 // }
-
-
