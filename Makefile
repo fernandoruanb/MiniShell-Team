@@ -95,13 +95,14 @@ SRCS = main/2-events.c \
 		handle_operators/heredoc.c\
 		handle_operators/operator_and.c\
 		handle_operators/operator_or.c\
+		ast/3-handle_redir.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJ = $(SRC:.c=.o)
 HEADER = include
 LIBFT = libft
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra -I$(HEADER) -g3
 
 .DEFAULT_GOAL := all

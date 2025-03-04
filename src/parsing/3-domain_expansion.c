@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/25 11:33:57 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:56:43 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static char	*complete_str(char *str, char *expand, char *prev, int *i)
 	ft_double_free(prev, expand);
 	temp = ft_strjoin(tmp, &str[*i]);
 	ft_double_free(tmp, str);
+	*i = 0;
 	return (temp);
 }
 
@@ -117,6 +118,7 @@ char	*domain_expansion(char *str, t_data *data)
 		{
 			temp = ft_strndup(str, i);
 			expand = search_content(str, data, &i);
+			printf("expand: %s\n", expand);
 			str = complete_str(str, expand, temp, &i);
 		}
 	return (str);

@@ -6,35 +6,11 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 10:34:17 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/28 11:10:38 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:33:46 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// t_ast	*make_ast(t_token **token)
-// {
-// 	t_token *temp;
-// 	t_ast	*new;
-
-// 	temp = *token;
-// 	new = NULL;
-// 	while (temp->next)
-// 		temp = temp->next;
-// 	while (temp->previous)
-// 	{
-// 		if (temp->id != CMD && temp->id != ARG)
-// 			new = add_node(new, &temp);
-// 		temp = temp->previous;
-// 	}
-// 	while (temp)
-// 	{
-// 		if (temp->id == CMD || temp->id == FD || temp->id == LIMITER)
-// 			new = add_node(new, &temp);
-// 		temp = temp->next;
-// 	}
-// 	return (new);
-// }
 
 static void	handle_operators(t_token **token, t_ast **ast)
 {
@@ -48,40 +24,36 @@ static void	handle_operators(t_token **token, t_ast **ast)
 		*ast = add_node(*ast, &temp);
 }
 
-static int	isredir(t_id id)
-{
-	return (id == REDIRECT_IN || id == REDIRECT_OUT || id == APPEND || id == HEREDOC);
-}
-
-static void	handle_pipe_redir(t_token **token, t_ast **ast)
+static void	handle_pipe_ast(t_token **token, t_ast **ast)
 {
 	t_token	*temp;
 
 	if (!*token)
 		return ;
 	temp = *token;
-	handle_pipe_redir(&temp->next, ast);
-	if (temp->id == PIPE || isredir(temp->id))
+	handle_pipe_ast(&temp->next, ast);
+	if (temp->id == PIPE)
 		*ast = add_node(*ast, &temp);
 }
 
-static void handle_commands(t_token **token, t_ast **ast)
+static void handle_commands(t_token **token, t_ast **ast, t_data *data)
 {
 	t_token	*temp;
 
 	if (!*token)
 		return ;
 	temp = *token;
-	handle_commands(&temp->next, ast);
+	handle_commands(&temp->next, ast, data);
 	if (temp->id == CMD || temp->id == FD || temp->id == LIMITER)
 		*ast = add_node(*ast, &temp);
 }
 
-void	make_ast(t_token **token, t_ast **ast)
+void	make_ast(t_token **token, t_ast **ast, t_data *data)
 {
 	if (!*token)
 		return ;
 	handle_operators(token, ast);
-	handle_pipe_redir(token, ast);
-	handle_commands(token, ast);
+	handle_pipe_ast(token, ast);
+	handle_redir(token, ast);
+	handle_commands(token, ast, data);
 }

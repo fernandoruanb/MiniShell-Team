@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/03 11:53:32 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:52:45 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void	analysis(t_data *data)
 	}
 	init_utils(&data->utils);
 	//aplly_parser(&data->token, data);
-	token_print(data->token);	
 	check_syntax(data->token, data->envp, &data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 	printf("Sintax: %d\n", data->prompt->exit_status);
@@ -165,12 +164,13 @@ void	analysis(t_data *data)
 	//my_tree_my_life(data->token, &data->utils);
 	//data->prompt->cmdset = converttokentosplit(&data->token);
 	//print_array(data->prompt->cmdset);
-	make_ast(&data->token, &data->root);
+	make_ast(&data->token, &data->root, data);
 	printf(RED"AST\n"RESET);
 	ast_print(data->root, 0);
 	print_node(data->root);
 	printf("\n");
-	//minishell(&data->root, data);
+	token_print(data->token);	
+	minishell(&data->root, data);
 	//data->prompt->cmdset = convert_to_cmd(&data->token);
 	//print_split(data->prompt->cmdset);
 	token_clean(data->token);

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/28 13:48:06 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:24:58 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,15 @@
 # define RED "\033[38;5;214m"
 # define RESET	"\033[0m"
 
+typedef struct s_ast t_ast;
+
 typedef struct s_ast
 {
-	char			**cmd;
-	int				index;
+	char	**cmd;
+	int		index;
 
-	struct s_ast	*left;
-	struct s_ast	*right;
+	t_ast	*left;
+	t_ast	*right;
 }	t_ast;
 
 typedef enum e_id
@@ -342,17 +344,19 @@ char		**updateenvp(t_export **export);
 int			handle_builtin(char **cmd, t_data *data);
 int			minishell(t_ast **root, t_data *data);
 void		call_minishell(t_ast **ast, t_data *data);
+
 //	ast
 t_ast		*create_node(char **cmd, int index);
 t_ast		*add_node(t_ast *root, t_token **token);
 void		print_node(t_ast *root);
 void		clean_node(t_ast **root);
-void		make_ast(t_token **token, t_ast **ast);
+void		make_ast(t_token **token, t_ast **ast, t_data *data);
+void		handle_redir(t_token **token, t_ast **ast);
 
 // HANDLE_OPERATORS
 
 void	append(char *message, char *filename);
-int	handle_pipe_op(char *cmd, int flag, char **envp);
+int		handle_pipe_op(char *cmd, int flag, char **envp);
 void	handle_red_in(char *cmd1, char *filename, int *status, char **envp);
 void	handle_red_out(char *message, char *filename);
 void	heredoc(char *limiter);
