@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-events.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/06 13:09:32 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/27 18:21:26 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/03/04 15:31:43 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/03/04 15:31:47 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	destroy(t_data *data, char *message, int exit_code)
 		// 	(void)clean_array(data->prompt->cmdset);
 		free(data->prompt);
 	}
+	if (data->root)
+		clean_node(&data->root);
 	if (data->export_vars)
 		export_clean(&data->export_vars);
 	if (data->local_vars)

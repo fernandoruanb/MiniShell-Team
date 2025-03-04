@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   3-export.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:19 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/16 16:18:31 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/04 12:33:51 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	namevalidation(char *input)
+static int	namevalidation(char *input, t_export **var)
 {
-	int	i;
+	int			i;
+	char		*name;
+	t_export	*temp;
 
 	if (!input || !valid_name(input[0], 1))
 		return (0);
@@ -22,6 +24,11 @@ int	namevalidation(char *input)
 	while (input[i] && input[i] != '=')
 		if (!valid_name(input[i++], 0))
 			return (0);
+	name = ft_strndup(input, i);
+	temp = search_var(var, name);
+	if (temp)
+		ft_unset(var, NULL, name);
+	free(name);
 	return (i);
 }
 
@@ -79,7 +86,7 @@ int	ft_export(char *input, t_export **var)
 
     if (!input)
         return (export_print(var));
-    len = namevalidation(input);
+    len = namevalidation(input, var);
     if (!len)
         return (1);
     new = calloc(sizeof(t_export), 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4-unset.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:26 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/19 13:15:41 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/04 12:34:21 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,16 @@ void	ft_unset(t_export **var, t_localvar **local, char *name)
 
 	if (!name)
 		return ;
-	temp = search_var(var, name);
-	if (temp)
-		return (clean_export(var, temp));
-	temp2 = search_locals(local, name);
-	if (temp2)
-		return (clean_local(local, temp2));
+	if (var)
+	{
+		temp = search_var(var, name);
+		if (temp)
+			return (clean_export(var, temp));
+	}
+	if (local)
+	{
+		temp2 = search_locals(local, name);
+		if (temp2)
+			return (clean_local(local, temp2));
+	}
 }
