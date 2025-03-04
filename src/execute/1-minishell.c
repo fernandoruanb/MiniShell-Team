@@ -97,7 +97,8 @@
 // 	if (!pid)
 // 	{
 // 		path = find_path((*root)->cmd[0], data->envp);
-// 		execve(path, (*root)->cmd, data->envp);
+//		if (path)
+// 			execve(path, (*root)->cmd, data->envp);
 // 		perror("Erro no execve");
 // 		free(path);
 // 		exit(1);
