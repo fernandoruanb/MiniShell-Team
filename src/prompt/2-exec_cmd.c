@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 13:21:40 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/04 13:01:59 by jopereir         ###   ########.fr       */
+/*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/03/04 15:35:28 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void	analysis(t_data *data)
 	check_syntax(data->token, data->envp, &data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 	printf("Sintax: %d\n", data->prompt->exit_status);
+	}
 	if (data->prompt->exit_status != 0)
 	{
 		token_clean(data->token);
@@ -180,7 +181,7 @@ void	analysis(t_data *data)
 	clean_program(&data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 }
-
+ 
 // void	exec_cmd(t_prompt *prompt)
 // {
 // 	// if (ft_strchr(prompt->input, '|'))
@@ -194,5 +195,3 @@ void	analysis(t_data *data)
 // 	if (prompt->input != NULL)
 // 		child(prompt);
 // }
-
-

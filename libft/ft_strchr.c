@@ -6,7 +6,7 @@
 /*   By: fruan-ba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 09:37:33 by fruan-ba          #+#    #+#             */
-/*   Updated: 2024/10/12 09:37:35 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:43:19 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*ft_strchr(const char *s, int c)
 	int	index;
 	int	length;
 
+	if (!s)
+		return (NULL);
 	length = ft_strlen(s);
 	index = 0;
 	if (c > 255)

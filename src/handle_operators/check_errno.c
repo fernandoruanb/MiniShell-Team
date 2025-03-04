@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   check_errno.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 15:36:10 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 15:36:13 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/26 18:51:37 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/26 18:55:54 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	int	index;
+#include "../../include/minishell.h"
 
-	if (!s1 || !s2)
-		return (1);
-	index = 0;
-	while (s1[index] != '\0' && s2[index] != '\0')
+void	check_errno(char **split1, t_utils *data)
+{
+	if (execve(split1[0], split1, data->envp) == -1)
 	{
-		if (s1[index] != s2[index])
-			return ((unsigned char)s1[index] - (unsigned char)s2[index]);
-		index++;
+		free_splits(NULL, split1, NULL, NULL);
+		if (errno == ENOENT)
+			exit(127);
+		else if (errno == EACCES)
+			exit(126);
+		else
+			exit(errno);
 	}
-	return ((unsigned char)s1[index] - (unsigned char)s2[index]);
 }

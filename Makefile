@@ -92,10 +92,21 @@ SRCS = main/2-events.c \
 		handle_operators/append.c\
 		handle_operators/handle_pipe_op.c\
 		handle_operators/handle_red_in.c\
-		handle_operators/handle_red_out.c\
+		handle_operators/handle_redirect_out.c\
 		handle_operators/heredoc.c\
 		handle_operators/operator_and.c\
 		handle_operators/operator_or.c\
+		handle_operators/utils/close_descriptors.c\
+		handle_operators/utils/fulfil_data_fd.c\
+		handle_operators/utils/get_pipes.c\
+		handle_operators/utils/init_pipes.c\
+		handle_operators/ft_write_read_mode.c\
+		handle_operators/ft_read_mode.c\
+		handle_operators/ft_write_mode.c\
+		handle_operators/heredoc_check_mode.c\
+		handle_operators/check_errno.c\
+		handle_operators/translate.c\
+		handle_operators/single_command.c\
 		ast/3-handle_redir.c\
 		1-token.c
 	

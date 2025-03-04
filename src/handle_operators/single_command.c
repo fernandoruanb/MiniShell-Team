@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   single_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 15:36:10 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 15:36:13 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/28 15:36:24 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/28 15:41:22 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	int	index;
+#include "../../include/minishell.h"
 
-	if (!s1 || !s2)
-		return (1);
-	index = 0;
-	while (s1[index] != '\0' && s2[index] != '\0')
+void	single_command(char *cmd, t_utils *data)
+{
+	char	**split1;
+	int		pid;
+
+	split1 = ft_split(cmd, ' ');
+	if (!split1)
+		return ;
+	pid = fork();
+	if (pid == -1)
 	{
-		if (s1[index] != s2[index])
-			return ((unsigned char)s1[index] - (unsigned char)s2[index]);
-		index++;
+		free_splits(NULL, split1, NULL, NULL);
+		return ;
 	}
-	return ((unsigned char)s1[index] - (unsigned char)s2[index]);
+	if (pid == 0)
+		check_errno(split1, data);
+	free_splits(NULL, split1, NULL, NULL);
+	waitpid(pid, &data->exec_status, 0);
 }

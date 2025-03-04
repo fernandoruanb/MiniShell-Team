@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 12:59:35 by jopereir         ###   ########.fr       */
+/*   Created: 2025/03/04 15:43:39 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/03/04 15:43:42 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stddef.h>
+# include <sys/types.h>
 # include <limits.h>
 # include "libft.h"
 # include "libft.h"
@@ -102,17 +104,26 @@ typedef struct s_utils
 	char		*temp;
 	char		*path;
 	char		**paths;
+	char		**envp;
+	int			**pipes_fd;
 	int			status;
 	int			redirects;
 	int			files;
+	int			pid;
 	int			commands;
 	int			pipes;
+	int			temp_fd;
+	int			fd_backup;
+	int			exec_status;
 	int			exit_status;
 	int			simple_quotes;
 	int			double_quotes;
 	char		*copy_new;
 	int			args;
+	int			pids[9000];
+	int			index;
 	int			brackets_c;
+	int			num_of_processes;
 	int			brackets_o;
 	int			index_bra_c;
 	int			index_bra_o;
@@ -129,7 +140,7 @@ typedef struct s_export
 	struct s_export	*prev;
 }	t_export;
 
-typedef struct	s_var
+typedef struct s_var
 {
 	char			*name;
 	char			*value;
@@ -356,6 +367,24 @@ void		handle_redir(t_token **token, t_ast **ast);
 
 // HANDLE_OPERATORS
 
+void		append(char *message, char *filename, t_utils *data);
+int			handle_pipe_op(char *cmd, int flag, t_utils *data);
+void		handle_red_in(char *cmd1, char *filename, t_utils *data);
+void		handle_redirect_out(char *message, char *filename, t_utils *data);
+int			heredoc(char *cmd, char *limiter, t_utils *data);
+void		operator_and(char *cmd1, char *cmd2, t_utils *data);
+void		operator_or(char *cmd1, char *cmd2, t_utils *data);
+int			close_descriptors(int *pipefd, int flag, t_utils *data);
+void		fulfil_data_fd(int *pipefd, t_utils *data);
+int			get_pipes(t_token *root);
+int			init_pipes(t_utils *data);
+void		ft_write_mode(int *pipefd, char **cmd, t_utils *data);
+void		ft_read_mode(char **cmd, int *pipefd, t_utils *data);
+void		ft_write_read_mode(int *pipefd, char **cmd, t_utils *data);
+void		heredoc_check_mode(char *line, char *limiter, int fd);
+void		check_errno(char **split1, t_utils *data);
+void		translate(t_utils *data);
+void		single_command(char *cmd, t_utils *data);
 void	append(char *message, char *filename);
 int		handle_pipe_op(char *cmd, int flag, char **envp);
 void	handle_red_in(char *cmd1, char *filename, int *status, char **envp);

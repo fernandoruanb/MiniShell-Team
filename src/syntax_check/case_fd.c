@@ -6,13 +6,13 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:34:42 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/17 17:26:42 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:27:05 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	check_pipes_cases_fd(t_token *root)
+/*static int	check_pipes_cases_fd(t_token *root)
 {
 	t_token	*last;
 
@@ -31,9 +31,9 @@ static int	check_pipes_cases_fd(t_token *root)
 		last = last->next;
 	}
 	return (0);
-}
+}*/
 
-static int	invalid_fd(t_token *root, t_utils *data)
+/*static int	invalid_fd(t_token *root, t_utils *data)
 {
 	t_token	*last;
 
@@ -56,12 +56,10 @@ static int	invalid_fd(t_token *root, t_utils *data)
 		if (access(root->str, F_OK) != 0)
 			return (show_error_fd("Syntax: FD Error", 1, data, 1));
 	return (0);
-}
+}*/
 
 int	case_fd(t_token *root, t_utils *data)
 {
-	if (invalid_fd(root, data))
-		return (0);
 	if (is_number(root))
 		return (check_is_valid_fd(root, data));
 	if (check_is_directory(root, data))

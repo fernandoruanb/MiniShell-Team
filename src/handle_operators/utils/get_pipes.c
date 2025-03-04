@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_pipes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 16:15:18 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/18 16:18:32 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/21 17:29:46 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/24 10:26:44 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	get_pipes(t_token *root)
 {
-	t_utils	data;
-	t_token	*root;
+	t_token	*last;
+	int		count;
 
-	(void)argv;
-	if (argc < 1)
-		return (1);
-	root = NULL;
-	init_utils(&data);
-	root = create_token("\'echo\'", CMD);
 	if (!root)
-		return (1);
-	show_tokens(root);
-	if (check_syntax(root, envp, &data))
-		printf("OK\n");
-	else
-		printf("KO\n");
-	clean_program(&data);
-	return (0);
+		return (0);
+	last = root;
+	count = 0;
+	while (last->next)
+	{
+		if (last->id == PIPE)
+			count++;
+		last = last->next;
+	}
+	return (count);
 }
-

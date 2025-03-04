@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_write_mode.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 15:36:10 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 15:36:13 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/26 09:57:28 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/03/03 16:34:54 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	int	index;
+#include "../../include/minishell.h"
 
-	if (!s1 || !s2)
-		return (1);
-	index = 0;
-	while (s1[index] != '\0' && s2[index] != '\0')
+void	ft_write_mode(int *pipefd, char **cmd, t_utils *data)
+{
+	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+		exit(EXIT_FAILURE);
+	close_descriptors(pipefd, 1, data);
+	if (execve(cmd[0], cmd, data->envp) == -1)
 	{
-		if (s1[index] != s2[index])
-			return ((unsigned char)s1[index] - (unsigned char)s2[index]);
-		index++;
+		perror("Error: ");
+		free_splits(NULL, cmd, NULL, NULL);
+		exit(errno);
 	}
-	return ((unsigned char)s1[index] - (unsigned char)s2[index]);
 }

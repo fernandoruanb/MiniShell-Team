@@ -1,16 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   append.c                                           :+:      :+:    :+:   */
+/*   handle_redirect_out.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 10:05:05 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/03 16:38:14 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/03/04 09:46:52 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static char	*capture_dir(char *filename);
+
+static char	*initialize_directory(char *filename, t_utils *data)
+{
+	char	*detect_dir;
+
+	detect_dir = capture_dir(filename);
+	if (detect_dir == NULL)
+	{
+		detect_dir = ft_strdup(".");
+		if (!detect_dir)
+			return (NULL);
+	}
+	if (detect_dir != NULL)
+	{
+		if (access(detect_dir, W_OK) == -1)
+		{
+			data->exec_status = 1;
+			free(detect_dir);
+			return (NULL);
+		}
+	}
+	return (detect_dir);
+}
 
 static char	*capture_dir(char *filename)
 {
@@ -29,30 +54,21 @@ static char	*capture_dir(char *filename)
 	if (limit != 0)
 		detect_dir = ft_substr(filename, 0, limit);
 	else
-		detect_dir = ft_strdup(".");
+		detect_dir = NULL;
 	if (!detect_dir)
 		return (NULL);
 	return (detect_dir);
 }
 
-void	append(char *message, char *filename, t_utils *data)
+void	handle_redirect_out(char *message, char *filename, t_utils *data)
 {
-	int			fd;
-	char		*detect_dir;
+	int		fd;
+	char	*detect_dir;
 
-	detect_dir = capture_dir(filename);
-	if (!detect_dir)
-		detect_dir = ft_strdup(".");
-	if (detect_dir != NULL)
-	{
-		if (access(detect_dir, W_OK) == -1)
-		{
-			data->exec_status = 1;
-			free(detect_dir);
-			return ;
-		}
-	}
-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	detect_dir = initialize_directory(filename, data);
+	if (detect_dir == NULL)
+		return ;
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		free(detect_dir);
@@ -72,7 +88,7 @@ void	append(char *message, char *filename, t_utils *data)
 	data.utils.envp = envp;
 	if (argc != 3)
 		return (1);
-	append(argv[1], argv[2], &data.utils);
+	handle_redirect_out(argv[1], argv[2], &data.utils);
 	ft_printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
 }*/

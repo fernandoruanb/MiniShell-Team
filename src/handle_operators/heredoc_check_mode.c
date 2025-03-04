@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_red_out.c                                   :+:      :+:    :+:   */
+/*   heredoc_check_mode.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 08:09:42 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/21 16:12:38 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/26 18:39:44 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/03/04 14:06:10 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	handle_redirect_out(char *message, char *filename)
+void	heredoc_check_mode(char *line, char *limiter, int fd)
 {
-	int		fd;
-
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-		return ;
-	ft_putendl_fd(message, fd);
-	if (fd > 2)
-		close(fd);
+	line = NULL;
+	while (1)
+	{
+		line = readline("> ");
+		if (line == NULL)
+			return ;
+		if (ft_strcmp(line, limiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+		else
+			ft_putendl_fd(line, fd);
+	}
 }
-
-/*int	main(int argc, char **argv)
-{
-	if (argc != 3)
-		return (1);
-	handle_redirect_out(argv[1], argv[2]);
-	return (0);
-}*/
