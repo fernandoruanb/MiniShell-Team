@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/21 16:55:04 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:33:57 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 static char	*is_return(t_data *data, char *find)
 {
 	free(find);
-	return (ft_strdup(ft_itoa(data->prompt->exit_status)));
+	return (ft_itoa(data->prompt->exit_status));
 }
 
 static char	*search_content(char *str, t_data *data, int *i)
@@ -84,50 +84,40 @@ static char	*search_content(char *str, t_data *data, int *i)
 	return (NULL);
 }
 
-static char	*complete_str(char *str, char *expand, t_data *data)
+static char	*complete_str(char *str, char *expand, char *prev, int *i)
 {
-	char	*prev;
-	char	*next;
-	char	*new;
-	int		i;
+	char	*tmp;
+	char	*temp;
 
-	i = 0;
-	while (str[i] && str[i] != '$')
-		i++;
-	prev = ft_strndup(str, i);
-	if (!prev)
-		return (NULL);
-	while (str[i] && str[i] != ' ' && str[i] != '\"' && str[i] != '\\')
-		i++;
-	new = ft_strjoin(prev, expand);
-	(void)ft_double_free(prev, expand);
-	if (!new)
-		return (NULL);
-	next = ft_strdup(&str[i]);
-	prev = ft_strjoin(new, next);
-	(void)ft_double_free(next, new);
-	if (find_var(&prev[i]))
-		prev = domain_expansion(prev, data);
-	return (prev);
+	if (!expand)
+	{
+		tmp = ft_strjoin(prev, &str[*i]);
+		ft_double_free(str, prev);
+		*i = 0;
+		return (tmp);
+	}
+	tmp = ft_strjoin(prev, expand);
+	ft_double_free(prev, expand);
+	temp = ft_strjoin(tmp, &str[*i]);
+	ft_double_free(tmp, str);
+	return (temp);
 }
 
 char	*domain_expansion(char *str, t_data *data)
 {
 	int		i;
 	char	*expand;
-	char	*new;
+	char	*temp;
 
 	if (str[0] == '\'')
 		return (str);
 	i = -1;
-	new = NULL;
 	while (++i < int_ft_strlen(str))
 		if (str[i] == '$')
 		{
+			temp = ft_strndup(str, i);
 			expand = search_content(str, data, &i);
-			if (expand)
-				new = complete_str(str, expand, data);
+			str = complete_str(str, expand, temp, &i);
 		}
-	free(str);
-	return (new);
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/21 16:51:06 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:16:23 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ static int	is_cmd(char *str, t_lex *lex)
 
 void	get_label(t_lex *lex)
 {
-	if (lex->id != LIMITER && ((is_cmd(lex->word, lex) && lex->id != FD) || lex->id == NONE || ft_strncmp(lex->word, "./", 2) == 0)
+	if ((lex->id == NONE || lex->id != ARG) && !ft_strcmp(lex->word, "."))
+		lex->id = CMD;
+	else if (lex->id != LIMITER && ((is_cmd(lex->word, lex) && lex->id != FD) || lex->id == NONE || ft_strncmp(lex->word, "./", 2) == 0)
 		&& ft_strcmp(lex->word, ".") != 0 && ft_strncmp(lex->word, "../", 3) != 0)
 		lex->id = CMD;
 	else if (lex->id != FD && lex->id != LIMITER && lex->id != CMD)

@@ -85,6 +85,9 @@ SRCS = main/2-events.c \
 		parsing/6-expand_tilde.c\
 		execute/1-minishell.c\
 		execute/2-isbuiltin.c\
+		execute/3-updateenvp.c\
+		ast/1-ast.c\
+		ast/2-make_ast.c\
 		handle_operators/append.c\
 		handle_operators/handle_pipe_op.c\
 		handle_operators/handle_red_in.c\
@@ -110,7 +113,7 @@ OBJ = $(SRC:.c=.o)
 HEADER = include
 LIBFT = libft
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -I$(HEADER) -g
+CFLAGS = -Wall -Werror -Wextra -I$(HEADER) -g3
 
 .DEFAULT_GOAL := all
 

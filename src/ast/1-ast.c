@@ -5,97 +5,77 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 17:04:26 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/10 16:19:36 by jopereir         ###   ########.fr       */
+/*   Created: 2025/02/24 08:25:03 by jonas             #+#    #+#             */
+/*   Updated: 2025/02/28 11:09:30 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_cmd(char *str)
-{
-	int		i;
-	char	*temp;
-
-	i = 0;
-	while (str[i] && str[i] != ' ')
-		i++;
-	temp = ft_calloc(i + 1, 1);
-	if (!temp)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != ' ')
-	{
-		temp[i] = str[i];
-		i++;
-	}
-	return (str[i]);
-}
-
-static char	**get_args(char *str)
-{
-	int		i;
-	char	**temp;
-
-	i = 0;
-	while (str[i] && str[i] != ' ')
-		i++;
-	temp = ft_split(&str[i], ' ');
-	if (!temp)
-		return (NULL);
-	return (temp);
-}
-
-t_ast	*ast_create(char *input, t_ast *parent)
+t_ast	*create_node(char **cmd, int index)
 {
 	t_ast	*new;
 
-	new = ft_calloc(1, sizeof(t_ast));
+	new = ft_calloc(sizeof(t_ast), 1);
 	if (!new)
 		return (NULL);
+	new->cmd = cmd;
+	new->index = index;
 	new->left = NULL;
 	new->right = NULL;
-	new->parent = parent;
-	new->cmd = get_cmd(input);
 	return (new);
 }
 
-t_ast	*ast_add(t_ast *root, char *input)
+// static int	is_op(t_id id)
+// {
+// 	return (id == PIPE || id == OPERATOR_AND || id == OPERATOR_OR);
+// }
+
+t_ast	*add_node(t_ast *root, t_token **token)
 {
+	t_token	*temp;
+
 	if (!root)
-		return (create_ast(input, root));
-	
-	/*
-		Criar as condições para decidir o lado da lista
-		    |
-	       / \
-	     cmd >>
-	         / \
-		   cmd FD
-	*/
-	root->left = add_node(root->left, input);
-	root->right = add_node(root->right, input);
-	return (root);
+		return (create_node(convert_to_cmd(token), (*token)->index));
+	temp = *token;
+	if (temp->index > root->index)
+		root->right = add_node(root->right, token);
+	else
+		root->left = add_node(root->left, token);
+	return (root); 
 }
 
-void	ast_destroy(t_ast *root)
+static void	print_cmd(char **cmd)
+{
+	int	i;
+
+	if (!cmd)
+		return ;
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i])
+			printf("%s ", cmd[i]);
+		i++;
+	}
+}
+
+void	print_node(t_ast *root)
 {
 	if (!root)
 		return ;
-	ast_destroy(root->left);
-	ast_destroy(root->right);
-	free(root);
+	print_node(root->left);
+	print_cmd(root->cmd);
+	print_node(root->right);
 }
 
-/*
-	excluir futuramente
-*/
-void print_tree(t_ast *root, int level){
-    if (!root)
-        return ;
-	print_tree(root->left, level + 1);
-	for (int i = 0; i < level; i++)
-		printf("     ");
-	printf("%d\n", root->value);
-	print_tree(root->right, level + 1);
+void	clean_node(t_ast **root)
+{
+	if (!*root)
+		return ;
+	clean_node(&(*root)->left);
+	clean_node(&(*root)->right);
+	clear_split((*root)->cmd);
+	free(*root);
+	*root = NULL;
 }

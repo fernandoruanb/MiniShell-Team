@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 16:36:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 14:01:15 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/03/04 15:43:39 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/03/04 15:43:42 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stddef.h>
+# include <sys/types.h>
 # include <limits.h>
 # include "libft.h"
 # include "libft.h"
@@ -41,8 +43,8 @@
 typedef struct s_ast
 {
 	char			**cmd;
+	int				index;
 
-	struct s_ast	*parent;
 	struct s_ast	*left;
 	struct s_ast	*right;
 }	t_ast;
@@ -88,8 +90,7 @@ typedef struct s_token
 typedef struct s_prompt
 {
 	char	*input;
-	char	***cmdset;
-	char	**envp;
+	char	**cmdset;
 	char	*path;
 
 	int		exit_status;
@@ -119,7 +120,7 @@ typedef struct s_utils
 	int			pids[9000];
 	int			index;
 	int			brackets_c;
-	int		num_of_processes;
+	int			num_of_processes;
 	int			brackets_o;
 	int			index_bra_c;
 	int			index_bra_o;
@@ -147,14 +148,16 @@ typedef struct s_var
 
 typedef struct s_data
 {
+	t_ast		*root;
 	t_prompt	*prompt;
 	t_token		*token;
 	t_utils		utils;
 	t_export	*export_vars;
 	t_localvar	*local_vars;
 
-	int			isPipe;
-	int			fd[2];
+	char		**envp;
+	int			is_pipe;
+	int			fd_backup;
 }	t_data;
 
 //	0-utils.c
@@ -333,8 +336,7 @@ int			check_local_environment(t_token *root);
 int			my_tree_my_life(t_token *root, t_utils *data);
 
 //	Parsing
-char		***converttokentosplit(t_token **token);
-void		print_array(char ***array);
+char		**convert_to_cmd(t_token **token);
 void		print_split(char **split);
 char		*remove_quotes(char *str);
 void		*clean_array(char ***array);
@@ -344,10 +346,19 @@ char		*domain_expansion(char *str, t_data *data);
 char		*remove_escape(char *str);
 int			find_var(char *str);
 char		*expand_tilde(char *str);
+int			count_var(char *str);
 
 //	execution
-int			minishell(t_data *data);
-int			handle_builtin(char ***cmd, t_data *data);
+char		**updateenvp(t_export **export);
+int			handle_builtin(char **cmd, t_data *data);
+int			minishell(t_ast **root, t_data *data);
+void		call_minishell(t_ast **ast, t_data *data);
+//	ast
+t_ast		*create_node(char **cmd, int index);
+t_ast		*add_node(t_ast *root, t_token **token);
+void		print_node(t_ast *root);
+void		clean_node(t_ast **root);
+void		make_ast(t_token **token, t_ast **ast);
 
 // HANDLE_OPERATORS
 

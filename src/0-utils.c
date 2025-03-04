@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   0-utils.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:15:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 11:59:54 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:12:32 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	*clear_split(char **str)
 	while (str[i])
 		free(str[i++]);
 	free(str);
+	str = NULL;
 	return (NULL);
 }
 

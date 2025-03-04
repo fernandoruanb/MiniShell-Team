@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/21 12:51:09 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:05:26 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,19 @@ static int	find_tilde(char *str)
 			if (i == 0 || (i > 0 && str[i - 1] == ' '))
 				return (1);
 	return (0); 
+}
+
+int	count_var(char *str)
+{
+	int	i;
+	int	cnt;
+
+	i = 0;
+	cnt = 0;
+	while (str[i])
+		if (str[i++] == '$')
+			cnt++;
+	return (cnt);
 }
 
 int	parser(t_token **token, t_data *data)
