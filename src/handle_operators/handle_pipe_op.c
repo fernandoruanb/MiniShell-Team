@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/03 17:19:55 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/04 13:56:32 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	write_mode(char **cmd, int *pipefd, t_utils *data)
 
 	data->fd_backup = dup(pipefd[0]);
 	if (data->fd_backup == -1)
-		return (close_descriptors(pipefd, 0, data));
+		close_descriptors(pipefd, 0, data);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -57,10 +57,10 @@ void	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 	int	fd;
 
 	if (data->fd_backup < 0)
-		return (close_descriptors(pipefd, 1, data));
+		close_descriptors(pipefd, 1, data);
 	fd = dup(pipefd[0]);
 	if (fd == -1)
-		return (close_descriptors(pipefd, 1, data));
+		close_descriptors(pipefd, 1, data);
 	pid = fork();
 	if (pid == -1)
 	{

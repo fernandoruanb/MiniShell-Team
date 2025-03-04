@@ -6,11 +6,36 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/28 17:55:54 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/04 09:46:52 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static char	*capture_dir(char *filename);
+
+static char	*initialize_directory(char *filename, t_utils *data)
+{
+	char	*detect_dir;
+
+	detect_dir = capture_dir(filename);
+	if (detect_dir == NULL)
+	{
+		detect_dir = ft_strdup(".");
+		if (!detect_dir)
+			return (NULL);
+	}
+	if (detect_dir != NULL)
+	{
+		if (access(detect_dir, W_OK) == -1)
+		{
+			data->exec_status = 1;
+			free(detect_dir);
+			return (NULL);
+		}
+	}
+	return (detect_dir);
+}
 
 static char	*capture_dir(char *filename)
 {
@@ -40,18 +65,9 @@ void	handle_redirect_out(char *message, char *filename, t_utils *data)
 	int		fd;
 	char	*detect_dir;
 
-	detect_dir = capture_dir(filename);
+	detect_dir = initialize_directory(filename, data);
 	if (detect_dir == NULL)
-		detect_dir = ".";
-	if (detect_dir != NULL)
-	{
-		if (access(detect_dir, W_OK) == -1)
-		{
-			data->exec_status = 1;
-			free(detect_dir);
-			return ;
-		}
-	}
+		return ;
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
