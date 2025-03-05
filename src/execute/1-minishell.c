@@ -356,28 +356,31 @@ static t_ast	*find_cmd(t_ast **root)
 	return (ast);
 }
 
-static int	redir(t_ast **root, t_data *data)
+static void	redir(t_ast **root, t_data *data)
 {
 	t_ast	*ast;
-	int		original;
 	char	*name;
 
 	if (!*root || !data)
-		return (-1);
+		return ;
 	ast = *root;
-	original = dup (STDOUT_FILENO);
 	name = find_fd(&ast);
 	if (ast->id == REDIRECT_OUT)
 		handle_redirect_out(name, &data->utils);
 	else if (ast->id == APPEND)
 		append(name, &data->utils);
 	if (ast->left->id != PIPE && ast->right->id != PIPE)
-	{
 		single_command(find_cmd(&ast)->cmd, &data->utils);
-		dup2(original, STDOUT_FILENO);
-		return (-1);
-	}
-	return (original);
+}
+
+static void	exec_redir(t_ast **root, t_data *data)
+{
+	if (!*root)
+		return ;
+	if (isredir((*root)->id))
+		redir(root, data);
+	exec_redir(&(*root)->left, data);
+	exec_redir(&(*root)->right, data);
 }
 
 static int	exec_cmd(t_ast	**root, t_data *data)
@@ -388,9 +391,8 @@ static int	exec_cmd(t_ast	**root, t_data *data)
 	if (!*root || !data)
 		return (-1);
 	ast = *root;
-	fd = -1;
-	if (isredir(ast->id))
-		fd = redir(&ast, data);
+	fd = dup (STDOUT_FILENO);
+	exec_redir(&ast, data);
 	if (ast->id == PIPE || isredir(ast->id))
 		exec_cmd(&ast->left, data);
 
@@ -403,26 +405,25 @@ static int	exec_cmd(t_ast	**root, t_data *data)
 		else
 			handle_pipe_op(&ast, 3, &data->utils);
 	}
-
+		dup2(fd, STDOUT_FILENO);
 	if (ast->id == PIPE || isredir(ast->id))
 		exec_cmd(&ast->right, data);
+	if (fd >= 0)
+		dup2(fd, STDOUT_FILENO);
 	return (fd);
 }
 
 int	minishell(t_data *data)
 {
 	t_ast	*ast;
-	int		fd;
 
 	if (!data)
 		return (1);
 	ast = data->root;
-	fd = -1;
 	if (ast->id != CMD)
-		fd = exec_cmd(&ast, data);
+		exec_cmd(&ast, data);
 	else
 		single_command(ast->cmd, &data->utils);
-	dup2(fd, STDOUT_FILENO);
 	data->prompt->exit_status = data->utils.exec_status;
 	return (0);
 }
