@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 15:35:28 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/05 10:50:24 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,11 @@ void ast_print(t_ast *root, int level)
     {
 		    return ;
 	}
-	ast_print(root->left, level + 1);
+	ast_print(root->right, level + 1);
 	for (int i = 0; i < level; i++)
 		printf("     ");
 	printf("%s (%d)(%s)\n", root->cmd[0], root->index, root->id == CMD ? "CMD" : root->id == LIMITER ? "LIMITER" : root->id == FD ? "FD" : root->id == PIPE ? "PIPE" : "REDIRECT");
-	ast_print(root->right, level + 1);
+	ast_print(root->left, level + 1);
 }
 
 void	analysis(t_data *data)
@@ -151,7 +151,6 @@ void	analysis(t_data *data)
 	check_syntax(data->token, data->envp, &data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 	printf("Sintax: %d\n", data->prompt->exit_status);
-	}
 	if (data->prompt->exit_status != 0)
 	{
 		token_clean(data->token);
@@ -171,8 +170,8 @@ void	analysis(t_data *data)
 	print_node(data->root);
 	printf("\n");
 	token_print(data->token);	
-	//handle_builtin(data->root->cmd, data);
-	// minishell(&data->root, data);
+	handle_builtin(data->root->cmd, data);
+	minishell(data);
 	//data->prompt->cmdset = convert_to_cmd(&data->token);
 	//print_split(data->prompt->cmdset);
 	token_clean(data->token);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:18:33 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 16:18:55 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/05 10:50:14 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,6 @@
 # define RED "\033[38;5;214m"
 # define RESET	"\033[0m"
 
-typedef struct s_ast
-{
-	char			**cmd;
-
-	struct s_ast	*parent;
-	struct s_ast	*left;
-	struct s_ast	*right;
-}	t_ast;
 
 typedef enum e_id
 {
@@ -64,6 +56,18 @@ typedef enum e_id
 	OPERATOR_OR,
 	OPERATOR_AND
 }	t_id;
+
+typedef struct s_ast t_ast;
+
+typedef struct s_ast
+{
+	char	**cmd;
+	int		index;
+	t_id	id;
+
+	t_ast	*left;
+	t_ast	*right;
+}	t_ast;
 
 typedef struct s_lex
 {
@@ -150,11 +154,12 @@ typedef struct s_data
 	t_prompt	*prompt;
 	t_token		*token;
 	t_utils		utils;
+	t_ast		*root;
 	t_export	*export_vars;
 	t_localvar	*local_vars;
 
-	int			isPipe;
-	int			fd[2];
+	int			is_pipe;
+	char		**envp;
 }	t_data;
 
 //	0-utils.c
@@ -196,7 +201,7 @@ void		export_clean(t_export **var);
 void		export_init(char **envp, t_export **var);
 int			ft_localvar(char *input, t_localvar **var);
 void		clean_locals(t_localvar	*var);
-int			namevalidation(char *input);
+t_localvar	*init_local(void);
 char		*get_var(char *input);
 int			export_print(t_export **var);
 t_export	*export_last(t_export **var);
@@ -333,7 +338,7 @@ int			check_local_environment(t_token *root);
 int			my_tree_my_life(t_token *root, t_utils *data);
 
 //	Parsing
-char		***converttokentosplit(t_token **token);
+char		**convert_to_cmd(t_token **token);
 void		print_array(char ***array);
 void		print_split(char **split);
 char		*remove_quotes(char *str);
@@ -347,17 +352,19 @@ char		*expand_tilde(char *str);
 
 //	execution
 int			minishell(t_data *data);
-int			handle_builtin(char ***cmd, t_data *data);
+int			handle_builtin(char **cmd, t_data *data);
+char		**updateenvp(t_export **export);
+
 
 // HANDLE_OPERATORS
-
 void		append(char *message, char *filename, t_utils *data);
-int			handle_pipe_op(char *cmd, int flag, t_utils *data);
+int			handle_pipe_op(t_ast **root, int flag, t_utils *data);
 void		handle_red_in(char *cmd1, char *filename, t_utils *data);
 void		handle_redirect_out(char *message, char *filename, t_utils *data);
 int			heredoc(char *cmd, char *limiter, t_utils *data);
 void		operator_and(char *cmd1, char *cmd2, t_utils *data);
 void		operator_or(char *cmd1, char *cmd2, t_utils *data);
+
 int			close_descriptors(int *pipefd, int flag, t_utils *data);
 void		fulfil_data_fd(int *pipefd, t_utils *data);
 int			get_pipes(t_token *root);
@@ -369,5 +376,13 @@ void		heredoc_check_mode(char *line, char *limiter, int fd);
 void		check_errno(char **split1, t_utils *data);
 void		translate(t_utils *data);
 void		single_command(char *cmd, t_utils *data);
+
+//	ast
+void		clean_node(t_ast **root);
+void		print_node(t_ast *root);
+t_ast		*add_node(t_ast *root, t_token **token);
+t_ast		*create_node(char **cmd, int index, t_id id);
+void		make_ast(t_token **token, t_ast **ast, t_data *data);
+void		handle_redir(t_token **token, t_ast **ast);
 
 #endif
