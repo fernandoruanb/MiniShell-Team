@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/03 11:05:26 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:18:07 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ int	find_var(char *str)
 	return (0);
 }
 
-static int	find_escape(char *str)
-{
-	int	i;
+// static int	find_escape(char *str)
+// {
+// 	int	i;
 
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
-		if (str[i++] == '\\')
-			return (1);
-	return (0);
-}
+// 	if (!str)
+// 		return (0);
+// 	i = 0;
+// 	while (str[i])
+// 		if (str[i++] == '\\')
+// 			return (1);
+// 	return (0);
+// }
 
 static int	find_quote(char *str)
 {
@@ -90,7 +90,5 @@ int	parser(t_token **token, t_data *data)
 		temp->str = domain_expansion(temp->str, data);
 	if (find_quote(temp->str))
 		temp->str = remove_quotes(temp->str);
-	if (find_escape(temp->str))
-		temp->str = remove_escape(temp->str);
 	return (0);
 }

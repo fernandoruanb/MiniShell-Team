@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/03 11:00:32 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:23:28 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	handle_special(char *str, t_token **token)
 
 	i = -1;
 	while (str[++i])
-		if (str[i] == '\\' && !str[i + 1])
+		if (str[i] == '\\' || str[i] == ';')
 			return (bad_char(token));
 	return (0);
 }
@@ -82,7 +82,7 @@ t_token	*lexer(char *str, char **envp)
 	token = NULL;
 	if (handle_special(str, &token))
 	{
-		printf("Lexer: Escape on the wrong place.\n");
+		printf("Lexer error:\n\n';' or '\\' detected.\n\n");
 		return (NULL);
 	}
 	while (str[i])

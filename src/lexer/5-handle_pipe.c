@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:41:29 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/13 12:06:21 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:21:48 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	handle_pipe(char *str, t_token **token, t_lex *lex)
 	if (i == 2)
 		return (handle_or(str, token, lex));
 	if (i > 2)
-		return (error_message("Lexer: Too many pipes.", -1, token));
+		return (error_message("Lexer error:\n Too many pipes.", -1, token));
 	(*token) = token_add((*token),
 			token_create(str, i, lex->index++, PIPE), NULL);
 	lex->id = CMD;
