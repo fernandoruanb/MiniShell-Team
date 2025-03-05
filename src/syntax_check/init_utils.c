@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:28:30 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/02 12:37:33 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:50:19 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	init_utils(t_utils *data)
+void	init_utils(t_utils *data, char **envp)
 {
 	data->index_bra_c = -1;
 	data->index_bra_o = -1;
@@ -21,6 +21,7 @@ void	init_utils(t_utils *data)
 	data->path = NULL;
 	data->simple_quotes = 0;
 	data->copy_new = NULL;
+	data->envp = envp;
 	data->double_quotes = 0;
 	data->paths = NULL;
 	data->temp = NULL;

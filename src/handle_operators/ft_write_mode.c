@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_write_mode.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:57:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/03 16:34:54 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:58:13 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 
 void	ft_write_mode(int *pipefd, char **cmd, t_utils *data)
 {
+	char	*path;
+
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 		exit(EXIT_FAILURE);
 	close_descriptors(pipefd, 1, data);
-	if (execve(cmd[0], cmd, data->envp) == -1)
-	{
-		perror("Error: ");
-		free_splits(NULL, cmd, NULL, NULL);
-		exit(errno);
-	}
+	if (access(cmd[0], F_OK | X_OK))
+		path = find_path(cmd[0], data->envp);
+	else
+		path = cmd[0];
+	if (path)
+		execve(path, cmd, data->envp);
+	free(path);
+	perror("Error: ");
+	//free_splits(NULL, cmd, NULL, NULL);
+	exit(errno);
 }

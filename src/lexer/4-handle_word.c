@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/05 12:27:16 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:44:29 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 	k = find_quote(str);
 	flag = 1 + (k >= 0);
 	j = quote_close(str, k);
-	printf("j: %d k: %d str: %s\n", j, k, &str[i]);
 	while (str[i] && is_word(str[i], flag))
 		if (i++ - 1 >= 0 && flag == 2 && conditiontobreak(str, j, i))
 			break ;

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:28 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/05 12:27:48 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:45:42 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	quote_close(char *str, int k)
 		return (0);
 	i = 0;
 	quote = '\0';
-	if (is_quote(str[k]))
+	if (k >=0 && is_quote(str[k]))
 		quote = str[k];
 	while (str[i++] && quote)
 		if (str[i] == quote && i != k)

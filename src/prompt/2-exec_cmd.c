@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 11:50:48 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:40:29 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	analysis(t_data *data)
 		return ;
 	}
 	token_print(data->token);
-	init_utils(&data->utils);
+	init_utils(&data->utils, data->envp);
 	aplly_parser(&data->token, data);
 	check_syntax(data->token, data->envp, &data->utils);
 	data->prompt->exit_status = data->utils.exit_status;

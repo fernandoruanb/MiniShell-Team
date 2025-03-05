@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:18:33 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 12:29:54 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:05:07 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ int			error_message(char *message, int __return__, t_token **token);
 int			handle_fd(char *str);
 
 // syntax checker
-void		init_utils(t_utils *data);
+void		init_utils(t_utils *data, char **envp);
 void		clean_program(t_utils *data);
 int			check_syntax(t_token *root, char **envp, t_utils *data);
 int			get_command(t_token *root, t_utils *data);
@@ -276,7 +276,6 @@ int			ft_isalpha_special_2(char letter);
 int			ft_isalpha_special(char letter);
 int			check_quotes(t_token *root);
 void		check_copy_new(t_utils *data);
-void		init_utils(t_utils *data);
 void		clean_program(t_utils *data);
 int			check_syntax(t_token *root, char **envp, t_utils *data);
 int			get_command(t_token *root, t_utils *data);
@@ -376,7 +375,7 @@ void		ft_write_read_mode(int *pipefd, char **cmd, t_utils *data);
 void		heredoc_check_mode(char *line, char *limiter, int fd);
 void		check_errno(char **split1, t_utils *data);
 void		translate(t_utils *data);
-void		single_command(char *cmd, t_utils *data);
+void		single_command(char **cmd, t_utils *data);
 
 //	ast
 void		clean_node(t_ast **root);

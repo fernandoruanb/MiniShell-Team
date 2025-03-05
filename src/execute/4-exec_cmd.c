@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:41:24 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/05 11:42:04 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:00:28 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,23 @@ char	*find_path(char *cmd, char **env)
 	return (clear_split(paths));
 }
 
-pid_t	exec_cmd(t_ast **root, t_data *data)
-{
-	pid_t	pid;
-	char	*path;
+// pid_t	exec_cmd(t_ast **root, t_data *data)
+// {
+// 	pid_t	pid;
+// 	char	*path;
 
-	pid = fork();
-	if (!pid)
-	{
-		path = find_path((*root)->cmd[0], data->envp);
-		if (path)
-			execve(path, (*root)->cmd, data->envp);
-		perror("Erro no execve");
-		free(path);
-		exit(1);
-	}
-	return (pid);
-}
+// 	pid = fork();
+// 	if (!pid)
+// 	{
+// 		if (access((*root)->cmd[0], F_OK | X_OK))
+// 			path = find_path((*root)->cmd[0], data->envp);
+// 		else
+// 			path = (*root)->cmd[0];
+// 		if (path)
+// 			execve(path, (*root)->cmd, data->envp);
+// 		perror("Erro no execve");
+// 		free(path);
+// 		exit(1);
+// 	}
+// 	return (pid);
+// }

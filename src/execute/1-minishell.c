@@ -317,12 +317,14 @@ static void	make_pipe(t_ast	**root, t_data *data)
 	if (!*root || !data)
 		return ;
 	ast = *root;
-	make_pipe(&ast->left, data);
+	if (ast->left)
+		make_pipe(&ast->left, data);
 	if (getfirstcmd(ast->index, &data->token))
 		handle_pipe_op(&ast, 1, &data->utils);
 	else
 		handle_pipe_op(&ast, 3, &data->utils);
-	make_pipe(&ast->right, data);
+	if (ast->right)
+		make_pipe(&ast->right, data);
 	if (getlastcmd(ast->index, &data->token))
 		handle_pipe_op(&ast, 2, &data->utils);
 	// (void)root;
@@ -333,15 +335,11 @@ static void	make_pipe(t_ast	**root, t_data *data)
 int	minishell(t_data *data)
 {
 	t_ast	*ast;
-	pid_t	pid;
 
 	ast = data->root;
 	if (ast->id == PIPE)
 		make_pipe(&ast, data);
 	else if (ast->id == CMD)
-	{
-		pid = exec_cmd(&ast, data);
-		waitpid(pid, &data->prompt->exit_status, 0);
-	}
+		single_command(ast->cmd, &data->utils);
 	return (0);
 }
