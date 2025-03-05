@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/05 12:44:29 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:10:00 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static int	find_quote(char *str)
 {
 	int	i;
 
-	printf("%s\n", str);
 	i = -1;
 	while (str[++i] && str[i] != ' ')
 		if (is_quote(str[i]) || str[i] == '\\')
@@ -66,9 +65,9 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 			break ;
 	(*token) = token_add((*token),
 			token_create(str, i, lex->index++, lex->id), NULL);
-	if (ft_strncmp(str, "xargs", 5) && (lex->id == CMD || lex->id == LIMITER))
+	if (ft_strncmp(str, "xargs", 5) && (lex->id == CMD || lex->id == LIMITER || lex->id == FD))
 		lex->id = ARG;
-	else if (lex->id == FD)
+	else
 		lex->id = CMD;
 	return (i);
 }

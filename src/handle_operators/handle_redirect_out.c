@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 13:33:25 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:55:49 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*capture_dir(char *filename)
 	return (detect_dir);
 }
 
-void	handle_redirect_out(char *message, char *filename, t_utils *data)
+void	handle_redirect_out(char *filename, t_utils *data)
 {
 	int		fd;
 	char	*detect_dir;
@@ -74,9 +74,9 @@ void	handle_redirect_out(char *message, char *filename, t_utils *data)
 		free(detect_dir);
 		return ;
 	}
-	ft_putendl_fd(message, fd);
-	if (fd > 2)
-		close(fd);
+	//ft_putendl_fd(message, fd);
+	dup2(fd, STDOUT_FILENO);
+	close (fd);
 	free(detect_dir);
 }
 
