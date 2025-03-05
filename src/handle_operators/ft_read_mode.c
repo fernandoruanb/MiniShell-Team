@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read_mode.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:05:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/03 16:34:45 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/05 10:55:14 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,3 +26,4 @@ void	ft_read_mode(char **cmd, int *pipefd, t_utils *data)
 		exit(errno);
 	}
 }
+ 

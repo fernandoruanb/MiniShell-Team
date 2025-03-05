@@ -324,21 +324,60 @@
 // 	return (0);
 // }
 
+static int	getlastcmd(int index, t_token **token)
+{
+	t_token	*tkn;
+	int		i;
+
+	if (!*token)
+		return (0);
+	tkn = *token;
+	i = 0;
+	while (tkn)
+	{
+		if (tkn->id == CMD && tkn->index > i)
+			i = tkn->index;
+		tkn = tkn->next;
+	}
+	(void)index;
+	return (i);
+}
+
+static int	getfirstcmd(int index, t_token **token)
+{
+	t_token	*tkn;
+
+	if (!*token)
+		return (0);
+	tkn = *token;
+	(void)index;
+	while (tkn)
+	{
+		if (tkn->id == CMD)
+			return (tkn->index);
+		tkn = tkn->next;
+	}
+	return (0);
+}
+
 static void	make_pipe(t_ast	**root, t_data *data)
 {
-	t_ast	*ast;
+	// t_ast	*ast;
 
-	if (!*root)
-		return ;
-	ast = *root;
-	make_pipe(&ast->left, data);
-	if (ast->index == 0)
-		handle_pipe_op(&ast, 1, &data->utils);
-	else
-		handle_pipe_op(&ast, 3, &data->utils);
-	make_pipe(&ast->right, data);
-	if (!ast->right)
-		handle_pipe_op(&ast, 2, &data->utils);
+	// if (!*root || !data)
+	// 	return ;
+	// ast = *root;
+	// make_pipe(&ast->left, data);
+	// if (ast->index == 0)
+	// 	handle_pipe_op(&ast, 1, &data->utils);
+	// else
+	// 	handle_pipe_op(&ast, 3, &data->utils);
+	// make_pipe(&ast->right, data);
+	// if (getlastcmd(ast->index, &data->token))
+	// 	handle_pipe_op(&ast, 2, &data->utils);
+	(void)root;
+	printf("first: %d\n", getfirstcmd(0, &data->token));
+	printf("last: %d\n", getlastcmd(0, &data->token));
 }
 
 int	minishell(t_data *data)

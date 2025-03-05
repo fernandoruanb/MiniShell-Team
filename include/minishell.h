@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:18:33 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 10:50:14 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:27:16 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,5 +384,6 @@ t_ast		*add_node(t_ast *root, t_token **token);
 t_ast		*create_node(char **cmd, int index, t_id id);
 void		make_ast(t_token **token, t_ast **ast, t_data *data);
 void		handle_redir(t_token **token, t_ast **ast);
+int			isredir(t_id id);
 
 #endif

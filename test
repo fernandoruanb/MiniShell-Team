@@ -1,0 +1,18 @@
+total 368
+-rw-r--r--  1 jopereir candidate  19538 Mar  3 14:32 checker.c
+-rw-r--r--  1 jopereir candidate  19459 Mar  3 14:32 checker_official.c
+drwxr-xr-x  2 jopereir candidate   4096 Mar  5 10:17 include
+-rw-r--r--  1 jopereir candidate      3 Mar  3 14:47 infile
+drwxr-xr-x  4 jopereir candidate   4096 Mar  3 14:32 Labs
+drwxr-xr-x  2 jopereir candidate  12288 Mar  5 11:08 libft
+-rw-r--r--  1 jopereir candidate   4865 Mar  5 10:17 Makefile
+-rwxr-xr-x  1 jopereir candidate 274768 Mar  5 11:08 minishell
+-rw-r--r--  1 jopereir candidate    141 Mar  3 14:47 out
+-rw-r--r--  1 jopereir candidate      0 Mar  3 14:47 outfile
+-rw-r--r--  1 jopereir candidate     90 Mar  3 14:32 readline.sup
+-rw-r--r--  1 jopereir candidate   1027 Mar  3 14:32 README.md
+drwxr-xr-x 13 jopereir candidate   4096 Mar  5 11:08 src
+-rw-r--r--  1 jopereir candidate      0 Mar  5  2025 test
+-rw-r--r--  1 jopereir candidate      3 Mar  4 15:50 todo
+-rw-r--r--  1 jopereir candidate    247 Mar  3 14:32 todo.md
+-rw-r--r--  1 jopereir candidate      0 Mar  3 14:47 um_pequeno_test.txt
