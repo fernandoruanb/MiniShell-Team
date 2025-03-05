@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/05 11:54:52 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:27:16 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,31 @@ static int	conditiontobreak(char *str, int j, int i)
 			|| (j == 0 && str[i] == ' ' && is_quote(str[i - 1]))));
 }
 
+static int	find_quote(char *str)
+{
+	int	i;
+
+	printf("%s\n", str);
+	i = -1;
+	while (str[++i] && str[i] != ' ')
+		if (is_quote(str[i]) || str[i] == '\\')
+			return (i);
+	return (-1);
+}
+
 int	handle_word(char *str, t_token **token, t_lex *lex)
 {
 	int	i;
 	int	flag;
 	int	j;
+	int	k;
 
 	i = 0;
 	get_label(lex);
-	flag = 1 + (is_quote(str[i]) || str[i] == '\\');
-	j = quote_close(str);
+	k = find_quote(str);
+	flag = 1 + (k >= 0);
+	j = quote_close(str, k);
+	printf("j: %d k: %d str: %s\n", j, k, &str[i]);
 	while (str[i] && is_word(str[i], flag))
 		if (i++ - 1 >= 0 && flag == 2 && conditiontobreak(str, j, i))
 			break ;
