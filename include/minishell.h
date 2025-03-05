@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:18:33 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 12:28:03 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:29:54 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct s_utils
 	int			pids[9000];
 	int			index;
 	int			brackets_c;
-	int		num_of_processes;
+	int			num_of_processes;
 	int			brackets_o;
 	int			index_bra_c;
 	int			index_bra_o;
@@ -386,5 +386,11 @@ t_ast		*create_node(char **cmd, int index, t_id id);
 void		make_ast(t_token **token, t_ast **ast, t_data *data);
 void		handle_redir(t_token **token, t_ast **ast);
 int			isredir(t_id id);
+
+// HANDLE_SIGNALS
+
+void	handle_prompt_signal(void);
+void	heredoc_signal(void);
+void	handle_command_signal(void);
 
 #endif
