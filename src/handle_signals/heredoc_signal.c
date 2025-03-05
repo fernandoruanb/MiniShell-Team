@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:27:50 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/26 18:36:16 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:33:45 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ static void	heredoc_sig_cmd(int signal)
 		ft_printf("\n");
 		exit(130);
 	}
-	if (signal == SIGQUIT)
-		return ;
 }
 
 void	heredoc_signal(void)
 {
 	signal(SIGINT, heredoc_sig_cmd);
-	signal(SIGQUIT, heredoc_sig_cmd);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 /*int	main(int argc, char **argv, char **envp)
