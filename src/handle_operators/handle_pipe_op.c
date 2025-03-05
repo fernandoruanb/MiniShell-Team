@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipe_op.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 13:56:32 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/05 10:39:03 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 	if (pid == 0)
 		ft_read_mode(cmd, pipefd, data);
 	close_descriptors(pipefd, 1, data);
-	free_splits(NULL, cmd, NULL, NULL);
+	//free_splits(NULL, cmd, NULL, NULL);
 	data->pids[data->index++] = pid;
 	data->num_of_processes++;
 }
@@ -45,7 +45,7 @@ void	write_mode(char **cmd, int *pipefd, t_utils *data)
 	}
 	if (pid == 0)
 		ft_write_mode(pipefd, cmd, data);
-	free_splits(NULL, cmd, NULL, NULL);
+	//free_splits(NULL, cmd, NULL, NULL);
 	data->pid = pid;
 	data->pids[data->index++] = pid;
 	data->num_of_processes++;
@@ -75,7 +75,7 @@ void	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 	if (data->fd_backup)
 		close(data->fd_backup);
 	data->fd_backup = fd;
-	free_splits(NULL, cmd, NULL, NULL);
+	//free_splits(NULL, cmd, NULL, NULL);
 	data->pids[data->index++] = pid;
 	data->num_of_processes++;
 }
@@ -94,25 +94,25 @@ void	wait_all_pids(t_utils *data)
 	translate(data);
 }
 
-int	handle_pipe_op(char *cmd, int flag, t_utils *data)
+int	handle_pipe_op(t_ast **root, int flag, t_utils *data)
 {
 	int		pipefd[2];
-	char	**split1;
+	t_ast	*ast;
 
 	if (pipe(pipefd) == -1)
 		return (1);
-	split1 = ft_split(cmd, ' ');
-	if (!split1)
-	{
-		close_descriptors(pipefd, 1, data);
-		return (1);
-	}
+	ast = *root;
+	// if (!split1)
+	// {
+	// 	close_descriptors(pipefd, 1, data);
+	// 	return (1);
+	// }
 	if (flag == 1)
-		write_mode(split1, pipefd, data);
+		write_mode(ast->cmd, pipefd, data);
 	else if (flag == 2)
-		read_mode(split1, pipefd, data);
+		read_mode(ast->cmd, pipefd, data);
 	else if (flag == 3)
-		write_read_mode(split1, pipefd, data);
+		write_read_mode(ast->cmd, pipefd, data);
 	if (flag == 3 || flag == 1)
 		close_descriptors(pipefd, 0, data);
 	if (flag == 2)

@@ -323,3 +323,30 @@
 	
 // 	return (0);
 // }
+
+static void	make_pipe(t_ast	**root, t_data *data)
+{
+	t_ast	*ast;
+
+	if (!*root)
+		return ;
+	ast = *root;
+	make_pipe(&ast->left, data);
+	if (ast->index == 0)
+		handle_pipe_op(&ast, 1, &data->utils);
+	else
+		handle_pipe_op(&ast, 3, &data->utils);
+	make_pipe(&ast->right, data);
+	if (!ast->right)
+		handle_pipe_op(&ast, 2, &data->utils);
+}
+
+int	minishell(t_data *data)
+{
+	t_ast	*ast;
+
+	ast = data->root;
+	if (ast->id == PIPE)
+		make_pipe(&ast, data);
+	return (0);
+}
