@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:31:43 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 17:33:42 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:03:45 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	destroy(t_data *data, char *message, int exit_code)
 		// 	(void)clean_array(data->prompt->cmdset);
 		free(data->prompt);
 	}
-	if (data->token)
-		clean_node(&data->token);
+	if (data->root)
+		clean_node(&data->root);
 	if (data->export_vars)
 		export_clean(&data->export_vars);
 	if (data->local_vars)

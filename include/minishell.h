@@ -5,13 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< HEAD
 /*   Created: 2025/03/04 17:19:34 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 17:19:38 by fruan-ba         ###   ########.fr       */
-=======
-/*   Created: 2025/03/04 16:18:33 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 10:50:14 by jopereir         ###   ########.fr       */
->>>>>>> origin/main
+/*   Updated: 2025/03/05 11:02:18 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +37,6 @@
 # define YELLOW "\033[33m"
 # define RED "\033[38;5;214m"
 # define RESET	"\033[0m"
-
-<<<<<<< HEAD
-typedef struct s_ast
-{
-	char			**cmd;
-
-	struct s_ast	*parent;
-	struct s_ast	*left;
-	struct s_ast	*right;
-}	t_ast;
-=======
->>>>>>> origin/main
 
 typedef enum e_id
 {
