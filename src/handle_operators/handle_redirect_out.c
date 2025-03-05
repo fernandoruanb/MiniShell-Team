@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirect_out.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 09:46:52 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:33:25 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,20 @@ void	handle_redirect_out(char *message, char *filename, t_utils *data)
 	free(detect_dir);
 }
 
-/*int	main(int argc, char **argv, char **envp)
-{
-	t_data	data;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_data	data;
+// 	int		fd;
 
-	data.utils.exec_status = 0;
-	data.utils.envp = envp;
-	if (argc != 3)
-		return (1);
-	handle_redirect_out(argv[1], argv[2], &data.utils);
-	ft_printf("EXEC STATUS: %d\n", data.utils.exec_status);
-	return (0);
-}*/
+// 	data.utils.exec_status = 0;
+// 	data.utils.envp = envp;
+// 	if (argc != 3)
+// 		return (1);
+// 	fd = -1;
+// 	if (fd == -1)
+// 		return (1);
+// 	dup2(fd, STDOUT_FILENO);
+// 	handle_redirect_out(argv[1], argv[2], &data.utils);
+// 	ft_printf("EXEC STATUS: %d\n", data.utils.exec_status);
+// 	return (0);
+// }

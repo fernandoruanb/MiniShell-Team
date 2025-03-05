@@ -317,19 +317,19 @@ static void	make_pipe(t_ast	**root, t_data *data)
 	if (!*root || !data)
 		return ;
 	ast = *root;
-	if (ast->left)
+	if (ast->id == PIPE)
 		make_pipe(&ast->left, data);
-	if (getfirstcmd(ast->index, &data->token))
-		handle_pipe_op(&ast, 1, &data->utils);
-	else
-		handle_pipe_op(&ast, 3, &data->utils);
-	if (ast->right)
+	if (ast->id != PIPE)
+	{
+		if (getfirstcmd(ast->index, &data->token))
+			handle_pipe_op(&ast, 1, &data->utils);
+		else if (getlastcmd(ast->index, &data->token))
+			handle_pipe_op(&ast, 2, &data->utils);
+		else
+			handle_pipe_op(&ast, 3, &data->utils);
+	}
+	if (ast->id == PIPE)
 		make_pipe(&ast->right, data);
-	if (getlastcmd(ast->index, &data->token))
-		handle_pipe_op(&ast, 2, &data->utils);
-	// (void)root;
-	// printf("first: %d\n", getfirstcmd(0, &data->token));
-	// printf("last: %d\n", getlastcmd(0, &data->token));
 }
 
 int	minishell(t_data *data)
@@ -337,9 +337,11 @@ int	minishell(t_data *data)
 	t_ast	*ast;
 
 	ast = data->root;
+	//handle_command_signal();
 	if (ast->id == PIPE)
 		make_pipe(&ast, data);
 	else if (ast->id == CMD)
 		single_command(ast->cmd, &data->utils);
+	//handle_prompt_signal();
 	return (0);
 }
