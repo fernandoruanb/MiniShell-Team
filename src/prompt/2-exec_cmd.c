@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 10:50:24 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:50:48 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ void	analysis(t_data *data)
 		data->prompt->exit_status = 2;
 		return ;
 	}
+	token_print(data->token);
 	init_utils(&data->utils);
 	aplly_parser(&data->token, data);
 	check_syntax(data->token, data->envp, &data->utils);
@@ -169,9 +170,12 @@ void	analysis(t_data *data)
 	ast_print(data->root, 0);
 	print_node(data->root);
 	printf("\n");
-	token_print(data->token);	
-	handle_builtin(data->root->cmd, data);
-	minishell(data);
+	if (!handle_builtin(data->root->cmd, data))
+	{
+		printf(GREEN"OUTPUT:"RESET);
+		printf("\n");
+		minishell(data);
+	}
 	//data->prompt->cmdset = convert_to_cmd(&data->token);
 	//print_split(data->prompt->cmdset);
 	token_clean(data->token);

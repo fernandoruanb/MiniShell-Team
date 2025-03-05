@@ -56,55 +56,7 @@
 // // 		exit (1);
 // // }
 
-// /*
-// 	OBS: env[i] + 5 is for ignore "PATH=" before the paths
-// */
-// static	char	*find_path(char *cmd, char **env)
-// {
-// 	int		i;
-// 	char	**paths;
-// 	char	*path;
-// 	char	*temp;
 
-// 	if (!cmd)
-// 		return (NULL);
-// 	i = 0;
-// 	while (!ft_strnstr(env[i], "PATH", 4))
-// 		i++;
-// 	paths = ft_split(env[i] + 5, ':');
-// 	i = 0;
-// 	while (paths[i])
-// 	{
-// 		temp = ft_strjoin(paths[i], "/");
-// 		path = ft_strjoin(temp, cmd);
-// 		if (access(path, F_OK | X_OK) == 0)
-// 		{
-// 			ft_double_free(clear_split(paths), temp);
-// 			return (path);
-// 		}
-// 		ft_double_free(path, temp);
-// 		i++;
-// 	}
-// 	return (clear_split(paths));
-// }
-
-// static pid_t	exec_cmd(t_ast **root, t_data *data)
-// {
-// 	pid_t	pid;
-// 	char	*path;
-
-// 	pid = fork();
-// 	if (!pid)
-// 	{
-// 		path = find_path((*root)->cmd[0], data->envp);
-//		if (path)
-// 			execve(path, (*root)->cmd, data->envp);
-// 		perror("Erro no execve");
-// 		free(path);
-// 		exit(1);
-// 	}
-// 	return (pid);
-// }
 
 // static pid_t	exec_cmd2(t_ast **root, t_data *data, int fd[2], int flag)
 // {
@@ -339,8 +291,7 @@ static int	getlastcmd(int index, t_token **token)
 			i = tkn->index;
 		tkn = tkn->next;
 	}
-	(void)index;
-	return (i);
+	return (index == i);
 }
 
 static int	getfirstcmd(int index, t_token **token)
@@ -350,11 +301,10 @@ static int	getfirstcmd(int index, t_token **token)
 	if (!*token)
 		return (0);
 	tkn = *token;
-	(void)index;
 	while (tkn)
 	{
 		if (tkn->id == CMD)
-			return (tkn->index);
+			return (index == tkn->index);
 		tkn = tkn->next;
 	}
 	return (0);
@@ -362,30 +312,36 @@ static int	getfirstcmd(int index, t_token **token)
 
 static void	make_pipe(t_ast	**root, t_data *data)
 {
-	// t_ast	*ast;
+	t_ast	*ast;
 
-	// if (!*root || !data)
-	// 	return ;
-	// ast = *root;
-	// make_pipe(&ast->left, data);
-	// if (ast->index == 0)
-	// 	handle_pipe_op(&ast, 1, &data->utils);
-	// else
-	// 	handle_pipe_op(&ast, 3, &data->utils);
-	// make_pipe(&ast->right, data);
-	// if (getlastcmd(ast->index, &data->token))
-	// 	handle_pipe_op(&ast, 2, &data->utils);
-	(void)root;
-	printf("first: %d\n", getfirstcmd(0, &data->token));
-	printf("last: %d\n", getlastcmd(0, &data->token));
+	if (!*root || !data)
+		return ;
+	ast = *root;
+	make_pipe(&ast->left, data);
+	if (getfirstcmd(ast->index, &data->token))
+		handle_pipe_op(&ast, 1, &data->utils);
+	else
+		handle_pipe_op(&ast, 3, &data->utils);
+	make_pipe(&ast->right, data);
+	if (getlastcmd(ast->index, &data->token))
+		handle_pipe_op(&ast, 2, &data->utils);
+	// (void)root;
+	// printf("first: %d\n", getfirstcmd(0, &data->token));
+	// printf("last: %d\n", getlastcmd(0, &data->token));
 }
 
 int	minishell(t_data *data)
 {
 	t_ast	*ast;
+	pid_t	pid;
 
 	ast = data->root;
 	if (ast->id == PIPE)
 		make_pipe(&ast, data);
+	else if (ast->id == CMD)
+	{
+		pid = exec_cmd(&ast, data);
+		waitpid(pid, &data->prompt->exit_status, 0);
+	}
 	return (0);
 }

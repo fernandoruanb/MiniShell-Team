@@ -108,6 +108,7 @@ SRCS = main/2-events.c \
 		handle_operators/translate.c\
 		handle_operators/single_command.c\
 		ast/3-handle_redir.c\
+		execute/4-exec_cmd.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))

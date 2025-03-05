@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:18:33 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 11:27:16 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:42:11 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,7 +354,8 @@ char		*expand_tilde(char *str);
 int			minishell(t_data *data);
 int			handle_builtin(char **cmd, t_data *data);
 char		**updateenvp(t_export **export);
-
+char		*find_path(char *cmd, char **env);
+pid_t		exec_cmd(t_ast **root, t_data *data);
 
 // HANDLE_OPERATORS
 void		append(char *message, char *filename, t_utils *data);
