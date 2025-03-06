@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:18:33 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 16:55:29 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:41:47 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,6 +343,7 @@ void		print_split(char **split);
 char		*remove_quotes(char *str);
 void		*clean_array(char ***array);
 int			parser(t_token **token, t_data *data);
+int			find_quote(char *str);
 int			is_operator(t_id id);
 char		*domain_expansion(char *str, t_data *data);
 char		*remove_escape(char *str);

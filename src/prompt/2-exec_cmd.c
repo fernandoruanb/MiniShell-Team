@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 15:05:44 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:51:06 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,17 @@
 // 	return (0);
 // }
 
-void	aplly_parser(t_token **token, t_data *data)
-{
-	t_token	*temp;
+// void	aplly_parser(t_token **token, t_data *data)
+// {
+// 	t_token	*temp;
 
-	temp = *token;
-	while (temp)
-	{
-		parser(&temp, data);
-		temp = temp->next;
-	}
-}
+// 	temp = *token;
+// 	while (temp)
+// 	{
+// 		parser(&temp, data);
+// 		temp = temp->next;
+// 	}
+// }
 
 // t_ast	*make_ast(t_token **token)
 // {
@@ -148,10 +148,10 @@ void	analysis(t_data *data)
 	}
 	token_print(data->token);
 	init_utils(&data->utils, data->envp);
-	aplly_parser(&data->token, data);
+	//aplly_parser(&data->token, data);
 	check_syntax(data->token, data->envp, &data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
-	//printf("Sintax: %d\n", data->prompt->exit_status);
+	printf("Sintax: %d\n", data->prompt->exit_status);
 	if (data->prompt->exit_status != 0)
 	{
 		token_clean(data->token);
