@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/06 10:41:53 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/06 11:17:03 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	handle_redirect_out(char *filename, t_utils *data)
 	detect_dir = initialize_directory(filename, data);
 	if (detect_dir == NULL)
 		return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)
 	{
 		free(detect_dir);

@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/06 10:37:45 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/06 15:23:24 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void	analysis(t_data *data)
 	{
 		printf(GREEN"OUTPUT:"RESET);
 		printf("\n");
-		minishell(data);
+		minishell(&data->root, data);
 	}
 	//data->prompt->cmdset = convert_to_cmd(&data->token);
 	//print_split(data->prompt->cmdset);

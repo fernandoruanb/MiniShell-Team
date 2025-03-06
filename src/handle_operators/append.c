@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:05:05 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/06 10:41:42 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/06 11:16:53 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	append(char *filename, t_utils *data)
 			return (-1);
 		}
 	}
-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	if (fd == -1)
 	{
 		free(detect_dir);
