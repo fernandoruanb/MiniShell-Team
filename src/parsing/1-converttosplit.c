@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 15:08:29 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/05 23:11:59 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,9 @@ char	**convert_to_cmd(t_token **token)
 		return (NULL);
 	i = 0;
 	split[i++] = ft_strdup(temp->str);
+	len = temp->id == CMD;
 	temp = temp->next;
-	while (temp && temp->id != CMD && temp->id != PIPE)
+	while (temp && len && temp->id != CMD)
 	{
 		if (temp->id == ARG)
 			split[i++] = ft_strdup(temp->str);

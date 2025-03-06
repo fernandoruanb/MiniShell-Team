@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:18:33 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 22:41:47 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/05 23:42:03 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -351,7 +351,7 @@ int			find_var(char *str);
 char		*expand_tilde(char *str);
 
 //	execution
-int			minishell(t_data *data);
+int			minishell(t_ast **root, t_data *data);
 int			handle_builtin(char **cmd, t_data *data);
 char		**updateenvp(t_export **export);
 char		*find_path(char *cmd, char **env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-ast.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 08:25:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/05 11:32:50 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 23:06:21 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_ast	*add_node(t_ast *root, t_token **token)
 	return (root); 
 }
 
-static void	print_cmd(char **cmd)
+static void	print_cmd(char **cmd, int index)
 {
 	int	i;
 
@@ -56,7 +56,7 @@ static void	print_cmd(char **cmd)
 	while (cmd[i])
 	{
 		if (cmd[i])
-			printf("%s ", cmd[i]);
+			printf("%s (%d)", cmd[i], index);
 		i++;
 	}
 }
@@ -66,7 +66,7 @@ void	print_node(t_ast *root)
 	if (!root)
 		return ;
 	print_node(root->left);
-	print_cmd(root->cmd);
+	print_cmd(root->cmd, root->index);
 	print_node(root->right);
 }
 
