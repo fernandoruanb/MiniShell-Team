@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-isbuiltin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:10:30 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/05 12:10:44 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:40:30 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,36 @@ static int	handle_cd(char **cmd, t_export **export)
 	return (1);
 }
 
+static int	call_export(char *cmd, t_export **var)
+{
+	if (!cmd)
+		ft_export(NULL, var);
+	else
+		ft_export(cmd, var);
+	return (1);
+}
+
+static int	call_unset(char *cmd, t_export **export, t_localvar **locals)
+{
+	ft_unset(export, locals, cmd);
+	return (1);
+}
+
+static int	call_local(char *cmd, t_localvar **locals)
+{
+	ft_localvar(cmd, locals);
+	return (1);
+}
+
 int	handle_builtin(char **cmd, t_data *data)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
 		return (handle_cd(cmd, &data->export_vars));
-	if (!ft_strcmp(cmd[0], "export"))
-	{
-		if (cmd[1])
-			ft_export(cmd[1], &data->export_vars);
-		else
-			ft_export(NULL, &data->export_vars);
-		return (1);
-	}
-	else if (ft_strnstr(cmd[0], "=", ft_strlen(cmd[0])))
-	{
-		ft_localvar(cmd[0], &data->local_vars);
-		return (1);
-	}
 	if (!ft_strncmp(cmd[0], "unset", 5))
-	{
-		ft_unset(&data->export_vars, &data->local_vars, cmd[1]);
-		return (1);
-	}
+		return (call_unset(cmd[1], &data->export_vars, &data->local_vars));
+	if (!ft_strcmp(cmd[0], "export"))
+		return (call_export(cmd[1], &data->export_vars));
+	else if (ft_strnstr(cmd[0], "=", ft_strlen(cmd[0])))
+		return (call_local(cmd[0], &data->local_vars));
 	return (0);
 }

@@ -6,7 +6,11 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:18:33 by fruan-ba          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/06 17:31:54 by fruan-ba         ###   ########.fr       */
+=======
+/*   Updated: 2025/03/06 17:27:48 by jonas            ###   ########.fr       */
+>>>>>>> 5ae8faf4b61638613622a017a0f3183674e348bb
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +199,7 @@ void		analysis(t_data *data);
 void		ft_cd(char *input);
 void		ft_echo(t_prompt *prompt);
 char		*enviroment_var(char *cmd, int exit_status);
-void		ft_exit(char *name, t_data *data, char *exit_status);
+void		ft_exit(t_data *data, char *exit_status);
 int			valid_name(char c, int flag);
 int			ft_export(char *input, t_export **var);
 t_export	*search_var(t_export **var, char *name);
@@ -354,17 +358,23 @@ int			find_var(char *str);
 char		*expand_tilde(char *str);
 
 //	execution
-int			minishell(t_data *data);
+int			minishell(t_ast **root, t_data *data);
 int			handle_builtin(char **cmd, t_data *data);
 char		**updateenvp(t_export **export);
 char		*find_path(char *cmd, char **env);
+int			*manage_redir(t_ast **root, t_data *data);
+void		restore_redirect(int *original);
+int			*save_origin(void);
+void		make_redir(int fd, int fd2);
+void		destroy_fd(int *fd);
+void		exec_pipe(t_ast **root, t_data *data);
 
 // HANDLE_OPERATORS
-void		append(char *filename, t_utils *data);
+int			append(char *filename, t_utils *data);
 int			handle_pipe_op(t_ast **root, int flag, t_utils *data);
-void		handle_red_in(char *cmd1, char *filename, t_utils *data);
-void		handle_redirect_out(char *filename, t_utils *data);
-int			heredoc(char *cmd, char *limiter, t_utils *data);
+int			handle_red_in(char *filename, t_utils *data);
+int			handle_redirect_out(char *filename, t_utils *data);
+int			heredoc(char *limiter, t_utils *data);
 void		operator_and(char *cmd1, char *cmd2, t_utils *data);
 void		operator_or(char *cmd1, char *cmd2, t_utils *data);
 
@@ -378,7 +388,8 @@ void		ft_write_read_mode(int *pipefd, char **cmd, t_utils *data);
 void		heredoc_check_mode(char *line, char *limiter, int fd);
 void		check_errno(char **split1, t_utils *data);
 void		translate(t_utils *data);
-void		single_command(char **cmd, t_utils *data);
+void		exec_single_cmd(t_ast **root, t_data *data);
+void		single_command(t_ast **root, t_utils *data);
 
 //	ast
 void		clean_node(t_ast **root);

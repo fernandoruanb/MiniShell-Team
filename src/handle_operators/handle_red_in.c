@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_red_in.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:20:41 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 10:11:43 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:26:45 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,26 @@ static int	check_file(char *filename, t_utils *data)
 	return (1);
 }
 
-void	handle_red_in(char *cmd1, char *filename, t_utils *data)
+int	handle_red_in(char *filename, t_utils *data)
 {
-	int		id;
+	// int		id;
 	int		fd;
-	char	**split1;
 
 	if (!check_file(filename, data))
-		return ;
+		return (-1);
 	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return ;
-	split1 = ft_split(cmd1, ' ');
-	if (!split1)
-		return ;
-	if (dup2(fd, STDIN_FILENO) == -1)
-		return ;
-	id = fork();
-	if (id == 0)
-		check_errno(split1, data);
-	free_splits(NULL, split1, NULL, NULL);
-	if (fd > 2)
-		close(fd);
-	waitpid(id, &data->exec_status, 0);
+	// if (fd == -1)
+	// 	return (-1);
+	// if (dup2(fd, STDIN_FILENO) == -1)
+	// 	return ;
+	// id = fork();
+	// if (id == 0)
+	// 	check_errno(cmd1, data);
+	// free_splits(NULL, cmd1, NULL, NULL);
+	// if (fd > 2)
+	// 	close(fd);
+	// waitpid(id, &data->exec_status, 0);
+	return (fd);
 }
 
 /*int	main(int argc, char **argv, char **envp)

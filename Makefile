@@ -109,6 +109,10 @@ SRCS = main/2-events.c \
 		handle_operators/single_command.c\
 		ast/3-handle_redir.c\
 		execute/4-exec_cmd.c\
+		execute/5-manage_redir.c\
+		execute/5.1-manage_redir_utils.c\
+		execute/6-exec_pipe.c\
+		execute/7-exec_single_cmd.c\
 		handle_signals/heredoc_signal.c\
 		handle_signals/handle_command_signal.c\
 		handle_signals/handle_prompt_signal.c\

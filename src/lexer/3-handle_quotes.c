@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-handle_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:28 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/05 12:45:42 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:22:26 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,12 @@ int	is_quote(unsigned char c)
 int	quote_close(char *str, int k)
 {
 	int		i;
-	char	quote;
 
 	if (!str)
 		return (0);
 	i = 0;
-	quote = '\0';
-	if (k >=0 && is_quote(str[k]))
-		quote = str[k];
-	while (str[i++] && quote)
-		if (str[i] == quote && i != k)
+	while (str[i++])
+		if (is_quote(str[i]) && i != k)
 			return (i);
 	return (0);
 }

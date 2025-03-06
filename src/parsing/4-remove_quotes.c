@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:25:35 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/05 21:59:56 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/06 10:27:06 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ static int	get_nonquoteslen(char *str, char quote)
 	return (len);
 }
 
+static int	my_find_quote(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (is_quote(str[i]))
+			return (i);
+	return (-1);
+}
+
 char	*remove_quotes(char *str)
 {
 	int		i;
@@ -37,7 +48,7 @@ char	*remove_quotes(char *str)
 	if (!str)
 		return (NULL);
 	i = 0;
-	quote = str[i++];
+	quote = str[my_find_quote(str)];
 	j = 0;
 	new = ft_calloc (get_nonquoteslen(str, quote) + 1, 1);
 	if (!new)

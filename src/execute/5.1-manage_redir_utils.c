@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   single_command.c                                   :+:      :+:    :+:   */
+/*   5.1-manage_redir_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/28 15:36:24 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/06 17:27:31 by jonas            ###   ########.fr       */
+/*   Created: 2025/03/06 16:11:48 by jonas             #+#    #+#             */
+/*   Updated: 2025/03/06 16:17:08 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
-void	single_command(t_ast **root, t_utils *data)
+int	*save_origin(void)
 {
-	int		pid;
+	int	*new;
 
-	if (!*root || (*root)->id != CMD)
+	new = ft_calloc(2, sizeof(int));
+	if (!new)
+		return (NULL);
+	new[0] = dup(0);
+	new[1] = dup(1);
+	return (new);
+}
+
+void	destroy_fd(int *fd)
+{
+	if (!fd)
 		return ;
-	pid = fork();
-	if (pid == -1)
+	close (fd[0]);
+	close (fd[1]);
+	free(fd);
+}
+
+void	make_redir(int fd, int fd2)
+{
+	if (fd < 0 || fd2 < 0)
 		return ;
-	if (pid == 0)
-		check_errno((*root)->cmd, data);
-	waitpid(pid, &data->exec_status, 0);
+	if (dup2(fd , fd2) < 0)
+		perror("Redirect error: ");
 }
