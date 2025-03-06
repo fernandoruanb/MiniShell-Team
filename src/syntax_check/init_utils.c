@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:28:30 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 12:50:19 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:34:33 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ void	init_utils(t_utils *data, char **envp)
 	data->envp = envp;
 	data->double_quotes = 0;
 	data->paths = NULL;
+	data->line = NULL;
+	data->newpwd = NULL;
+	data->oldpwd = NULL;
 	data->temp = NULL;
 	data->new_str = NULL;
 	data->status = 0;
