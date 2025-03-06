@@ -6,13 +6,13 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/06 17:22:30 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/06 18:00:57 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	exec_multi_cmd(t_ast	**root, t_data *data)
+static void	exec_multi_cmd(t_ast **root, t_data *data)
 {
 	t_ast	*ast;
 

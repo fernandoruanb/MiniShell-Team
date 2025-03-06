@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 08:25:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/05 23:06:21 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/06 18:03:56 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ t_ast	*create_node(char **cmd, int index, t_id id)
 	new->right = NULL;
 	return (new);
 }
-
-// static int	is_op(t_id id)
-// {
-// 	return (id == PIPE || id == OPERATOR_AND || id == OPERATOR_OR);
-// }
 
 t_ast	*add_node(t_ast *root, t_token **token)
 {
