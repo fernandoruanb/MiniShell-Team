@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-domain_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/05 14:46:32 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:24:07 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,22 @@ static char	*is_return(t_data *data, char *find)
 	return (ft_itoa(data->prompt->exit_status));
 }
 
+static char	*get_find(char *str, int n, int *i)
+{
+	char	*new;
+	char	*temp;
+
+	new = ft_strndup(str, n);
+	if (find_quote(new))
+	{
+		(*i)--;
+		temp = ft_strndup(new, int_ft_strlen(new) - 1);
+		free(new);
+		return (temp);
+	}
+	return (new);
+}
+
 static char	*search_content(char *str, t_data *data, int *i)
 {
 	char		*find;
@@ -68,7 +84,8 @@ static char	*search_content(char *str, t_data *data, int *i)
 		(*i)++;
 		j++;
 	}
-	find = ft_strndup(&str[*i - j + 1], j - 1);
+	find = get_find(&str[*i - j + 1], j - 1, i);
+	printf("%s\n", find);
 	if (!ft_strcmp(find, "?"))
 		return (is_return(data, find));
 	temp = search_var(&data->export_vars, find);
@@ -110,15 +127,17 @@ char	*domain_expansion(char *str, t_data *data)
 	char	*expand;
 	char	*temp;
 
-	if (str[0] == '\'')
+	if (str[0] == '\'' && str[int_ft_strlen(str) - 1] == '\'')
 		return (str);
 	i = -1;
 	while (++i < int_ft_strlen(str))
+	{
 		if (str[i] == '$')
 		{
 			temp = ft_strndup(str, i);
 			expand = search_content(str, data, &i);
 			str = complete_str(str, expand, temp, &i);
 		}
+	}
 	return (str);
 }

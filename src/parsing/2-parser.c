@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-parser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/05 15:18:07 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:20:26 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	find_var(char *str)
 // 	return (0);
 // }
 
-static int	find_quote(char *str)
+int	find_quote(char *str)
 {
 	int	i;
 
