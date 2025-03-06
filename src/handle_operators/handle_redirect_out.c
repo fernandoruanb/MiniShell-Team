@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirect_out.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 16:55:49 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:41:53 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,23 @@ static char	*capture_dir(char *filename)
 	return (detect_dir);
 }
 
-void	handle_redirect_out(char *filename, t_utils *data)
+int	handle_redirect_out(char *filename, t_utils *data)
 {
 	int		fd;
 	char	*detect_dir;
 
 	detect_dir = initialize_directory(filename, data);
 	if (detect_dir == NULL)
-		return ;
+		return (-1);
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		free(detect_dir);
-		return ;
+		return (-1);
 	}
 	//ft_putendl_fd(message, fd);
-	dup2(fd, STDOUT_FILENO);
-	close (fd);
 	free(detect_dir);
+	return (fd);
 }
 
 // int	main(int argc, char **argv, char **envp)

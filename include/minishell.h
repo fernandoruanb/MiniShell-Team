@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:18:33 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/06 10:37:34 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/06 10:40:19 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,10 +357,10 @@ char		**updateenvp(t_export **export);
 char		*find_path(char *cmd, char **env);
 
 // HANDLE_OPERATORS
-void		append(char *filename, t_utils *data);
+int			append(char *filename, t_utils *data);
 int			handle_pipe_op(t_ast **root, int flag, t_utils *data);
 void		handle_red_in(char *cmd1, char *filename, t_utils *data);
-void		handle_redirect_out(char *filename, t_utils *data);
+int			handle_redirect_out(char *filename, t_utils *data);
 int			heredoc(char *cmd, char *limiter, t_utils *data);
 void		operator_and(char *cmd1, char *cmd2, t_utils *data);
 void		operator_or(char *cmd1, char *cmd2, t_utils *data);
