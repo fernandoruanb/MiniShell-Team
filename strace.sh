@@ -1,0 +1,1 @@
+cat | strace -f -e read,write,openat,exit,close,dup2,execve bash
