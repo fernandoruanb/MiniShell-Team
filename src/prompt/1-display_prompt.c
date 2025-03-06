@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/06 12:31:23 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/06 16:08:00 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,26 +75,18 @@ static int	handle_space(char *str)
 
 void	display_prompt(t_data *data)
 {
-	char	*name;
-	// int		space;
-
-	// space = 0;
-	name = ft_strdup(BLUE"Master of universe(mini)$ "RESET);
-	//name = ft_strdup("<<Master of universe(mini)>>$ ");
-	if (!name)
-		return ;
 	while (1)
 	{
-		data->prompt->input = readline(name);
+		data->prompt->input = readline(BLUE"Master of universe(mini)$ "RESET);
 		if (!data->prompt->input)
-			return (ft_exit(name, data, NULL));
+			return (ft_exit(data, NULL));
 		if (handle_space(data->prompt->input))
 		{
 			free(data->prompt->input);
 			continue ;
 		}
 		if (ft_strncmp(data->prompt->input, "exit", 4) == 0)
-			return (ft_exit(name, data, &data->prompt->input[5]));
+			return (ft_exit(data, &data->prompt->input[5]));
 		// if (ft_strncmp(data->prompt->input, "export", 6) == 0)
 		// {
 		// 	if (ft_strlen(data->prompt->input) > 6)
@@ -123,5 +115,4 @@ void	display_prompt(t_data *data)
 		free(data->prompt->input);
 		data->prompt->input = NULL;
 	}
-	free(name);
 }

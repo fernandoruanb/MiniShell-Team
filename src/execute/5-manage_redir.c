@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/06 14:55:57 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/06 16:37:22 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static char	*find_fd(t_ast **root)
 {
 	char	*temp;
+
 	if (!*root)
 		return (NULL);
 	if ((*root)->id == FD || (*root)->id == LIMITER)
@@ -32,14 +33,12 @@ static int	switch_redir(t_ast **root, t_id id, t_utils *data)
 
 	fd = -1;
 	name = find_fd(root);
-	if (id == REDIRECT_OUT)
+	if (id == REDIRECT_IN || id == HEREDOC)
+		fd = handle_red_in(name, data);
+	else if (id == REDIRECT_OUT)
 		fd = handle_redirect_out(name, data);
 	else if (id == APPEND)
 		fd = append(name, data);
-	else if (id == REDIRECT_IN)
-		fd = handle_red_in(name, data);
-	else if (id == HEREDOC)
-		fd = heredoc(name, data);
 	return (fd);
 }
 
@@ -47,12 +46,7 @@ static void	aplly_redirect(int fd, t_id id)
 {
 	if (fd < 0)
 		return ;
-	if (id == APPEND || id == REDIRECT_OUT)
-		if (dup2(fd , 1) < 0)
-			perror("Redirect error: ");
-	if (id == HEREDOC || id == REDIRECT_IN)
-		if (dup2(fd, 0) < 0)
-			perror("Redirect error: ");
+	make_redir(fd, id == APPEND || id == REDIRECT_OUT);
 	close (fd);
 }
 
@@ -63,11 +57,9 @@ int	*manage_redir(t_ast **root, t_data *data)
 
 	if (!*root || !isredir((*root)->id))
 		return (NULL);
-	original = ft_calloc(2, sizeof(int));
+	original = save_origin();
 	if (!original)
 		return (NULL);
-	original[0] = dup(0);
-	original[1] = dup(1);
 	fd = switch_redir(root, (*root)->id, &data->utils);
 	aplly_redirect(fd, (*root)->id);
 	return (original);
@@ -81,7 +73,5 @@ void	restore_redirect(int *original)
 		perror("Restore STDOUT error: ");
 	if (dup2 (original[0], 0) < 0)
 		perror("Restore STDIN error: ");
-	close (original[0]);
-	close (original[1]);
-	free(original);
+	destroy_fd(original);
 }

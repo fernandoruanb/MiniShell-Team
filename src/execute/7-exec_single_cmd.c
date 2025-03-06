@@ -1,42 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1-minishell.c                                      :+:      :+:    :+:   */
+/*   7-exec_single_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/06 17:22:30 by jonas            ###   ########.fr       */
+/*   Created: 2025/03/06 17:16:20 by jonas             #+#    #+#             */
+/*   Updated: 2025/03/06 17:41:49 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	exec_multi_cmd(t_ast	**root, t_data *data)
+static t_ast	*find_cmd(t_ast **root)
 {
 	t_ast	*ast;
 
-	if (!*root || !data)
-		return ;
-	ast = *root;
-	if (ast->id == PIPE)
-	{
-		exec_multi_cmd(&ast->left, data);
-		exec_multi_cmd(&ast->right, data);
-	}
-	exec_pipe(&ast, data);
+	if (!*root)
+		return (NULL);
+	if ((*root)->id == CMD)
+		return (*root);
+	ast = find_cmd(&(*root)->right);
+	if (!ast)
+		ast = find_cmd(&(*root)->left);
+	return (ast);
 }
 
-int	minishell(t_ast **root, t_data *data)
+void	exec_single_cmd(t_ast **root, t_data *data)
 {
 	t_ast	*ast;
+	t_ast	*cmd;
+	int		*fd;
 
-	if (!data)
-		return (1);
+	if (!*root || (*root)->id == PIPE)
+		return ;
 	ast = *root;
-	if (ast->id == PIPE)
-		exec_multi_cmd(&ast, data);
-	exec_single_cmd(&ast, data);
-	data->prompt->exit_status = data->utils.exec_status;
-	return (0);
+	fd = manage_redir(&ast, data);
+	cmd = find_cmd(&ast);
+	if (!handle_builtin(ast->cmd, data))
+		single_command(&cmd, &data->utils);
+	restore_redirect(fd);
 }

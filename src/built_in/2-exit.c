@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:47:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 12:15:02 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:07:30 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@ static int	is_all_num(char *str)
 	return (1);
 }
 
-void	ft_exit(char *name, t_data *data, char *exit_status)
+void	ft_exit(t_data *data, char *exit_status)
 {
 	rl_clear_history();
-	free(name);
 	data->prompt->exit_status = 0;
 	if (exit_status && is_all_num(exit_status))
 		destroy(data, "Exit", ft_atoi(exit_status));

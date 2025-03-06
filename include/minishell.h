@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:18:33 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/06 15:23:12 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/06 17:27:48 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void		analysis(t_data *data);
 void		ft_cd(char *input);
 void		ft_echo(t_prompt *prompt);
 char		*enviroment_var(char *cmd, int exit_status);
-void		ft_exit(char *name, t_data *data, char *exit_status);
+void		ft_exit(t_data *data, char *exit_status);
 int			valid_name(char c, int flag);
 int			ft_export(char *input, t_export **var);
 t_export	*search_var(t_export **var, char *name);
@@ -357,6 +357,10 @@ char		**updateenvp(t_export **export);
 char		*find_path(char *cmd, char **env);
 int			*manage_redir(t_ast **root, t_data *data);
 void		restore_redirect(int *original);
+int			*save_origin(void);
+void		make_redir(int fd, int fd2);
+void		destroy_fd(int *fd);
+void		exec_pipe(t_ast **root, t_data *data);
 
 // HANDLE_OPERATORS
 int			append(char *filename, t_utils *data);
@@ -377,7 +381,8 @@ void		ft_write_read_mode(int *pipefd, char **cmd, t_utils *data);
 void		heredoc_check_mode(char *line, char *limiter, int fd);
 void		check_errno(char **split1, t_utils *data);
 void		translate(t_utils *data);
-void		single_command(char **cmd, t_utils *data, int *fd);
+void		exec_single_cmd(t_ast **root, t_data *data);
+void		single_command(t_ast **root, t_utils *data);
 
 //	ast
 void		clean_node(t_ast **root);
