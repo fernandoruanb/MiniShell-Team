@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 08:04:32 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/07 15:03:46 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:14:18 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void		analysis(t_data *data);
 void		ft_cd(char *input);
 void		ft_echo(t_prompt *prompt);
 char		*enviroment_var(char *cmd, int exit_status);
-void		ft_exit(t_data *data, char *exit_status);
+void		ft_exit(t_data *data, char *exit_status, int flag);
 int			valid_name(char c, int flag);
 int			ft_export(char *input, t_export **var);
 t_export	*search_var(t_export **var, char *name);
@@ -351,7 +351,7 @@ char		*expand_tilde(char *str);
 
 //	execution
 int			minishell(t_ast **root, t_data *data);
-int			handle_builtin(char **cmd, t_data *data);
+int		handle_builtin(char **cmd, t_data *data, int flag);
 char		**updateenvp(t_export **export);
 char		*find_path(char *cmd, char **env);
 void		manage_redir(t_ast **root, t_data *data);

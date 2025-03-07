@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-display_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/06 16:08:00 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/07 15:12:49 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,12 @@ void	display_prompt(t_data *data)
 	{
 		data->prompt->input = readline(BLUE"Master of universe(mini)$ "RESET);
 		if (!data->prompt->input)
-			return (ft_exit(data, NULL));
+			return (ft_exit(data, NULL, 1));
 		if (handle_space(data->prompt->input))
 		{
 			free(data->prompt->input);
 			continue ;
 		}
-		if (ft_strncmp(data->prompt->input, "exit", 4) == 0)
-			return (ft_exit(data, &data->prompt->input[5]));
 		// if (ft_strncmp(data->prompt->input, "export", 6) == 0)
 		// {
 		// 	if (ft_strlen(data->prompt->input) > 6)

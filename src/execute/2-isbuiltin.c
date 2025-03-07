@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:10:30 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/07 12:51:46 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:13:57 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	call_local(char *cmd, t_localvar **locals)
 	return (1);
 }
 
-int	handle_builtin(char **cmd, t_data *data)
+int	handle_builtin(char **cmd, t_data *data, int flag)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
 		return (handle_cd(cmd, &data->export_vars));
@@ -50,5 +50,10 @@ int	handle_builtin(char **cmd, t_data *data)
 		return (call_export(cmd[1], &data->export_vars));
 	else if (ft_strnstr(cmd[0], "=", ft_strlen(cmd[0])))
 		return (call_local(cmd[0], &data->local_vars));
+	else if (!ft_strcmp(cmd[0], "exit"))
+	{
+		ft_exit(data, cmd[1], flag);
+		return (1);
+	}
 	return (0);
 }
