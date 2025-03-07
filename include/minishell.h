@@ -6,7 +6,11 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 08:04:32 by fruan-ba          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/07 17:39:59 by fruan-ba         ###   ########.fr       */
+=======
+/*   Updated: 2025/03/07 15:58:51 by jopereir         ###   ########.fr       */
+>>>>>>> c1c06ada0b0d4da988afae13bc30e07a14029ef0
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -367,9 +371,15 @@ int			append(char *filename, t_utils *data);
 int			handle_pipe_op(t_ast **root, int flag, t_data *data);
 int			handle_red_in(char *filename, t_utils *data);
 int			handle_redirect_out(char *filename, t_utils *data);
+<<<<<<< HEAD
 int			heredoc(char *limiter, t_utils *data);
 void		operator_and(char *cmd1, char *cmd2, t_data *data);
 void		operator_or(char *cmd1, char *cmd2, t_data *data);
+=======
+int			heredoc(char **cmd, char *limiter, t_utils *data);
+void		operator_and(char *cmd1, char *cmd2, t_utils *data);
+void		operator_or(char *cmd1, char *cmd2, t_utils *data);
+>>>>>>> c1c06ada0b0d4da988afae13bc30e07a14029ef0
 
 int			close_descriptors(int *pipefd, int flag, t_data *data);
 void		fulfil_data_fd(int *pipefd, t_data *data);

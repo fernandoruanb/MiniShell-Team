@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/06 17:44:38 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/07 15:32:22 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,8 @@
 
 void ast_print(t_ast *root, int level)
 {
-    if (!root)
-    {
-		    return ;
-	}
+	if (!root)
+		return ;
 	ast_print(root->right, level + 1);
 	for (int i = 0; i < level; i++)
 		printf("     ");
