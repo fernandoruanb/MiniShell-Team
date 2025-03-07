@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/07 15:19:00 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:29:27 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ static int	handle_space(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (0);
 	i = -1;
 	while (str[++i])
 		if (str[i] != ' ' && str[i] != '\0')
@@ -79,7 +81,7 @@ void	display_prompt(t_data *data)
 	{
 		data->prompt->input = readline(BLUE"Master of universe(mini)$ "RESET);
 		if (!data->prompt->input)
-			return (ft_exit(data, NULL));
+			ft_exit(data, NULL);
 		if (handle_space(data->prompt->input))
 		{
 			free(data->prompt->input);

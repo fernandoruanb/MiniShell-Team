@@ -6,15 +6,14 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:10:30 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/07 15:18:17 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:24:15 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	handle_cd(char **cmd, t_export **export)
+static int	handle_cd(char **cmd)
 {
-	(void)export;
 	ft_cd(cmd[1]);
 	return (1);
 }
@@ -43,7 +42,7 @@ static int	call_local(char *cmd, t_localvar **locals)
 int	handle_builtin(char **cmd, t_data *data)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
-		return (handle_cd(cmd, &data->export_vars));
+		return (handle_cd(cmd));
 	if (!ft_strncmp(cmd[0], "unset", 5))
 		return (call_unset(cmd[1], &data->export_vars, &data->local_vars));
 	if (!ft_strcmp(cmd[0], "export"))

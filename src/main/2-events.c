@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:31:43 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 15:31:47 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:30:22 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	destroy(t_data *data, char *message, int exit_code)
 {
 	if (data->prompt)
 	{
-		if (data->prompt->path)
-			free(data->prompt->path);
 		if (data->prompt->input)
 			free(data->prompt->input);
 		// if (data->prompt->cmdset)
