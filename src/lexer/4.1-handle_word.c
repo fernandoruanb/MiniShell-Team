@@ -12,52 +12,53 @@
 
 #include "minishell.h"
 
-static int	free_me(char **split, char *s1, char *s2, int exit)
-{
-	int	i;
+// static int	free_me(char **split, char *s1, char *s2, int exit)
+// {
+// 	int	i;
 
-	i = 0;
-	while (split[i])
-		free(split[i++]);
-	free(split);
-	free(s1);
-	free(s2);
-	return (exit);
-}
+// 	i = 0;
+// 	while (split[i])
+// 		free(split[i++]);
+// 	free(split);
+// 	free(s1);
+// 	free(s2);
+// 	return (exit);
+// }
 
-static	int	find_my_path(char *cmd, char **env)
-{
-	int		i;
-	char	**paths;
-	char	*path;
-	char	*temp;
+// static	int	find_my_path(char *cmd, char **env)
+// {
+// 	int		i;
+// 	char	**paths;
+// 	char	*path;
+// 	char	*temp;
 
-	if (!cmd)
-		return (0);
-	i = 0;
-	while (!ft_strnstr(env[i], "PATH=", 5))
-		i++;
-	if (!env)
-		return (0);
-	paths = ft_split(env[i] + 5, ':');
-	i = 0;
-	while (paths[i])
-	{
-		temp = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(temp, cmd);
-		if (access(path, X_OK) == 0)
-			return (free_me(paths, path, temp, 1));
-		free(path);
-		free(temp);
-		i++;
-	}
-	return (free_me(paths, NULL, NULL, 0));
-}
+// 	if (!cmd)
+// 		return (0);
+// 	i = 0;
+// 	while (!ft_strnstr(env[i], "PATH=", 5))
+// 		i++;
+// 	if (!env)
+// 		return (0);
+// 	paths = ft_split(env[i] + 5, ':');
+// 	i = 0;
+// 	while (paths[i])
+// 	{
+// 		temp = ft_strjoin(paths[i], "/");
+// 		path = ft_strjoin(temp, cmd);
+// 		if (access(path, X_OK) == 0)
+// 			return (free_me(paths, path, temp, 1));
+// 		free(path);
+// 		free(temp);
+// 		i++;
+// 	}
+// 	return (free_me(paths, NULL, NULL, 0));
+// }
 
 static int	is_cmd(char *str, t_lex *lex)
 {
 	struct stat	st;
 
+	(void)lex;
 	if (stat(str, &st) == 0)
         if (S_ISDIR(st.st_mode))
             return 0;
@@ -68,8 +69,8 @@ static int	is_cmd(char *str, t_lex *lex)
 		return (1);
 	if (access(str, F_OK | X_OK) == 0)
 		return (1);
-	if (find_my_path(str, lex->envp))
-		return (1);
+	// if (find_my_path(str, lex->envp))
+	// 	return (1);
 	return (0);
 }
 
