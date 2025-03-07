@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/07 15:12:49 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:19:00 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	display_prompt(t_data *data)
 	{
 		data->prompt->input = readline(BLUE"Master of universe(mini)$ "RESET);
 		if (!data->prompt->input)
-			return (ft_exit(data, NULL, 1));
+			return (ft_exit(data, NULL));
 		if (handle_space(data->prompt->input))
 		{
 			free(data->prompt->input);
