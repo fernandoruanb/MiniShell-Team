@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/07 13:20:23 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:21:38 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ static int	switch_redir(t_ast **root, t_id id, t_utils *data)
 
 	fd = -1;
 	name = find_fd(root);
-	if (id == REDIRECT_IN || id == HEREDOC)
+	if (id == REDIRECT_IN)
 		fd = handle_red_in(name, data);
 	else if (id == REDIRECT_OUT)
 		fd = handle_redirect_out(name, data);
 	else if (id == APPEND)
 		fd = append(name, data);
+	else if (id == HEREDOC)
+		heredoc((*root)->cmd, find_fd(root), data);
 	return (fd);
 }
 

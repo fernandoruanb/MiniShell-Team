@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/07 15:29:27 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:31:36 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	handle_space(char *str)
 	while (str[++i])
 		if (str[i] != ' ' && str[i] != '\0')
 			return (0);
-	return (1);		
+	return (1);
 }
 
 void	display_prompt(t_data *data)
@@ -87,26 +87,6 @@ void	display_prompt(t_data *data)
 			free(data->prompt->input);
 			continue ;
 		}
-		// if (ft_strncmp(data->prompt->input, "export", 6) == 0)
-		// {
-		// 	if (ft_strlen(data->prompt->input) > 6)
-		// 		ft_export(&data->prompt->input[7], &data->export_vars);
-		// 	else
-		// 		ft_export(NULL, &data->export_vars);
-		// 	t_export *last = export_last(&data->export_vars);
-		// 	export_print(&last);
-		// }
-		// else if (ft_strnstr(data->prompt->input, "=", ft_strlen(data->prompt->input)))
-		// {
-		// 	ft_localvar(data->prompt->input, &data->local_vars);
-		// 	locals_print(&data->local_vars);
-		// }
-		// if (ft_strncmp(data->prompt->input, "unset", 5) == 0)
-		// {
-		// 	ft_unset(&data->export_vars, &data->local_vars, &data->prompt->input[6]);
-		// 	t_export *last = export_last(&data->export_vars);
-		// 	export_print(&last);
-		// }
 		if (data->prompt->input[0] != '\0')
 		{
 			add_history(data->prompt->input);
