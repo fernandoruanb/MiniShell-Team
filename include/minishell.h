@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 08:04:32 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/07 15:18:54 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:39:59 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,25 +364,25 @@ void		try_redir(t_ast **root, t_data *data);
 
 // HANDLE_OPERATORS
 int			append(char *filename, t_utils *data);
-int			handle_pipe_op(t_ast **root, int flag, t_utils *data);
+int			handle_pipe_op(t_ast **root, int flag, t_data *data);
 int			handle_red_in(char *filename, t_utils *data);
 int			handle_redirect_out(char *filename, t_utils *data);
 int			heredoc(char *limiter, t_utils *data);
-void		operator_and(char *cmd1, char *cmd2, t_utils *data);
-void		operator_or(char *cmd1, char *cmd2, t_utils *data);
+void		operator_and(char *cmd1, char *cmd2, t_data *data);
+void		operator_or(char *cmd1, char *cmd2, t_data *data);
 
-int			close_descriptors(int *pipefd, int flag, t_utils *data);
-void		fulfil_data_fd(int *pipefd, t_utils *data);
+int			close_descriptors(int *pipefd, int flag, t_data *data);
+void		fulfil_data_fd(int *pipefd, t_data *data);
 int			get_pipes(t_token *root);
 int			init_pipes(t_utils *data);
-void		ft_write_mode(int *pipefd, char **cmd, t_utils *data);
-void		ft_read_mode(char **cmd, int *pipefd, t_utils *data);
-void		ft_write_read_mode(int *pipefd, char **cmd, t_utils *data);
+void		ft_write_mode(int *pipefd, char **cmd, t_data *data);
+void		ft_read_mode(char **cmd, int *pipefd, t_data *data);
+void		ft_write_read_mode(int *pipefd, char **cmd, t_data *data);
 void		heredoc_check_mode(char *line, char *limiter, int fd);
 void		check_errno(char **split1, t_utils *data);
-void		translate(t_utils *data);
+void		translate(t_data *data);
 void		exec_single_cmd(t_ast **root, t_data *data);
-void		single_command(t_ast **root, t_utils *data);
+void		single_command(t_ast **root, t_data *data);
 
 //	ast
 void		clean_node(t_ast **root);

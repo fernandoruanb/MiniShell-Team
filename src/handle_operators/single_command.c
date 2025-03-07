@@ -6,13 +6,13 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:36:24 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/06 17:27:31 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/07 17:52:27 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	single_command(t_ast **root, t_utils *data)
+void	single_command(t_ast **root, t_data *data)
 {
 	int		pid;
 
@@ -22,6 +22,6 @@ void	single_command(t_ast **root, t_utils *data)
 	if (pid == -1)
 		return ;
 	if (pid == 0)
-		check_errno((*root)->cmd, data);
-	waitpid(pid, &data->exec_status, 0);
+		check_errno((*root)->cmd, &data->utils);
+	waitpid(pid, &data->utils.exec_status, 0);
 }

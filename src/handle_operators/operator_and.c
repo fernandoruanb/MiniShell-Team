@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:08 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 11:51:55 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:29:56 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ static void	execute_cmd2(char *cmd2, t_utils *data)
 	waitpid(id, &data->exec_status, 0);
 }
 
-void	operator_and(char *cmd1, char *cmd2, t_utils *data)
+void	operator_and(char *cmd1, char *cmd2, t_data *data)
 {
-	execute_cmd1(cmd1, data);
-	if (data->exec_status != 0)
+	execute_cmd1(cmd1, &data->utils);
+	if (data->utils.exec_status != 0)
 		return ;
-	execute_cmd2(cmd2, data);
+	execute_cmd2(cmd2, &data->utils);
 }
 
 /*int	main(int argc, char **argv, char **envp)

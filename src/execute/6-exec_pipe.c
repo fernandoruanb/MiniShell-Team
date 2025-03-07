@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:48:09 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/07 13:56:32 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:53:15 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ static void	call_handle_pipe(t_ast *ast, t_data *data)
 	if (ast->id != CMD)
 		return ;
 	if (getfirstcmd(ast->index, &data->token))
-		handle_pipe_op(&ast, 1, &data->utils);
+		handle_pipe_op(&ast, 1, data);
 	else if (getlastcmd(ast->index, &data->token))
-		handle_pipe_op(&ast, 2, &data->utils);
+		handle_pipe_op(&ast, 2, data);
 	else
-		handle_pipe_op(&ast, 3, &data->utils);
+		handle_pipe_op(&ast, 3, data);
 }
 
 static int	isbuiltin(char **cmd)

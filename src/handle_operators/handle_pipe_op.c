@@ -6,13 +6,13 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/05 16:15:39 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:25:51 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	read_mode(char **cmd, int *pipefd, t_utils *data)
+void	read_mode(char **cmd, int *pipefd, t_data *data)
 {
 	int	pid;
 
@@ -26,16 +26,16 @@ void	read_mode(char **cmd, int *pipefd, t_utils *data)
 		ft_read_mode(cmd, pipefd, data);
 	close_descriptors(pipefd, 1, data);
 	//free_splits(NULL, cmd, NULL, NULL);
-	data->pids[data->index++] = pid;
-	data->num_of_processes++;
+	data->utils.pids[data->utils.index++] = pid;
+	data->utils.num_of_processes++;
 }
 
-void	write_mode(char **cmd, int *pipefd, t_utils *data)
+void	write_mode(char **cmd, int *pipefd, t_data *data)
 {
 	int	pid;
 
-	data->fd_backup = dup(pipefd[0]);
-	if (data->fd_backup == -1)
+	data->utils.fd_backup = dup(pipefd[0]);
+	if (data->utils.fd_backup == -1)
 		close_descriptors(pipefd, 1, data);
 	pid = fork();
 	if (pid == -1)
@@ -46,17 +46,17 @@ void	write_mode(char **cmd, int *pipefd, t_utils *data)
 	if (pid == 0)
 		ft_write_mode(pipefd, cmd, data);
 	//free_splits(NULL, cmd, NULL, NULL);
-	data->pid = pid;
-	data->pids[data->index++] = pid;
-	data->num_of_processes++;
+	data->utils.pid = pid;
+	data->utils.pids[data->utils.index++] = pid;
+	data->utils.num_of_processes++;
 }
 
-void	write_read_mode(char **cmd, int *pipefd, t_utils *data)
+void	write_read_mode(char **cmd, int *pipefd, t_data *data)
 {
 	int	pid;
 	int	fd;
 
-	if (data->fd_backup < 0)
+	if (data->utils.fd_backup < 0)
 		close_descriptors(pipefd, 1, data);
 	fd = dup(pipefd[0]);
 	if (fd == -1)
@@ -72,29 +72,29 @@ void	write_read_mode(char **cmd, int *pipefd, t_utils *data)
 		close(fd);
 		ft_write_read_mode(pipefd, cmd, data);
 	}
-	if (data->fd_backup)
-		close(data->fd_backup);
-	data->fd_backup = fd;
+	if (data->utils.fd_backup)
+		close(data->utils.fd_backup);
+	data->utils.fd_backup = fd;
 	//free_splits(NULL, cmd, NULL, NULL);
-	data->pids[data->index++] = pid;
-	data->num_of_processes++;
+	data->utils.pids[data->utils.index++] = pid;
+	data->utils.num_of_processes++;
 }
 
-void	wait_all_pids(t_utils *data)
+void	wait_all_pids(t_data *data)
 {
 	int	index;
 
 	index = 0;
-	while (index < data->num_of_processes - 1)
+	while (index < data->utils.num_of_processes - 1)
 	{
-		waitpid(data->pids[index], NULL, 0);
+		waitpid(data->utils.pids[index], NULL, 0);
 		index++;
 	}
-	waitpid(data->pids[index], &data->exec_status, 0);
+	waitpid(data->utils.pids[index], &data->utils.exec_status, 0);
 	translate(data);
 }
 
-int	handle_pipe_op(t_ast **root, int flag, t_utils *data)
+int	handle_pipe_op(t_ast **root, int flag, t_data *data)
 {
 	int		pipefd[2];
 	t_ast	*ast;
@@ -119,7 +119,7 @@ int	handle_pipe_op(t_ast **root, int flag, t_utils *data)
 		close_descriptors(pipefd, 1, data);
 	if (flag == 2)
 		wait_all_pids(data);
-	return (data->exec_status);
+	return (data->utils.exec_status);
 }
 
 /*int	main(int argc, char **argv, char **envp)
