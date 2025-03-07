@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 08:04:32 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/07 13:17:56 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:03:46 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 # define RED "\033[38;5;214m"
 # define RESET	"\033[0m"
 
-
 typedef enum e_id
 {
 	NONE,
@@ -57,7 +56,7 @@ typedef enum e_id
 	OPERATOR_AND
 }	t_id;
 
-typedef struct s_ast t_ast;
+typedef struct s_ast	t_ast;
 
 typedef struct s_ast
 {
@@ -92,10 +91,7 @@ typedef struct s_token
 typedef struct s_prompt
 {
 	char	*input;
-	char	***cmdset;
-	char	**envp;
 	char	*path;
-
 	int		exit_status;
 }	t_prompt;
 
@@ -280,64 +276,63 @@ int			ft_isalpha_special_2(char letter);
 int			ft_isalpha_special(char letter);
 int			check_quotes(t_token *root);
 void		check_copy_new(t_utils *data);
-void		clean_program(t_utils *data);
-int			check_syntax(t_token *root, char **envp, t_utils *data);
-int			get_command(t_token *root, t_utils *data);
-int			final_case(t_token *root, t_utils *data);
-int			check_invalid_brackets_position(t_utils *data);
-int			case_arg(t_token *root, t_utils *data);
-int			case_limiter(t_token *root, t_utils *data);
-int			case_command(t_token *root, t_utils *data);
-int			is_insider_quotes(t_token *root, t_utils *data);
-int			test_all_paths(t_utils *data);
-int			is_absolute_path_quotes(t_utils *data);
-int			case_builtins_quotes(t_utils *data);
-int			is_environment(t_token *root);
-int			case_builtins(t_token *root);
-int			extra_cases(t_token *root, t_utils *data);
-int			check_brackets(t_token *root, t_utils *data);
-int			check_invalid_things(t_token *root);
-int			case_fd(t_token *root, t_utils *data);
-int			check_is_directory(t_token *root, t_utils *data);
-int			check_is_valid_fd(t_token *root, t_utils *data);
-int			is_number(t_token *root);
-int			case_redirect(t_token *root, t_utils *data);
-int			extra_redirect_cases(t_token *root, t_utils *data);
-int			heredoc_or_append(t_token *root, t_utils *data);
-int			case_pipe(t_token *root, t_utils *data);
-int			decrement_status(t_utils *data);
-int			show_error_fd(char *message, int flag, t_utils *data, int signal);
-int			free_each_split(char **split1, char **split2, int flag);
-int			exist_command(t_token *root, t_utils *data);
-int			check_absolute_path(t_token *root, t_utils *data);
-void		get_full_path(t_token *root, int index, t_utils *data);
-void		get_paths(char **envp, t_utils *data);
-void		show_paths(t_utils *data);
-int			free_strs_flag(char *str1, char *str2, int flag);
-void		show_tokens(t_token *root);
-char		*get_token(t_id id);
-void		free_tokens(t_token *root);
-void		add_token(t_token **root, char *str, t_id id);
-t_token		*create_token(char *str, t_id id);
-int			special(t_token *root, t_utils *data);
-int			get_check_command(t_token *root, t_utils *data);
-int			final_check(t_utils *data);
-int			check_order_quotes(t_token *root);
-int			case_quotes_syntax(char *quote, int marker, int *flag);
-void		create_variables_order(t_token *root, int *index, int *flag);
-int			special_check_quotes(t_token *root, t_utils *data);
-int			how_many_quotes(t_token *root, t_utils *data);
-int			ft_isalpha_special_2(char letter);
-int			ft_isalpha_special(char letter);
-int			check_quotes(t_token *root);
-void		check_copy_new(t_utils *data);
+// void		clean_program(t_utils *data);
+// int			check_syntax(t_token *root, char **envp, t_utils *data);
+// int			get_command(t_token *root, t_utils *data);
+// int			final_case(t_token *root, t_utils *data);
+// int			check_invalid_brackets_position(t_utils *data);
+// int			case_arg(t_token *root, t_utils *data);
+// int			case_limiter(t_token *root, t_utils *data);
+// int			case_command(t_token *root, t_utils *data);
+// int			is_insider_quotes(t_token *root, t_utils *data);
+// int			test_all_paths(t_utils *data);
+// int			is_absolute_path_quotes(t_utils *data);
+// int			case_builtins_quotes(t_utils *data);
+// int			is_environment(t_token *root);
+// int			case_builtins(t_token *root);
+// int			extra_cases(t_token *root, t_utils *data);
+// int			check_brackets(t_token *root, t_utils *data);
+// int			check_invalid_things(t_token *root);
+// int			case_fd(t_token *root, t_utils *data);
+// int			check_is_directory(t_token *root, t_utils *data);
+// int			check_is_valid_fd(t_token *root, t_utils *data);
+// int			is_number(t_token *root);
+// int			case_redirect(t_token *root, t_utils *data);
+// int			extra_redirect_cases(t_token *root, t_utils *data);
+// int			heredoc_or_append(t_token *root, t_utils *data);
+// int			case_pipe(t_token *root, t_utils *data);
+// int			decrement_status(t_utils *data);
+// int			show_error_fd(char *message, int flag, t_utils *data, int signal);
+// int			free_each_split(char **split1, char **split2, int flag);
+// int			exist_command(t_token *root, t_utils *data);
+// int			check_absolute_path(t_token *root, t_utils *data);
+// void		get_full_path(t_token *root, int index, t_utils *data);
+// void		get_paths(char **envp, t_utils *data);
+// void		show_paths(t_utils *data);
+// int			free_strs_flag(char *str1, char *str2, int flag);
+// void		show_tokens(t_token *root);
+// char		*get_token(t_id id);
+// void		free_tokens(t_token *root);
+// void		add_token(t_token **root, char *str, t_id id);
+// t_token		*create_token(char *str, t_id id);
+// int			special(t_token *root, t_utils *data);
+// int			get_check_command(t_token *root, t_utils *data);
+// int			final_check(t_utils *data);
+// int			check_order_quotes(t_token *root);
+// int			case_quotes_syntax(char *quote, int marker, int *flag);
+// void		create_variables_order(t_token *root, int *index, int *flag);
+// int			special_check_quotes(t_token *root, t_utils *data);
+// int			how_many_quotes(t_token *root, t_utils *data);
+// int			ft_isalpha_special_2(char letter);
+// int			ft_isalpha_special(char letter);
+// int			check_quotes(t_token *root);
+// void		check_copy_new(t_utils *data);
 int			godness_decision(int flag, t_utils *data);
 int			pipes_case(t_token *root, t_utils *data);
 int			start_case(t_token *root, t_utils *data);
 int			check_local_environment(t_token *root);
 
 //	Binary Executor
-
 int			my_tree_my_life(t_token *root, t_utils *data);
 
 //	Parsing
@@ -400,8 +395,8 @@ int			isredir(t_id id);
 
 // HANDLE_SIGNALS
 
-void	handle_prompt_signal(void);
-void	heredoc_signal(void);
-void	handle_command_signal(void);
+void		handle_prompt_signal(void);
+void		heredoc_signal(void);
+void		handle_command_signal(void);
 
 #endif

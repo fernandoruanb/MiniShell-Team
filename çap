@@ -1,8 +1,1 @@
-[38;5;214mAST
-[0m     ls (5)(FD)
-> (4)(REDIRECT)
-          çap (3)(FD)
-     < (2)(REDIRECT)
-          grep (0)(CMD)
-grep (0)Makefile (0)< (2)çap (3)> (4)ls (5)
-[32mOUTPUT:[0m
+Manage_redir foi chamado: 2
