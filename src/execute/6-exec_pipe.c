@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:48:09 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/07 11:44:06 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:30:36 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,9 @@ static int	isbuiltin(char **cmd)
 void	exec_pipe(t_ast **root, t_data *data)
 {
 	t_ast	*ast;
-	int		*fd;
 
 	if (!*root || isbuiltin((*root)->cmd))
 		return ;
 	ast = *root;
-	fd = manage_redir(&ast, data);
 	call_handle_pipe(ast, data);
-	restore_redirect(fd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-isbuiltin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:10:30 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/06 17:40:30 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/07 12:51:46 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 static int	handle_cd(char **cmd, t_export **export)
 {
-	// if (!ft_strcmp(cmd[1], "-"))
-	// {
-	// 	free(cmd[1]);
-	// 	cmd[1] = NULL;
-	// 	cmd[1] = ft_strdup(search_var(export, "OLDPWD")->value);
-	// }
 	(void)export;
 	ft_cd(cmd[1]);
 	return (1);

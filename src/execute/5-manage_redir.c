@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/07 11:41:49 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:20:23 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,16 @@ static void	aplly_redirect(int fd, t_id id)
 	close (fd);
 }
 
-int	*manage_redir(t_ast **root, t_data *data)
+void	manage_redir(t_ast **root, t_data *data)
 {
-	int	*original;
 	int	fd;
 
+	printf("Manage_redir foi chamado: %d\n", (*root)->index);
 	if (!*root || !isredir((*root)->id))
-		return (NULL);
-	original = save_origin();
-	if (!original)
-		return (NULL);
+		return ;
+	printf("Manage_redir vai executar: %d\n", (*root)->index);
 	fd = switch_redir(root, (*root)->id, &data->utils);
 	aplly_redirect(fd, (*root)->id);
-	return (original);
 }
 
 void	restore_redirect(int *original)

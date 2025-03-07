@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 08:04:32 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/07 11:49:43 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:17:56 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ typedef struct s_data
 	t_export	*export_vars;
 	t_localvar	*local_vars;
 
+	int			*fd;
 	int			is_pipe;
 	char		**envp;
 }	t_data;
@@ -358,13 +359,13 @@ int			minishell(t_ast **root, t_data *data);
 int			handle_builtin(char **cmd, t_data *data);
 char		**updateenvp(t_export **export);
 char		*find_path(char *cmd, char **env);
-int			*manage_redir(t_ast **root, t_data *data);
+void		manage_redir(t_ast **root, t_data *data);
 void		restore_redirect(int *original);
 int			*save_origin(void);
 void		make_redir(int fd, int fd2);
 void		destroy_fd(int *fd);
 void		exec_pipe(t_ast **root, t_data *data);
-int			*try_redir(t_ast **root, t_data *data, int *fd);
+void		try_redir(t_ast **root, t_data *data);
 
 // HANDLE_OPERATORS
 int			append(char *filename, t_utils *data);

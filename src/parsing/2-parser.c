@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-parser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/06 10:23:50 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/07 12:53:39 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	find_tilde(char *str)
 		if (str[i] == '~' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
 			if (i == 0 || (i > 0 && str[i - 1] == ' '))
 				return (1);
-	return (0); 
+	return (0);
 }
 
 int	count_var(char *str)

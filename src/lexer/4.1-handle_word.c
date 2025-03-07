@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/07 12:27:25 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:53:24 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ static int	is_cmd(char *str, t_lex *lex)
 
 	(void)lex;
 	if (stat(str, &st) == 0)
-        if (S_ISDIR(st.st_mode))
-            return 0;
+		if (S_ISDIR(st.st_mode))
+			return (0);
 	if (ft_strcmp(str, "cd") == 0 || ft_strcmp(str, "export") == 0
 		|| ft_strcmp(str, "unset") == 0 || ft_strcmp(str, "pwd") == 0
 		|| ft_strcmp(str, "env") == 0 || ft_strcmp(str, "echo") == 0
@@ -77,10 +77,10 @@ static int	is_cmd(char *str, t_lex *lex)
 void	get_label(t_lex *lex)
 {
 	if ((!ft_strncmp(lex->word, "xargs", 5)
-		|| (lex->id != LIMITER
-		&& ((is_cmd(lex->word, lex) && lex->id != FD) || ft_strncmp(lex->word, "./", 2) == 0)
-		&& ft_strcmp(lex->word, ".") != 0 && ft_strncmp(lex->word, "../", 3) != 0 && !ft_strcmp(lex->word, ".")))
-		|| lex->id == NONE)
+			|| (lex->id != LIMITER
+				&& ((is_cmd(lex->word, lex) && lex->id != FD) || ft_strncmp(lex->word, "./", 2) == 0)
+				&& ft_strcmp(lex->word, ".") != 0 && ft_strncmp(lex->word, "../", 3) != 0
+				&& !ft_strcmp(lex->word, "."))) || lex->id == NONE)
 		lex->id = CMD;
 	else if (lex->id != FD && lex->id != LIMITER && lex->id != CMD)
 		lex->id = ARG;
