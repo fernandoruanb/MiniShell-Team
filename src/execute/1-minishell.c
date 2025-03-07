@@ -1,30 +1,30 @@
-<<<<<<< HEAD
- /* ************************************************************************** */
- /*                                                                            */
- /*                                                        :::      ::::::::   */
-/*   1-minishell.c                                      :+:      :+:    :+:   */
- /*                                                    +:+ +:+         +:+     */
- /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
- /*                                                +#+#+#+#+#+   +#+           */
- /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/05 14:39:25 by fruan-ba         ###   ########.fr       */
- /*                                                                            */
- /* ************************************************************************** */
-=======
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   1-minishell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/06 18:00:57 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/07 11:49:34 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
->>>>>>> 5ae8faf4b61638613622a017a0f3183674e348bb
 
 #include "minishell.h"
+
+int	*try_redir(t_ast **root, t_data *data, int *fd)
+{
+	int	*origin;
+
+	if (!*root)
+		return (fd);
+	//origin = manage_redir(root, data);
+	fd = try_redir(&(*root)->left, data, fd);
+	fd = try_redir(&(*root)->right, data, fd);
+	restore_redirect(fd);
+	origin = manage_redir(root, data);
+	return (origin);
+}
 
 static void	exec_multi_cmd(t_ast **root, t_data *data)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-make_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 10:34:17 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/06 18:07:45 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/07 12:48:07 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	handle_pipe_ast(t_token **token, t_ast **ast)
 		*ast = add_node(*ast, &temp);
 }
 
-static void handle_commands(t_token **token, t_ast **ast, t_data *data)
+static void	handle_commands(t_token **token, t_ast **ast, t_data *data)
 {
 	t_token	*temp;
 

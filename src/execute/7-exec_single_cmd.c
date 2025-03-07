@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   7-exec_single_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:16:20 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/06 17:41:49 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/07 11:50:06 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec_single_cmd(t_ast **root, t_data *data)
 	if (!*root || (*root)->id == PIPE)
 		return ;
 	ast = *root;
-	fd = manage_redir(&ast, data);
+	fd = try_redir(&ast, data, NULL);
 	cmd = find_cmd(&ast);
 	if (!handle_builtin(ast->cmd, data))
 		single_command(&cmd, &data->utils);

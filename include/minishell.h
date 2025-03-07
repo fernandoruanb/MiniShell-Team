@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 08:04:32 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/07 08:04:35 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:49:43 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,6 +364,7 @@ int			*save_origin(void);
 void		make_redir(int fd, int fd2);
 void		destroy_fd(int *fd);
 void		exec_pipe(t_ast **root, t_data *data);
+int			*try_redir(t_ast **root, t_data *data, int *fd);
 
 // HANDLE_OPERATORS
 int			append(char *filename, t_utils *data);

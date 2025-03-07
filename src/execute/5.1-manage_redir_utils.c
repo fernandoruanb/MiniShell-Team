@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   5.1-manage_redir_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:11:48 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/06 16:17:08 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/07 11:33:58 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ void	destroy_fd(int *fd)
 	close (fd[0]);
 	close (fd[1]);
 	free(fd);
+	fd = NULL;
 }
 
 void	make_redir(int fd, int fd2)
 {
 	if (fd < 0 || fd2 < 0)
 		return ;
-	if (dup2(fd , fd2) < 0)
+	if (dup2(fd, fd2) < 0)
 		perror("Redirect error: ");
 }

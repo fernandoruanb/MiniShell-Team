@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   5-manage_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/06 16:37:22 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/07 11:41:49 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	*manage_redir(t_ast **root, t_data *data)
 
 void	restore_redirect(int *original)
 {
-	if (!original)
+	if (!original || (original[0] < 0 || original[1] < 0))
 		return ;
 	if (dup2 (original[1], 1) < 0)
 		perror("Restore STDOUT error: ");
