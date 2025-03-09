@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/08 22:43:40 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/09 09:29:29 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	handle_redirect_out(char **cmd, char *f, t_utils *data, int flag)
  	data.utils.envp = envp;
 	split1 = ft_split(argv[1], ' ');
 	(void)argc;
-	index = 1;
+	index = 2;
 	if (!split1)
 		return (1);
 	while (index < argc - 1)

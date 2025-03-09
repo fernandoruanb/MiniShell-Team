@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:05:05 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/08 20:43:01 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/09 09:21:07 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,11 @@ void	append(char **cmd, char *f, t_utils *data, int flag)
 		return ;
 	fd = open(f, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
+	{
 		free(detect_dir);
+		return ;
+	}
+	free(detect_dir);
 	if (flag == 1)
 	{
 		id = fork();
@@ -83,7 +87,6 @@ void	append(char **cmd, char *f, t_utils *data, int flag)
 	}
 	if (flag == 1)
 		waitpid(id, &data->exec_status, 0);
-	free(detect_dir);
 }
 
 /*int	main(int argc, char **argv, char **envp)
@@ -98,7 +101,7 @@ void	append(char **cmd, char *f, t_utils *data, int flag)
 	split1 = ft_split(argv[1], ' ');
 	if (!split1)
 		return (1);
-	index = 1;
+	index = 2;
 	while (index < argc - 1)
 	{
 		append(split1, argv[index], &data.utils, 0);
