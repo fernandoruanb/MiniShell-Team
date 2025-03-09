@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 13:52:54 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/09 15:24:07 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void ast_print(t_ast *root, int level)
 	ast_print(root->left, level + 1);
 }
 
-static void	clear_everything(t_data *data)
+void	clear_everything(t_data *data)
 {
 	token_clean(data->token);
 	clean_node(&data->root);
@@ -171,6 +171,7 @@ void	analysis(t_data *data)
 	if (manage_redir(&data->token, data))
 		return (clear_everything(data));
 	minishell(&data->root, data);
+	restore_redirect(data->fd);
 	clear_everything(data);
 	data->prompt->exit_status = data->utils.exec_status;
 }

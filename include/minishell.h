@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 13:33:44 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/09 15:23:02 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ int			init_data(t_data *data, char **envp);
 
 //	prompt
 int			child(t_prompt *prompt);
+void		clear_everything(t_data *data);
 void		display_prompt(t_data *data);
 void		analysis(t_data *data);
 
