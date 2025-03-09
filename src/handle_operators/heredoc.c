@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 10:12:47 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/09 10:21:23 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	heredoc(char **cmd, char *limiter, t_utils *data, int flag)
 	return (fd);
 }
 
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	char	**cmd;
@@ -119,4 +119,4 @@ int	main(int argc, char **argv, char **envp)
 	heredoc(cmd, argv[index], &data.utils, 1);
 	translate(&data);
 	return (0);
-}
+}*/
