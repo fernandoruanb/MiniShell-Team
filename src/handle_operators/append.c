@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:05:05 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 10:22:24 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:50:12 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,33 +60,34 @@ static char	*capture_dir(char *f)
 	return (detect_dir);
 }
 
-void	append(char **cmd, char *f, t_utils *data, int flag)
+int	append(char *f, t_utils *data)
 {
 	int			fd;
 	char		*detect_dir;
-	int			id;
+	//int			id;
 
 	detect_dir = initialize_directory(f, data);
 	if (detect_dir == NULL)
-		return ;
+		return (-1);
 	fd = open(f, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
-	{
-		free(detect_dir);
-		return ;
-	}
+	// if (fd == -1)
+	// {
+	// 	free(detect_dir);
+	// 	return ;
+	// }
 	free(detect_dir);
-	if (flag == 1)
-	{
-		id = fork();
-		if (id == 0)
-		{
-			dup2(fd, STDOUT_FILENO);
-			check_errno(cmd, data);
-		}
-	}
-	if (flag == 1)
-		waitpid(id, &data->exec_status, 0);
+	// if (flag == 1)
+	// {
+	// 	id = fork();
+	// 	if (id == 0)
+	// 	{
+	// 		dup2(fd, STDOUT_FILENO);
+	// 		check_errno(cmd, data);
+	// 	}
+	// }
+	// if (flag == 1)
+	// 	waitpid(id, &data->exec_status, 0);
+	return (fd);
 }
 
 /*int	main(int argc, char **argv, char **envp)

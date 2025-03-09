@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 09:52:20 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:33:44 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,23 +354,22 @@ int			minishell(t_ast **root, t_data *data);
 int			handle_builtin(char **cmd, t_data *data);
 char		**updateenvp(t_export **export);
 char		*find_path(char *cmd, char **env);
-void		manage_redir(t_ast **root, t_data *data);
+int			manage_redir(t_token **token, t_data *data);
 void		restore_redirect(int *original);
 int			*save_origin(void);
 void		make_redir(int fd, int fd2);
 void		destroy_fd(int *fd);
 void		exec_pipe(t_ast **root, t_data *data);
-void		try_redir(t_ast **root, t_data *data);
 
 // HANDLE_OPERATORS
 
-void		handle_redirect_out(char **cmd, char *f, t_utils *data, int flag);
-void		append(char **cmd, char *f, t_utils *data, int flag);
+int			handle_redirect_out(char *f, t_utils *data);
+int			append(char *f, t_utils *data);
 int			handle_pipe_op(t_ast **root, int flag, t_data *data);
-int			handle_red_in(char **cmd, char *f, t_utils *data, int flag);
+int			handle_red_in(char *f, t_utils *data);
 void		operator_and(char *cmd1, char *cmd2, t_data *data);
 void		operator_or(char *cmd1, char *cmd2, t_data *data);
-int			heredoc(char **cmd, char *limiter, t_utils *data, int flag);
+void		heredoc(char *limiter, t_utils *data);
 void		operator_and(char *cmd1, char *cmd2, t_data *data);
 void		operator_or(char *cmd1, char *cmd2, t_data *data);
 int			close_descriptors(int *pipefd, int flag, t_data *data);

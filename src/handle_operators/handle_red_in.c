@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:20:41 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 10:07:06 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:54:28 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,29 @@ static int	check_file(char *f, t_utils *data)
 	return (1);
 }
 
-int	handle_red_in(char **cmd, char *f, t_utils *data, int flag)
+int	handle_red_in(char *f, t_utils *data)
 {
-	int		id;
+	//int		id;
 	int		fd;
 
 	if (!check_file(f, data))
-	{
-		free_splits(NULL, cmd, NULL, NULL);
-		return (1);
-	}
+		return (INT_MIN);
 	fd = open(f, O_RDONLY);
-	if (fd == -1)
-		return (0);
-	if (flag == 1)
-	{
-		id = fork();
-		if (id == 0)
-		{
-			if (dup2(fd, STDIN_FILENO) == -1)
-				exit(1);
-			check_errno(cmd, data);
-		}
-	}
-	if (flag == 1 && id != -1)
-		waitpid(id, &data->exec_status, 0);
-	return (0);
+	// if (fd == -1)
+	// 	return (0);
+	// if (flag == 1)
+	// {
+	// 	id = fork();
+	// 	if (id == 0)
+	// 	{
+	// 		if (dup2(fd, STDIN_FILENO) == -1)
+	// 			exit(1);
+	// 		check_errno(cmd, data);
+	// 	}
+	// }
+	// if (flag == 1 && id != -1)
+	// 	waitpid(id, &data->exec_status, 0);
+	return (fd);
 }
 
 /*int	main(int argc, char **argv, char **envp)

@@ -3,74 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   5-manage_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/07 16:21:38 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:33:50 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*find_fd(t_ast **root)
+static char	*find_fd(t_token **token)
 {
-	char	*temp;
+	t_token	*temp;
 
-	if (!*root)
+	if (!*token)
 		return (NULL);
-	if ((*root)->id == FD || (*root)->id == LIMITER)
-		return ((*root)->cmd[0]);
-	temp = find_fd(&(*root)->left);
-	if (!temp)
-		temp = find_fd(&(*root)->right);
-	return (temp);
-}
-
-static int	switch_redir(t_ast **root, t_id id, t_utils *data)
-{
-	int		fd;
-	char	*name;
-
-	fd = -1;
-	name = find_fd(root);
-	if (id == REDIRECT_IN)
-		fd = handle_red_in(name, data);
-	else if (id == REDIRECT_OUT)
-		fd = handle_redirect_out(name, data);
-	else if (id == APPEND)
-		fd = append(name, data);
-	else if (id == HEREDOC)
-		heredoc((*root)->cmd, find_fd(root), data);
-	return (fd);
+	temp = *token;
+	while (temp)
+	{
+		if (temp->id == FD || temp->id == LIMITER)
+			return (temp->str);
+		temp = temp->next;
+	}
+	// temp = find_fd(&(*token)->next);
+	return (NULL);
 }
 
 static void	aplly_redirect(int fd, t_id id)
 {
 	if (fd < 0)
 		return ;
-	make_redir(fd, id == APPEND || id == REDIRECT_OUT);
+	make_redir(fd, id == REDIRECT_OUT || id == APPEND);
 	close (fd);
 }
 
-void	manage_redir(t_ast **root, t_data *data)
+static int	switch_redir(t_token **token, t_utils *data)
 {
-	int	fd;
+	int		fd;
+	char	*name;
 
-	printf("Manage_redir foi chamado: %d\n", (*root)->index);
-	if (!*root || !isredir((*root)->id))
-		return ;
-	printf("Manage_redir vai executar: %d\n", (*root)->index);
-	fd = switch_redir(root, (*root)->id, &data->utils);
-	aplly_redirect(fd, (*root)->id);
+	if (!*token)
+		return (-1);
+	name = find_fd(token);
+	fd = -1;
+	if ((*token)->id == REDIRECT_OUT)
+		fd = handle_redirect_out(name, data);
+	else if ((*token)->id == APPEND)
+		fd = append(name, data);
+	else if ((*token)->id == REDIRECT_IN )
+		fd = handle_red_in(name, data);
+	else if ((*token)->id == HEREDOC)
+		heredoc(name, data);
+	return (fd);
+}
+
+int	manage_redir(t_token **token, t_data *data)
+{
+	int		fd;
+	t_token	*temp;
+
+	if (!*token || !data)
+		return (1);
+	temp = *token;
+	fd = -1;
+	while (temp)
+	{
+		if (isredir(temp->id))
+		{
+			fd = switch_redir(&temp, &data->utils);
+			if (fd == INT_MIN)
+				return (1);
+			aplly_redirect(fd, temp->id);
+		}
+		temp = temp->next;
+	}
+	return (0);
 }
 
 void	restore_redirect(int *original)
 {
 	if (!original || (original[0] < 0 || original[1] < 0))
 		return ;
-	if (dup2 (original[1], 1) < 0)
-		perror("Restore STDOUT error: ");
-	if (dup2 (original[0], 0) < 0)
-		perror("Restore STDIN error: ");
+	make_redir(original[0], 0);
+	make_redir(original[1], 1);
 	destroy_fd(original);
 }

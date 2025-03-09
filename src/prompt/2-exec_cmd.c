@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/07 15:32:22 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:28:24 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,13 +132,18 @@ void ast_print(t_ast *root, int level)
 	ast_print(root->left, level + 1);
 }
 
+static void	clear_everything(t_data *data)
+{
+	token_clean(data->token);
+	clean_node(&data->root);
+	clear_split(data->envp);
+	clean_program(&data->utils);
+}
+
 void	analysis(t_data *data)
 {
 	data->envp = updateenvp(&data->export_vars);
-	//print_split(data->envp);
 	data->token = lexer(data->prompt->input, data->envp);
-	// data->prompt->exit_status = 2 * !data->token;
-	//printf("\033[31mLexer exit:\033[0m %d\n", data->prompt->exit_status);
 	if (!data->token)
 	{
 		data->prompt->exit_status = 2;
@@ -146,7 +151,6 @@ void	analysis(t_data *data)
 	}
 	token_print(data->token);
 	init_utils(&data->utils, data->envp);
-	//aplly_parser(&data->token, data);
 	check_syntax(data->token, data->envp, &data->utils);
 	data->prompt->exit_status = data->utils.exit_status;
 	printf("Sintax: %d\n", data->prompt->exit_status);
@@ -157,12 +161,6 @@ void	analysis(t_data *data)
 		clean_program(&data->utils);
 		return ;
 	}
-	//aplly_parser(&data->token, data);
-	//token_print(data->token);
-	//printf("\033[31mSyntax exit:\033[0m %d\n", data->prompt->exit_status)
-	//my_tree_my_life(data->token, &data->utils);
-	//data->prompt->cmdset = converttokentosplit(&data->token);
-	//print_array(data->prompt->cmdset);
 	make_ast(&data->token, &data->root, data);
 	printf(RED"AST\n"RESET);
 	ast_print(data->root, 0);
@@ -170,13 +168,11 @@ void	analysis(t_data *data)
 	printf("\n");
 	printf(GREEN"OUTPUT:"RESET);
 	printf("\n");
+	data->fd = save_origin();
+	if (manage_redir(&data->token, data))
+		return (clear_everything(data));
 	minishell(&data->root, data);
-	//data->prompt->cmdset = convert_to_cmd(&data->token);
-	//print_split(data->prompt->cmdset);
-	token_clean(data->token);
-	clean_node(&data->root);
-	clear_split(data->envp);
-	clean_program(&data->utils);
+	clear_everything(data);
 	data->prompt->exit_status = data->utils.exit_status;
 }
  

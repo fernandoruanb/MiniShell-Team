@@ -3,30 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 10:21:23 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:34:51 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	free_strs(char *str1, char *str2, int flag)
+static void	free_strs(char *str1, char *str2)
 {
 	free(str1);
 	free(str2);
-	return (flag);
 }
 
-static int	close_fd(int fd, char **split1, int flag)
+static void	close_fd(int fd)
 {
 	close(fd);
-	if (split1)
-		free_splits(NULL, split1, NULL, NULL);
-	if (flag == 1)
-		return (1);
-	return (0);
 }
 
 static void	delete_heredoc(char *filename)
@@ -57,25 +51,25 @@ static void	delete_heredoc(char *filename)
 	waitpid(pid, NULL, 0);
 }
 
-static int	execute_heredoc(char **cmd, char *filename, t_utils *data)
+static void	execute_heredoc(char *filename)
 {
-	int		pid;
+	//int		pid;
 	int		fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		return (1);
+		return ;
 	if (dup2(fd, STDIN_FILENO) == -1)
-		return (close_fd(fd, NULL, 0));
-	pid = fork();
-	if (pid == 0)
-		check_errno(cmd, data);
-	close(fd);
-	waitpid(pid, &data->exec_status, 0);
-	return (free_splits(NULL, cmd, NULL, NULL));
+		return (close_fd(fd));
+	// pid = fork();
+	// if (pid == 0)
+	// 	check_errno(cmd, data);
+	// close(fd);
+	// waitpid(pid, &data->exec_status, 0);
+	// return (0);
 }
 
-int	heredoc(char **cmd, char *limiter, t_utils *data, int flag)
+void	heredoc(char *limiter, t_utils *data)
 {
 	int		fd;
 	char	*line;
@@ -85,17 +79,15 @@ int	heredoc(char **cmd, char *limiter, t_utils *data, int flag)
 	data->exec_status = 0;
 	filename = ft_strjoin("/tmp/", limiter);
 	if (!filename)
-		return (0);
-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		return ;
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		return (free_strs(filename, NULL, 0));
+		return (free_strs(filename, NULL));
 	heredoc_check_mode(line, limiter, fd);
 	close(fd);
-	if (flag == 1)
-		execute_heredoc(cmd, filename, data);
+	// if (flag == 1)
+	execute_heredoc(filename);
 	delete_heredoc(filename);
-	free(filename);
-	return (fd);
 }
 
 /*int	main(int argc, char **argv, char **envp)

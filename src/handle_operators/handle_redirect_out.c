@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 09:29:29 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:48:44 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,57 +62,58 @@ static char	*capture_dir(char *f)
 	return (detect_dir);
 }
 
-void	handle_redirect_out(char **cmd, char *f, t_utils *data, int flag)
+int	handle_redirect_out(char *f, t_utils *data)
 {
 	int		fd;
 	char	*detect_dir;
-	int		id;
+	//int		id;
 
 	detect_dir = initialize_directory(f, data);
 	if (detect_dir == NULL)
-		return ;
+		return (-1);
 	fd = open(f, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-	{
-		free(detect_dir);
-		return ;
-	}
+	// if (fd == -1)
+	// {
+	// 	free(detect_dir);
+	// 	return ;
+	// }
 	free(detect_dir);
-	if (flag == 1)
-	{
-		dup2(fd, STDOUT_FILENO);
-		id = fork();
-		if (id == 0)
-			check_errno(cmd, data);
-	}
-	if (flag == 1)
-		waitpid(id, &data->exec_status, 0);
-	if (fd > 2)
-		close(fd);
+	// if (flag == 1)
+	// {
+	// 	dup2(fd, STDOUT_FILENO);
+	// 	id = fork();
+	// 	if (id == 0)
+	// 		check_errno(cmd, data);
+	// }
+	// if (flag == 1)
+	// 	waitpid(id, &data->exec_status, 0);
+	// if (fd > 2)
+	// 	close(fd);
+	return (fd);
 }
 
-/*int	main(int argc, char **argv, char **envp)
-{
- 	t_data	data;
- 	int		fd;
-	char	**split1;
-	int	index;
+// int	main(int argc, char **argv, char **envp)
+// {
+//  	t_data	data;
+//  	int		fd;
+// 	char	**split1;
+// 	int	index;
 
- 	data.utils.exec_status = 0;
- 	data.utils.envp = envp;
-	split1 = ft_split(argv[1], ' ');
-	(void)argc;
-	index = 2;
-	if (!split1)
-		return (1);
-	while (index < argc - 1)
-	{
- 		handle_redirect_out(split1, argv[index], &data.utils, 0);
-		index++;
-	}
-	handle_redirect_out(split1, argv[index], &data.utils, 1);
-	free_splits(NULL, split1, NULL, NULL);
-	translate(&data);
- 	ft_printf("EXEC STATUS: %d\n", data.utils.exec_status);
- 	return (0);
-}*/
+//  	data.utils.exec_status = 0;
+//  	data.utils.envp = envp;
+// 	split1 = ft_split(argv[1], ' ');
+// 	(void)argc;
+// 	index = 2;
+// 	if (!split1)
+// 		return (1);
+// 	while (index < argc - 1)
+// 	{
+//  		handle_redirect_out(split1, argv[index], &data.utils, 0);
+// 		index++;
+// 	}
+// 	handle_redirect_out(split1, argv[index], &data.utils, 1);
+// 	free_splits(NULL, split1, NULL, NULL);
+// 	translate(&data);
+//  	ft_printf("EXEC STATUS: %d\n", data.utils.exec_status);
+//  	return (0);
+// }
