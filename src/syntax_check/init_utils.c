@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:28:30 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 15:35:14 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/09 15:49:13 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_utils(t_utils *data, char **envp)
 	data->paths = NULL;
 	data->line = NULL;
 	data->newpwd = NULL;
+	data->fd_backup = 0;
 	data->oldpwd = NULL;
 	data->temp = NULL;
 	data->new_str = NULL;

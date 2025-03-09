@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:31:43 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 15:23:25 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/09 15:53:07 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	execute(t_data *data)
 
 int	destroy(t_data *data, char *message, int exit_code)
 {
-	clear_everything(data);
+	//clear_everything(data);
 	if (data->prompt)
 	{
 		if (data->prompt->input)
