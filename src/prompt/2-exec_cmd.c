@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 13:28:24 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/09 13:52:54 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,11 +151,10 @@ void	analysis(t_data *data)
 	}
 	token_print(data->token);
 	init_utils(&data->utils, data->envp);
-	check_syntax(data->token, data->envp, &data->utils);
-	data->prompt->exit_status = data->utils.exit_status;
-	printf("Sintax: %d\n", data->prompt->exit_status);
-	if (data->prompt->exit_status != 0)
+	if (!check_syntax(data->token, data->envp, &data->utils))
 	{
+		data->prompt->exit_status = data->utils.exit_status;
+		printf("Sintax: %d\n", data->prompt->exit_status);
 		token_clean(data->token);
 		clear_split(data->envp);
 		clean_program(&data->utils);
@@ -173,7 +172,7 @@ void	analysis(t_data *data)
 		return (clear_everything(data));
 	minishell(&data->root, data);
 	clear_everything(data);
-	data->prompt->exit_status = data->utils.exit_status;
+	data->prompt->exit_status = data->utils.exec_status;
 }
  
 // void	exec_cmd(t_prompt *prompt)

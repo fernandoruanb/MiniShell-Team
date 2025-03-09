@@ -146,9 +146,8 @@ $(LIBFT)/libft.a:
 $(NAME): $(OBJ) $(LIBFT)/libft.a
 	@$(CC) $(CFLAGS) $(SRC_DIR)/main/1-main.c $(OBJ) $(LIBFT)/libft.a -o $(NAME) -lreadline -lncurses
 
-leak: $(NAME)
-	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) 2>&1 | \
-	grep -i "no leaks are possible" > /dev/null && echo "Tudo nos conformes." || echo "Faz denovo, faz direito!!"
+run: all
+	valgrind --suppressions=readline.sup --leak-check=full --show-leak-kinds=all ./minishell
 
 clean:
 	@echo "\033[1;32m===========================================\033[0m"
