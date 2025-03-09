@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 13:34:51 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/09 16:27:34 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	heredoc(char *limiter, t_utils *data)
 	// if (flag == 1)
 	execute_heredoc(filename);
 	delete_heredoc(filename);
+	free(filename);
 }
 
 /*int	main(int argc, char **argv, char **envp)
