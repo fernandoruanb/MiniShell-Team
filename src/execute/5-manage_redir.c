@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/09 13:33:50 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/09 17:46:14 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ int	manage_redir(t_token **token, t_data *data)
 	fd = -1;
 	while (temp)
 	{
+		printf("estou no token %d\n", temp->index);
 		if (isredir(temp->id))
 		{
+			printf("vou redirecionar %d\n", temp->index);
 			fd = switch_redir(&temp, &data->utils);
 			if (fd == INT_MIN)
 				return (1);

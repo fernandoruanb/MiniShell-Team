@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 13:56:46 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/09 16:41:13 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ int	handle_pipe_op(t_ast **root, int flag, t_data *data)
 
 	if (pipe(pipefd) == -1)
 		return (1);
+	if (handle_builtin((*root)->cmd, data))
+		return (0);
 	ast = *root;
 	if (flag == 1)
 		write_mode(ast->cmd, pipefd, data);

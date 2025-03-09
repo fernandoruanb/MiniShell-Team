@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-isbuiltin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:10:30 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/07 15:24:15 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:45:14 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ static int	handle_cd(char **cmd)
 
 static int	call_export(char *cmd, t_export **var)
 {
-	if (!cmd)
-		ft_export(NULL, var);
-	else
-		ft_export(cmd, var);
+	ft_export(cmd, var);
 	return (1);
 }
 

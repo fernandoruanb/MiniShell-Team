@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:56:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2024/11/29 12:17:21 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:05:04 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static int	count_words(const char *s, char c)
 	int	index;
 	int	len_s;
 
+	if (!s || !c)
+		return (0);
 	len_s = ft_strlen(s);
 	if (len_s == 0)
 		return (0);
@@ -97,7 +99,7 @@ char	**ft_split(char const *s, char c)
 	int		size;
 	char	**str_list;
 
-	if (!s)
+	if (!s || !c)
 		return (ft_calloc(1, sizeof(char *)));
 	size = count_words(s, c);
 	if (size == 0)

@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 15:23:02 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/09 17:55:23 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ t_localvar	*search_locals(t_localvar **var, char *name);
 
 //	lexer
 t_token		*lexer(char *str, char **envp);
+int			is_cmd(char *str, t_lex *lex);
 int			handle_bracket(char *str, t_token **token, t_lex *lex);
 int			handle_and(char *str, t_token **token, t_lex *lex);
 int			handle_less(char *str, t_token **token, t_lex *lex);

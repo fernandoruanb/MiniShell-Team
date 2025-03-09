@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 13:06:00 by fruan-ba          #+#    #+#             */
-/*   Updated: 2024/10/13 13:06:02 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:03:50 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	size_t	detect;
 	size_t	f_detect;
 
+	if (!big || !little)
+		return (NULL);
 	detect = 0;
 	if (little[detect] == '\0')
 		return ((char *)big);

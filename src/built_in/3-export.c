@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-export.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:19 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/05 12:10:38 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:32:59 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	ft_export(char *input, t_export **var)
 	t_export	*new;
 	t_export	*temp;
 
-    if (!input)
+    if (!input || input[0] == '\0')
         return (export_print(var));
     len = namevalidation(input, var);
     if (!len)
