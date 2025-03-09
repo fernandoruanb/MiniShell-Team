@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   translate.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 10:50:15 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/07 17:47:48 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/02/18 16:15:18 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/02/18 16:18:32 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	translate(t_data *data)
+int	main(int argc, char **argv, char **envp)
 {
-	if (data->utils.exec_status == 32512)
-		data->utils.exec_status = 127;
-	else if (data->utils.exec_status == 32256
-		|| data->utils.exec_status == 3328)
-		data->utils.exec_status = 126;
-	else if (data->utils.exec_status == 256
-		|| data->utils.exec_status == 512)
-		data->utils.exec_status = 2;
+	t_utils	data;
+	t_token	*root;
+
+	(void)argv;
+	if (argc < 1)
+		return (1);
+	root = NULL;
+	init_utils(&data);
+	root = create_token("\'echo\'", CMD);
+	if (!root)
+		return (1);
+	show_tokens(root);
+	if (check_syntax(root, envp, &data))
+		printf("OK\n");
+	else
+		printf("KO\n");
+	clean_program(&data);
+	return (0);
 }
+

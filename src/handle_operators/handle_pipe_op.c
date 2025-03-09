@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/07 17:25:51 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:29:13 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	read_mode(char **cmd, int *pipefd, t_data *data)
 	if (pid == 0)
 		ft_read_mode(cmd, pipefd, data);
 	close_descriptors(pipefd, 1, data);
-	//free_splits(NULL, cmd, NULL, NULL);
 	data->utils.pids[data->utils.index++] = pid;
 	data->utils.num_of_processes++;
 }
@@ -45,7 +44,6 @@ void	write_mode(char **cmd, int *pipefd, t_data *data)
 	}
 	if (pid == 0)
 		ft_write_mode(pipefd, cmd, data);
-	//free_splits(NULL, cmd, NULL, NULL);
 	data->utils.pid = pid;
 	data->utils.pids[data->utils.index++] = pid;
 	data->utils.num_of_processes++;
@@ -75,7 +73,6 @@ void	write_read_mode(char **cmd, int *pipefd, t_data *data)
 	if (data->utils.fd_backup)
 		close(data->utils.fd_backup);
 	data->utils.fd_backup = fd;
-	//free_splits(NULL, cmd, NULL, NULL);
 	data->utils.pids[data->utils.index++] = pid;
 	data->utils.num_of_processes++;
 }
@@ -102,11 +99,6 @@ int	handle_pipe_op(t_ast **root, int flag, t_data *data)
 	if (pipe(pipefd) == -1)
 		return (1);
 	ast = *root;
-	// if (!split1)
-	// {
-	// 	close_descriptors(pipefd, 1, data);
-	// 	return (1);
-	// }
 	if (flag == 1)
 		write_mode(ast->cmd, pipefd, data);
 	else if (flag == 2)

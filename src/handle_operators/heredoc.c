@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/07 15:52:29 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:24:00 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,12 @@ static void	delete_heredoc(char *filename)
 
 static int	execute_heredoc(char **cmd, char *filename, t_utils *data)
 {
-	//char	**split1;
 	int		pid;
 	int		fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (1);
-	// split1 = ft_split(cmd, ' ');
-	// if (!split1)
-	// 	return (close_fd(fd, NULL, 0));
 	if (dup2(fd, STDIN_FILENO) == -1)
 		return (close_fd(fd, NULL, 0));
 	pid = fork();
@@ -76,10 +72,10 @@ static int	execute_heredoc(char **cmd, char *filename, t_utils *data)
 		check_errno(cmd, data);
 	close(fd);
 	waitpid(pid, &data->exec_status, 0);
-	return (free_splits(NULL, NULL, NULL, NULL));
+	return (free_splits(NULL, cmd, NULL, NULL));
 }
 
-int	heredoc(char **cmd, char *limiter, t_utils *data)
+int	heredoc(char **cmd, char *limiter, t_utils *data, int flag)
 {
 	int		fd;
 	char	*line;
@@ -95,8 +91,9 @@ int	heredoc(char **cmd, char *limiter, t_utils *data)
 		return (free_strs(filename, NULL, 0));
 	heredoc_check_mode(line, limiter, fd);
 	close(fd);
-	if (execute_heredoc(cmd, filename, data))
-		delete_heredoc(filename);
+	if (flag == 1)
+		execute_heredoc(cmd, filename, data);
+	delete_heredoc(filename);
 	free(filename);
 	return (fd);
 }
@@ -104,12 +101,22 @@ int	heredoc(char **cmd, char *limiter, t_utils *data)
 /*int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
+	char	**cmd;
+	int	index;
 
 	data.utils.exec_status = 0;
 	data.utils.envp = envp;
-	if (argc < 2)
+	(void)argc;
+	cmd = ft_split(argv[1], ' ');
+	if (!cmd)
 		return (1);
-	heredoc(argv[1], argv[2], &data.utils);
-	translate(&data.utils);
+	index = 2;
+	while (index < argc - 1)
+	{
+		heredoc(cmd, argv[index], &data.utils, 0);
+		index++;
+	}
+	heredoc(cmd, argv[index], &data.utils, 1);
+	translate(&data);
 	return (0);
 }*/

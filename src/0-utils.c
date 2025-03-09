@@ -6,11 +6,11 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:15:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/24 15:12:32 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/08 15:03:17 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	*clear_split(char **str)
 {

@@ -6,19 +6,19 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/06 11:17:03 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/08 22:43:40 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*capture_dir(char *filename);
+static char	*capture_dir(char *f);
 
-static char	*initialize_directory(char *filename, t_utils *data)
+static char	*initialize_directory(char *f, t_utils *data)
 {
 	char	*detect_dir;
 
-	detect_dir = capture_dir(filename);
+	detect_dir = capture_dir(f);
 	if (detect_dir == NULL)
 	{
 		detect_dir = ft_strdup(".");
@@ -37,7 +37,7 @@ static char	*initialize_directory(char *filename, t_utils *data)
 	return (detect_dir);
 }
 
-static char	*capture_dir(char *filename)
+static char	*capture_dir(char *f)
 {
 	int		index;
 	int		limit;
@@ -45,54 +45,74 @@ static char	*capture_dir(char *filename)
 
 	index = 0;
 	limit = 0;
-	while (filename[index] != '\0')
+	while (f[index] != '\0')
 	{
-		if (filename[index] == '/')
+		if (f[index] == '/')
 			limit = index;
 		index++;
 	}
 	if (limit != 0)
-		detect_dir = ft_substr(filename, 0, limit);
+	{
+		detect_dir = ft_substr(f, 0, limit);
+		if (!detect_dir)
+			return (NULL);
+	}
 	else
 		detect_dir = NULL;
-	if (!detect_dir)
-		return (NULL);
 	return (detect_dir);
 }
 
-int	handle_redirect_out(char *filename, t_utils *data)
+void	handle_redirect_out(char **cmd, char *f, t_utils *data, int flag)
 {
 	int		fd;
 	char	*detect_dir;
+	int		id;
 
-	detect_dir = initialize_directory(filename, data);
+	detect_dir = initialize_directory(f, data);
 	if (detect_dir == NULL)
-		return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		return ;
+	fd = open(f, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		free(detect_dir);
-		return (-1);
+		return ;
 	}
-	//ft_putendl_fd(message, fd);
 	free(detect_dir);
-	return (fd);
+	if (flag == 1)
+	{
+		dup2(fd, STDOUT_FILENO);
+		id = fork();
+		if (id == 0)
+			check_errno(cmd, data);
+	}
+	if (flag == 1)
+		waitpid(id, &data->exec_status, 0);
+	if (fd > 2)
+		close(fd);
 }
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_data	data;
-// 	int		fd;
+/*int	main(int argc, char **argv, char **envp)
+{
+ 	t_data	data;
+ 	int		fd;
+	char	**split1;
+	int	index;
 
-// 	data.utils.exec_status = 0;
-// 	data.utils.envp = envp;
-// 	if (argc != 3)
-// 		return (1);
-// 	fd = -1;
-// 	if (fd == -1)
-// 		return (1);
-// 	dup2(fd, STDOUT_FILENO);
-// 	handle_redirect_out(argv[1], argv[2], &data.utils);
-// 	ft_printf("EXEC STATUS: %d\n", data.utils.exec_status);
-// 	return (0);
-// }
+ 	data.utils.exec_status = 0;
+ 	data.utils.envp = envp;
+	split1 = ft_split(argv[1], ' ');
+	(void)argc;
+	index = 1;
+	if (!split1)
+		return (1);
+	while (index < argc - 1)
+	{
+ 		handle_redirect_out(split1, argv[index], &data.utils, 0);
+		index++;
+	}
+	handle_redirect_out(split1, argv[index], &data.utils, 1);
+	free_splits(NULL, split1, NULL, NULL);
+	translate(&data);
+ 	ft_printf("EXEC STATUS: %d\n", data.utils.exec_status);
+ 	return (0);
+}*/

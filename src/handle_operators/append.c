@@ -6,13 +6,38 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:05:05 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/06 11:16:53 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/08 20:43:01 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*capture_dir(char *filename)
+static char	*capture_dir(char *f);
+
+static char	*initialize_directory(char *f, t_utils *data)
+{
+	char	*detect_dir;
+
+	detect_dir = capture_dir(f);
+	if (detect_dir == NULL)
+	{
+		detect_dir = ft_strdup(".");
+		if (!detect_dir)
+			return (NULL);
+	}
+	if (detect_dir != NULL)
+	{
+		if (access(detect_dir, W_OK) == -1)
+		{
+			data->exec_status = 1;
+			free(detect_dir);
+			return (NULL);
+		}
+	}
+	return (detect_dir);
+}
+
+static char	*capture_dir(char *f)
 {
 	int		index;
 	int		limit;
@@ -20,14 +45,14 @@ static char	*capture_dir(char *filename)
 
 	index = 0;
 	limit = 0;
-	while (filename[index] != '\0')
+	while (f[index] != '\0')
 	{
-		if (filename[index] == '/')
+		if (f[index] == '/')
 			limit = index;
 		index++;
 	}
 	if (limit != 0)
-		detect_dir = ft_substr(filename, 0, limit);
+		detect_dir = ft_substr(f, 0, limit);
 	else
 		detect_dir = ft_strdup(".");
 	if (!detect_dir)
@@ -35,43 +60,52 @@ static char	*capture_dir(char *filename)
 	return (detect_dir);
 }
 
-int	append(char *filename, t_utils *data)
+void	append(char **cmd, char *f, t_utils *data, int flag)
 {
 	int			fd;
 	char		*detect_dir;
+	int			id;
 
-	detect_dir = capture_dir(filename);
-	if (!detect_dir)
-		detect_dir = ft_strdup(".");
-	if (detect_dir != NULL)
+	detect_dir = initialize_directory(f, data);
+	if (detect_dir == NULL)
+		return ;
+	fd = open(f, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+		free(detect_dir);
+	if (flag == 1)
 	{
-		if (access(detect_dir, W_OK) == -1)
+		id = fork();
+		if (id == 0)
 		{
-			data->exec_status = 1;
-			free(detect_dir);
-			return (-1);
+			dup2(fd, STDOUT_FILENO);
+			check_errno(cmd, data);
 		}
 	}
-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	if (fd == -1)
-	{
-		free(detect_dir);
-		return (-1);
-	}
-	//ft_putendl_fd(message, fd);
+	if (flag == 1)
+		waitpid(id, &data->exec_status, 0);
 	free(detect_dir);
-	return (fd);
 }
 
 /*int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
+	char	**split1;
+	int		index;
 
 	data.utils.exec_status = 0;
 	data.utils.envp = envp;
-	if (argc != 3)
+	(void)argc;
+	split1 = ft_split(argv[1], ' ');
+	if (!split1)
 		return (1);
-	append(argv[1], argv[2], &data.utils);
+	index = 1;
+	while (index < argc - 1)
+	{
+		append(split1, argv[index], &data.utils, 0);
+		index++;
+	}
+	append(split1, argv[index], &data.utils, 1);
+	free_splits(NULL, split1, NULL, NULL);
 	ft_printf("EXEC STATUS: %d\n", data.utils.exec_status);
 	return (0);
 }*/
