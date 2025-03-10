@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/10 15:18:56 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:45:07 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	switch_redir(t_token **token, t_utils *data)
 	else if ((*token)->id == REDIRECT_IN)
 		fd = handle_red_in(name, data);
 	else if ((*token)->id == HEREDOC)
-		heredoc(name, data);
+		fd = heredoc(name, data);
 	return (fd);
 }
 

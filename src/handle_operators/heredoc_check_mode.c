@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_check_mode.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:39:44 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/04 14:06:10 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:23:35 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	heredoc_check_mode(char *line, char *limiter, int fd)
 			free(line);
 			break ;
 		}
-		else
-			ft_putendl_fd(line, fd);
+		ft_putendl_fd(line, fd);
+		free(line);
 	}
 }

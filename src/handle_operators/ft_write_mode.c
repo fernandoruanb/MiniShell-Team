@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:57:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 16:01:52 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:44:31 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	ft_write_mode(int *pipefd, char **cmd, t_data *data)
 	}
 	else
 		path = cmd[0];
-	execve(path, cmd, data->utils.envp);
+	if (!handle_builtin(cmd, data))
+		execve(path, cmd, data->utils.envp);
 	free(path);
 	perror("Error: ");
 	exit(errno);
