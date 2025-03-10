@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:10:30 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/10 12:11:41 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:38:37 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	handle_builtin(char **cmd, t_data *data)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
 		return (handle_cd(cmd));
+	if (!ft_strcmp(cmd[0], "pwd"))
+		return (ft_pwd(data));
 	if (!ft_strcmp(cmd[0], "env"))
 		return (ft_env(data));
 	if (!ft_strcmp(cmd[0], "echo"))

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:16:20 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/10 11:21:15 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:26:30 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	exec_single_cmd(t_ast **root, t_data *data)
 
 	if (!*root || (*root)->id == PIPE)
 		return ;
-	printf("cheguei na execução\n");
+	//printf("cheguei na execução\n");
 	ast = *root;
 	data->fd = save_origin();
 	if (manage_redir(&data->token, data))

@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 12:10:51 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:38:09 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ void		analysis(t_data *data);
 
 //	built_in/
 void		ft_cd(char *input);
+int			ft_pwd(t_data *data);
 int			ft_echo(char **str);
 int			ft_env(t_data *data);
 char		*enviroment_var(char *cmd, int exit_status);

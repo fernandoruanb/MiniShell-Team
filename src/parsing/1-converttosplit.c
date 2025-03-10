@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-converttosplit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/05 23:11:59 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/10 12:31:17 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,4 @@ void	print_split(char **split)
 	i = 0;
 	while (split[i])
 		printf("%s\n", split[i++]);
-	printf("\n");
 }

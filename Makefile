@@ -109,6 +109,7 @@ SRCS = main/2-events.c \
 		handle_operators/single_command.c\
 		built_in/7-echo.c\
 		built_in/8-env.c\
+		built_in/9-pwd.c\
 		ast/3-handle_redir.c\
 		execute/4-exec_cmd.c\
 		execute/5-manage_redir.c\

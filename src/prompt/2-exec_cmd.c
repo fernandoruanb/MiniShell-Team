@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 12:03:28 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:15:01 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	analysis(t_data *data)
 	if (!check_syntax(data->token, data->envp, &data->utils))
 	{
 		data->prompt->exit_status = data->utils.exit_status;
-		printf("Sintax: KO\n");
+		printf("Syntax: KO\n");
 		return (clear_everything(data, 0));
 	}
 	printf("Syntax: OK\n");
