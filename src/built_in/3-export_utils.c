@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:53:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/05 12:10:09 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:09:11 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,32 @@ void	export_clean(t_export **var)
 		ft_unset(var, NULL, (*var)->name);
 }
 
+static char	**clone_env(char **env)
+{
+	char	**new;
+	int		i;
+
+	new = ft_calloc(splitlen(env) + 1, sizeof(char *));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		new[i] = ft_strdup(env[i]);
+		i++;
+	}
+	return (new);
+}
+
 void	export_init(char **envp, t_export **var)
 {
-	int	i;
+	int		i;
+	char	**temp;
 
-	ft_quicksort(envp, 0, splitlen(envp) - 1);
+	temp = clone_env(envp);
+	ft_quicksort(temp, 0, splitlen(temp) - 1);
 	i = -1;
-	while (envp[++i])
-		ft_export(envp[i], var);
+	while (temp[++i])
+		ft_export(temp[i], var);
+	clear_split(temp);
 }

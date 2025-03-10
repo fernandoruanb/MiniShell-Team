@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 10:51:01 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:10:51 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ typedef struct s_data
 	t_export	*export_vars;
 	t_localvar	*local_vars;
 
+	char		**original_envp;
 	int			*fd;
 	int			is_pipe;
 	char		**envp;
@@ -185,13 +186,14 @@ int			init_data(t_data *data, char **envp);
 
 //	prompt
 int			child(t_prompt *prompt);
-void		clear_everything(t_data *data);
+void		clear_everything(t_data *data, int flag);
 void		display_prompt(t_data *data);
 void		analysis(t_data *data);
 
 //	built_in/
 void		ft_cd(char *input);
 int			ft_echo(char **str);
+int			ft_env(t_data *data);
 char		*enviroment_var(char *cmd, int exit_status);
 void		ft_exit(t_data *data, char *exit_status);
 int			valid_name(char c, int flag);
