@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 10:30:12 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:03:28 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,11 @@ void ast_print(t_ast *root, int level)
 	ast_print(root->left, level + 1);
 }
 
-void	clear_everything(t_data *data)
+void	clear_everything(t_data *data, int flag)
 {
+	if (flag)
+		clean_node(&data->root);
 	token_clean(data->token);
-	clean_node(&data->root);
 	clear_split(data->envp);
 	clean_program(&data->utils);
 }
@@ -154,12 +155,10 @@ void	analysis(t_data *data)
 	if (!check_syntax(data->token, data->envp, &data->utils))
 	{
 		data->prompt->exit_status = data->utils.exit_status;
-		printf("Sintax: %d\n", data->prompt->exit_status);
-		token_clean(data->token);
-		clear_split(data->envp);
-		clean_program(&data->utils);
-		return ;
+		printf("Sintax: KO\n");
+		return (clear_everything(data, 0));
 	}
+	printf("Syntax: OK\n");
 	make_ast(&data->token, &data->root, data);
 	printf(RED"AST\n"RESET);
 	ast_print(data->root, 0);
@@ -167,11 +166,10 @@ void	analysis(t_data *data)
 	printf("\n");
 	printf(GREEN"OUTPUT:"RESET);
 	printf("\n");
-	
 	//	return (clear_everything(data));
 	minishell(&data->root, data);
 	//restore_redirect(data->fd);
-	clear_everything(data);
+	clear_everything(data, 1);
 	data->prompt->exit_status = data->utils.exec_status;
 }
  

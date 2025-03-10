@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:26 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/04 12:34:21 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:04:28 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	valid_name(char c, int flag)
 	if (flag)
 		return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) || c == '_');
 	return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-			|| c == '_'
-			|| (c >= '0' && c <= '9'));
+		|| c == '_'
+		|| (c >= '0' && c <= '9'));
 }
 
 t_export	*search_var(t_export **var, char *name)
