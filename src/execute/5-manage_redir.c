@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   5-manage_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/09 17:46:14 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/10 10:38:04 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static char	*find_fd(t_token **token)
 			return (temp->str);
 		temp = temp->next;
 	}
-	// temp = find_fd(&(*token)->next);
 	return (NULL);
 }
 
@@ -50,7 +49,7 @@ static int	switch_redir(t_token **token, t_utils *data)
 		fd = handle_redirect_out(name, data);
 	else if ((*token)->id == APPEND)
 		fd = append(name, data);
-	else if ((*token)->id == REDIRECT_IN )
+	else if ((*token)->id == REDIRECT_IN)
 		fd = handle_red_in(name, data);
 	else if ((*token)->id == HEREDOC)
 		heredoc(name, data);
@@ -68,10 +67,8 @@ int	manage_redir(t_token **token, t_data *data)
 	fd = -1;
 	while (temp)
 	{
-		printf("estou no token %d\n", temp->index);
 		if (isredir(temp->id))
 		{
-			printf("vou redirecionar %d\n", temp->index);
 			fd = switch_redir(&temp, &data->utils);
 			if (fd == INT_MIN)
 				return (1);

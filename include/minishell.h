@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 17:55:23 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/10 10:51:01 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ void		analysis(t_data *data);
 
 //	built_in/
 void		ft_cd(char *input);
-void		ft_echo(t_prompt *prompt);
+int			ft_echo(char **str);
 char		*enviroment_var(char *cmd, int exit_status);
 void		ft_exit(t_data *data, char *exit_status);
 int			valid_name(char c, int flag);

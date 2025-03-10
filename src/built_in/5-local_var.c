@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 15:47:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/05 10:29:40 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:09:18 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,22 @@ static t_localvar	*local_last(t_localvar **var)
 
 int	ft_localvar(char *input, t_localvar **var)
 {
-	int 		len;
+	int			len;
 	t_localvar	*new;
 	t_localvar	*temp;
 
-    if (!input)
-        return (1);
-    len = namevalidation(input, var);
-    if (!len)
-        return (1);
-    new = init_local();
+	if (!input)
+		return (1);
+	len = namevalidation(input, var);
+	if (!len)
+		return (1);
+	new = init_local();
 	if (!new)
-	return (1);
-    new->name = ft_strndup(input, len);
-    new->value = get_var(&input[len + 1]);
-    if (!new->name || !new->value)
-        return (my_free_my_life(new->name, new->value, new, 1));
+		return (1);
+	new->name = ft_strndup(input, len);
+	new->value = get_var(&input[len + 1]);
+	if (!new->name || !new->value)
+		return (my_free_my_life(new->name, new->value, new, 1));
 	else if (!(*var))
 		*var = new;
 	else
@@ -82,7 +82,7 @@ int	ft_localvar(char *input, t_localvar **var)
 		temp->next = new;
 		new->prev = temp;
 	}
-    return (0);
+	return (0);
 }
 
 void	locals_print(t_localvar **var)
@@ -90,7 +90,7 @@ void	locals_print(t_localvar **var)
 	t_localvar	*temp;
 
 	temp = *var;
-	while(temp)
+	while (temp)
 	{
 		printf("local: %s=%s\n", temp->name, temp->value);
 		temp = temp->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-minishell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/09 15:20:59 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/10 10:35:51 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ static void	exec_multi_cmd(t_ast **root, t_data *data)
 	if (!*root || !data)
 		return ;
 	ast = *root;
-	//manage_redir(root, data);
 	if (ast->id == PIPE)
 	{
+		data->fd = save_origin();
+		if (manage_redir(&data->token, data))
+			return ;
 		exec_multi_cmd(&ast->left, data);
 		exec_multi_cmd(&ast->right, data);
+		restore_redirect(data->fd);
 	}
 	exec_pipe(&ast, data);
 }

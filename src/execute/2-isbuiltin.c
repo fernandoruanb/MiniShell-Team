@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-isbuiltin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:10:30 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/09 16:45:14 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/10 10:51:10 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	handle_builtin(char **cmd, t_data *data)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
 		return (handle_cd(cmd));
+	if (!ft_strcmp(cmd[0], "echo"))
+		return (!ft_echo(&cmd[1]));
 	if (!ft_strncmp(cmd[0], "unset", 5))
 		return (call_unset(cmd[1], &data->export_vars, &data->local_vars));
 	if (!ft_strcmp(cmd[0], "export"))

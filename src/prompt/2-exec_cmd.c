@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 15:24:07 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/10 10:30:12 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,11 +167,10 @@ void	analysis(t_data *data)
 	printf("\n");
 	printf(GREEN"OUTPUT:"RESET);
 	printf("\n");
-	data->fd = save_origin();
-	if (manage_redir(&data->token, data))
-		return (clear_everything(data));
+	
+	//	return (clear_everything(data));
 	minishell(&data->root, data);
-	restore_redirect(data->fd);
+	//restore_redirect(data->fd);
 	clear_everything(data);
 	data->prompt->exit_status = data->utils.exec_status;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-export.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:19 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/09 16:32:59 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/10 11:08:38 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,14 @@ char	*get_var(char *input)
 	int		i;
 
 	i = 0;
-	while (input[i])
-		if (input[i++] == ' ' && !is_quote(input[0]))
-			break ;
-	var = ft_calloc(i + 1, 1);
+	while (input[i] && !is_quote(input[0]))
+		i++;
+	var = ft_calloc(i, 1);
 	if (!var)
 		return (NULL);
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == ' ' && !is_quote(input[0]))
-			break ;
 		var[i] = input[i];
 		i++;
 	}
@@ -70,7 +67,7 @@ int	export_print(t_export **var)
 	t_export	*temp;
 
 	temp = *var;
-	while(temp)
+	while (temp)
 	{
 		printf("declare -x %s=%s\n", temp->name, temp->value);
 		temp = temp->next;
@@ -80,12 +77,12 @@ int	export_print(t_export **var)
 
 int	ft_export(char *input, t_export **var)
 {
-	int 		len;
+	int			len;
 	t_export	*new;
 	t_export	*temp;
 
-    if (!input || input[0] == '\0')
-        return (export_print(var));
+	if (!input || input[0] == '\0')
+		return (export_print(var));
     len = namevalidation(input, var);
     if (!len)
         return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   6-exec_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:48:09 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/09 16:40:47 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/10 10:33:55 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,5 @@ void	exec_pipe(t_ast **root, t_data *data)
 	if (!*root || isbuiltin((*root)->cmd))
 		return ;
 	ast = *root;
-	
 	call_handle_pipe(ast, data);
-	//data->prompt->exit_status = data->utils.exec_status;
 }
