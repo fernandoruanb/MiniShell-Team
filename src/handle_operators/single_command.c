@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:36:24 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 13:55:20 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/10 14:20:37 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	single_command(t_ast **root, t_data *data)
 	if (pid == -1)
 		return ;
 	if (pid == 0)
-		check_errno((*root)->cmd, &data->utils);
+		check_errno((*root)->cmd, &data->utils, data);
 	waitpid(pid, &data->utils.exec_status, 0);
 	data->utils.exec_status = (data->utils.exec_status >> 8) & 0xFF;
 }

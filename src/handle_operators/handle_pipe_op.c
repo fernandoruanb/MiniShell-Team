@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 13:49:23 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:52:44 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ int	handle_pipe_op(t_ast **root, int flag, t_data *data)
 	int		pipefd[2];
 	t_ast	*ast;
 
-	if (handle_builtin((*root)->cmd, data))
-		return (0);
+	handle_builtin((*root)->cmd, data);
 	if (pipe(pipefd) == -1)
 		return (1);
 	ast = *root;

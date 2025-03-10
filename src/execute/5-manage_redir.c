@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/10 10:38:04 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:18:56 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	manage_redir(t_token **token, t_data *data)
 		if (isredir(temp->id))
 		{
 			fd = switch_redir(&temp, &data->utils);
-			if (fd == INT_MIN)
+			if (fd < 0)
 				return (1);
 			aplly_redirect(fd, temp->id);
 		}

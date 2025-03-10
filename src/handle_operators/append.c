@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:05:05 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 12:50:12 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/10 15:17:17 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,12 @@ int	append(char *f, t_utils *data)
 {
 	int			fd;
 	char		*detect_dir;
-	//int			id;
 
 	detect_dir = initialize_directory(f, data);
 	if (detect_dir == NULL)
 		return (-1);
 	fd = open(f, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	// if (fd == -1)
-	// {
-	// 	free(detect_dir);
-	// 	return ;
-	// }
 	free(detect_dir);
-	// if (flag == 1)
-	// {
-	// 	id = fork();
-	// 	if (id == 0)
-	// 	{
-	// 		dup2(fd, STDOUT_FILENO);
-	// 		check_errno(cmd, data);
-	// 	}
-	// }
-	// if (flag == 1)
-	// 	waitpid(id, &data->exec_status, 0);
 	return (fd);
 }
 
