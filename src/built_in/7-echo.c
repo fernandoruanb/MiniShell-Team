@@ -6,11 +6,17 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 10:43:23 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/10 11:15:07 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:20:05 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	put_str(char **str, int i)
+{
+	while (str[i])
+		printf("%s ", str[i++]);
+}
 
 int	ft_echo(char **str)
 {
@@ -21,8 +27,7 @@ int	ft_echo(char **str)
 		return (!printf("\n"));
 	nl = ft_strcmp(str[0], "-n") != 0;
 	i = !nl;
-	while (str[i])
-		printf("%s ", str[i++]);
+	put_str(str, i);
 	if (nl)
 		printf("\n");
 	return (0);
