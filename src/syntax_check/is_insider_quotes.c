@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:24:11 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/11 16:58:08 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:26:09 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_insider_quotes(t_token *root, t_utils *data)
 	size_t	length;
 
 	check_copy_new(data);
+	if (!data->paths)
+		return (1);
 	if (!root)
 		return (0);
 	length = ft_strlen(root->str);

@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:53:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/17 17:49:44 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:22:07 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	exist_command(t_token *root, t_utils *data)
 {
 	int	index;
 
+	if (!data->paths)
+		return (1);
 	index = 0;
 	while (data->paths[index] != NULL)
 	{
