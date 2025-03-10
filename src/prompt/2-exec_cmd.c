@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 13:56:07 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:36:08 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,9 +166,7 @@ void	analysis(t_data *data)
 	printf("\n");
 	printf(GREEN"OUTPUT:"RESET);
 	printf("\n");
-	//	return (clear_everything(data));
 	minishell(&data->root, data);
-	//restore_redirect(data->fd);
 	clear_everything(data, 1);
 	data->prompt->exit_status = data->utils.exec_status;
 }

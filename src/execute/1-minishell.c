@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/10 15:29:10 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:38:42 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ static void	exec_multi_cmd(t_ast **root, t_data *data)
 	if (isredir(ast->id))
 	{
 		fd = save_origin();
-		manage_redir(&data->token, data);
+		if (manage_redir(&data->token, data))
+		{
+			restore_redirect(fd);
+			return ;
+		}
 	}
 	if (ast->id != CMD)
 	{

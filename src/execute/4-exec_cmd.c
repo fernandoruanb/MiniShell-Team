@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:41:24 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/10 14:12:23 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:13:09 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,26 @@ static char	*helper(char *path, char *cmd)
 	return (new);
 }
 
+void	*call_clean(t_data *data)
+{
+	clear_everything(data, 1);
+	clean_locals(data->local_vars);
+	export_clean(&data->export_vars);
+	if (data->fd)
+		restore_redirect(data->fd);
+	if (data->prompt)
+	{
+		if (data->prompt->input)
+			free(data->prompt->input);
+		free(data->prompt);
+	}
+	return (NULL);
+}
+
 /*
 	OBS: env[i] + 5 is for ignore "PATH=" before the paths
 */
-char	*find_path(char *cmd, char **env)
+char	*find_path(char *cmd, char **env, t_data *data)
 {
 	int		i;
 	char	**paths;
@@ -38,7 +54,7 @@ char	*find_path(char *cmd, char **env)
 	while (env[i] && !ft_strnstr(env[i], "PATH", 4))
 		i++;
 	if (!env[i])
-		return (NULL);
+		return (call_clean(data));
 	paths = ft_split(env[i] + 5, ':');
 	i = 0;
 	while (paths[i])

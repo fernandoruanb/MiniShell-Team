@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 15:18:10 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:44:19 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,13 @@ static void	delete_heredoc(char *filename)
 
 static void	execute_heredoc(char *filename)
 {
-	//int		pid;
-	int		fd;
+	int	fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return ;
 	if (dup2(fd, STDIN_FILENO) == -1)
 		return (close_fd(fd));
-	// pid = fork();
-	// if (pid == 0)
-	// 	check_errno(cmd, data);
-	// close(fd);
-	// waitpid(pid, &data->exec_status, 0);
-	// return (0);
 }
 
 void	heredoc(char *limiter, t_utils *data)

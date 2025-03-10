@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:57:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 14:16:03 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:01:52 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@ void	ft_write_mode(int *pipefd, char **cmd, t_data *data)
 	close_descriptors(pipefd, 1, data);
 	if (access(cmd[0], F_OK | X_OK))
 	{
-		path = find_path(cmd[0], data->utils.envp);
+		path = find_path(cmd[0], data->utils.envp, data);
 		if (!path)
-		{
-			clear_everything(data, 1);
 			exit(errno);
-		}
 	}
 	else
 		path = cmd[0];

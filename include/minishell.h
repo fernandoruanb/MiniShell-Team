@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 14:16:47 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:10:22 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,13 +358,14 @@ char		*expand_tilde(char *str);
 int			minishell(t_ast **root, t_data *data);
 int			handle_builtin(char **cmd, t_data *data);
 char		**updateenvp(t_export **export);
-char		*find_path(char *cmd, char **env);
+char		*find_path(char *cmd, char **env, t_data *data);
 int			manage_redir(t_token **token, t_data *data);
 void		restore_redirect(int *original);
 int			*save_origin(void);
 void		make_redir(int fd, int fd2);
 void		destroy_fd(int *fd);
 void		exec_pipe(t_ast **root, t_data *data);
+void		*call_clean(t_data *data);
 
 // HANDLE_OPERATORS
 

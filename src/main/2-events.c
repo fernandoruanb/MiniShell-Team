@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-events.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:31:43 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 15:53:07 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:12:46 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,10 @@ void	execute(t_data *data)
 
 int	destroy(t_data *data, char *message, int exit_code)
 {
-	//clear_everything(data);
 	if (data->prompt)
 	{
 		if (data->prompt->input)
 			free(data->prompt->input);
-		// if (data->prompt->cmdset)
-		// 	while (data->prompt->cmdset[i])
-		// 		clear_split(data->prompt->cmdset[i++]);
-		// 	(void)clean_array(data->prompt->cmdset);
 		free(data->prompt);
 	}
 	if (data->root)
