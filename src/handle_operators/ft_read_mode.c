@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:05:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 12:27:13 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:35:55 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ft_read_mode(char **cmd, int *pipefd, t_data *data)
 
 	if (data->utils.fd_backup < 0)
 		exit(EXIT_FAILURE);
+	if (handle_builtin(cmd, data))
+		exit(0);
 	if (dup2(data->utils.fd_backup, STDIN_FILENO) == -1)
 		exit(EXIT_FAILURE);
 	close_descriptors(pipefd, 1, data);
