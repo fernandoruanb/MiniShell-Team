@@ -40,6 +40,11 @@ int	handle_builtin(char **cmd, t_data *data)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
 		return (handle_cd(cmd));
+	if (!ft_strcmp(cmd[0], "clear"))
+	{
+		write(1, "\033[H\033[J", 7);
+		return (1);
+	}
 	if (!ft_strcmp(cmd[0], "pwd"))
 		return (ft_pwd(data));
 	if (!ft_strcmp(cmd[0], "env"))
