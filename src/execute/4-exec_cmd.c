@@ -6,11 +6,22 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:41:24 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/08 14:46:20 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:54:30 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static char	*helper(char *path, char *cmd)
+{
+	char	*temp;
+	char	*new;
+
+	temp = ft_strjoin(path, "/");
+	new = ft_strjoin(temp, cmd);
+	free(temp);
+	return (new);
+}
 
 /*
 	OBS: env[i] + 5 is for ignore "PATH=" before the paths
@@ -20,25 +31,25 @@ char	*find_path(char *cmd, char **env)
 	int		i;
 	char	**paths;
 	char	*path;
-	char	*temp;
 
 	if (!cmd)
 		return (NULL);
 	i = 0;
-	while (!ft_strnstr(env[i], "PATH", 4))
+	while (env[i] && !ft_strnstr(env[i], "PATH", 4))
 		i++;
+	if (!env[i])
+		return (NULL);
 	paths = ft_split(env[i] + 5, ':');
 	i = 0;
 	while (paths[i])
 	{
-		temp = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(temp, cmd);
+		path = helper(paths[i], cmd);
 		if (access(path, F_OK | X_OK) == 0)
 		{
-			ft_double_free(clear_split(paths), temp);
+			clear_split(paths);
 			return (path);
 		}
-		ft_double_free(path, temp);
+		free(path);
 		i++;
 	}
 	return (clear_split(paths));

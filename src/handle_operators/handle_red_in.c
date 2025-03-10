@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:20:41 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 13:34:34 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:04:08 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,11 @@ static int	check_file(char *f, t_utils *data)
 
 int	handle_red_in(char *f, t_utils *data)
 {
-	//int		id;
 	int		fd;
 
 	if (!check_file(f, data))
 		return (INT_MIN);
 	fd = open(f, O_RDONLY);
-	// if (fd == -1)
-	// 	return (0);
-	// if (flag == 1)
-	// {
-	// 	id = fork();
-	// 	if (id == 0)
-	// 	{
-	// 		if (dup2(fd, STDIN_FILENO) == -1)
-	// 			exit(1);
-	// 		check_errno(cmd, data);
-	// 	}
-	// }
-	// if (flag == 1 && id != -1)
-	// 	waitpid(id, &data->exec_status, 0);
 	return (fd);
 }
 

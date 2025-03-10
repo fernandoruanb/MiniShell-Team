@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirect_out.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 12:48:44 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/10 14:04:15 by jopereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,29 +66,12 @@ int	handle_redirect_out(char *f, t_utils *data)
 {
 	int		fd;
 	char	*detect_dir;
-	//int		id;
 
 	detect_dir = initialize_directory(f, data);
 	if (detect_dir == NULL)
 		return (-1);
 	fd = open(f, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	// if (fd == -1)
-	// {
-	// 	free(detect_dir);
-	// 	return ;
-	// }
 	free(detect_dir);
-	// if (flag == 1)
-	// {
-	// 	dup2(fd, STDOUT_FILENO);
-	// 	id = fork();
-	// 	if (id == 0)
-	// 		check_errno(cmd, data);
-	// }
-	// if (flag == 1)
-	// 	waitpid(id, &data->exec_status, 0);
-	// if (fd > 2)
-	// 	close(fd);
 	return (fd);
 }
 
