@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 14:22:55 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 15:51:33 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void	clear_everything(t_data *data, int flag)
 		clean_node(&data->root);
 	token_clean(data->token);
 	clear_split(data->envp);
+	data->should_clean = false;
 }
 
 void	analysis(t_data *data)

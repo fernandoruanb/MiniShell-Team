@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 12:49:15 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 15:46:17 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <termcap.h>
+# include <stdbool.h>
 # include <readline/history.h>
 
 # define BLUE "\033[0;36m"
@@ -157,6 +158,7 @@ typedef struct s_data
 	t_export	*export_vars;
 	t_localvar	*local_vars;
 
+	bool		should_clean;
 	char		**original_envp;
 	int			*fd;
 	int			is_pipe;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 16:45:40 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:38:49 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int	heredoc(char *limiter, t_utils *data)
 		return (free_strs(filename, NULL));
 	heredoc_check_mode(line, limiter, fd);
 	close(fd);
-	//execute_heredoc(filename);
-	//delete_heredoc(filename);
 	fd = open(filename, O_RDONLY);
 	free(filename);
 	return (fd);
