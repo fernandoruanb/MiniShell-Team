@@ -1,0 +1,78 @@
+Master of universe(mini)$ ls | exit 500
+Token 0: ls Tipo: CMD
+Token 1: | Tipo: PIPE
+Token 2: exit Tipo: CMD
+Token 3: 500 Tipo: ARG
+Syntax: OK
+AST
+     exit (2)(CMD)
+| (1)(PIPE)
+     ls (0)(CMD)
+ls (0)| (1)exit (2)500 (2)
+OUTPUT:
+Exit
+==49447== 
+==49447== HEAP SUMMARY:
+==49447==     in use at exit: 232,891 bytes in 237 blocks
+==49447==   total heap usage: 1,006 allocs, 769 frees, 271,658 bytes allocated
+==49447== 
+==49447== 3 bytes in 1 blocks are still reachable in loss record 1 of 77
+==49447==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==49447==    by 0x113E47: ft_strdup (ft_strdup.c:58)
+==49447==    by 0x10DD23: get_check_command (get_check_command.c:36)
+==49447==    by 0x10DC09: special (special.c:30)
+==49447==    by 0x10C0B3: case_command (case_command.c:101)
+==49447==    by 0x10B601: get_command (get_command.c:33)
+==49447==    by 0x10B42C: check_syntax (check_syntax.c:52)
+==49447==    by 0x109CEF: analysis (2-exec_cmd.c:154)
+==49447==    by 0x10991A: display_prompt (1-display_prompt.c:93)
+==49447==    by 0x109620: execute (2-events.c:32)
+==49447==    by 0x109601: create (2-events.c:27)
+==49447==    by 0x109555: main (1-main.c:32)
+==49447== 
+==49447== 11 bytes in 1 blocks are still reachable in loss record 6 of 77
+==49447==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==49447==    by 0x114168: ft_strjoin (ft_strjoin.c:41)
+==49447==    by 0x10D704: get_full_path (get_full_path.c:25)
+==49447==    by 0x10D5BB: exist_command (exist_command.c:24)
+==49447==    by 0x10C001: case_command (case_command.c:95)
+==49447==    by 0x10B601: get_command (get_command.c:33)
+==49447==    by 0x10B42C: check_syntax (check_syntax.c:52)
+==49447==    by 0x109CEF: analysis (2-exec_cmd.c:154)
+==49447==    by 0x10991A: display_prompt (1-display_prompt.c:93)
+==49447==    by 0x109620: execute (2-events.c:32)
+==49447==    by 0x109601: create (2-events.c:27)
+==49447==    by 0x109555: main (1-main.c:32)
+==49447== 
+==49447== 15 bytes in 1 blocks are still reachable in loss record 12 of 77
+==49447==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==49447==    by 0x114168: ft_strjoin (ft_strjoin.c:41)
+==49447==    by 0x10D730: get_full_path (get_full_path.c:28)
+==49447==    by 0x10D5BB: exist_command (exist_command.c:24)
+==49447==    by 0x10C001: case_command (case_command.c:95)
+==49447==    by 0x10B601: get_command (get_command.c:33)
+==49447==    by 0x10B42C: check_syntax (check_syntax.c:52)
+==49447==    by 0x109CEF: analysis (2-exec_cmd.c:154)
+==49447==    by 0x10991A: display_prompt (1-display_prompt.c:93)
+==49447==    by 0x109620: execute (2-events.c:32)
+==49447==    by 0x109601: create (2-events.c:27)
+==49447==    by 0x109555: main (1-main.c:32)
+==49447== 
+==49447== LEAK SUMMARY:
+==49447==    definitely lost: 0 bytes in 0 blocks
+==49447==    indirectly lost: 0 bytes in 0 blocks
+==49447==      possibly lost: 0 bytes in 0 blocks
+==49447==    still reachable: 29 bytes in 3 blocks
+==49447==         suppressed: 232,862 bytes in 234 blocks
+==49447== 
+==49447== For lists of detected and suppressed errors, rerun with: -s
+==49447== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Master of universe(mini)$ echo $?
+Token 0: echo Tipo: CMD
+Token 1: $? Tipo: ARG
+Syntax: OK
+AST
+echo (0)(CMD)
+echo (0)244 (0)
+OUTPUT:
+244
