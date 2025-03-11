@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 15:46:17 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 18:23:56 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,7 +370,7 @@ void		exec_pipe(t_ast **root, t_data *data);
 void		*call_clean(t_data *data);
 
 // HANDLE_OPERATORS
-
+void		clean_process(t_data *data, char *path);
 int			handle_redirect_out(char *f, t_utils *data);
 int			append(char *f, t_utils *data);
 int			handle_pipe_op(t_ast **root, int flag, t_data *data);

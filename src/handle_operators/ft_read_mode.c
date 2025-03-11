@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:05:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 18:10:10 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:24:36 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ void	ft_read_mode(char **cmd, int *pipefd, t_data *data)
 		path = find_path(cmd[0], data->utils.envp, data);
 		if (!path)
 		{
-			clean_program(&data->utils);
-			call_clean(data);
-			free(data->prompt->input);
-			free(data->prompt);
+			clean_process(data, path);
 			exit(127);
 		}
 	}
@@ -37,9 +34,7 @@ void	ft_read_mode(char **cmd, int *pipefd, t_data *data)
 		path = cmd[0];
 	if (!handle_builtin(cmd, data))
 		execve(path, cmd, data->utils.envp);
-	clean_program(&data->utils);
-	call_clean(data);
-	free(path);
+	clean_process(data, path);
 	perror("Error: ");
 	exit(errno);
 }
