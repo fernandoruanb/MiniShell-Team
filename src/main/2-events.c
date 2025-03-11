@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-events.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:31:43 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 16:12:46 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:01:19 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,19 @@ int	destroy(t_data *data, char *message, int exit_code)
 			free(data->prompt->input);
 		free(data->prompt);
 	}
+	if (data->fd)
+		restore_redirect(data->fd);
 	if (data->root)
 		clean_node(&data->root);
 	if (data->export_vars)
 		export_clean(&data->export_vars);
 	if (data->local_vars)
 		clean_locals(data->local_vars);
+	if (data->envp)
+		clear_split(data->envp);
+	if (data->token)
+		token_clean(data->token);
+	clean_program(&data->utils);
 	set_null(data);
 	if (message)
 		printf("%s\n", message);

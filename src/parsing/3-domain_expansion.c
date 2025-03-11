@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-domain_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/10 15:35:41 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:04:33 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 static char	*is_return(t_data *data, char *find)
 {
 	free(find);
+	data->prompt->exit_status = WEXITSTATUS(data->utils.exec_status);
 	return (ft_itoa(data->prompt->exit_status));
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   7-echo.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 10:43:23 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/10 13:47:01 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:29:48 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 static void	put_str(char **str, int i)
 {
 	while (str[i])
-		printf("%s ", str[i++]);
+	{
+		printf("%s", str[i++]);
+		if (str[i])
+			printf(" ");
+	}
 }
 
 int	ft_echo(char **str)

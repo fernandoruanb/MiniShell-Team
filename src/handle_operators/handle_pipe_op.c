@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipe_op.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 09:55:48 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:05:46 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	wait_all_pids(t_data *data)
 		index++;
 	}
 	waitpid(data->utils.pids[index], &data->utils.exec_status, 0);
-	data->utils.exec_status = (data->utils.exec_status >> 8) & 0xFF;
 	translate(data);
 }
 

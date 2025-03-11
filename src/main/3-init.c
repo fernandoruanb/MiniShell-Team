@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-init.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:09:27 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/10 12:07:58 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:31:00 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	init_data(t_data *data, char **envp)
 	data->local_vars = NULL;
 	data->envp = NULL;
 	data->original_envp = envp;
+	data->fd = NULL;
 	data->is_pipe = 0;
 	data->root = NULL;
 	data->export_vars = NULL;
