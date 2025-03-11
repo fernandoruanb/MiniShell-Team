@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   6-exec_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:48:09 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/10 10:33:55 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:51:33 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,11 @@ static void	call_handle_pipe(t_ast *ast, t_data *data)
 		handle_pipe_op(&ast, 3, data);
 }
 
-static int	isbuiltin(char **cmd)
-{
-	return (!ft_strcmp(cmd[0], "cd") || !ft_strncmp(cmd[0], "unset", 5)
-		|| !ft_strcmp(cmd[0], "export"));
-}
-
 void	exec_pipe(t_ast **root, t_data *data)
 {
 	t_ast	*ast;
 
-	if (!*root || isbuiltin((*root)->cmd))
+	if (!*root)
 		return ;
 	ast = *root;
 	call_handle_pipe(ast, data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3-export.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:19 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/10 12:00:13 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:52:07 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	export_print(t_export **var)
 {
 	t_export	*temp;
 
+	if (!*var)
+		return (0);
 	temp = *var;
 	while (temp)
 	{
