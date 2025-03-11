@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-lexer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/05 15:23:28 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:02:06 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_token	*lexer(char *str, char **envp)
 	token = NULL;
 	if (handle_special(str, &token))
 	{
-		printf("Lexer error:\n\n';' or '\\' detected.\n\n");
+		printf("Error:\n\n';' or '\\' detected.\n\n");
 		return (NULL);
 	}
 	while (str[i])

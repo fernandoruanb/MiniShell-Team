@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 16:59:17 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 17:41:05 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	handle_pipe_op(t_ast **root, int flag, t_data *data)
 	int		pipefd[2];
 	t_ast	*ast;
 
+	data->utils.exec_status = 0;
 	if (pipe(pipefd) == -1)
 		return (1);
 	ast = *root;

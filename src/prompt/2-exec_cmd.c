@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 15:51:33 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 17:57:06 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ void	analysis(t_data *data)
 	minishell(&data->root, data);
 	clean_program(&data->utils);
 	clear_everything(data, 1);
+	//data->should_clean = true;
 	data->prompt->exit_status = data->utils.exec_status;
 }
  

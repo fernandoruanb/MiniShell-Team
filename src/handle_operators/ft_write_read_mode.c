@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_write_read_mode.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:39:22 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 12:33:22 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:56:14 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,21 @@ void	ft_write_read_mode(int *pipefd, char **cmd, t_data *data)
 		exit(EXIT_FAILURE);
 	close_descriptors(pipefd, 1, data);
 	if (access(cmd[0], F_OK | X_OK))
+	{
 		path = find_path(cmd[0], data->utils.envp, data);
+		if (!path)
+		{
+			free(data->prompt->input);
+			free(data->prompt);
+			exit(127);
+		}
+	}
 	else
 		path = ft_strdup(cmd[0]);
 	if (!handle_builtin(cmd, data))
-	{
-		if (execve(path, cmd, data->utils.envp) == -1)
-		{
-			call_clean(data);
-			free(path);
-			perror("Error: ");
-			exit(errno);
-		}
-	}
+		execve(path, cmd, data->utils.envp);
 	call_clean(data);
 	free(path);
+	perror("Error: ");
+	exit(errno);
 }
