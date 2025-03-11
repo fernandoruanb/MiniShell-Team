@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   5-manage_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/10 16:45:07 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:49:25 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ void	restore_redirect(int *original)
 		return ;
 	make_redir(original[0], 0);
 	make_redir(original[1], 1);
-	destroy_fd(original);
+	destroy_fd(&original);
 }

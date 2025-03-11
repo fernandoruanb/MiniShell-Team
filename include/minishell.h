@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 11:35:25 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 12:49:15 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,7 +363,7 @@ int			manage_redir(t_token **token, t_data *data);
 void		restore_redirect(int *original);
 int			*save_origin(void);
 void		make_redir(int fd, int fd2);
-void		destroy_fd(int *fd);
+void		destroy_fd(int **fd);
 void		exec_pipe(t_ast **root, t_data *data);
 void		*call_clean(t_data *data);
 

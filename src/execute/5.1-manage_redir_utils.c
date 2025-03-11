@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:11:48 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/11 11:44:32 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 12:49:02 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	*save_origin(void)
 	return (new);
 }
 
-void	destroy_fd(int *fd)
+void	destroy_fd(int **fd)
 {
 	if (!fd)
 		return ;
-	close (fd[0]);
-	close (fd[1]);
-	free(fd);
-	fd = NULL;
+	close ((*fd)[0]);
+	close ((*fd)[1]);
+	free(*fd);
+	*fd = NULL;
 }
 
 void	make_redir(int fd, int fd2)
