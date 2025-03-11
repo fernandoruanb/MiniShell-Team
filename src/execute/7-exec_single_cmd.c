@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   7-exec_single_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:16:20 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/10 15:52:09 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:17:28 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ void	exec_single_cmd(t_ast **root, t_data *data)
 	}
 	ast = *root;
 	cmd = find_cmd(&ast);
-	if (handle_builtin(ast->cmd, data))
-		data->utils.exec_status = (0 >> 8) & 0xFF;
-	else
+	if (!handle_builtin(ast->cmd, data))
 		single_command(&cmd, data);
 	restore_redirect(data->fd);
 }

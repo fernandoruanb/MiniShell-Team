@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:31:43 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 11:01:19 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 11:40:06 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,9 @@ void	execute(t_data *data)
 
 int	destroy(t_data *data, char *message, int exit_code)
 {
-	if (data->prompt)
-	{
-		if (data->prompt->input)
-			free(data->prompt->input);
-		free(data->prompt);
-	}
-	if (data->fd)
-		restore_redirect(data->fd);
-	if (data->root)
-		clean_node(&data->root);
-	if (data->export_vars)
-		export_clean(&data->export_vars);
-	if (data->local_vars)
-		clean_locals(data->local_vars);
-	if (data->envp)
-		clear_split(data->envp);
-	if (data->token)
-		token_clean(data->token);
-	clean_program(&data->utils);
+	call_clean(data);
 	set_null(data);
 	if (message)
 		printf("%s\n", message);
-	exit (exit_code);
+	exit (WEXITSTATUS(exit_code));
 }

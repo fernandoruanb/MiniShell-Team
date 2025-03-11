@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-exec_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 15:36:08 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:42:48 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ void	clear_everything(t_data *data, int flag)
 		clean_node(&data->root);
 	token_clean(data->token);
 	clear_split(data->envp);
-	clean_program(&data->utils);
 }
 
 void	analysis(t_data *data)
@@ -167,6 +166,7 @@ void	analysis(t_data *data)
 	printf(GREEN"OUTPUT:"RESET);
 	printf("\n");
 	minishell(&data->root, data);
+	clean_program(&data->utils);
 	clear_everything(data, 1);
 	data->prompt->exit_status = data->utils.exec_status;
 }

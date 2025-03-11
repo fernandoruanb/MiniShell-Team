@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-token.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:13:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/17 17:56:10 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:42:55 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	token_clean(t_token *token)
 	token_clean(token->next);
 	if (token->str)
 		free(token->str);
-	if (token)
-		free(token);
+	free(token);
 	token = NULL;
 }
 
