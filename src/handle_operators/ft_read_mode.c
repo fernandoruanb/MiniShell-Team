@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:05:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 18:42:25 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 19:02:23 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	ft_read_mode(char **cmd, int *pipefd, t_data *data)
 	if (!handle_builtin(cmd, data))
 		execve(path, cmd, data->utils.envp);
 	clean_process(data);
-	free(path);
 	//perror("Error: ");
 	exit(errno);
 }

@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:57:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 18:41:23 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 19:01:54 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@ void	ft_write_mode(int *pipefd, char **cmd, t_data *data)
 		}
 	}
 	else
-		path = ft_strdup(cmd[0]);
+		path = cmd[0];
 	if (!handle_builtin(cmd, data))
 		execve(path, cmd, data->utils.envp);
 	clean_process(data);
-	free(path);
 	//perror("Error: ");
 	exit(errno);
 } 	
