@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:41:24 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/11 11:35:15 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 14:19:07 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,12 @@ static char	*helper(char *path, char *cmd)
 
 void	*call_clean(t_data *data)
 {
-	clear_everything(data, 1);
+	if (data->envp || data->token || data->root)
+		clear_everything(data, 1);
 	clean_locals(data->local_vars);
 	export_clean(&data->export_vars);
 	if (data->fd)
 		restore_redirect(data->fd);
-	if (data->prompt)
-	{
-		if (data->prompt->input)
-			free(data->prompt->input);
-		free(data->prompt);
-	}
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:11:48 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/11 12:49:02 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 14:01:18 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	*save_origin(void)
 
 void	destroy_fd(int **fd)
 {
-	if (!fd)
+	if (!fd || !*fd)
 		return ;
 	close ((*fd)[0]);
 	close ((*fd)[1]);

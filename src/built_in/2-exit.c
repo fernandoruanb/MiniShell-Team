@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:47:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/11 12:58:36 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 14:32:43 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	ft_exit(t_data *data, char *exit_status)
 	if (exit_status && is_all_num(exit_status))
 		data->prompt->exit_status = ft_atoi_but_better(exit_status);
 	clear_split(data->utils.paths);
+	call_clean(data);
 	destroy(data, "Exit", data->prompt->exit_status);
 }
