@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:41:24 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/11 16:01:11 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 18:30:55 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static char	*helper(char *path, char *cmd)
 	return (new);
 }
 
-void	*call_clean(t_data *data)
+void	*call_clean(t_data *data, int flag)
 {
 	clear_everything(data, 1);
 	clean_locals(data->local_vars);
 	export_clean(&data->export_vars);
-	if (data->fd)
+	if (flag)
 		restore_redirect(data->fd);
 	return (NULL);
 }
@@ -48,7 +48,7 @@ char	*find_path(char *cmd, char **env, t_data *data)
 	while (env[i] && !ft_strnstr(env[i], "PATH", 4))
 		i++;
 	if (!env[i])
-		return (call_clean(data));
+		return (call_clean(data, 1));
 	paths = ft_split(env[i] + 5, ':');
 	i = 0;
 	while (paths[i])
