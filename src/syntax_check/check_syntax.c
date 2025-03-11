@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:11:23 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 13:19:03 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:05:15 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ int	check_syntax(t_token *root, char **envp, t_utils *data)
 		go = go->next;
 	}
 	if (flag != 1)
+	{
+		clean_program(data);
 		return (0);
+	}
 	if (data->brackets_o != data->brackets_c)
 		return (show_error_fd("Syntax: BRACKET Error", 0, data, 2));
 	return (1);
