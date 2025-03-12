@@ -6,26 +6,28 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:39:44 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 16:23:35 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:38:34 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	heredoc_check_mode(char *line, char *limiter, int fd)
+void	heredoc_check_mode(t_utils *data, char *limiter, int fd)
 {
-	line = NULL;
+	data->line_heredoc = NULL;
 	while (1)
 	{
-		line = readline("> ");
-		if (line == NULL)
+		data->line_heredoc = NULL;
+		heredoc_signal();
+		data->line_heredoc = readline("> ");
+		if (data->line_heredoc == NULL)
 			return ;
-		if (ft_strcmp(line, limiter) == 0)
+		if (ft_strcmp(data->line_heredoc, limiter) == 0)
 		{
-			free(line);
+			free(data->line_heredoc);
 			break ;
 		}
-		ft_putendl_fd(line, fd);
-		free(line);
+		ft_putendl_fd(data->line_heredoc, fd);
+		free(data->line_heredoc);
 	}
 }

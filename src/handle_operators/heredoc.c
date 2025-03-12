@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 15:38:49 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 12:39:32 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	heredoc(char *limiter, t_utils *data)
 	int		fd;
 	char	*line;
 	char	*filename;
+	int	pid;
 
 	line = NULL;
 	data->exec_status = 0;
@@ -84,8 +85,16 @@ int	heredoc(char *limiter, t_utils *data)
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		return (free_strs(filename, NULL));
-	heredoc_check_mode(line, limiter, fd);
+	pid = fork();
+	if (pid == -1)
+	{
+		close(fd);
+		return (-1);
+	}
+	if (pid == 0)
+		heredoc_check_mode(data, limiter, fd);
 	close(fd);
+	waitpid(pid, &data->exec_status, 0);
 	fd = open(filename, O_RDONLY);
 	free(filename);
 	return (fd);

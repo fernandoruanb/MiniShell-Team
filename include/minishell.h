@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 21:24:49 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 12:40:35 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_utils
 {
 	char		*temp;
 	char		*path;
+	char		*line_heredoc;
 	char		**paths;
 	char		**envp;
 	int			**pipes_fd;
@@ -389,7 +390,7 @@ int			init_pipes(t_utils *data);
 void		ft_write_mode(int *pipefd, char **cmd, t_data *data);
 void		ft_read_mode(char **cmd, int *pipefd, t_data *data);
 void		ft_write_read_mode(int *pipefd, char **cmd, t_data *data);
-void		heredoc_check_mode(char *line, char *limiter, int fd);
+void		heredoc_check_mode(t_utils *data, char *limiter, int fd);
 void		check_errno(char **split1, t_utils *data, t_data *__data);
 void		translate(t_data *data);
 void		exec_single_cmd(t_ast **root, t_data *data);
@@ -409,5 +410,6 @@ int			isredir(t_id id);
 void		handle_prompt_signal(void);
 void		heredoc_signal(void);
 void		handle_command_signal(void);
+t_data		*get_minishell(void);
 
 #endif

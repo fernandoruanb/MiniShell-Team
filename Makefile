@@ -119,6 +119,7 @@ SRCS = main/2-events.c \
 		handle_signals/heredoc_signal.c\
 		handle_signals/handle_command_signal.c\
 		handle_signals/handle_prompt_signal.c\
+		handle_signals/get_minishell.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))

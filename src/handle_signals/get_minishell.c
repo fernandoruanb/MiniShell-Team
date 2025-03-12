@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_prompt_signal.c                             :+:      :+:    :+:   */
+/*   get_minishell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 17:07:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 12:43:52 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/03/12 12:27:58 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/03/12 12:41:31 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	handle_prompt_sig(int signal)
+t_data	*get_minishell(void)
 {
-	if (signal == SIGINT)
-	{
-		ft_putchar_fd('\n', 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
+	static t_data	data;
 
-void	handle_prompt_signal(void)
-{
-	signal(SIGINT, handle_prompt_sig);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGPIPE, SIG_IGN);
+	return (&data);
 }
