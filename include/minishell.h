@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 14:09:43 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 15:08:03 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,12 @@ typedef struct s_var
 	struct s_var	*prev;
 }	t_localvar;
 
+typedef struct s_clean_flags
+{
+	bool	should_clean;
+	bool	shoud_restore;
+}	t_flags;
+
 typedef struct s_data
 {
 	t_prompt	*prompt;
@@ -160,8 +166,8 @@ typedef struct s_data
 	t_ast		*root;
 	t_export	*export_vars;
 	t_localvar	*local_vars;
+	t_flags		flags;
 
-	bool		should_clean;
 	char		**original_envp;
 	int			*fd;
 	int			is_pipe;
@@ -365,8 +371,8 @@ int			handle_builtin(char **cmd, t_data *data);
 char		**updateenvp(t_export **export);
 char		*find_path(char *cmd, char **env, t_data *data);
 int			manage_redir(t_token **token, t_data *data);
-void		restore_redirect(int *original);
-int			*save_origin(void);
+void		restore_redirect(int *original, t_data *data);
+int			*save_origin(t_data *data);
 void		make_redir(int fd, int fd2);
 void		destroy_fd(int **fd);
 void		exec_pipe(t_ast **root, t_data *data);

@@ -6,13 +6,13 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:11:48 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/11 15:34:11 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 15:04:07 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	*save_origin(void)
+int	*save_origin(t_data *data)
 {
 	int	*new;
 
@@ -21,6 +21,7 @@ int	*save_origin(void)
 		return (NULL);
 	new[0] = dup(0);
 	new[1] = dup(1);
+	data->shoud_restore = !data->shoud_restore;
 	return (new);
 }
 

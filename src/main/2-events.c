@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:31:43 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 14:41:49 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 15:11:09 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	set_null(t_data *data)
 	data->export_vars = NULL;
 	data->token = NULL;
 	data->local_vars = NULL;
-	data->should_clean = true;
 }
 
 void	create(t_data *data, char **envp)

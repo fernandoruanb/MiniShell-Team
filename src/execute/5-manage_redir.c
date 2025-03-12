@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/11 12:49:25 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 15:02:38 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ int	manage_redir(t_token **token, t_data *data)
 	return (0);
 }
 
-void	restore_redirect(int *original)
+void	restore_redirect(int *original, t_data *data)
 {
 	if (!original || (original[0] < 0 || original[1] < 0))
 		return ;
 	make_redir(original[0], 0);
 	make_redir(original[1], 1);
 	destroy_fd(&original);
+	data->shoud_restore = !data->shoud_restore;
 }

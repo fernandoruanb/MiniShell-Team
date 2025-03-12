@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 17:57:06 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 15:23:55 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ void	clear_everything(t_data *data, int flag)
 		clean_node(&data->root);
 	token_clean(data->token);
 	clear_split(data->envp);
-	data->should_clean = false;
+	data->flags.should_clean = false;
+	printf("clear_everything\nshound clean alterada: %s\n", data->flags.should_clean ? "true" : "false");
 }
 
 void	analysis(t_data *data)
@@ -160,6 +161,7 @@ void	analysis(t_data *data)
 	}
 	printf("Syntax: OK\n");
 	make_ast(&data->token, &data->root, data);
+	data->flags.should_clean = true;
 	printf(RED"AST\n"RESET);
 	ast_print(data->root, 0);
 	print_node(data->root);
@@ -168,8 +170,8 @@ void	analysis(t_data *data)
 	printf("\n");
 	minishell(&data->root, data);
 	clean_program(&data->utils);
-	clear_everything(data, 1);
-	//data->should_clean = true;
+	if (data->flags.should_clean)
+		clear_everything(data, 1);
 	data->prompt->exit_status = data->utils.exec_status;
 }
  

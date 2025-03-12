@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_command_signal.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:49:44 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 12:40:52 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:09:14 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	handle_command(int signal)
 	if (signal == SIGINT)
 	{
 		minishell = get_minishell();
-		call_clean(minishell, 0);
+		call_clean(minishell, minishell->flags.shoud_restore);
 		clean_program(&minishell->utils);
 		minishell->prompt->exit_status = 130;
 		minishell->utils.exec_status = 130;

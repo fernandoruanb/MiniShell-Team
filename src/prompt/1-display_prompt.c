@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/12 14:43:17 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 15:21:48 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@
 // 	return (yellow_text);
 // }
 
+// static int	check_shoud_clean(t_data *data)
+// {
+// 	return (data->root != NULL);
+// }
+
 static int	handle_space(char *str)
 {
 	int	i;
@@ -95,6 +100,5 @@ void	display_prompt(t_data *data)
 		}
 		free(data->prompt->input);
 		data->prompt->input = NULL;
-		data->should_clean = true;
 	}
 }

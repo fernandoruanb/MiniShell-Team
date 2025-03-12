@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:09:27 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/12 14:06:02 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 15:09:46 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ int	init_data(t_data *data, char **envp)
 	data->fd = NULL;
 	data->is_pipe = 0;
 	data->utils.paths = NULL;
-	data->should_clean = true;
+	data->flags.should_clean = true;
 	data->root = NULL;
+	data->flags.shoud_restore = false;
 	data->export_vars = NULL;
 	export_init(envp, &data->export_vars);
 	return (0);

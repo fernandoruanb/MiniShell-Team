@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/11 17:45:23 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 15:04:22 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static void	exec_multi_cmd(t_ast **root, t_data *data)
 	fd = NULL;
 	if (isredir(ast->id))
 	{
-		fd = save_origin();
+		fd = save_origin(data);
 		if (manage_redir(&data->token, data))
 		{
-			restore_redirect(fd);
+			restore_redirect(fd, data);
 			return ;
 		}
 	}
@@ -46,7 +46,7 @@ static void	exec_multi_cmd(t_ast **root, t_data *data)
 		exec_multi_cmd(&ast->right, data);
 	}
 	exec_pipe(&ast, data);
-	restore_redirect(fd);
+	restore_redirect(fd, data);
 }
 
 int	minishell(t_ast **root, t_data *data)

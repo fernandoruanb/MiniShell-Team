@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:16:20 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/11 14:32:00 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 15:04:30 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ void	exec_single_cmd(t_ast **root, t_data *data)
 
 	if (!*root || (*root)->id == PIPE)
 		return ;
-	data->fd = save_origin();
+	data->fd = save_origin(data);
 	if (manage_redir(&data->token, data))
 	{
-		restore_redirect(data->fd);
+		restore_redirect(data->fd, data);
 		return ;
 	}
 	ast = *root;
 	cmd = find_cmd(&ast);
 	if (!handle_builtin(ast->cmd, data))
 		single_command(&cmd, data);
-	restore_redirect(data->fd);
+	restore_redirect(data->fd, data);
 }
