@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:57:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 19:01:54 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:23:24 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_write_mode(int *pipefd, char **cmd, t_data *data)
 {
 	char	*path;
 
+	handle_command_signal();
 	path = NULL;
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 		exit(EXIT_FAILURE);
@@ -34,6 +35,5 @@ void	ft_write_mode(int *pipefd, char **cmd, t_data *data)
 	if (!handle_builtin(cmd, data))
 		execve(path, cmd, data->utils.envp);
 	clean_process(data);
-	//perror("Error: ");
 	exit(errno);
 } 	

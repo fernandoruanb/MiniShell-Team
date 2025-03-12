@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/12 12:32:01 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:59:12 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	display_prompt(t_data *data)
 		data->prompt->input = readline(FERNANDO_BLUE"(mini)Universe"RESET);
 		if (!data->prompt->input)
 			ft_exit(data, NULL);
-		handle_prompt_signal();
+		//handle_prompt_signal();
 		if (handle_space(data->prompt->input))
 		{
 			free(data->prompt->input);

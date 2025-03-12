@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 08:09:42 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/21 16:12:38 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:17:02 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	handle_redirect_out(char *message, char *filename)
 {
 	int		fd;
 
+	handle_command_signal();
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		return ;
