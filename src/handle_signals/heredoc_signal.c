@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_signal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:27:50 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 12:53:51 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:10:39 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@ static void	heredoc_sig_cmd(int signal)
 
 	if (signal == SIGINT)
 	{
+		printf("detectei cntrl c\n");
 		ft_putchar_fd('\n', 1);
 		minishell = get_minishell();
-		call_clean(minishell, 0);
-		clean_program(&minishell->utils);
+		// call_clean(minishell, 1);
+		// clean_program(&minishell->utils);
+		clean_process(minishell);
+		free(minishell->utils.filename);
 		minishell->prompt->exit_status = 130;
 		minishell->utils.exec_status = 130;
 		exit(130);

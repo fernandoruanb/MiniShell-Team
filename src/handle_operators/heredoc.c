@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 12:39:32 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:10:11 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,17 @@ static int	free_strs(char *str1, char *str2)
 int	heredoc(char *limiter, t_utils *data)
 {
 	int		fd;
-	char	*line;
-	char	*filename;
+//	char	*line;
 	int	pid;
 
-	line = NULL;
+	//line = NULL;
 	data->exec_status = 0;
-	filename = ft_strjoin("/tmp/", limiter);
-	if (!filename)
+	data->filename = ft_strjoin("/tmp/", limiter);
+	if (!data->filename)
 		return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(data->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		return (free_strs(filename, NULL));
+		return (free_strs(data->filename, NULL));
 	pid = fork();
 	if (pid == -1)
 	{
@@ -95,8 +94,8 @@ int	heredoc(char *limiter, t_utils *data)
 		heredoc_check_mode(data, limiter, fd);
 	close(fd);
 	waitpid(pid, &data->exec_status, 0);
-	fd = open(filename, O_RDONLY);
-	free(filename);
+	fd = open(data->filename, O_RDONLY);
+	free(data->filename);
 	return (fd);
 }
 

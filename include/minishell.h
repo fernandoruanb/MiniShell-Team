@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 12:40:35 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:09:43 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct s_utils
 	int			index_bra_c;
 	int			index_bra_o;
 	char		*new_str;
+	char		*filename;
 	struct stat	stat_check;
 }	t_utils;
 
