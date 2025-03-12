@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:11:48 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/12 15:04:07 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 15:28:11 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	*save_origin(t_data *data)
 		return (NULL);
 	new[0] = dup(0);
 	new[1] = dup(1);
-	data->shoud_restore = !data->shoud_restore;
+	data->flags.shoud_restore = !data->flags.shoud_restore;
 	return (new);
 }
 

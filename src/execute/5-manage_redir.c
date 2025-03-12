@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/12 15:02:38 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 15:28:02 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,5 @@ void	restore_redirect(int *original, t_data *data)
 	make_redir(original[0], 0);
 	make_redir(original[1], 1);
 	destroy_fd(&original);
-	data->shoud_restore = !data->shoud_restore;
+	data->flags.shoud_restore = !data->flags.shoud_restore;
 }
