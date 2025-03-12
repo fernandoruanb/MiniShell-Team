@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:07:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 12:43:52 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:50:23 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static void	handle_prompt_sig(int signal)
 	if (signal == SIGINT)
 	{
 		ft_putchar_fd('\n', 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		// rl_on_new_line();
+		// rl_replace_line("", 0);
+		// rl_redisplay();
 	}
 }
 
