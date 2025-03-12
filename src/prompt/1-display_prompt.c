@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-display_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/07 15:31:36 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/11 21:28:32 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	display_prompt(t_data *data)
 {
 	while (1)
 	{
-		data->prompt->input = readline(BLUE"Master of universe(mini)$ "RESET);
+		data->prompt->input = readline(FERNANDO_BLUE"(mini)Universe"RESET);
 		if (!data->prompt->input)
 			ft_exit(data, NULL);
 		if (handle_space(data->prompt->input))

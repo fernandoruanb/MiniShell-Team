@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 18:39:18 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/11 21:24:49 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@
 # include <readline/history.h>
 
 # define BLUE "\033[0;36m"
+# define FERNANDO_BLUE "<<\033[38;5;39m"
 # define GREEN "\033[32m"
 # define YELLOW "\033[33m"
-# define RED "\033[38;5;214m"
-# define RESET	"\033[0m"
+# define RED "\033[31m"
+# define RESET	"\033[0m>>$ "
 
 typedef enum e_id
 {
