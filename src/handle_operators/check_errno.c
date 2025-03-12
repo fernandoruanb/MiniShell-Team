@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:51:37 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 14:07:49 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 14:20:10 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	clean_process(t_data *data)
 		if (data->prompt->input)
 			free(data->prompt->input);
 		free(data->prompt);
+		data->prompt = NULL;
 	}
 	call_clean(data, 1);
 	clean_program(&data->utils);

@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:47:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/11 18:30:43 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 14:42:49 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	ft_exit(t_data *data, char *exit_status)
 	if (exit_status && is_all_num(exit_status))
 		data->prompt->exit_status = ft_atoi_but_better(exit_status);
 	clear_split(data->utils.paths);
+	printf("shound clean: %s\n", data->should_clean ? "OK" : "KO");
 	if (data->should_clean)
 		call_clean(data, 1);
 	destroy(data, "Exit", data->prompt->exit_status);

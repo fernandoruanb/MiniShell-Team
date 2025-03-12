@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:25:21 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/12 13:33:05 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:43:17 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ void	display_prompt(t_data *data)
 		}
 		free(data->prompt->input);
 		data->prompt->input = NULL;
+		data->should_clean = true;
 	}
 }
