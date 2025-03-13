@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:51:37 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 19:15:41 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:17:28 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	check_errno(char **split1, t_utils *data, t_data *__data)
 	if (ft_strcmp(split1[0], "sudo") == 0)
 	{
 		data->exec_status = 126;
+		clean_process(__data);
 		ft_printf("sudo: permission denied\n");
 		exit(126);
 	}
