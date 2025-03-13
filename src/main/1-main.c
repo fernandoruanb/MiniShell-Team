@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:09:08 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/12 14:06:20 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 21:28:06 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc != 1)
 		return (1);
-	handle_prompt_signal();
 	data = get_minishell();
+	handle_prompt_signal();
 	create(data, envp);
 	return (0);
 }

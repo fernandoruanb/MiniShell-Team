@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 15:08:03 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/12 21:06:05 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct s_utils
 	int			pipes;
 	int			temp_fd;
 	int			fd_backup;
+	int			rl_flag;
 	int			exec_status;
 	int			exit_status;
 	int			simple_quotes;
