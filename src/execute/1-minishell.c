@@ -27,7 +27,6 @@ static void	exec_multi_cmd(t_ast **root, t_data *data)
 	t_ast	*ast;
 	int		*fd;
 
-	handle_command_signal();
 	if (!*root || !data)
 		return ;
 	ast = *root;
