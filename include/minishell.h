@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 13:53:38 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 16:30:20 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,7 +390,7 @@ int			handle_pipe_op(t_ast **root, int flag, t_data *data);
 int			handle_red_in(char *f, t_utils *data);
 void		operator_and(char *cmd1, char *cmd2, t_data *data);
 void		operator_or(char *cmd1, char *cmd2, t_data *data);
-int			heredoc(char *limiter, t_utils *data);
+int			heredoc(char *limiter, t_data *data, int index);
 void		operator_and(char *cmd1, char *cmd2, t_data *data);
 void		operator_or(char *cmd1, char *cmd2, t_data *data);
 int			close_descriptors(int *pipefd, int flag, t_data *data);
@@ -400,7 +400,7 @@ int			init_pipes(t_utils *data);
 void		ft_write_mode(int *pipefd, char **cmd, t_data *data);
 void		ft_read_mode(char **cmd, int *pipefd, t_data *data);
 void		ft_write_read_mode(int *pipefd, char **cmd, t_data *data);
-void		heredoc_check_mode(t_utils *data, char *limiter, int fd);
+void		heredoc_check_mode(t_utils *data, char *limiter, int *fd);
 void		check_errno(char **split1, t_utils *data, t_data *__data);
 void		translate(t_data *data);
 void		exec_single_cmd(t_ast **root, t_data *data);

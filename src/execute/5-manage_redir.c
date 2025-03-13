@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/12 15:28:02 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 16:08:37 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	aplly_redirect(int fd, t_id id)
 	close (fd);
 }
 
-static int	switch_redir(t_token **token, t_utils *data)
+static int	switch_redir(t_token **token, t_data *data)
 {
 	int		fd;
 	char	*name;
@@ -46,13 +46,13 @@ static int	switch_redir(t_token **token, t_utils *data)
 	name = find_fd(token);
 	fd = -1;
 	if ((*token)->id == REDIRECT_OUT)
-		fd = handle_redirect_out(name, data);
+		fd = handle_redirect_out(name, &data->utils);
 	else if ((*token)->id == APPEND)
-		fd = append(name, data);
+		fd = append(name, &data->utils);
 	else if ((*token)->id == REDIRECT_IN)
-		fd = handle_red_in(name, data);
+		fd = handle_red_in(name, &data->utils);
 	else if ((*token)->id == HEREDOC)
-		fd = heredoc(name, data);
+		fd = heredoc(name, data, (*token)->index);
 	return (fd);
 }
 
@@ -69,7 +69,7 @@ int	manage_redir(t_token **token, t_data *data)
 	{
 		if (isredir(temp->id))
 		{
-			fd = switch_redir(&temp, &data->utils);
+			fd = switch_redir(&temp, data);
 			if (fd < 0)
 				return (1);
 			aplly_redirect(fd, temp->id);

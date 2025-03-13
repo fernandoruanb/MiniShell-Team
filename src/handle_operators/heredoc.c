@@ -6,18 +6,18 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 14:10:11 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 16:31:46 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	free_strs(char *str1, char *str2)
-{
-	free(str1);
-	free(str2);
-	return (-1);
-}
+// static int	free_strs(char *str1, char *str2)
+// {
+// 	free(str1);
+// 	free(str2);
+// 	return (-1);
+// }
 
 // static void	close_fd(int fd)
 // {
@@ -52,9 +52,9 @@ static int	free_strs(char *str1, char *str2)
 // 	waitpid(pid, NULL, 0);
 // }
 
-// static void	execute_heredoc(char *filename)
+// static void	execute_heredoc(char **cmd, char *filename, t_data *data)
 // {
-// 	//int		pid;
+// 	int		pid;
 // 	int		fd;
 
 // 	fd = open(filename, O_RDONLY);
@@ -62,40 +62,53 @@ static int	free_strs(char *str1, char *str2)
 // 		return ;
 // 	if (dup2(fd, STDIN_FILENO) == -1)
 // 		return (close_fd(fd));
-// 	// pid = fork();
-// 	// if (pid == 0)
-// 	// 	check_errno(cmd, data);
-// 	// close(fd);
-// 	// waitpid(pid, &data->exec_status, 0);
-// 	// return (0);
+// 	pid = fork();
+// 	if (pid == 0)
+// 		check_errno(cmd, &data->utils, data);
+// 	close(fd);
+// 	waitpid(pid, &data->utils.exec_status, 0);
 // }
 
-int	heredoc(char *limiter, t_utils *data)
+/*
+	get the index of the last heredoc
+*/
+static int	heredoc_count(t_token **token)
+{
+	t_token	*temp;
+	int		i;
+
+	if (!*token)
+		return (0);
+	i = -1;
+	temp = *token;
+	while (temp)
+	{
+		if (temp->id == HEREDOC)
+			i = temp->index;
+		temp = temp->next;
+	}
+	return (i);
+}
+
+int	heredoc(char *limiter, t_data *data, int index)
 {
 	int		fd;
+	int		last;
 //	char	*line;
-	int	pid;
 
 	//line = NULL;
-	data->exec_status = 0;
-	data->filename = ft_strjoin("/tmp/", limiter);
-	if (!data->filename)
+	last = heredoc_count(&data->token);
+	printf("last: %d index: %d\n", last, index);
+	data->utils.exec_status = 0;
+	data->utils.filename = ft_strjoin("/tmp/", limiter);
+	if (!data->utils.filename)
 		return (-1);
-	fd = open(data->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-		return (free_strs(data->filename, NULL));
-	pid = fork();
-	if (pid == -1)
-	{
-		close(fd);
-		return (-1);
-	}
-	if (pid == 0)
-		heredoc_check_mode(data, limiter, fd);
-	close(fd);
-	waitpid(pid, &data->exec_status, 0);
-	fd = open(data->filename, O_RDONLY);
-	free(data->filename);
+	fd = open(data->utils.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (index == last)
+		heredoc_check_mode(&data->utils, limiter, &fd);
+	else
+		close (fd);
+	free(data->utils.filename);
 	return (fd);
 }
 
