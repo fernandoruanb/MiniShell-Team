@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 13:50:16 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:53:38 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@
 # define GREEN "\033[32m"
 # define YELLOW "\033[33m"
 # define RED "\033[31m"
-# define RESET	"\033[0m>>$ "
+# define RESET	"\033[0m"
+# define RESET_PROMPT "\033[0m>>$ "
 
 typedef enum e_id
 {
