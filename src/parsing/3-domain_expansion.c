@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/11 11:04:33 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 12:03:22 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@
 static char	*is_return(t_data *data, char *find)
 {
 	free(find);
-	data->prompt->exit_status = WEXITSTATUS(data->utils.exec_status);
+	printf("status antes do wEXIT: %d\n", data->prompt->exit_status);
+	if (data->prompt->exit_status > 255)
+		data->prompt->exit_status = WEXITSTATUS(data->prompt->exit_status);
+	printf("status dps do wEXIT: %d\n", data->prompt->exit_status);
 	return (ft_itoa(data->prompt->exit_status));
 }
 

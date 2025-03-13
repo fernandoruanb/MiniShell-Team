@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 20:53:48 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/13 11:58:51 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	analysis(t_data *data)
 	if (!check_syntax(data->token, data->envp, &data->utils))
 	{
 		data->prompt->exit_status = data->utils.exit_status;
-		printf("Syntax: KO\n");
+		printf("Syntax: KO %d\n", data->prompt->exit_status);
 		return (clear_everything(data, 0));
 	}
 	printf("Syntax: OK\n");
@@ -172,7 +172,9 @@ void	analysis(t_data *data)
 	clean_program(&data->utils);
 	if (data->flags.should_clean)
 		clear_everything(data, 1);
+	printf("status foi atualizado de %d para ", data->prompt->exit_status);
 	data->prompt->exit_status = data->utils.exec_status;
+	printf("para %d\n", data->prompt->exit_status);
 }
  
 // void	exec_cmd(t_prompt *prompt)

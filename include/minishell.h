@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 21:06:05 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:02:17 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ typedef struct s_token
 
 typedef struct s_prompt
 {
-	char	*input;
-	char	*path;
-	int		exit_status;
+	char				*input;
+	char				*path;
+	unsigned int		exit_status;
 }	t_prompt;
 
 typedef struct s_utils
