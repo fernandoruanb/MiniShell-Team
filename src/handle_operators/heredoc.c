@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 16:31:46 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 16:47:37 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,22 @@ int	heredoc(char *limiter, t_data *data, int index)
 {
 	int		fd;
 	int		last;
-//	char	*line;
+	pid_t	pid;
 
-	//line = NULL;
 	last = heredoc_count(&data->token);
 	printf("last: %d index: %d\n", last, index);
 	data->utils.exec_status = 0;
-	data->utils.filename = ft_strjoin("/tmp/", limiter);
+	data->utils.filename = ft_strjoin("/dev/null", limiter);
 	if (!data->utils.filename)
 		return (-1);
 	fd = open(data->utils.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (index == last)
-		heredoc_check_mode(&data->utils, limiter, &fd);
+	{
+		pid = fork();
+		if (!pid)
+			heredoc_check_mode(&data->utils, limiter, &fd);
+		waitpid(pid, &data->utils.exec_status, 0);
+	}
 	else
 		close (fd);
 	free(data->utils.filename);
