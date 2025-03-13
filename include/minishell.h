@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 18:45:10 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 19:29:48 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,7 +390,7 @@ int			handle_pipe_op(t_ast **root, int flag, t_data *data);
 int			handle_red_in(char *f, t_utils *data);
 void		operator_and(char *cmd1, char *cmd2, t_data *data);
 void		operator_or(char *cmd1, char *cmd2, t_data *data);
-int			heredoc(char *limiter, t_data *data, int index);
+int			heredoc(char *limiter, t_data *data, t_token **token);
 void		operator_and(char *cmd1, char *cmd2, t_data *data);
 void		operator_or(char *cmd1, char *cmd2, t_data *data);
 int			close_descriptors(int *pipefd, int flag, t_data *data);

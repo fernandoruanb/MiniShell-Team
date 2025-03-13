@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 18:53:37 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 19:30:05 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,43 +120,57 @@ static void	open_fork(t_data *data, char *limiter, int *fd)
 	close (*fd);
 }
 
-static int	open_file_to_redirect(t_data *data, int *fd)
+/*
+	Return the last heredoc index or -1 if its not found
+*/
+static int	get_last_index(t_token **token)
 {
+	t_token	*temp;
+	int		last;
+
+	if (!*token)
+		return (-1);
+	last = -1;
+	temp = *token;
+	while (temp)
+	{
+		if (temp->id == HEREDOC)
+			last = temp->index;
+		temp = temp->next;
+	}
+	return (last);
+}
+
+/*
+	Open only for the last heredoc
+
+	Open the file was writen by check_mode and returns the id
+	to redirect for the command
+*/
+static int	open_file_to_redirect(t_data *data, t_token **token, int *fd)
+{
+	int	last;
+
+	last = get_last_index(token);
+	printf("token %d last %d\n", (*token)->index, last);
+	if ((*token)->index != last)
+	{
+		free(data->utils.filename);
+		return (-1);
+	}
 	*fd = open (data->utils.filename, O_RDONLY);
 	free(data->utils.filename);
 	return (*fd);
 }
 
-int	heredoc(char *limiter, t_data *data, int index)
+int	heredoc(char *limiter, t_data *data, t_token **token)
 {
 	int		fd;
 
-	if (!limiter || !data)
+	if (!limiter || !data || !*token)
 		return (-1);
-	fd = open_heredoc(data, index);
+	printf("token index: %d\n", (*token)->index);
+	fd = open_heredoc(data, (*token)->index);
 	open_fork(data, limiter, &fd);
-	return (open_file_to_redirect(data, &fd));
+	return (open_file_to_redirect(data, token, &fd));
 }
-
-/*int	main(int argc, char **argv, char **envp)
-{
-	t_data	data;
-	char	**cmd;
-	int	index;
-
-	data.utils.exec_status = 0;
-	data.utils.envp = envp;
-	(void)argc;
-	cmd = ft_split(argv[1], ' ');
-	if (!cmd)
-		return (1);
-	index = 2;
-	while (index < argc - 1)
-	{
-		heredoc(cmd, argv[index], &data.utils, 0);
-		index++;
-	}
-	heredoc(cmd, argv[index], &data.utils, 1);
-	translate(&data);
-	return (0);
-}*/

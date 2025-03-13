@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/13 17:14:47 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 19:34:03 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	switch_redir(t_token **token, t_data *data)
 	int		fd;
 	char	*name;
 
-	if (!*token)
+	if (!*token || !data)
 		return (-1);
 	name = find_fd(token);
 	fd = -1;
@@ -52,7 +52,7 @@ static int	switch_redir(t_token **token, t_data *data)
 	else if ((*token)->id == REDIRECT_IN)
 		fd = handle_red_in(name, &data->utils);
 	else if ((*token)->id == HEREDOC)
-		fd = heredoc(name, data, (*token)->index);
+		fd = heredoc(name, data, token);
 	return (fd);
 }
 
@@ -70,7 +70,7 @@ int	manage_redir(t_token **token, t_data *data)
 		if (isredir(temp->id))
 		{
 			fd = switch_redir(&temp, data);
-			if (fd < 0 || data->utils.exec_status == 130)
+			if (data->utils.exec_status == 130)
 				return (1);
 			aplly_redirect(fd, temp->id);
 		}
