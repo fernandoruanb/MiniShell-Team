@@ -6,28 +6,40 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:39:44 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 16:35:48 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 18:54:34 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	heredoc_check_mode(t_utils *data, char *limiter, int *fd)
+static void	destroy_fork(t_data *data)
+{
+	free(data->utils.line_heredoc);
+	if (data->flags.should_clean)
+		clean_process(data);
+	free(data->utils.filename);
+	exit (0);
+}
+
+static int	shoud_break(t_data *data, char *limiter)
+{
+	return (!data->utils.line_heredoc
+			|| !ft_strcmp(data->utils.line_heredoc, limiter));
+}
+
+void	heredoc_check_mode(t_data *data, char *limiter, int *fd)
 {
 	if (*fd < 0)
-		return ;
-	data->line_heredoc = NULL;
+		exit (1);
+	data->utils.line_heredoc = NULL;
 	while (1)
 	{
 		heredoc_signal();
-		free(data->line_heredoc);
-		data->line_heredoc = readline("> ");
-		if (!data->line_heredoc)
+		free(data->utils.line_heredoc);
+		data->utils.line_heredoc = readline("> ");
+		if (shoud_break(data, limiter))
 			break ;
-		if (!ft_strcmp(data->line_heredoc, limiter))
-			break ;
-		ft_putendl_fd(data->line_heredoc, *fd);
+		ft_putendl_fd(data->utils.line_heredoc, *fd);
 	}
-	close (*fd);
-	*fd = open(data->filename, O_RDONLY);
+	destroy_fork(data);
 }
