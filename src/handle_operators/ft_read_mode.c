@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:05:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 11:59:35 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 14:08:52 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ void	ft_read_mode(char **cmd, int *pipefd, t_data *data)
 	if (dup2(data->utils.fd_backup, STDIN_FILENO) == -1)
 		exit(EXIT_FAILURE);
 	close_descriptors(pipefd, 1, data);
-	if (!isbuiltin(cmd[0]) && access(cmd[0], F_OK | X_OK))
+	if (!isbuiltin(cmd[0])
+		&& (!ft_strnstr(cmd[0], "./", ft_strlen(cmd[0]))
+		&& access(cmd[0], F_OK | X_OK)))
 	{
 		path = find_path(cmd[0], data->utils.envp, data);
 		if (!path)

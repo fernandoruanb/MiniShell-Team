@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:51:37 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 13:14:47 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 14:06:08 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void	check_errno(char **split1, t_utils *data, t_data *__data)
 	char	*path;
 
 	handle_command_signal();
-	if (!isbuiltin(split1[0]) && access(split1[0], F_OK | X_OK))
+	if (!isbuiltin(split1[0])
+		&& (!ft_strnstr(split1[0], "./", ft_strlen(split1[0]))
+		&& access(split1[0], F_OK | X_OK)))
 	{
 		path = find_path(split1[0], data->envp, __data);
 		if (!path)
@@ -44,6 +46,7 @@ void	check_errno(char **split1, t_utils *data, t_data *__data)
 	}
 	else
 		path = ft_strdup(split1[0]);
+	printf("vou executar %s\n", path);
 	execve(path, split1, data->envp);
 	clean_process(__data);
 	free(path);
