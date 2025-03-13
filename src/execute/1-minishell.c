@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/12 15:04:22 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 13:50:31 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ int	minishell(t_ast **root, t_data *data)
 	if (ast->id == PIPE)
 		exec_multi_cmd(&ast, data);
 	exec_single_cmd(&ast, data);
+	start_echo();
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 12:17:31 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 13:50:16 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -382,6 +382,7 @@ int			isbuiltin(char *cmd);
 
 // HANDLE_OPERATORS
 void		clean_process(t_data *data);
+void		start_echo(void);
 int			handle_redirect_out(char *f, t_utils *data);
 int			append(char *f, t_utils *data);
 int			handle_pipe_op(t_ast **root, int flag, t_data *data);
