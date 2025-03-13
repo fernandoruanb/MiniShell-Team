@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 17:07:27 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 17:12:09 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int	heredoc(char *limiter, t_data *data, int index)
 		if (!pid)
 			heredoc_check_mode(&data->utils, limiter, &fd);
 		waitpid(pid, &data->utils.exec_status, 0);
+		translate(data);
+		printf("heredoc %d\n", data->utils.exec_status);
 	}
 	else
 		close (fd);
