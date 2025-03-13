@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/11 20:19:17 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 12:27:09 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,25 @@ int	is_cmd(char *str, t_lex *lex)
 	return (0);
 }
 
-void	get_label(t_lex *lex)
+static t_token	*last_token(t_token **token)
 {
-	if ((lex->id != LIMITER) && ((!ft_strncmp(lex->word, "xargs", 5) || is_cmd(lex->word, lex))
+	t_token	*temp;
+
+	if (!*token)
+		return (NULL);
+	temp = *token;
+	while (temp && temp->next)
+		temp = temp->next;
+	return (temp);
+}
+
+void	get_label(t_lex *lex, t_token **token)
+{
+	t_token	*temp;
+
+	temp = last_token(token);
+	if ((lex->id != LIMITER) && ((!ft_strncmp(lex->word, "xargs", 5)
+			|| ( (!temp || temp->id != CMD) && is_cmd(lex->word, lex)))
 			|| (ft_strncmp(lex->word, "./", 2) == 0
 			&& ft_strcmp(lex->word, ".") != 0 && ft_strncmp(lex->word, "../", 3) != 0
 			&& !ft_strcmp(lex->word, ".")) || lex->id == NONE))

@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 12:02:17 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 12:17:31 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ int			is_word(unsigned char c, int flag);
 int			is_quote(unsigned char c);
 int			handle_pipe(char *str, t_token **token, t_lex *lex);
 int			quote_close(char *str, int k);
-void		get_label(t_lex *lex);
+void		get_label(t_lex *lex, t_token **token);
 int			error_message(char *message, int __return__, t_token **token);
 int			handle_fd(char *str);
 

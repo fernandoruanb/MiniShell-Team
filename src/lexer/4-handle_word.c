@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   4-handle_word.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/10 10:54:10 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:17:37 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	handle_word(char *str, t_token **token, t_lex *lex)
 	int	k;
 
 	i = 0;
-	get_label(lex);
+	get_label(lex, token);
 	k = my_find_quote(str);
 	flag = 1 + (k >= 0);
 	j = quote_close(str, k);
