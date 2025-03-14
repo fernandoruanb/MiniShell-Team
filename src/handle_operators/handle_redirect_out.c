@@ -68,9 +68,10 @@ int	handle_redirect_out(char *f, t_utils *data)
 	char	*detect_dir;
 
 	detect_dir = initialize_directory(f, data);
-	if (check_is_directory_fd(f, data))
+	if (check_is_directory_fd(f, data) || access(f, W_OK) == -1)
 	{
 		free(detect_dir);
+		data->exec_status = 1;
 		return (INT_MIN);
 	}
 	if (detect_dir == NULL)
