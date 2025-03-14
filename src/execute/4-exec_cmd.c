@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:41:24 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/12 15:09:02 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 13:15:16 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*find_path(char *cmd, char **env, t_data *data)
 	char	**paths;
 	char	*path;
 
-	if (!cmd)
+	if (!cmd || cmd[0] == '\0')
 		return (NULL);
 	i = 0;
 	while (env[i] && !ft_strnstr(env[i], "PATH", 4))

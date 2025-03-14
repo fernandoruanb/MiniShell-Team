@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:39:22 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 21:53:14 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 13:16:29 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ char	*get_path(t_data *data, char **cmd)
 {
 	char	*path;
 
+	if (!cmd[0] || cmd[0][0] == '\0')
+	{
+		clean_process(data);
+		exit(0);
+	}
 	if (!isbuiltin(cmd[0])
 		&& (!ft_strnstr(cmd[0], "./", ft_strlen(cmd[0]))
 			&& access(cmd[0], F_OK | X_OK)))
