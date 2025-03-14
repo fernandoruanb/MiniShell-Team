@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:09:17 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 22:25:01 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 12:08:03 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,5 @@
 # include "handle_operators.h"
 # include "ast.h"
 # include "handle_signals.h"
-
-//	Binary Executor
-int			my_tree_my_life(t_token *root, t_utils *data);
 
 #endif

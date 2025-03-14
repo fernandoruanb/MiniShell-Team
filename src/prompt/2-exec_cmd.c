@@ -6,25 +6,11 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/14 10:52:38 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 12:19:08 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	Excluir isso antes de entregar
-*/
-void	ast_print(t_ast *root, int level)
-{
-	if (!root)
-		return ;
-	ast_print(root->right, level + 1);
-	for (int i = 0; i < level; i++)
-		printf("     ");
-	printf("%s (%d)(%s)\n", root->cmd[0], root->index, root->id == CMD ? "CMD" : root->id == LIMITER ? "LIMITER" : root->id == FD ? "FD" : root->id == PIPE ? "PIPE" : "REDIRECT");
-	ast_print(root->left, level + 1);
-}
 
 void	clear_everything(t_data *data, int flag)
 {
@@ -42,8 +28,9 @@ void	analysis(t_data *data)
 	data->token = lexer(data->prompt->input, data->envp);
 	if (!data->token)
 	{
+		if (data->flags.should_clean)
+			clear_everything(data, 1);
 		data->prompt->exit_status = 2;
-		clean_program(&data->utils);
 		return ;
 	}
 	token_print(data->token);
@@ -57,7 +44,6 @@ void	analysis(t_data *data)
 	printf("Syntax: OK\n");
 	make_ast(&data->token, &data->root, data);
 	printf(RED"AST\n"RESET);
-	ast_print(data->root, 0);
 	print_node(data->root);
 	printf("\n");
 	printf(GREEN"OUTPUT:"RESET);
