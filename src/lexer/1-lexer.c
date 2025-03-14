@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/11 18:02:06 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 10:39:39 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ static int	handle_special(char *str, t_token **token)
 {
 	int	i;
 
+	
 	i = -1;
 	while (str[++i])
-		if (str[i] == '\\' || str[i] == ';')
+		if (str[i] == '\\' || str[i] == ';'
+			|| str[i] == '&' || str[i] == '(' || str[i] == ')')
 			return (bad_char(token));
 	return (0);
 }
@@ -57,12 +59,11 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 		__return__ = handle_less(&str[*i], token, lex);
 	if (str[*i] == '&')
 		__return__ = handle_and(&str[*i], token, lex);
-	if (str[*i] == '(' || str[*i] == ')')
-		__return__ = handle_bracket(&str[*i], token, lex);
 	if (__return__ > 0)
 		*i += __return__;
 	else
 		(*i)++;
+	free(lex->word);
 	return (__return__);
 }
 
@@ -82,14 +83,11 @@ t_token	*lexer(char *str, char **envp)
 	token = NULL;
 	if (handle_special(str, &token))
 	{
-		printf("Error:\n\n';' or '\\' detected.\n\n");
+		printf("Error:\n\n';' or '\\' or '||' or '()' detected.\n\n");
 		return (NULL);
 	}
 	while (str[i])
-	{
 		if (handler(str, &i, &lex, &token) < 0)
 			return (NULL);
-		free(lex.word);
-	}
 	return (token);
 }
