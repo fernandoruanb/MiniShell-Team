@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/13 19:34:03 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 10:40:42 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	manage_redir(t_token **token, t_data *data)
 		if (isredir(temp->id))
 		{
 			fd = switch_redir(&temp, data);
-			if (data->utils.exec_status == 130)
+			if (fd == INT_MIN || data->utils.exec_status == 130)
 				return (1);
 			aplly_redirect(fd, temp->id);
 		}

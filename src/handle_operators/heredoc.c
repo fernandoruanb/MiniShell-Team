@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 19:30:05 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 10:41:30 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ static int	open_heredoc(t_data *data, int index)
 
 	filename = ft_itoa(index);
 	if (!filename)
-		return (-1);
+		return (INT_MIN);
 	data->utils.filename = ft_strjoin("/tmp/", filename);
 	free(filename);
 	if (!data->utils.filename)
-		return (-1);
+		return (INT_MIN);
 	fd = open(data->utils.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	return (fd);
 }
@@ -168,7 +168,7 @@ int	heredoc(char *limiter, t_data *data, t_token **token)
 	int		fd;
 
 	if (!limiter || !data || !*token)
-		return (-1);
+		return (INT_MIN);
 	printf("token index: %d\n", (*token)->index);
 	fd = open_heredoc(data, (*token)->index);
 	open_fork(data, limiter, &fd);

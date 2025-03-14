@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:05:05 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 15:35:25 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:41:59 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	append(char *f, t_utils *data)
 
 	detect_dir = initialize_directory(f, data);
 	if (detect_dir == NULL)
-		return (-1);
+		return (INT_MIN);
 	fd = open(f, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	free(detect_dir);
 	return (fd);
