@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:28 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 12:50:38 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 14:34:38 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ int	is_quote(unsigned char c)
 int	quote_close(char *str, int k)
 {
 	int		i;
+	char	quote;
 
-	if (!str)
+	if (!str || k < 0)
 		return (0);
 	i = 0;
+	quote = str[k];
 	while (str[i++])
-		if (is_quote(str[i]) && i != k)
+		if (str[i] == quote && i != k)
 			return (i);
 	return (0);
 }
