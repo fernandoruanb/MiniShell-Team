@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/14 10:40:42 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 16:10:32 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,12 @@ static char	*find_fd(t_token **token)
 
 static void	aplly_redirect(int fd, t_id id)
 {
+	int	std;
+
 	if (fd < 0)
 		return ;
-	make_redir(fd, id == REDIRECT_OUT || id == APPEND);
+	std = (id == REDIRECT_OUT || id == APPEND);
+	make_redir(fd, std);
 	close (fd);
 }
 
