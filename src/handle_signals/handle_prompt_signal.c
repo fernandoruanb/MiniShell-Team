@@ -34,5 +34,4 @@ void	handle_prompt_signal(void)
 {
 	signal(SIGINT, handle_prompt_sig);
 	signal(SIGQUIT, SIG_IGN);
-	//signal(SIGPIPE, SIG_IGN);
 }

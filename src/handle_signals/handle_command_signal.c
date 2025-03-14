@@ -27,5 +27,4 @@ void	handle_command_signal(void)
 {
 	signal(SIGINT, handle_command);
 	signal(SIGQUIT, SIG_IGN);
-	//signal(SIGPIPE, SIG_IGN);
 }

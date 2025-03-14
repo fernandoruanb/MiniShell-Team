@@ -31,7 +31,6 @@ void	heredoc_signal(void)
 {
 	signal(SIGINT, heredoc_sig_cmd);
 	signal(SIGQUIT, SIG_IGN);
-	//signal(SIGPIPE, SIG_IGN);
 }
 
 /*int	main(int argc, char **argv, char **envp)
