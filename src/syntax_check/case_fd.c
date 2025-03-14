@@ -62,7 +62,7 @@ int	case_fd(t_token *root, t_utils *data)
 {
 	if (is_number(root))
 		return (check_is_valid_fd(root, data));
-	if (check_is_directory(root, data))
+	if (check_is_directory(root, data) && !pipes_case(root, data) && !start_case(root, data))
 		return (show_error_fd("Syntax: FD Error", 0, data, 1));
 	if ((data->status == 0) && (!is_number(root)))
 		return (show_error_fd("Syntax: FD Error", 0, data, 127));
