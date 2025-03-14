@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/13 12:17:37 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 12:45:43 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	error_message(char *message, int __return__, t_token **token)
 int	is_word(unsigned char c, int flag)
 {
 	if (flag == 1)
-		return ((c != ' ' && c != '&' && c != '|' && c != '(' && c != ')'
+		return ((c != ' ' && c != '|'
 				&& c != '<' && c != '>'));
 	if (flag == 2)
 		return (c >= 32 && c <= 126);
-	return ((c != ' ' && c != '&' && c != '|' && c != '(' && c != ')'
+	return ((c != ' ' && c != '|'
 			&& c != '<' && c != '>') && !(is_quote(c)));
 }
 

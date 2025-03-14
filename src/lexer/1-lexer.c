@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 12:09:25 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 12:47:00 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	handle_special(char *str, t_token **token)
 	i = -1;
 	while (str[++i])
 		if (str[i] == '\\' || str[i] == ';'
-			|| str[i] == '&' || str[i] == '(' || str[i] == ')')
+			|| str[i] == '(' || str[i] == ')')
 			return (bad_char(token));
 	return (0);
 }
