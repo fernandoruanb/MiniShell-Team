@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 10:39:39 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 10:46:51 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_token	*lexer(char *str, char **envp)
 	token = NULL;
 	if (handle_special(str, &token))
 	{
-		printf("Error:\n\n';' or '\\' or '||' or '()' detected.\n\n");
+		printf("Error:\n\n';' or '\\' or '||' or '()' or '&' detected.\n\n");
 		return (NULL);
 	}
 	while (str[i])

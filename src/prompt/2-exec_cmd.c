@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 22:00:41 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 10:52:38 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ void	clear_everything(t_data *data, int flag)
 void	analysis(t_data *data)
 {
 	data->envp = updateenvp(&data->export_vars);
+	data->flags.should_clean = true;
 	data->token = lexer(data->prompt->input, data->envp);
 	if (!data->token)
 	{
 		data->prompt->exit_status = 2;
+		clean_program(&data->utils);
 		return ;
 	}
 	token_print(data->token);
@@ -54,7 +56,6 @@ void	analysis(t_data *data)
 	}
 	printf("Syntax: OK\n");
 	make_ast(&data->token, &data->root, data);
-	data->flags.should_clean = true;
 	printf(RED"AST\n"RESET);
 	ast_print(data->root, 0);
 	print_node(data->root);

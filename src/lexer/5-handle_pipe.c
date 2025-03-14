@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:41:29 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 10:38:46 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 10:50:37 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	handle_pipe(char *str, t_token **token, t_lex *lex)
 	while (str[i] && str[i] == '|')
 		i++;
 	if (i > 1)
-		return (error_message("Error:\n\nToo many pipes.", -1, token));
+		return (error_message("Error:\n\nToo many pipes.\n", -1, token));
 	(*token) = token_add((*token),
 			token_create(str, i, lex->index++, PIPE), NULL);
 	lex->id = CMD;
