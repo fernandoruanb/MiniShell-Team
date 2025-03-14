@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:16:20 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/14 10:57:53 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 12:56:28 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	exec_single_cmd(t_ast **root, t_data *data)
 	}
 	ast = *root;
 	cmd = find_cmd(&ast);
-	if (!handle_builtin(cmd->cmd, data))
+	if (cmd && !handle_builtin(cmd->cmd, data))
 		single_command(&cmd, data);
 	restore_redirect(data->fd, data);
 }
