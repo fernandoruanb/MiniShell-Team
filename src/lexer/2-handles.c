@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:40:26 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 10:37:08 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 14:40:35 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	handle_and(char *str, t_token **token, t_lex *lex)
 
 	i = 0;
 	(void)lex;
-	while (str[i] && str[i] == '&')
+	while (str[i] && (str[i] == '&' || str[i] == ';'))
 		i++;
 	if (i > 0)
-		return (error_message("ERROR:\n\nDetected '&'.", -1, token));
+		return (error_message("ERROR:\n\nDetected '&' or ';'.", -1, token));
 	return (-1);
 }

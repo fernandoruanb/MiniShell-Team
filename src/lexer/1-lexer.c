@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 12:51:43 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 14:40:48 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	handle_special(char *str, t_token **token)
 
 	i = -1;
 	while (str[++i])
-		if (str[i] == '\\' || str[i] == ';')
+		if (str[i] == '\\')
 			return (bad_char(token));
 	return (0);
 }
@@ -55,7 +55,7 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 		__return__ = handle_great(&str[*i], token, lex);
 	if (str[*i] == '<')
 		__return__ = handle_less(&str[*i], token, lex);
-	if (str[*i] == '&')
+	if (str[*i] == '&' || str[*i] == ';')
 		__return__ = handle_and(&str[*i], token, lex);
 	if (str[*i] == '(' || str[*i] == ')')
 		__return__ = handle_bracket(&str[*i], token, lex);
