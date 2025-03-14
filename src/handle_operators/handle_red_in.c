@@ -33,7 +33,7 @@ int	handle_red_in(char *f, t_utils *data)
 {
 	int		fd;
 
-	if (!check_file(f, data))
+	if (!check_file(f, data) || check_is_directory_fd(f, data))
 		return (INT_MIN);
 	fd = open(f, O_RDONLY);
 	return (fd);

@@ -35,5 +35,6 @@ void	translate(t_data *data);
 void	exec_single_cmd(t_ast **root, t_data *data);
 void	single_command(t_ast **root, t_data *data);
 char	*get_path(t_data *data, char **cmd);
+int		check_is_directory_fd(char *f, t_utils *data);
 
 #endif

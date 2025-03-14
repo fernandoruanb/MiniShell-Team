@@ -66,6 +66,8 @@ int	append(char *f, t_utils *data)
 	char		*detect_dir;
 
 	detect_dir = initialize_directory(f, data);
+	if (check_is_directory_fd(f, data))
+		return (INT_MIN);
 	if (detect_dir == NULL)
 		return (INT_MIN);
 	fd = open(f, O_WRONLY | O_CREAT | O_APPEND, 0644);
