@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:49:44 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 19:39:05 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 11:57:13 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	handle_command_signal(void)
 {
 	signal(SIGINT, handle_command);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGPIPE, SIG_IGN);
+	//signal(SIGPIPE, SIG_IGN);
 }

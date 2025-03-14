@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:10:30 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 10:57:10 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 11:18:00 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static int	call_local(char *cmd, t_localvar **locals)
 
 int	handle_builtin(char **cmd, t_data *data)
 {
-	printf("handle built in recebeu %s\n", cmd[0]);
 	if (!ft_strcmp(cmd[0], "cd"))
 		return (handle_cd(cmd));
 	if (!ft_strcmp(cmd[0], "clear"))

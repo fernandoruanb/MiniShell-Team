@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:07:46 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 12:34:02 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 11:57:10 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	handle_prompt_signal(void)
 {
 	signal(SIGINT, handle_prompt_sig);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGPIPE, SIG_IGN);
+	//signal(SIGPIPE, SIG_IGN);
 }
