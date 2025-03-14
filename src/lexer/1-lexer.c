@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 14:40:48 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 17:07:47 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ static int	handler(char *str, int *i, t_lex *lex, t_token **token)
 
 	__return__ = 0;
 	lex->word = get_str(&str[*i]);
+	if (!ft_strcmp(lex->word, "$EMPTY"))
+	{
+		*i += 6;
+		free (lex->word);
+		lex->word = get_str(&str[*i]);
+	}
 	if (handle_fd(&str[*i]))
 		lex->id = FD;
 	if (is_word(str[*i], 1))
