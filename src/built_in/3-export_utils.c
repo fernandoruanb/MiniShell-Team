@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:53:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/14 15:07:34 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 16:23:59 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,4 @@ void	export_init(char **envp, t_export **var)
 	temp = clone_env(envp);
 	ft_quicksort(temp, 0, splitlen(temp) - 1);
 	ft_export(temp, var);
-	clear_split(temp);
 }

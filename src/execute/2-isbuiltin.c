@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:10:30 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 15:58:27 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 16:39:49 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	handle_builtin(char **cmd, t_data *data)
 	if (!ft_strcmp(cmd[0], "env"))
 		return (ft_env(data));
 	if (!ft_strcmp(cmd[0], "echo"))
-		return (!ft_echo(&cmd[1]));
+		return (call_echo(data, &cmd[1]));
 	if (!ft_strncmp(cmd[0], "unset", 5))
 		return (call_unset(cmd[1], &data->export_vars, &data->local_vars));
 	if (!ft_strcmp(cmd[0], "export"))

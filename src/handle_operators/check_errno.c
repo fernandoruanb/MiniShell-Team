@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:51:37 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/14 10:56:26 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 16:15:15 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	check_errno(char **split1, t_utils *data, t_data *__data)
 		exit(126);
 	}
 	path = get_path(__data, split1);
-	printf("vou executar %s\n", path);
 	execve(path, split1, data->envp);
 	clean_process(__data);
 	free(path);
