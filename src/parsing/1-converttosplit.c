@@ -3,72 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   1-converttosplit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:18:00 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/10 12:31:17 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:58:46 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static int	get_arraylen(t_token **token)
-// {
-// 	int		cnt;
-// 	t_token	*temp;
-
-// 	temp = (*token);
-// 	cnt = 0;
-// 	while (temp)
-// 	{
-// 		cnt += temp->id != ARG;
-// 		temp = temp->next;
-// 	}
-// 	return (cnt);
-// }
-
-// static int	cmdlen(t_token **token)
-// {
-// 	int		cnt;
-// 	t_token	*temp;
-
-// 	cnt = 1;
-// 	temp = (*token)->next;
-// 	while (temp && (temp->id != CMD))
-// 	{
-// 		cnt += temp->id == ARG;
-// 		temp = temp->next;
-// 	}		
-// 	return (cnt);
-// }
-
-// static char	**make_cmd(t_token **token)
-// {
-// 	char	**split;
-// 	int		i;
-// 	t_token	*fd;
-
-// 	if (!(*token))
-// 		return (NULL);
-// 	split = ft_calloc(cmdlen(token) + 1, sizeof(char *));
-// 	if (!split)
-// 		return (NULL);
-// 	i = 0;
-// 	split[i++] = ft_strdup((*token)->str);
-// 	(*token) = (*token)->next;
-// 	fd = NULL;
-// 	while ((*token) && (*token)->id != CMD && !is_operator((*token)->id))
-// 	{
-// 		if ((*token)->id == ARG)
-// 			split[i++] = ft_strdup((*token)->str);
-// 		else if ((*token)->id == FD || (*token)->id == LIMITER)
-// 			fd = (*token)->previous;
-// 		(*token) = (*token)->next;
-// 	}
-// 	if (fd)
-// 		(*token) = fd;
-// 	return (split);
-// }
 
 static int	cmdlen(t_token **token)
 {

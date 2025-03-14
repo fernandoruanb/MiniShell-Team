@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-ast.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 08:25:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/07 12:53:56 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:42:50 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ t_ast	*add_node(t_ast *root, t_token **token)
 	t_token	*temp;
 
 	if (!root)
-		return (create_node(convert_to_cmd(token), (*token)->index, (*token)->id));
+		return (create_node(convert_to_cmd(token)
+				, (*token)->index, (*token)->id));
 	temp = *token;
 	if (temp->index > root->index)
 		root->right = add_node(root->right, token);

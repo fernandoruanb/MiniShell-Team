@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/13 13:58:42 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 21:57:23 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,14 @@ void	get_label(t_lex *lex, t_token **token)
 	t_token	*temp;
 
 	temp = last_token(token);
-	if ((lex->id != LIMITER) && ((!ft_strncmp(lex->word, "xargs", 5)
-			|| ( (!temp || (temp->id != CMD && temp->id != ARG)) && is_cmd(lex->word, lex)))
+	if ((lex->id != LIMITER)
+		&& ((!ft_strncmp(lex->word, "xargs", 5)
+				|| ((!temp || (temp->id != CMD && temp->id != ARG))
+					&& is_cmd(lex->word, lex)))
 			|| (ft_strncmp(lex->word, "./", 2) == 0
-			&& ft_strcmp(lex->word, ".") != 0 && ft_strncmp(lex->word, "../", 3) != 0
-			&& !ft_strcmp(lex->word, ".")) || lex->id == NONE))
+				&& ft_strcmp(lex->word, ".") != 0
+				&& ft_strncmp(lex->word, "../", 3) != 0
+				&& !ft_strcmp(lex->word, ".")) || lex->id == NONE))
 		lex->id = CMD;
 	else if (lex->id != FD && lex->id != LIMITER && lex->id != CMD)
 		lex->id = ARG;

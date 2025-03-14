@@ -86,6 +86,7 @@ SRCS = main/2-events.c \
 		parsing/6-expand_tilde.c\
 		execute/1-minishell.c\
 		execute/2-isbuiltin.c\
+		execute/2.1-isbuiltin.c\
 		execute/3-updateenvp.c\
 		ast/1-ast.c\
 		ast/2-make_ast.c\

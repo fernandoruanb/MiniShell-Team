@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:11:23 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 18:05:15 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/13 22:02:13 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,19 @@ int	check_brackets_start(t_token *root)
 	return (1);
 }
 
+static void	set_zero(t_utils *data)
+{
+	data->brackets_o = 0;
+	data->brackets_c = 0;
+	data->exit_status = 0;
+}
+
 int	check_syntax(t_token *root, char **envp, t_utils *data)
 {
 	int		flag;
 	t_token	*go;
 
-	data->brackets_o = 0;
-	data->brackets_c = 0;
-	data->exit_status = 0;
+	set_zero(data);
 	if (!check_brackets_start(root))
 		return (show_error_fd("Syntax Error: BRACKETS", 0, data, 2));
 	get_paths(envp, data);

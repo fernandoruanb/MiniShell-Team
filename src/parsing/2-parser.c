@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2-parser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:37:47 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/07 12:53:39 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:58:31 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,6 @@ int	find_var(char *str)
 	return (0);
 }
 
-// static int	find_escape(char *str)
-// {
-// 	int	i;
-
-// 	if (!str)
-// 		return (0);
-// 	i = 0;
-// 	while (str[i])
-// 		if (str[i++] == '\\')
-// 			return (1);
-// 	return (0);
-// }
-
 int	find_quote(char *str)
 {
 	int	i;
@@ -50,7 +37,7 @@ int	find_quote(char *str)
 		if (is_quote(str[i]))
 			return (1);
 		i += 1 + (str[i] == '\\');
-	}		
+	}
 	return (0);
 }
 

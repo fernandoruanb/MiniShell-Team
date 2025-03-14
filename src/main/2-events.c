@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:31:43 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/12 15:11:09 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 21:57:44 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	execute(t_data *data)
 
 int	destroy(t_data *data, char *message, int exit_code)
 {
-	// if (data)
-	// 	call_clean(data);
 	if (data->export_vars)
 		export_clean(&data->export_vars);
 	if (data->local_vars)

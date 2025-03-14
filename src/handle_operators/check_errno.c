@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:51:37 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 19:17:28 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:54:54 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,7 @@ void	check_errno(char **split1, t_utils *data, t_data *__data)
 		ft_printf("sudo: permission denied\n");
 		exit(126);
 	}
-	if (!isbuiltin(split1[0])
-		&& (!ft_strnstr(split1[0], "./", ft_strlen(split1[0]))
-		&& access(split1[0], F_OK | X_OK)))
-	{
-		path = find_path(split1[0], data->envp, __data);
-		if (!path)
-		{
-			clean_process(__data);
-			data->exec_status = 127;
-			exit(127);
-		}
-	}
-	else
-		path = ft_strdup(split1[0]);
+	path = get_path(__data, split1);
 	printf("vou executar %s\n", path);
 	execve(path, split1, data->envp);
 	clean_process(__data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1.5-converttosplit_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:21:36 by jopereir          #+#    #+#             */
-/*   Updated: 2025/02/18 11:53:02 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:59:24 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,21 @@ void	print_array(char ***array)
 	}
 }
 
-void	*clean_array(char ***array) {
-    int	i;
+void	*clean_array(char ***array)
+{
+	int	i;
 	int	j;
 
 	if (!array || !*array)
 		return (NULL);
 	i = 0;
-    while (array[i])
+	while (array[i])
 	{
-        j = 0;
-        while (array[i][j])
-            free(array[i][j++]);
+		j = 0;
+		while (array[i][j])
+			free(array[i][j++]);
 		free(array[i++]);
-    }
-    free(array);
+	}
+	free(array);
 	return (NULL);
 }
