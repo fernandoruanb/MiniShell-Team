@@ -89,6 +89,7 @@ typedef struct s_utils
 	int			temp_fd;
 	int			fd_backup;
 	int			rl_flag;
+	int			exit_flag;
 	int			exec_status;
 	int			exit_status;
 	int			simple_quotes;

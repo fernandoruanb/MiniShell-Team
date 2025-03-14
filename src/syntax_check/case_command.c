@@ -49,6 +49,12 @@ static int	escaping_case(t_token *root, t_utils *data)
 {
 	int	index;
 
+	if (root->id == CMD && root->previous != NULL
+		&& root->previous->id == BRACKET_C)
+	{
+		data->exit_flag = 2;
+		return (1);
+	}
 	index = 0;
 	while (root->str[index] != '\0')
 	{
@@ -56,7 +62,10 @@ static int	escaping_case(t_token *root, t_utils *data)
 				|| root->str[index + 1] == '\"'))
 		{
 			if (!pipes_case(root, data) && !start_case(root, data))
+			{
+				data->exit_flag = 127;
 				return (1);
+			}
 		}
 		index++;
 	}
@@ -96,7 +105,7 @@ int	case_command(t_token *root, t_utils *data)
 			|| check_absolute_path(root, data)))
 		return (decrement_status(data));
 	else if (escaping_case(root, data))
-		return (show_error_fd("Syntax Error: CMD Error", 0, data, 127));
+		return (show_error_fd("Syntax Error", 0, data, data->exit_flag));
 	else if (case_builtins(root) || is_environment(root)
 		|| is_insider_quotes(root, data) || special(root, data))
 	{
