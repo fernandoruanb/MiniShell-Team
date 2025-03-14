@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:44:28 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/12 13:58:46 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 12:50:38 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,10 @@ int	quote_close(char *str, int k)
 
 int	handle_bracket(char *str, t_token **token, t_lex *lex)
 {
-	if (str[0] == '(')
-		(*token) = token_add((*token),
-				token_create(str, 1, lex->index++, BRACKET_O), NULL);
-	if (str[0] == ')')
-		(*token) = token_add((*token),
-				token_create(str, 1, lex->index++, BRACKET_C), NULL);
+	if (str[0] == '(' || str[0] == ')')
+		error_message("ERROR:\n\n '()' detected.\n", -1, token);
 	lex->id = CMD;
-	return (1);
+	return (-1);
 }
 
 int	handle_fd(char *str)
