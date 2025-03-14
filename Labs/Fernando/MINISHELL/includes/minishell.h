@@ -43,7 +43,7 @@ typedef struct s_data
 	int		redirect_out_triple;
 }	t_data;
 
-void	execute(t_data *data, char **envp);
+void	ute(t_data *data, char **envp);
 int		builtins(t_data *data);
 void	ft_cd(t_data *data);
 void	ft_env(t_data *data);
