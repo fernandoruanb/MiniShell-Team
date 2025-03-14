@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:46:31 by jonas             #+#    #+#             */
-/*   Updated: 2025/02/24 15:07:54 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/13 22:20:53 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	envplen(t_export **export)
 	return (cnt);
 }
 
-char	**updateenvp(t_export **export)
+char	**updateenvp(t_export **exp)
 {
 	char		**new_envp;
 	t_export	*temp;
@@ -37,11 +37,11 @@ char	**updateenvp(t_export **export)
 	char		*name;
 
 	new_envp = NULL;
-	new_envp = ft_calloc(envplen(export) + 1, sizeof(char *));
+	new_envp = ft_calloc(envplen(exp) + 1, sizeof(char *));
 	if (!new_envp)
 		return (NULL);
 	i = 0;
-	temp = *export;
+	temp = *exp;
 	while (temp)
 	{
 		name = ft_strjoin(temp->name, "=");
