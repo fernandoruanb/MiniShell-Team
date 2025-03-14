@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/14 14:46:57 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 15:12:02 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static char	*search_content(char *str, t_data *data, int *i)
 		j++;
 	}
 	find = get_find(&str[*i - j + 1], j - 1, i);
-	if (!ft_strcmp(find, "?"))
+	if (ft_strnstr(str, "$?", ft_strlen(str)))
 		return (is_return(data, find));
 	temp = search_var(&data->export_vars, find);
 	if (temp)
