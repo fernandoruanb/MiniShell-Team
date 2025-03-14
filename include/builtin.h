@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 22:12:39 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/14 15:05:16 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 16:48:55 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		ft_cd(char *input);
 int			ft_pwd(t_data *data);
 int			ft_echo(char **str);
 int			ft_env(t_data *data);
-void		ft_exit(t_data *data, char *exit_status);
+void		ft_exit(t_data *data, char **exit_status);
 int			valid_name(char c, int flag);
 int			ft_export(char **input, t_export **var);
 t_export	*search_var(t_export **var, char *name);

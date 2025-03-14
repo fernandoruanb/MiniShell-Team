@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:11:40 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/14 10:41:30 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 16:57:04 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ static int	open_file_to_redirect(t_data *data, t_token **token, int *fd)
 	int	last;
 
 	last = get_last_index(token);
-	printf("token %d last %d\n", (*token)->index, last);
 	if ((*token)->index != last)
 	{
 		free(data->utils.filename);
@@ -169,7 +168,6 @@ int	heredoc(char *limiter, t_data *data, t_token **token)
 
 	if (!limiter || !data || !*token)
 		return (INT_MIN);
-	printf("token index: %d\n", (*token)->index);
 	fd = open_heredoc(data, (*token)->index);
 	open_fork(data, limiter, &fd);
 	return (open_file_to_redirect(data, token, &fd));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_red_in.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:20:41 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/10 14:04:08 by jopereir         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:55:41 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ static int	check_file(char *f, t_utils *data)
 {
 	if (access(f, F_OK) != 0)
 	{
-		ft_printf("Doesn't exist a file\n");
+		ft_putstr_fd("No such file or directory\n", 2);
 		data->exec_status = 1;
 		return (0);
 	}
 	if (access(f, R_OK) != 0)
 	{
-		ft_printf("You don't have read permissions\n");
+		ft_putstr_fd("You don't have read permissions\n", 2);
 		data->exec_status = 1;
 		return (0);
 	}

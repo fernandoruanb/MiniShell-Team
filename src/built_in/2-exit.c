@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:47:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 16:42:15 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 16:48:46 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,22 @@ static int	is_all_num(char *str)
 	return (1);
 }
 
-void	ft_exit(t_data *data, char *exit_status)
+void	ft_exit(t_data *data, char **exit_status)
 {
+	int	len;
+
 	rl_clear_history();
 	data->prompt->exit_status = 0;
-	if (exit_status && is_all_num(exit_status))
-		data->prompt->exit_status = ft_atoi_but_better(exit_status);
+	if (exit_status)
+	{
+		len = splitlen(exit_status);
+		if (len > 2)
+			data->prompt->exit_status = 1;
+		else if (is_all_num(exit_status[1]))
+			data->prompt->exit_status = ft_atoi_but_better(exit_status[1]);
+		else
+			data->prompt->exit_status = 2;
+	}
 	clear_split(data->utils.paths);
 	if (data->flags.should_clean)
 		call_clean(data, data->flags.shoud_restore);

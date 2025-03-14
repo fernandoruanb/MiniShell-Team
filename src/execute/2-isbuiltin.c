@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:10:30 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 16:39:49 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/14 16:49:13 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	handle_builtin(char **cmd, t_data *data)
 		return (call_local(cmd[0], &data->local_vars, data));
 	if (!ft_strcmp(cmd[0], "exit"))
 	{
-		ft_exit(data, cmd[1]);
+		ft_exit(data, cmd);
 		return (1);
 	}
 	return (0);
