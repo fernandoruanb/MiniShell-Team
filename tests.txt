@@ -43,5 +43,22 @@ MINISHELL TESTER - CHECK
 41 - OK
 42 - OK
 43 - OK
-44 - OK (SÓ QUE DÁ EXIT +100 CHEGA 2 NO REAL);
-45 - 
+44 - OK
+45 - OK
+46 - OK
+47 - OK
+48 - OK
+49 - OK
+50 - OK
+51 - OK
+52 - -- não tinha um teste aqui
+53 - OK
+54 - OK
+55 - OK
+56 - OK
+57 - OK
+58 - OK
+59 - OK
+60 - OK
+61 - OK
+62 - 
