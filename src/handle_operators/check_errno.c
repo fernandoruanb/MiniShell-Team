@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:51:37 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/14 16:15:15 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/15 19:37:54 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	check_errno(char **split1, t_utils *data, t_data *__data)
 	{
 		data->exec_status = 126;
 		clean_process(__data);
-		ft_printf("sudo: permission denied\n");
+		ft_printf("minishell: /usr/bin/sudo: permission denied\n");
 		exit(126);
 	}
 	path = get_path(__data, split1);
