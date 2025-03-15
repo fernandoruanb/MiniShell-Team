@@ -61,4 +61,13 @@ MINISHELL TESTER - CHECK
 59 - OK
 60 - OK
 61 - OK
-62 - 
+62 - OK
+63 - OK
+64 - OK
+65 - OK
+66 - OK
+67 - OK
+68 - KO - sem retorno adequado, mas funciona exit code
+69 - OK - mas dá still reachable
+70 - OK
+71 - KO - não está tendo um retorno completo.
