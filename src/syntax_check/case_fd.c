@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:34:42 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/15 18:17:58 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:42:08 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ static int	check_incomplete_quotes(char *filename)
 
 int	case_fd(t_token *root, t_utils *data)
 {
-	if ((check_incomplete_quotes(root->str) || !check_quotes(root))
-		&& (!pipes_case(root, data) && !start_case(root, data)))
+	if ((check_incomplete_quotes(root->str) || !check_quotes(root)))
 		return (show_error_fd("Syntax: FD Error", 0, data, 2));
 	if (is_number(root))
 		return (check_is_valid_fd(root, data));
