@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 19:59:36 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/15 15:12:18 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:27:59 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	check_too_many_arguments(char *divine_eye)
 	str = locate_target(divine_eye);
 	if (!str)
 		return (0);
-	index = 2;
+	index = 0;
 	while (str[index] != '\0')
 	{
 		if (str[index] == ' '
