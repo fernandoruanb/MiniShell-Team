@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:34:42 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/15 18:42:08 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:58:10 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 	return (0);
 }*/
 
-static int	check_incomplete_quotes(char *filename)
+/*static int	check_incomplete_quotes(char *filename)
 {
 	int	index;
 	int	double_quotes;
@@ -78,7 +78,7 @@ static int	check_incomplete_quotes(char *filename)
 	if (double_quotes % 2 != 0 || simple_quotes % 2 != 0)
 		return (1);
 	return (0);
-}
+}*/
 
 int	case_fd(t_token *root, t_utils *data)
 {

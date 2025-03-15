@@ -123,6 +123,7 @@ SRCS = main/2-events.c \
 		handle_signals/handle_prompt_signal.c\
 		handle_signals/get_minishell.c\
 		handle_operators/check_directory_fd.c\
+		syntax_check/check_incomplete_quotes.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
