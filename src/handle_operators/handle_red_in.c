@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:20:41 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/14 16:55:41 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/15 18:22:06 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,50 @@ static int	check_file(char *f, t_utils *data)
 	return (1);
 }
 
+static char	*remove_all_quotes(char *filename)
+{
+	char	*buffer;
+	size_t	length;
+	int		index;
+	int		count;
+
+	length = ft_strlen(filename);
+	if (length == 0)
+		return (NULL);
+	buffer = (char *)malloc(length + 1);
+	if (!buffer)
+		return (NULL);
+	index = 0;
+	count = 0;
+	while (filename[index] != '\0')
+	{
+		if (filename[index] != '\'' && filename[index] != '\"')
+		{
+			buffer[count] = filename[index];
+			count++;
+		}
+		index++;
+	}
+	buffer[count] = '\0';
+	return (buffer);
+}
+
 int	handle_red_in(char *f, t_utils *data)
 {
-	int		fd;
+	int			fd;
+	char		*true_archive;
 
-	if (!check_file(f, data) || check_is_directory_fd(f, data))
+	true_archive = remove_all_quotes(f);
+	if (!true_archive)
 		return (INT_MIN);
+	f = true_archive;
+	if (!check_file(f, data) || check_is_directory_fd(f, data))
+	{
+		free(f);
+		return (INT_MIN);
+	}
 	fd = open(f, O_RDONLY);
+	free(f);
 	return (fd);
 }
 

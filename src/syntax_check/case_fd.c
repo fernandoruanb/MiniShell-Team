@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:34:42 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/02/24 12:27:05 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:17:58 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,37 @@
 	return (0);
 }*/
 
+static int	check_incomplete_quotes(char *filename)
+{
+	int	index;
+	int	double_quotes;
+	int	simple_quotes;
+
+	index = 0;
+	double_quotes = 0;
+	simple_quotes = 0;
+	while (filename[index] != '\0')
+	{
+		if (filename[index] == '\'')
+			simple_quotes++;
+		else if (filename[index] == '\"')
+			double_quotes++;
+		index++;
+	}
+	if (double_quotes % 2 != 0 || simple_quotes % 2 != 0)
+		return (1);
+	return (0);
+}
+
 int	case_fd(t_token *root, t_utils *data)
 {
+	if ((check_incomplete_quotes(root->str) || !check_quotes(root))
+		&& (!pipes_case(root, data) && !start_case(root, data)))
+		return (show_error_fd("Syntax: FD Error", 0, data, 2));
 	if (is_number(root))
 		return (check_is_valid_fd(root, data));
-	if (check_is_directory(root, data) && !pipes_case(root, data) && !start_case(root, data))
+	if (check_is_directory(root, data) && !pipes_case(root, data)
+		&& !start_case(root, data))
 		return (show_error_fd("Syntax: FD Error", 0, data, 1));
 	if ((data->status == 0) && (!is_number(root)))
 		return (show_error_fd("Syntax: FD Error", 0, data, 127));
