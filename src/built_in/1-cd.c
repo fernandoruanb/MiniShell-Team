@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 19:59:36 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/15 15:27:59 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:44:19 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*locate_target(char *divine_eye)
 	{
 		if (divine_eye[index] == 'c'
 			&& divine_eye[index + 1] == 'd')
-			pass = index + 2;
+			pass = index + 3;
 		index++;
 	}
 	index = 0;
