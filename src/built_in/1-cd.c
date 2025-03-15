@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 19:59:36 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/15 15:44:19 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:54:49 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ static char	*locate_target(char *divine_eye)
 	char	*str;
 
 	index = 0;
+	pass = 0;
 	while (divine_eye[index + 1] != '\0')
 	{
 		if (divine_eye[index] == 'c'
 			&& divine_eye[index + 1] == 'd')
-			pass = index + 3;
+			pass = index;
 		index++;
 	}
 	index = 0;
@@ -60,7 +61,12 @@ static int	check_too_many_arguments(char *divine_eye)
 	str = locate_target(divine_eye);
 	if (!str)
 		return (0);
-	index = 0;
+	if (ft_strcmp(str, "cd") == 0)
+	{
+		free(str);
+		return (0);
+	}
+	index = 3;
 	while (str[index] != '\0')
 	{
 		if (str[index] == ' '
