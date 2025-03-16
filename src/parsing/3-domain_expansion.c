@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/16 11:47:18 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/16 12:03:12 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static char	*get_after(char *str, int i)
 {
+	if (!ft_strncmp(str, "$?", 2))
+		return (ft_strdup(&str[2]));
 	i++;
 	while (str[i] && str[i] != '$' && str[i] != '\"' && str[i] != ' ')
 		i++;
@@ -44,6 +46,7 @@ static char	*make_replacement(char *str, char *expand, int *i)
 		return (str);
 	prev = ft_strndup(str, *i);
 	after = get_after(str, *i);
+	printf("prev: %s after: %s\n", prev, after);
 	exp = put_together(prev, expand, after);
 	if (!exp)
 		return (str);
