@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/16 10:41:28 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/16 10:50:50 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,9 @@ int	handle_redirect_out(char *f, t_utils *data)
 	char	*detect_dir;
 
 	detect_dir = initialize_directory(f, data);
-	if (check_is_directory_fd(f, data) || access(f, W_OK) == -1)
+	if (check_is_directory_fd(f, data))
 	{
 		free(detect_dir);
-		ft_printf("Eu entrei aqui e meu file é %s\n", f);
 		data->exec_status = 1;
 		return (INT_MIN);
 	}
