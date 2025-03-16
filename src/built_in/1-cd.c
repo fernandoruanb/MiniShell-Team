@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 19:59:36 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/16 10:47:43 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:32:34 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	ft_cd(char *input)
 	if (check_too_many_arguments(official->prompt->input))
 	{
 		official->utils.exec_status = 1;
-		ft_printf("minishell: cd: too many arguments.\n");
+		ft_putstr_fd("minishell: cd: too many arguments.\n", 2);
 		return ;
 	}
 	flag = 0;
