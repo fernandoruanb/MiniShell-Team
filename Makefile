@@ -81,6 +81,7 @@ SRCS = main/2-events.c \
 		parsing/1.5-converttosplit_utils.c\
 		parsing/2-parser.c\
 		parsing/3-domain_expansion.c\
+		parsing/3.1-make_expansion.c\
 		parsing/4-remove_quotes.c\
 		parsing/5-remove_escape.c\
 		parsing/6-expand_tilde.c\
