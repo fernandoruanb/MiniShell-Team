@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 22:12:39 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/14 16:48:55 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/16 09:56:57 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 void		ft_cd(char *input);
 int			ft_pwd(t_data *data);
+int			ft_clear(void);
 int			ft_echo(char **str);
 int			ft_env(t_data *data);
 void		ft_exit(t_data *data, char **exit_status);
