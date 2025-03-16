@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 19:59:36 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/15 15:54:49 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/16 10:47:43 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,8 @@ static char	*transform_string(char *input, int *flag)
 {
 	char	*home;
 	char	*transformation;
-	size_t	len_s1;
-	size_t	len_s2;
 
 	home = getenv("HOME");
-	len_s1 = ft_strlen(home);
-	len_s2 = ft_strlen(input);
 	transformation = ft_strjoin(home, input + 1);
 	if (!transformation)
 		return (NULL);
