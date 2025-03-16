@@ -51,10 +51,10 @@
 static char	*is_return(t_data *data, char *find)
 {
 	free(find);
-	printf("status antes do wEXIT: %d\n", data->prompt->exit_status);
+	//printf("status antes do wEXIT: %d\n", data->prompt->exit_status);
 	if (data->prompt->exit_status > 255)
 		data->prompt->exit_status = WEXITSTATUS(data->prompt->exit_status);
-	printf("status dps do wEXIT: %d\n", data->prompt->exit_status);
+	//printf("status dps do wEXIT: %d\n", data->prompt->exit_status);
 	return (ft_itoa(data->prompt->exit_status));
 }
 

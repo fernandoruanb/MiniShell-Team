@@ -71,3 +71,17 @@ MINISHELL TESTER - CHECK
 69 - OK - mas dá still reachable
 70 - OK
 71 - KO - não está tendo um retorno completo.
+72 - OK
+73 - OK
+74 - OK
+75 - OK
+76 - OK
+77 - OK
+78 - OK
+79 - KO - Manage redir do Jonas é quebradaço
+80 - OK
+81 - OK
+82 - OK
+83 - OK
+84 - OK
+85 - 

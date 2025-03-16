@@ -11,6 +11,7 @@ ls
 Makefile
 minishell
 minishell_tester
+oi
 outfile
 outfile1
 readline.sup

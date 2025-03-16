@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:05:05 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/14 10:41:59 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/16 11:10:19 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	append(char *f, t_utils *data)
 	char		*detect_dir;
 
 	detect_dir = initialize_directory(f, data);
-	if (check_is_directory_fd(f, data) || access(f, W_OK) == -1)
+	if (check_is_directory_fd(f, data) || check_invalid_permission(f))
 	{
 		free(detect_dir);
 		data->exec_status = 1;
