@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 11:10:30 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 16:49:13 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/16 12:19:29 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,13 @@ static int	call_export(char **cmd, t_export **var, t_data *data)
 	return (1);
 }
 
-static int	call_unset(char *cmd, t_export **export, t_localvar **locals)
+static int	call_unset(char **cmd, t_export **export, t_localvar **locals)
 {
-	ft_unset(export, locals, cmd);
+	int	i;
+
+	i = 1;
+	while (cmd[i])
+		ft_unset(export, locals, cmd[i++]);
 	return (1);
 }
 
@@ -49,7 +53,7 @@ int	handle_builtin(char **cmd, t_data *data)
 	if (!ft_strcmp(cmd[0], "echo"))
 		return (call_echo(data, &cmd[1]));
 	if (!ft_strncmp(cmd[0], "unset", 5))
-		return (call_unset(cmd[1], &data->export_vars, &data->local_vars));
+		return (call_unset(cmd, &data->export_vars, &data->local_vars));
 	if (!ft_strcmp(cmd[0], "export"))
 		return (call_export(&cmd[1], &data->export_vars, data));
 	else if (ft_strnstr(cmd[0], "=", ft_strlen(cmd[0])))

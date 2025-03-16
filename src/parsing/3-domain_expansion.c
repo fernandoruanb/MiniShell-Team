@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:24:54 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/16 11:55:14 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/16 12:03:58 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static char	*get_after(char *str, int i)
 {
+	if (!ft_strncmp(str, "$?", 2))
+		return (ft_strdup(&str[2]));
 	i++;
 	while (str[i] && str[i] != '$' && str[i] != '\"' && str[i] != ' ')
 		i++;
