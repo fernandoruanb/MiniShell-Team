@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 22:16:19 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/13 22:17:02 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/16 10:54:12 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ char	*domain_expansion(char *str, t_data *data);
 char	*remove_escape(char *str);
 int		find_var(char *str);
 char	*expand_tilde(char *str);
+char	*make_expansion(char *str, t_data *data, int i);
 
 #endif
