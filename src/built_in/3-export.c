@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:19 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/16 12:18:58 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/16 12:26:35 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ int	export_print(t_export **var)
 int	ft_export(char **input, t_export **var)
 {
 	int			len;
-	t_export	*new;
 	int			i;
-	t_export	*temp;
 
 	if (!input || !input[0])
 		return (export_print(var));
@@ -92,21 +90,7 @@ int	ft_export(char **input, t_export **var)
 		len = namevalidation(input[i], var);
 		if (!len)
 			return (1);
-		new = calloc(sizeof(t_export), 1);
-		if (!new)
-			return (1);
-		new->name = ft_strndup(input[i], len);
-		new->value = get_var(&input[i][len + 1]);
-		if (!new->name || !new->value)
-			return (my_free_my_life(new->name, new->value, new, 1));
-		else if (!(*var))
-			*var = new;
-		else
-		{
-			temp = export_last(var);
-			temp->next = new;
-			new->prev = temp;
-		}
+		create_var(input[i], var, len);
 	}
 	return (0);
 }

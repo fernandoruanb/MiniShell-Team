@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:53:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/16 12:18:50 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/16 12:25:46 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,27 @@ void	export_init(char **envp, t_export **var)
 	ft_quicksort(temp, 0, splitlen(temp) - 1);
 	ft_export(temp, var);
 	clear_split(temp);
+}
+
+int	create_var(char *input, t_export **var, int len)
+{
+	t_export	*new;
+	t_export	*temp;
+
+	new = calloc(sizeof(t_export), 1);
+	if (!new)
+		return (1);
+	new->name = ft_strndup(input, len);
+	new->value = get_var(&input[len + 1]);
+	if (!new->name || !new->value)
+		return (my_free_my_life(new->name, new->value, new, 1));
+	else if (!(*var))
+		*var = new;
+	else
+	{
+		temp = export_last(var);
+		temp->next = new;
+		new->prev = temp;
+	}
+	return (0);
 }
