@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 10:50:15 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/13 17:12:59 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 19:54:28 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	translate(t_data *data)
 		data->utils.exec_status = 127;
 	else if (data->utils.exec_status == 33280)
 		data->utils.exec_status = 130;
+	else if (data->utils.exec_status == 2304)
+		data->utils.exec_status = 126;
 	else if (data->utils.exec_status == 256)
 		data->utils.exec_status = 1;
 	else if (data->utils.exec_status == 2)
