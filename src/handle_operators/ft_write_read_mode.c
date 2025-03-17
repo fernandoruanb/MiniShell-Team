@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:39:22 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/14 15:56:50 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 14:50:51 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ char	*get_path(t_data *data, char **cmd)
 	return (path);
 }
 
-void	ft_write_read_mode(int *pipefd, char **cmd, t_data *data)
+void	ft_write_read_mode(int *pipefd, t_ast **root, t_data *data)
 {
 	char	*path;
+	t_ast	*ast;
 
+	ast = *root;
 	handle_command_signal();
 	path = NULL;
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
@@ -48,14 +50,14 @@ void	ft_write_read_mode(int *pipefd, char **cmd, t_data *data)
 	if (dup2(data->utils.fd_backup, STDIN_FILENO) == -1)
 		exit(EXIT_FAILURE);
 	close_descriptors(pipefd, 1, data);
-	path = get_path(data, cmd);
-	if (handle_builtin(cmd, data))
+	path = get_path(data, ast->cmd);
+	if (handle_builtin(ast->cmd, data))
 	{
 		free(path);
 		clean_process(data);
 		exit(data->utils.exec_status);
 	}
-	execve(path, cmd, data->utils.envp);
+	execve(path, ast->cmd, data->utils.envp);
 	clean_process(data);
 	free(path);
 	exit(errno);

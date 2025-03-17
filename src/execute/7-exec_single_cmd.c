@@ -6,13 +6,13 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 17:16:20 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/14 12:56:28 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 15:29:04 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_ast	*find_cmd(t_ast **root)
+t_ast	*find_cmd(t_ast **root)
 {
 	t_ast	*ast;
 
@@ -33,13 +33,13 @@ void	exec_single_cmd(t_ast **root, t_data *data)
 
 	if (!*root || (*root)->id == PIPE)
 		return ;
+	ast = *root;
 	data->fd = save_origin(data);
-	if (manage_redir(&data->token, data))
+	if (manage_redir(root, &data->token, data))
 	{
 		restore_redirect(data->fd, data);
 		return ;
 	}
-	ast = *root;
 	cmd = find_cmd(&ast);
 	if (cmd && !handle_builtin(cmd->cmd, data))
 		single_command(&cmd, data);

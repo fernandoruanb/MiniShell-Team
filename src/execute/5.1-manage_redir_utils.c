@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:11:48 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/12 15:28:11 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/16 16:24:07 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ void	make_redir(int fd, int fd2)
 {
 	if (fd < 0 || fd2 < 0)
 		return ;
-	if (dup2(fd, fd2) < 0)
-		close (fd);
+	dup2(fd, fd2);
+	close (fd);
 }

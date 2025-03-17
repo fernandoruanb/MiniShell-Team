@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:48:09 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/11 13:51:33 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 15:16:24 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,13 @@ static void	call_handle_pipe(t_ast *ast, t_data *data)
 		handle_pipe_op(&ast, 3, data);
 }
 
-void	exec_pipe(t_ast **root, t_data *data)
+int	exec_pipe(t_ast **root, t_data *data)
 {
 	t_ast	*ast;
 
 	if (!*root)
-		return ;
+		return (1);
 	ast = *root;
 	call_handle_pipe(ast, data);
+	return (0);
 }

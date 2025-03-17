@@ -6,13 +6,13 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/11 17:41:05 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 15:06:01 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	read_mode(char **cmd, int *pipefd, t_data *data)
+void	read_mode(t_ast **root, int *pipefd, t_data *data)
 {
 	int	pid;
 
@@ -23,13 +23,13 @@ void	read_mode(char **cmd, int *pipefd, t_data *data)
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-		ft_read_mode(cmd, pipefd, data);
+		ft_read_mode(root, pipefd, data);
 	close_descriptors(pipefd, 1, data);
 	data->utils.pids[data->utils.index++] = pid;
 	data->utils.num_of_processes++;
 }
 
-void	write_mode(char **cmd, int *pipefd, t_data *data)
+void	write_mode(t_ast **root, int *pipefd, t_data *data)
 {
 	int	pid;
 
@@ -43,16 +43,16 @@ void	write_mode(char **cmd, int *pipefd, t_data *data)
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-		ft_write_mode(pipefd, cmd, data);
+		ft_write_mode(pipefd, root, data);
 	data->utils.pid = pid;
 	data->utils.pids[data->utils.index++] = pid;
 	data->utils.num_of_processes++;
 }
 
-void	write_read_mode(char **cmd, int *pipefd, t_data *data)
+void	write_read_mode(t_ast **root, int *pipefd, t_data *data)
 {
-	int	pid;
-	int	fd;
+	int		pid;
+	int		fd;
 
 	if (data->utils.fd_backup < 0)
 		close_descriptors(pipefd, 1, data);
@@ -68,7 +68,7 @@ void	write_read_mode(char **cmd, int *pipefd, t_data *data)
 	if (pid == 0)
 	{
 		close(fd);
-		ft_write_read_mode(pipefd, cmd, data);
+		ft_write_read_mode(pipefd, root, data);
 	}
 	if (data->utils.fd_backup)
 		close(data->utils.fd_backup);
@@ -94,18 +94,16 @@ void	wait_all_pids(t_data *data)
 int	handle_pipe_op(t_ast **root, int flag, t_data *data)
 {
 	int		pipefd[2];
-	t_ast	*ast;
 
 	data->utils.exec_status = 0;
 	if (pipe(pipefd) == -1)
 		return (1);
-	ast = *root;
 	if (flag == 1)
-		write_mode(ast->cmd, pipefd, data);
+		write_mode(root, pipefd, data);
 	else if (flag == 2)
-		read_mode(ast->cmd, pipefd, data);
+		read_mode(root, pipefd, data);
 	else if (flag == 3)
-		write_read_mode(ast->cmd, pipefd, data);
+		write_read_mode(root, pipefd, data);
 	if (flag == 3 || flag == 1)
 		close_descriptors(pipefd, 0, data);
 	if (flag == 2)

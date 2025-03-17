@@ -1,0 +1,26 @@
+total 1088
+-rw-rw-r--  1 jonas jonas      3 Mar 16 15:59 12345
+-rw-r--r--  1 jonas jonas      0 Mar 16 16:07 a
+-rw-rw-r--  1 jonas jonas   1318 Mar 16 16:03 çap
+-rw-rw-r--  1 jonas jonas  19538 Mar 16 11:53 checker.c
+-rw-rw-r--  1 jonas jonas  19459 Mar 16 11:53 checker_official.c
+drwxrwxr-x  2 jonas jonas   4096 Mar 16 15:59 include
+-rw-rw-r--  1 jonas jonas   1371 Mar 16 11:53 infile
+-rw-rw-r--  1 jonas jonas      0 Mar 16 11:53 invalid
+drwxrwxr-x  4 jonas jonas   4096 Mar 16 11:53 Labs
+-rw-rw-r--  1 jonas jonas   2255 Mar 16 11:53 leaks.txt
+drwxrwxr-x  2 jonas jonas  12288 Mar 16 15:59 libft
+-rw-rw-r--  1 jonas jonas 138216 Mar 16 11:53 ls
+-rw-rw-r--  1 jonas jonas   5387 Mar 16 15:59 Makefile
+-rwxrwxr-x  1 jonas jonas 843504 Mar 16 16:00 minishell
+drwxrwxr-x  4 jonas jonas   4096 Mar 16 15:59 minishell_tester
+-rw-rw-r--  1 jonas jonas    198 Mar 16 15:59 oi
+-rw-rw-r--  1 jonas jonas   1471 Mar 16 11:53 outfile
+-rw-rw-r--  1 jonas jonas      4 Mar 16 11:53 outfile1
+-rw-rw-r--  1 jonas jonas     90 Mar 16 11:53 readline.sup
+-rw-rw-r--  1 jonas jonas   1027 Mar 16 11:53 README.md
+drwxrwxr-x 13 jonas jonas   4096 Mar 16 15:51 src
+-rw-rw-r--  1 jonas jonas     64 Mar 16 11:53 strace.sh
+-rw-rw-r--  1 jonas jonas   1038 Mar 16 15:59 tests.txt
+-rw-rw-r--  1 jonas jonas    247 Mar 16 11:53 todo.md
+-rw-rw-r--  1 jonas jonas     92 Mar 16 15:58 tudo
