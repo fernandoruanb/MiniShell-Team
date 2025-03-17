@@ -6,13 +6,13 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:28:30 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/09 15:49:13 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:00:47 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	init_utils(t_utils *data, char **envp)
+static void	helper(t_utils *data)
 {
 	data->index_bra_c = -1;
 	data->index_bra_o = -1;
@@ -21,8 +21,13 @@ void	init_utils(t_utils *data, char **envp)
 	data->path = NULL;
 	data->simple_quotes = 0;
 	data->copy_new = NULL;
-	data->envp = envp;
 	data->double_quotes = 0;
+}
+
+void	init_utils(t_utils *data, char **envp)
+{
+	helper(data);
+	data->envp = envp;
 	data->paths = NULL;
 	data->line = NULL;
 	data->newpwd = NULL;
@@ -38,5 +43,6 @@ void	init_utils(t_utils *data, char **envp)
 	data->pipes = 0;
 	data->args = 0;
 	data->commands = 0;
+	data->can_dup = true;
 	data->files = 0;
 }

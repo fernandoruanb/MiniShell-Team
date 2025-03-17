@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/17 16:03:47 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 18:02:43 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,11 @@ int	manage_redir(t_ast **root, t_token **token, t_data *data)
 	if (!*token || !data || !*root || !isredir((*root)->id))
 		return (0);
 	temp = get_pos(token, find_cmd(root));
-	printf("vou começar no comando %s\n", temp->str);
 	fd = -1;
 	while (temp && temp->id != PIPE)
 	{
 		if (isredir(temp->id))
 		{
-			printf("vou redirecionar\n");
 			fd = switch_redir(&temp, data);
 			if (fd == INT_MIN || data->utils.exec_status == 130)
 				return (1);
@@ -93,6 +91,10 @@ int	manage_redir(t_ast **root, t_token **token, t_data *data)
 		}
 		temp = temp->next;
 	}
+	if (temp && temp->id == PIPE)
+		data->utils.can_dup = false;
+	else
+		data->utils.can_dup = true;
 	return (0);
 }
 

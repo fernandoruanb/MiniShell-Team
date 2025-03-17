@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_invalid_permission.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:08:43 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/16 11:23:35 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:33:35 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,3 @@ int	check_invalid_permission(char *f)
 	}
 	return (0);
 }
-

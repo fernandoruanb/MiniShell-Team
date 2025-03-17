@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 22:05:11 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/14 10:50:45 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 17:56:52 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_utils
 	int			index_bra_o;
 	char		*new_str;
 	char		*filename;
+	bool		can_dup;
 	struct stat	stat_check;
 }	t_utils;
 

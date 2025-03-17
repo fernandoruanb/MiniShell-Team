@@ -158,7 +158,7 @@ $(NAME): $(OBJ) $(LIBFT)/libft.a
 	@$(CC) $(CFLAGS) $(SRC_DIR)/main/1-main.c $(OBJ) $(LIBFT)/libft.a -o $(NAME) -lreadline -lncurses
 
 run: all
-	valgrind --suppressions=readline.sup --trace-children=yes --track-fds=yes --leak-check=full --show-leak-kinds=all ./minishell
+	valgrind --suppressions=readline.sup --track-fds=yes --leak-check=full --show-leak-kinds=all ./minishell
 
 clean:
 	@echo "\033[1;32m===========================================\033[0m"
