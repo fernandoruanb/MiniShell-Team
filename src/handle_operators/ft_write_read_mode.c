@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:39:22 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/17 17:59:01 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 19:39:25 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,6 @@ void	ft_write_read_mode(int *pipefd, t_ast **root, t_data *data)
 	ast = *root;
 	handle_command_signal();
 	path = NULL;
-	if (data->utils.fd_backup < 0 || !data->utils.fd_backup)
-	{
-		close_descriptors(pipefd, 1, data);
-		clean_process(data);
-		exit(EXIT_FAILURE);
-	}
 	if (data->utils.can_dup)
 		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 			exit(EXIT_FAILURE);
@@ -64,6 +58,16 @@ void	ft_write_read_mode(int *pipefd, t_ast **root, t_data *data)
 		clean_process(data);
 		exit(data->utils.exec_status);
 	}
+	if (data->utils.fd_backup < 0 || !data->utils.fd_backup)
+        {
+		if (check_list_stdin(ast->cmd))
+		{
+			clean_process(data);
+			free(path);
+			close_descriptors(pipefd, 1, data);
+                	exit(0);
+		}
+        }
 	execve(path, ast->cmd, data->utils.envp);
 	clean_process(data);
 	free(path);
