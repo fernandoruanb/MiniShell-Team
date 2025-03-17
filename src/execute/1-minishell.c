@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/17 15:38:52 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 16:09:23 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,15 @@
 // 	restore_redirect(fd, data);
 // }
 
-
 static int	exec_multi_cmd(t_ast **root, t_data *data)
 {
 	t_ast	*ast;
 	int		*fd;
-	int		exec;
 
 	if (!*root || !data)
 		return (1);
 	ast = *root;
 	fd = NULL;
-	exec = 0;
 	if (isredir(ast->id))
 	{
 		fd = save_origin(data);
@@ -73,12 +70,10 @@ static int	exec_multi_cmd(t_ast **root, t_data *data)
 	}
 	if (ast->id != CMD)
 	{
-		exec = exec_multi_cmd(&ast->left, data);
-		if (!exec)
-			exec = exec_multi_cmd(&ast->right, data);
+		exec_multi_cmd(&ast->left, data);
+		exec_multi_cmd(&ast->right, data);
 	}
-	if (!exec)
-		exec_pipe(&ast, data);
+	exec_pipe(&ast, data);
 	restore_redirect(fd, data);
 	return (0);
 }

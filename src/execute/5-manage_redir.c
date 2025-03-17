@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/17 15:36:40 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 16:03:47 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,31 +59,33 @@ int	switch_redir(t_token **token, t_data *data)
 	return (fd);
 }
 
-// static t_token	*get_pos(t_token **token, t_ast **root)
-// {
-// 	t_token	*temp;
+static t_token	*get_pos(t_token **token, t_ast *root)
+{
+	t_token	*temp;
 
-// 	if (!*token | !*root)
-// 		return (NULL);
-// 	temp = *token;
-// 	while ((temp && temp->next) && temp->index != (*root)->index)
-// 		temp = temp->next;
-// 	return (temp);
-// }
+	if (!*token | !root)
+		return (NULL);
+	temp = *token;
+	while ((temp && temp->next) && temp->index != root->index)
+		temp = temp->next;
+	return (temp);
+}
 
 int	manage_redir(t_ast **root, t_token **token, t_data *data)
 {
 	int		fd;
 	t_token	*temp;
 
-	if (!*token || !data || !*root)
-		return (1);
-	temp = *token;
+	if (!*token || !data || !*root || !isredir((*root)->id))
+		return (0);
+	temp = get_pos(token, find_cmd(root));
+	printf("vou começar no comando %s\n", temp->str);
 	fd = -1;
-	while (temp)
+	while (temp && temp->id != PIPE)
 	{
 		if (isredir(temp->id))
 		{
+			printf("vou redirecionar\n");
 			fd = switch_redir(&temp, data);
 			if (fd == INT_MIN || data->utils.exec_status == 130)
 				return (1);

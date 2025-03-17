@@ -4,6 +4,8 @@ bye
 çap
 checker.c
 checker_official.c
+com
+dad
 include
 infile
 invalid
@@ -15,6 +17,7 @@ ls
 Makefile
 minishell
 minishell_tester
+new
 oi
 outfile
 outfile1
@@ -25,3 +28,4 @@ strace.sh
 tests.txt
 todo.md
 tudo
+vc
