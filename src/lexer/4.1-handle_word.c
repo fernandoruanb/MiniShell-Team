@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:43:59 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 17:05:04 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 18:52:43 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	get_label(t_lex *lex, t_token **token)
 	t_token	*temp;
 
 	temp = last_token(token);
-	if ((lex->id != LIMITER)
+	if ((lex->id != LIMITER && lex->id != FD)
 		&& (((!ft_strncmp(lex->word, "xargs", 5))
 				|| ((!temp || (temp->id != CMD && temp->id != ARG))
 					&& is_cmd(lex->word, lex)))
