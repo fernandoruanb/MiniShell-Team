@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 17:55:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/18 10:21:41 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:02:15 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,17 @@ int	handle_redirect_out(char *f, t_utils *data)
 		data->exec_status = 1;
 		return (INT_MIN);
 	}
-	if (detect_dir == NULL)
-		return (INT_MIN);
 	fd = open(f, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	free(detect_dir);
+	if (fd == -1)
+	{
+		ft_putstr_fd(" No such file or directory\n", 2);
+		data->exec_status = 1;
+		if (detect_dir != NULL)
+			free(detect_dir);
+		return (INT_MIN);
+	}
+	if (detect_dir != NULL)
+		free(detect_dir);
 	return (fd);
 }
 
