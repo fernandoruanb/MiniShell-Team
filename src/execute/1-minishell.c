@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/18 11:30:11 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/18 14:20:01 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,12 @@ static int	exec_multi_cmd(t_ast **root, t_data *data)
 	ast = *root;
 	fd = NULL;
 	// printf("eu tenho: %s(%d)\n", ast->cmd[0], ast->index);
-	if (isredir(ast->id))
+	// printf("vou mandar o %s(%d)\n", ast->cmd[0], ast->index);
+	fd = save_origin(data);
+	if (manage_redir(&ast, &data->token, data))
 	{
-		// printf("vou mandar o %s(%d)\n", ast->cmd[0], ast->index);
-		fd = save_origin(data);
-		if (manage_redir(&ast, &data->token, data))
-		{
-			restore_redirect(fd, data);
-			return (1);
-		}
+		restore_redirect(fd, data);
+		return (1);
 	}
 	if (ast->id != CMD)
 	{
