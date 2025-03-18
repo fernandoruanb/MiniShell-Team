@@ -6,7 +6,7 @@
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:15:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/18 09:01:01 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:13:58 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,16 @@ int	check_is_directory_fd(char *f, t_utils *data)
 		return (0);
 	if (S_ISDIR(data->stat_check.st_mode))
 	{
-		ft_putstr_fd(" Is a directory\n", 2);
+		if (f[0] == '.' || f[0] == '/')
+		{
+			ft_putstr_fd(" Is a directory\n", 2);
+			data->exec_status = 126;
+		}
+		else
+		{
+			ft_putstr_fd(" command not found\n", 2);
+			data->exec_status = 127;
+		}
 		return (1);
 	}
 	return (0);
