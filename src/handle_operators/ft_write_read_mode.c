@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:39:22 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/17 19:39:25 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:21:29 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ void	ft_write_read_mode(int *pipefd, t_ast **root, t_data *data)
 		exit(data->utils.exec_status);
 	}
 	if (data->utils.fd_backup < 0 || !data->utils.fd_backup)
-        {
+	{
 		if (check_list_stdin(ast->cmd))
 		{
 			clean_process(data);
 			free(path);
 			close_descriptors(pipefd, 1, data);
-                	exit(0);
+			exit (0);
 		}
-        }
+	}
 	execve(path, ast->cmd, data->utils.envp);
 	clean_process(data);
 	free(path);

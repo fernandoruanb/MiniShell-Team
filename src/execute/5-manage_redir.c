@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/17 18:02:43 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 21:09:36 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,25 @@ int	switch_redir(t_token **token, t_data *data)
 	name = find_fd(token);
 	fd = -1;
 	if ((*token)->id == REDIRECT_OUT)
+	{
+		data->utils.can_dup = false;
 		fd = handle_redirect_out(name, &data->utils);
+	}
 	else if ((*token)->id == APPEND)
+	{
+		data->utils.can_dup = false;
 		fd = append(name, &data->utils);
+	}
 	else if ((*token)->id == REDIRECT_IN)
+	{
+		data->utils.exec_status = true;
 		fd = handle_red_in(name, &data->utils);
+	}
 	else if ((*token)->id == HEREDOC)
+	{
+		data->utils.can_dup = true;
 		fd = heredoc(name, data, token);
+	}
 	return (fd);
 }
 
@@ -65,11 +77,30 @@ static t_token	*get_pos(t_token **token, t_ast *root)
 
 	if (!*token | !root)
 		return (NULL);
+	if (root->id != PIPE)
+		
 	temp = *token;
-	while ((temp && temp->next) && temp->index != root->index)
+	while ((temp && temp->next)
+			&& (temp->id == PIPE || temp->index != root->index))
 		temp = temp->next;
 	return (temp);
 }
+
+// static int	num_sei(t_token **token)
+// {
+// 	t_token	*temp;
+
+// 	if (!*token)
+// 		return (1);
+// 	temp = *token;
+// 	while (temp)
+// 	{
+// 		if (isredir(temp->id))
+// 			return (0);
+// 		temp = temp->next;
+// 	}
+// 	return (1);
+// }
 
 int	manage_redir(t_ast **root, t_token **token, t_data *data)
 {
@@ -78,6 +109,7 @@ int	manage_redir(t_ast **root, t_token **token, t_data *data)
 
 	if (!*token || !data || !*root || !isredir((*root)->id))
 		return (0);
+	// printf("recebi: %s(%d)\n", (*root)->cmd[0], (*root)->index);
 	temp = get_pos(token, find_cmd(root));
 	fd = -1;
 	while (temp && temp->id != PIPE)
@@ -91,10 +123,6 @@ int	manage_redir(t_ast **root, t_token **token, t_data *data)
 		}
 		temp = temp->next;
 	}
-	if (temp && temp->id == PIPE)
-		data->utils.can_dup = false;
-	else
-		data->utils.can_dup = true;
 	return (0);
 }
 
@@ -105,5 +133,6 @@ void	restore_redirect(int *original, t_data *data)
 	make_redir(original[0], 0);
 	make_redir(original[1], 1);
 	destroy_fd(&original);
+	data->utils.can_dup = true;
 	data->flags.shoud_restore = !data->flags.shoud_restore;
 }

@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/17 15:06:01 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 19:51:36 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	handle_pipe_op(t_ast **root, int flag, t_data *data)
 	if (flag == 2)
 		wait_all_pids(data);
 	if (data->utils.exec_status == 127)
-		printf("%s : command not found.\n", (*root)->cmd[0]);
+		ft_putstr_fd("Command not found.\n", 2);
 	return (data->utils.exec_status);
 }
 
