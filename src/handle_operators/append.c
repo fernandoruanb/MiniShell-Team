@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:05:05 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/18 10:21:57 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:15:02 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,15 @@ int	append(char *f, t_utils *data)
 		data->exec_status = 1;
 		return (INT_MIN);
 	}
-	if (detect_dir == NULL)
-		return (INT_MIN);
 	fd = open(f, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+	{
+		if (detect_dir != NULL)
+			free(detect_dir);
+		ft_putstr_fd(" No such file or directory\n", 2);
+		data->exec_status = 1;
+		return (INT_MIN);
+	}
 	free(detect_dir);
 	return (fd);
 }
