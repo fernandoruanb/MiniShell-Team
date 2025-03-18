@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 22:15:01 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/15 18:57:53 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:11:35 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void		init_utils(t_utils *data, char **envp);
 void		clean_program(t_utils *data);
 int			check_syntax(t_token *root, char **envp, t_utils *data);
 int			check_incomplete_quotes(char *filename);
+int			decision_of_emperor(t_token *root, t_utils *data);
 int			get_command(t_token *root, t_utils *data);
 int			final_case(t_token *root, t_utils *data);
 int			check_invalid_brackets_position(t_utils *data);

@@ -128,6 +128,7 @@ SRCS = main/2-events.c \
 		syntax_check/check_incomplete_quotes.c\
 		handle_operators/check_invalid_permission.c\
 		handle_operators/check_list_stdin.c\
+		syntax_check/decision_of_emperor.c\
 		1-token.c
 	
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
