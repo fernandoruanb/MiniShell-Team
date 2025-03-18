@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/17 21:09:36 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 21:16:32 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ static t_token	*get_pos(t_token **token, t_ast *root)
 
 	if (!*token | !root)
 		return (NULL);
-	if (root->id != PIPE)
-		
 	temp = *token;
 	while ((temp && temp->next)
 			&& (temp->id == PIPE || temp->index != root->index))
@@ -109,7 +107,7 @@ int	manage_redir(t_ast **root, t_token **token, t_data *data)
 
 	if (!*token || !data || !*root || !isredir((*root)->id))
 		return (0);
-	// printf("recebi: %s(%d)\n", (*root)->cmd[0], (*root)->index);
+	printf("recebi: %s(%d)\n", (*root)->cmd[0], (*root)->index);
 	temp = get_pos(token, find_cmd(root));
 	fd = -1;
 	while (temp && temp->id != PIPE)
