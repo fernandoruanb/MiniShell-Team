@@ -18,7 +18,7 @@ int	check_is_directory_fd(char *f, t_utils *data)
 		return (0);
 	if (S_ISDIR(data->stat_check.st_mode))
 	{
-		ft_putstr_fd(" Is directory\n", 2);
+		ft_putstr_fd(" Is a directory\n", 2);
 		return (1);
 	}
 	return (0);

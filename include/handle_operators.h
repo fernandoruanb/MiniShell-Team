@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 22:21:44 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/17 19:30:58 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:22:48 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	clean_process(t_data *data);
 void	start_echo(void);
 int		handle_redirect_out(char *f, t_utils *data);
-int		check_invalid_permission(char *f);
+int		check_invalid_permission(char *f, int flag);
 int		append(char *f, t_utils *data);
 int		check_list_stdin(char **cmd);
 int		handle_pipe_op(t_ast **root, int flag, t_data *data);

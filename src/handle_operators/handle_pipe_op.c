@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:45:01 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/17 19:51:36 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/18 11:05:20 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ void	read_mode(t_ast **root, int *pipefd, t_data *data)
 {
 	int	pid;
 
+	if (check_is_directory_fd((*root)->cmd[0], &data->utils))
+	{
+		data->utils.exec_status = 126;
+		close_descriptors(pipefd, 1, data);
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -36,6 +42,12 @@ void	write_mode(t_ast **root, int *pipefd, t_data *data)
 	data->utils.fd_backup = dup(pipefd[0]);
 	if (data->utils.fd_backup == -1)
 		close_descriptors(pipefd, 1, data);
+	if (check_is_directory_fd((*root)->cmd[0], &data->utils))
+	{
+		data->utils.exec_status = 126;
+		close_descriptors(pipefd, 0, data);
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -56,6 +68,12 @@ void	write_read_mode(t_ast **root, int *pipefd, t_data *data)
 
 	if (data->utils.fd_backup < 0)
 		close_descriptors(pipefd, 1, data);
+	if (check_is_directory_fd((*root)->cmd[0], &data->utils))
+	{
+		data->utils.exec_status = 126;
+		close_descriptors(pipefd, 0, data);
+		return ;
+	}
 	fd = dup(pipefd[0]);
 	if (fd == -1)
 		close_descriptors(pipefd, 1, data);
@@ -84,7 +102,8 @@ void	wait_all_pids(t_data *data)
 	index = 0;
 	while (index < data->utils.num_of_processes - 1)
 	{
-		waitpid(data->utils.pids[index], NULL, 0);
+		waitpid(data->utils.pids[index], &data->utils.exec_status, 0);
+		translate(data);
 		index++;
 	}
 	waitpid(data->utils.pids[index], &data->utils.exec_status, 0);
@@ -110,8 +129,6 @@ int	handle_pipe_op(t_ast **root, int flag, t_data *data)
 		close_descriptors(pipefd, 1, data);
 	if (flag == 2)
 		wait_all_pids(data);
-	if (data->utils.exec_status == 127)
-		ft_putstr_fd(" command not found\n", 2);
 	return (data->utils.exec_status);
 }
 
