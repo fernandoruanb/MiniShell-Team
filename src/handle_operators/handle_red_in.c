@@ -16,7 +16,7 @@ static int	check_file(char *f, t_utils *data)
 {
 	if (access(f, F_OK) != 0)
 	{
-		ft_putstr_fd("No such file or directory\n", 2);
+		ft_putstr_fd(" No such file or directory\n", 2);
 		data->exec_status = 1;
 		return (0);
 	}

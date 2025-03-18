@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:47:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/14 16:48:46 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/18 09:40:10 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,17 @@ void	ft_exit(t_data *data, char **exit_status)
 	{
 		len = splitlen(exit_status);
 		if (len > 2)
+		{
+			ft_putstr_fd(" too many arguments\n", 2);
 			data->prompt->exit_status = 1;
+		}
 		else if (is_all_num(exit_status[1]))
 			data->prompt->exit_status = ft_atoi_but_better(exit_status[1]);
 		else
+		{
+			ft_putstr_fd(" numeric argument required\n", 2);
 			data->prompt->exit_status = 2;
+		}
 	}
 	clear_split(data->utils.paths);
 	if (data->flags.should_clean)

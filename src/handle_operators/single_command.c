@@ -26,5 +26,5 @@ void	single_command(t_ast **root, t_data *data)
 	waitpid(pid, &data->utils.exec_status, 0);
 	translate(data);
 	if (data->utils.exec_status == 127)
-		ft_putstr_fd("command not found.\n", 2);
+		ft_putstr_fd(" command not found\n", 2);
 }

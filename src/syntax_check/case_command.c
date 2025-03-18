@@ -6,7 +6,7 @@
 /*   By: jopereir <jopereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:21:51 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/02 17:07:31 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/18 09:02:16 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,5 @@ int	case_command(t_token *root, t_utils *data)
 		return (show_error_fd("Syntax: CMD Error", 0, data, 1));
 	else if (extra_cases_commands(root, data))
 		return (1);
-	return (show_error_fd("Syntax: CMD Error", 0, data, 127));
+	return (show_error_fd(" command not found", 0, data, 127));
 }

@@ -18,7 +18,7 @@ int	check_invalid_permission(char *f)
 	{
 		if (access(f, W_OK) == -1)
 		{
-			ft_putstr_fd("Permission denied.\n", 2);
+			ft_putstr_fd(" Permission denied\n", 2);
 			return (1);
 		}
 	}

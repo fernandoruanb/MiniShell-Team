@@ -111,7 +111,7 @@ int	handle_pipe_op(t_ast **root, int flag, t_data *data)
 	if (flag == 2)
 		wait_all_pids(data);
 	if (data->utils.exec_status == 127)
-		ft_putstr_fd("Command not found.\n", 2);
+		ft_putstr_fd(" command not found\n", 2);
 	return (data->utils.exec_status);
 }
 

@@ -47,11 +47,17 @@ static int	namevalidation(char *input)
 	int	i;
 
 	if (!input || !valid_name(input[0], 1))
+	{
+		ft_putstr_fd(" not a valid identifier\n", 2);
 		return (0);
+	}
 	i = 0;
 	while (input[i] && input[i] != '=')
 		if (!valid_name(input[i++], 0))
+		{
+			ft_putstr_fd(" not a valid identifier\n", 2);
 			return (0);
+		}
 	return (i);
 }
 
