@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:48:09 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/17 20:35:21 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/17 21:40:56 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	exec_pipe(t_ast **root, t_data *data)
 	if (!*root)
 		return (1);
 	ast = *root;
-	// printf("pode dar dup: %s\n", data->utils.can_dup ? "yes" : "no");
+	printf("pode dar dup: %s\n", data->utils.can_dup ? "yes" : "no");
 	call_handle_pipe(ast, data);
 	return (0);
 }

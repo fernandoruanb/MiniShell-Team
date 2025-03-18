@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:47:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/18 09:40:10 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:14:32 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static int	is_all_num(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (0);
 	i = -1;
 	while (str[++i])
 		if (!ft_isdigit(str[i]) && !is_sig(str[i]))
@@ -51,6 +53,7 @@ void	ft_exit(t_data *data, char **exit_status)
 		}
 	}
 	clear_split(data->utils.paths);
+	printf("pode limpar: %s\n", data->flags.should_clean ? "yes" : "no");
 	if (data->flags.should_clean)
 		call_clean(data, data->flags.shoud_restore);
 	destroy(data, NULL, data->prompt->exit_status);
