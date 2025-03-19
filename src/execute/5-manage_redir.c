@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/18 11:30:00 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/19 11:26:39 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,16 @@ static t_token	*get_pos(t_token **token, t_ast *root)
 {
 	t_token	*temp;
 
-	if (!*token | !root)
+	if (!*token || !root)
 		return (NULL);
+	// printf("vou pesquisar\n");
 	temp = *token;
+	while (temp && temp->previous && temp->id != PIPE)
+		temp = temp->previous;
 	while ((temp && temp->next)
-					&& (temp->id == PIPE || temp->index != root->index))
+			&& (temp->id == PIPE || temp->index != root->index))
 		temp = temp->next;
+	
 	return (temp);
 }
 
@@ -105,15 +109,19 @@ int	manage_redir(t_ast **root, t_token **token, t_data *data)
 	int		fd;
 	t_token	*temp;
 
+	// printf("cheguei na manage\n");
 	if (!*token || !data || !*root || !isredir((*root)->id))
 		return (0);
+	// printf("a manage aprovou\n");
 	// printf("recebi: %s(%d)\n", (*root)->cmd[0], (*root)->index);
 	temp = get_pos(token, find_cmd(root));
+	// printf("vou começar a partir daqui %s(%d)\n", temp->str, temp->index);
 	fd = -1;
 	while (temp && temp->id != PIPE)
 	{
 		if (isredir(temp->id))
 		{
+			// printf("vou redirecionar\n");
 			fd = switch_redir(&temp, data);
 			if (fd == INT_MIN || data->utils.exec_status == 130)
 				return (1);

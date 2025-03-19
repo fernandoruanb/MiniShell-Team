@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/18 14:20:01 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/19 11:26:06 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ static int	exec_multi_cmd(t_ast **root, t_data *data)
 	if (!*root || !data)
 		return (1);
 	ast = *root;
-	fd = NULL;
 	// printf("eu tenho: %s(%d)\n", ast->cmd[0], ast->index);
-	// printf("vou mandar o %s(%d)\n", ast->cmd[0], ast->index);
 	fd = save_origin(data);
 	if (manage_redir(&ast, &data->token, data))
 	{
@@ -173,6 +171,7 @@ int	minishell(t_ast **root, t_data *data)
 
 	if (!data)
 		return (1);
+	printf("cheguei no minishell\n");
 	ast = *root;
 	if (ast->id == PIPE)
 		exec_multi_cmd(&ast, data);
