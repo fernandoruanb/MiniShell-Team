@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:28:30 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/17 18:00:47 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/19 12:28:34 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	init_utils(t_utils *data, char **envp)
 	data->pipes = 0;
 	data->args = 0;
 	data->commands = 0;
-	data->can_dup = true;
+	data->can_read = true;
+	data->can_write = true;
 	data->files = 0;
 }

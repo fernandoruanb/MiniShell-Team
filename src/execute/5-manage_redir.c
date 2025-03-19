@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/19 11:33:26 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/19 12:34:11 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,34 @@ void	aplly_redirect(int fd, t_id id)
 	close (fd);
 }
 
+int	redir_out(char *name, t_id id, t_data *data)
+{
+	int	fd;
+
+	fd = -1;
+	if (id == REDIRECT_OUT)
+		fd = handle_redirect_out(name, &data->utils);
+	else if (id == APPEND)
+		fd = append(name, &data->utils);
+	if (fd >= 0)
+		data->utils.can_write = false;
+	return (fd);
+}
+
+int	redir_in(char *name, t_id id, t_token **token, t_data *data)
+{
+	int	fd;
+
+	fd = -1;
+	if (id == REDIRECT_IN)
+		fd = handle_red_in(name, &data->utils);
+	else if (id == HEREDOC)
+		fd = heredoc(name, data, token);
+	if (fd >= 0)
+		data->utils.can_read = false;
+	return (fd);
+}
+
 int	switch_redir(t_token **token, t_data *data)
 {
 	int		fd;
@@ -48,26 +76,9 @@ int	switch_redir(t_token **token, t_data *data)
 		return (-1);
 	name = find_fd(token);
 	fd = -1;
-	if ((*token)->id == REDIRECT_OUT)
-	{
-		data->utils.can_dup = false;
-		fd = handle_redirect_out(name, &data->utils);
-	}
-	else if ((*token)->id == APPEND)
-	{
-		data->utils.can_dup = false;
-		fd = append(name, &data->utils);
-	}
-	else if ((*token)->id == REDIRECT_IN)
-	{
-		data->utils.exec_status = true;
-		fd = handle_red_in(name, &data->utils);
-	}
-	else if ((*token)->id == HEREDOC)
-	{
-		data->utils.can_dup = true;
-		fd = heredoc(name, data, token);
-	}
+	fd = redir_out(name, (*token)->id, data);
+	if (fd < 0 && fd != INT_MIN)
+		fd = redir_in(name, (*token)->id, token, data);
 	return (fd);
 }
 
@@ -140,6 +151,7 @@ void	restore_redirect(int *original, t_data *data)
 	make_redir(original[0], 0);
 	make_redir(original[1], 1);
 	destroy_fd(&original);
-	data->utils.can_dup = true;
+	data->utils.can_read = true;
+	data->utils.can_write = true;
 	data->flags.shoud_restore = !data->flags.shoud_restore;
 }

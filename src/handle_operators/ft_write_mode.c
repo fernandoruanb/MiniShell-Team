@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:57:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/17 20:21:24 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/19 12:32:14 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_write_mode(int *pipefd, t_ast **root, t_data *data)
 	ast = *root;
 	handle_command_signal();
 	path = NULL;
-	if (data->utils.can_dup)
+	if (data->utils.can_write)
 		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 			exit(EXIT_FAILURE);
 	close_descriptors(pipefd, 1, data);

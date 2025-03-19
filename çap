@@ -1,1 +1,37 @@
-vou redirecionar
+total 1132
+-rw-rw-r--  1 jonas jonas      3 Mar 18 11:28 12345
+-rw-rw-r--  1 jonas jonas   1366 Mar 18 11:28 a
+-rw-rw-r--  1 jonas jonas      0 Mar 18 11:28 bye
+-rw-r--r--  1 jonas jonas      0 Mar 19 11:43 çap
+-rw-rw-r--  1 jonas jonas  19538 Mar 18 11:28 checker.c
+-rw-rw-r--  1 jonas jonas  19459 Mar 18 11:28 checker_official.c
+-rw-rw-r--  1 jonas jonas     17 Mar 18 11:28 com
+-rw-rw-r--  1 jonas jonas     17 Mar 18 11:28 dad
+-rw-rw-r--  1 jonas jonas      3 Mar 18 13:56 hi
+drwxrwxr-x  2 jonas jonas   4096 Mar 18 13:56 include
+-rw-rw-r--  1 jonas jonas   1371 Mar 18 11:28 infile
+-rw-rw-r--  1 jonas jonas      0 Mar 18 11:28 invalid
+drwxrwxr-x  4 jonas jonas   4096 Mar 18 11:28 Labs
+-rw-rw-r--  1 jonas jonas      4 Mar 18 11:28 lala
+-rw-rw-r--  1 jonas jonas   2255 Mar 18 11:28 leaks.txt
+drwxrwxr-x  2 jonas jonas  12288 Mar 19 11:43 libft
+-rw-rw-r--  1 jonas jonas 138216 Mar 18 11:28 ls
+-rw-rw-r--  1 jonas jonas   5464 Mar 18 13:56 Makefile
+-rwxrwxr-x  1 jonas jonas 854776 Mar 19 11:43 minishell
+drwxrwxr-x  4 jonas jonas   4096 Mar 18 11:28 minishell_tester
+-rw-rw-r--  1 jonas jonas     55 Mar 18 11:28 new
+-rw-rw-r--  1 jonas jonas   1471 Mar 18 11:28 outfile
+-rw-rw-r--  1 jonas jonas      4 Mar 18 11:28 outfile1
+-rw-rw-r--  1 jonas jonas     90 Mar 18 11:28 readline.sup
+-rw-rw-r--  1 jonas jonas   1027 Mar 18 11:28 README.md
+drwxrwxr-x 13 jonas jonas   4096 Mar 19 11:43 src
+-rw-rw-r--  1 jonas jonas     64 Mar 18 11:28 strace.sh
+-rwxrwxr-x  1 jonas jonas     99 Mar 19 11:32 test
+-rw-r--r--  1 jonas jonas      4 Mar 19 11:29 teste
+-rw-rw-r--  1 jonas jonas   1038 Mar 18 11:28 tests.txt
+-rw-rw-r--  1 jonas jonas    247 Mar 18 11:28 todo.md
+-rw-rw-r--  1 jonas jonas      0 Mar 18 11:28 tst
+
+-rw-rw-r--  1 jonas jonas      4 Mar 18 11:28 tst]
+-rw-rw-r--  1 jonas jonas     17 Mar 18 11:28 tudo
+-rw-rw-r--  1 jonas jonas      7 Mar 18 11:28 vc
