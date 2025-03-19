@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/19 11:26:39 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/19 11:33:26 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,13 @@ static t_token	*get_pos(t_token **token, t_ast *root)
 		return (NULL);
 	// printf("vou pesquisar\n");
 	temp = *token;
-	while (temp && temp->previous && temp->id != PIPE)
-		temp = temp->previous;
 	while ((temp && temp->next)
 			&& (temp->id == PIPE || temp->index != root->index))
 		temp = temp->next;
-	
+	while (temp && temp->previous && temp->id != PIPE)
+		temp = temp->previous;
+	if (temp->id == PIPE)
+		temp = temp->next;
 	return (temp);
 }
 

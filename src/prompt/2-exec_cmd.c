@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:32:28 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/18 15:47:35 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/19 11:28:02 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ void	analysis(t_data *data)
 		data->prompt->exit_status = 2;
 		return ;
 	}
-	token_print(data->token);
+	// token_print(data->token);
 	init_utils(&data->utils, data->envp);
 	if (!check_syntax(data->token, data->envp, &data->utils))
 	{
 		data->prompt->exit_status = data->utils.exit_status;
 		return (clear_everything(data, 0));
 	}
-	printf("o checker aprovou\n");
+	// printf("o checker aprovou\n");
 	make_ast(&data->token, &data->root, data);
 	minishell(&data->root, data);
 	clean_program(&data->utils);
