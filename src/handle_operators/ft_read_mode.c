@@ -33,7 +33,7 @@ void	ft_read_mode(t_ast **root, int *pipefd, t_data *data)
 	}
 	if (data->utils.fd_backup < 0 || !data->utils.fd_backup)
 	{
-		if (check_list_stdin(ast->cmd))
+		if (check_list_stdin(ast->cmd) && data->utils.can_read)
 		{
 			clean_process(data);
 			free(path);
