@@ -5,3 +5,9 @@
 	[] - echo <"minishell_tester/test_files/infile_big" | cat <"minishell_tester/test_files/infile"
 	[] - echo <"./test_files/infile_big" | echo <"minishell_tester/test_files/infile"
 	[] - echo hi | cat <"minishell_tester/test_files/infile"
+	[] - echo hi | >minishell_tester/outfiles/outfile01 echo bye >minishell_tester/test_files/invalid_permission
+	[] - $EMPTY
+	[] - $EMPTY echo hi
+	[] -  true << oi > out
+	[] - echo <123 <456 hi | echo 42
+	[] -  
