@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 08:25:19 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/18 09:30:06 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:41:34 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ static int	namevalidation(char *input, t_export **var)
 	}
 	i = 0;
 	while (input[i] && input[i] != '=')
+	{
 		if (!valid_name(input[i++], 0))
 		{
 			ft_putstr_fd(" not a valid identifier\n", 2);
 			return (0);
 		}
+	}
 	name = ft_strndup(input, i);
 	temp = search_var(var, name);
 	if (temp)

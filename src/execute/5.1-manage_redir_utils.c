@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:11:48 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/16 16:24:07 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/20 16:32:48 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,35 @@ void	make_redir(int fd, int fd2)
 		return ;
 	dup2(fd, fd2);
 	close (fd);
+}
+
+char	*find_fd(t_token **token)
+{
+	t_token	*temp;
+
+	if (!*token)
+		return (NULL);
+	temp = *token;
+	while (temp)
+	{
+		if (temp->id == FD || temp->id == LIMITER)
+			return (temp->str);
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
+int	switch_redir(t_token **token, t_data *data)
+{
+	int		fd;
+	char	*name;
+
+	if (!*token || !data)
+		return (-1);
+	name = find_fd(token);
+	fd = -1;
+	fd = redir_out(name, (*token)->id, data);
+	if (fd < 0 && fd != INT_MIN)
+		fd = redir_in(name, (*token)->id, token, data);
+	return (fd);
 }

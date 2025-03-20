@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   1-cd.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 19:59:36 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/18 09:09:56 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:38:56 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,12 @@ static int	check_too_many_arguments(char *divine_eye)
 	return (0);
 }
 
+static void	do_flag(int flag, t_data *official)
+{
+	if (flag == 1)
+		free(official->utils.line);
+}
+
 void	ft_cd(char *input)
 {
 	t_data	*official;
@@ -103,6 +109,5 @@ void	ft_cd(char *input)
 	}
 	else
 		official->utils.exec_status = 0;
-	if (flag == 1)
-		free(official->utils.line);
+	do_flag(flag, official);
 }

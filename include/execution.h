@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 22:17:22 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/17 15:28:51 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/20 16:32:30 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_ast	*find_cmd(t_ast **root);
 /*
 	Test zone
 */
-int		new_redir(t_token **token, t_ast **root, t_data *data);
 int		exec_pipe(t_ast **root, t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:47:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/18 11:29:37 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/20 16:39:39 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	ft_exit(t_data *data, char **exit_status)
 		}
 	}
 	clear_split(data->utils.paths);
-	// printf("pode limpar: %s\n", data->flags.should_clean ? "yes" : "no");
 	if (data->flags.should_clean)
 		call_clean(data, data->flags.shoud_restore);
 	destroy(data, NULL, data->prompt->exit_status);

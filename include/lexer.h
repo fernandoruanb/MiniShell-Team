@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 22:13:46 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/13 22:14:32 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/20 16:36:29 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int		quote_close(char *str, int k);
 void	get_label(t_lex *lex, t_token **token);
 int		error_message(char *message, int __return__, t_token **token);
 int		handle_fd(char *str);
+void	handle_empty(t_lex *lex, int *i, char *str);
 
 #endif
