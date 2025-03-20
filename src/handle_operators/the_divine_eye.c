@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_list_stdin.c                                 :+:      :+:    :+:   */
+/*   the_divine_eye.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 19:22:45 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/17 19:22:50 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/03/20 12:14:22 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/03/20 12:14:22 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	check_list_stdin(char **cmd)
+void	the_divine_eye(int *pipefd, t_ast **root, t_data *data)
 {
-	int			index;
-	static char	*stdin_cmds[] = {"cat", "sort", NULL};
-
-	index = 0;
-	while (stdin_cmds[index] != NULL)
+	if (data->utils.fd_backup < 0)
+		close_descriptors(pipefd, 1, data);
+	if (check_is_directory_fd((*root)->cmd[0], &data->utils))
 	{
-		if (ft_strcmp(cmd[0], stdin_cmds[index]) == 0)
-			return (1);
-		index++;
+		data->utils.exec_status = 126;
+		close_descriptors(pipefd, 0, data);
+		return ;
 	}
-	return (0);
 }

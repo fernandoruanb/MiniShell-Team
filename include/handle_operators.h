@@ -16,7 +16,9 @@
 # include "minishell.h"
 
 void	clean_process(t_data *data);
+void	the_divine_eye(int *pipefd, t_ast **root, t_data *data);
 void	start_echo(void);
+void	ultimate_check(t_ast *ast, char *path, int *pipefd, t_data *data);
 int		handle_redirect_out(char *f, t_utils *data);
 int		check_invalid_permission(char *f, int flag);
 int		append(char *f, t_utils *data);

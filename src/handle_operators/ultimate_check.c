@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_list_stdin.c                                 :+:      :+:    :+:   */
+/*   ultimate_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fruan-ba <fruan-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 19:22:45 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/17 19:22:50 by fruan-ba         ###   ########.fr       */
+/*   Created: 2025/03/20 10:48:13 by fruan-ba          #+#    #+#             */
+/*   Updated: 2025/03/20 10:48:13 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	check_list_stdin(char **cmd)
+void	ultimate_check(t_ast *ast, char *path, int *pipefd, t_data *data)
 {
-	int			index;
-	static char	*stdin_cmds[] = {"cat", "sort", NULL};
-
-	index = 0;
-	while (stdin_cmds[index] != NULL)
+	if (data->utils.fd_backup < 0 || !data->utils.fd_backup)
 	{
-		if (ft_strcmp(cmd[0], stdin_cmds[index]) == 0)
-			return (1);
-		index++;
+		if (check_list_stdin(ast->cmd) && data->utils.can_read)
+		{
+			clean_process(data);
+			free(path);
+			close_descriptors(pipefd, 1, data);
+			exit (0);
+		}
 	}
-	return (0);
 }

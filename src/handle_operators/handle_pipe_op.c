@@ -66,14 +66,7 @@ void	write_read_mode(t_ast **root, int *pipefd, t_data *data)
 	int		pid;
 	int		fd;
 
-	if (data->utils.fd_backup < 0)
-		close_descriptors(pipefd, 1, data);
-	if (check_is_directory_fd((*root)->cmd[0], &data->utils))
-	{
-		data->utils.exec_status = 126;
-		close_descriptors(pipefd, 0, data);
-		return ;
-	}
+	the_divine_eye(pipefd, root, data);
 	fd = dup(pipefd[0]);
 	if (fd == -1)
 		close_descriptors(pipefd, 1, data);

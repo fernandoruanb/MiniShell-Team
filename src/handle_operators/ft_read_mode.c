@@ -31,16 +31,7 @@ void	ft_read_mode(t_ast **root, int *pipefd, t_data *data)
 		clean_process(data);
 		exit(data->utils.exec_status);
 	}
-	if (data->utils.fd_backup < 0 || !data->utils.fd_backup)
-	{
-		if (check_list_stdin(ast->cmd) && data->utils.can_read)
-		{
-			clean_process(data);
-			free(path);
-			close_descriptors(pipefd, 1, data);
-			exit (0);
-		}
-	}
+	ultimate_check(ast, path, pipefd, data);
 	execve(path, ast->cmd, data->utils.envp);
 	free(path);
 	clean_process(data);

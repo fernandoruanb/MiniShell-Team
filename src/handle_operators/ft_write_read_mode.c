@@ -59,16 +59,7 @@ void	ft_write_read_mode(int *pipefd, t_ast **root, t_data *data)
 		clean_process(data);
 		exit(data->utils.exec_status);
 	}
-	if (data->utils.fd_backup < 0 || !data->utils.fd_backup)
-	{
-		if (check_list_stdin(ast->cmd))
-		{
-			clean_process(data);
-			free(path);
-			close_descriptors(pipefd, 1, data);
-			exit (0);
-		}
-	}
+	ultimate_check(ast, path, pipefd, data);
 	execve(path, ast->cmd, data->utils.envp);
 	clean_process(data);
 	free(path);
