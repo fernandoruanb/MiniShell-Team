@@ -1,15 +1,7 @@
-export GHOST=123 | env | grep GHOST
-
-export HELLO=123 A
-
-unset PATH -> ls
-
-export hello
-
-echo <"minishell_tester/test_files/infile_big" | cat <"minishell_tester/test_files/infile"
-
-echo <"./test_files/infile_big" | echo <"minishell_tester/test_files/infile"
-
-echo hi | cat <"minishell_tester/test_files/infile"
-
-
+	[] - export GHOST=123 | env | grep GHOST
+	[] - export HELLO=123 A
+	[] - unset PATH -> ls
+	[] - export hello
+	[] - echo <"minishell_tester/test_files/infile_big" | cat <"minishell_tester/test_files/infile"
+	[] - echo <"./test_files/infile_big" | echo <"minishell_tester/test_files/infile"
+	[] - echo hi | cat <"minishell_tester/test_files/infile"
