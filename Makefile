@@ -89,6 +89,7 @@ SRCS = main/2-events.c \
 		execute/2-isbuiltin.c\
 		execute/2.1-isbuiltin.c\
 		execute/3-updateenvp.c\
+		execute/8-restore_redir.c\
 		ast/1-ast.c\
 		ast/2-make_ast.c\
 		handle_operators/append.c\

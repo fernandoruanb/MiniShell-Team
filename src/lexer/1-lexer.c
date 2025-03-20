@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:37:34 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/20 16:36:11 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/20 16:57:01 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	handle_special(char *str, t_token **token)
 	return (0);
 }
 
-static char	*get_str(char *str)
+char	*get_str(char *str)
 {
 	int	i;
 

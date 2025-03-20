@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 22:17:22 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/20 16:32:30 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/20 17:00:04 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	restore_redirect(int *original, t_data *data);
 int		*save_origin(t_data *data);
 void	make_redir(int fd, int fd2);
 void	destroy_fd(int **fd);
-// void	exec_pipe(t_ast **root, t_data *data);
 void	*call_clean(t_data *data, int flag);
 int		isbuiltin(char *cmd);
 int		call_echo(t_data *data, char **cmd);
@@ -32,9 +31,9 @@ int		switch_redir(t_token **token, t_data *data);
 void	aplly_redirect(int fd, t_id id);
 char	*find_fd(t_token **token);
 t_ast	*find_cmd(t_ast **root);
-/*
-	Test zone
-*/
 int		exec_pipe(t_ast **root, t_data *data);
+char	*get_str(char *str);
+int		redir_out(char *name, t_id id, t_data *data);
+int		redir_in(char *name, t_id id, t_token **token, t_data *data);
 
 #endif
