@@ -70,7 +70,6 @@ SRCS = main/2-events.c \
 		syntax_check/godness_decision.c\
 		syntax_check/start_case.c\
 		syntax_check/check_local_environment.c\
-		tree_binary_executor/my_tree_my_life.c\
 		lexer/4.1-handle_word.c\
 		built_in/3-export.c\
 		built_in/3-export_utils.c\
