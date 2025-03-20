@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:47:20 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/20 16:39:39 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/20 19:55:31 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,13 @@ static int	is_all_num(char *str)
 		return (0);
 	i = -1;
 	while (str[++i])
+	{
 		if (!ft_isdigit(str[i]) && !is_sig(str[i]))
+		{
+			ft_putstr_fd(" numeric argument required\n", 2);
 			return (0);
+		}
+	}
 	return (1);
 }
 
@@ -47,10 +52,7 @@ void	ft_exit(t_data *data, char **exit_status)
 		else if (is_all_num(exit_status[1]))
 			data->prompt->exit_status = ft_atoi_but_better(exit_status[1]);
 		else
-		{
-			ft_putstr_fd(" numeric argument required\n", 2);
 			data->prompt->exit_status = 2;
-		}
 	}
 	clear_split(data->utils.paths);
 	if (data->flags.should_clean)
