@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 22:17:22 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/21 00:35:58 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/21 13:13:50 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		switch_redir(t_token **token, t_data *data);
 void	aplly_redirect(int fd, t_id id);
 char	*find_fd(t_token **token);
 t_ast	*find_cmd(t_ast **root);
-int		exec_pipe(t_ast **root, t_data *data);
+int		exec_pipe(t_ast **root, t_data *data, int *fd);
 char	*get_str(char *str);
 int		redir_out(char *name, t_id id, t_data *data);
 int		redir_in(char *name, t_id id, t_token **token, t_data *data);

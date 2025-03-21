@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:52 by jopereir          #+#    #+#             */
-/*   Updated: 2025/03/20 16:36:56 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/21 13:16:46 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ static int	exec_multi_cmd(t_ast **root, t_data *data)
 		exec_multi_cmd(&ast->left, data);
 		exec_multi_cmd(&ast->right, data);
 	}
-	exec_pipe(&ast, data);
-	restore_redirect(fd, data);
+	exec_pipe(&ast, data, fd);
+	// if (data->flags.shoud_restore)
+	// 	restore_redirect(fd, data);
 	return (0);
 }
 
