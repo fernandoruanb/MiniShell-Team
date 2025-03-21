@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:39:22 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/19 12:32:36 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/21 18:03:25 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,18 @@ void	ft_write_read_mode(int *pipefd, t_ast **root, t_data *data)
 			exit(EXIT_FAILURE);
 	close_descriptors(pipefd, 1, data);
 	path = get_path(data, ast->cmd);
-	if (handle_builtin(ast->cmd, data))
-	{
-		free(path);
-		clean_process(data);
-		exit(data->utils.exec_status);
-	}
+	// if (handle_builtin(ast->cmd, data))
+	// {
+	// 	ultimate_check(ast, path, pipefd, data);
+	// 	free(path);
+	// 	clean_process(data);
+	// 	exit(data->utils.exec_status);
+	// }
 	ultimate_check(ast, path, pipefd, data);
-	execve(path, ast->cmd, data->utils.envp);
+	if (!handle_builtin(ast->cmd, data))
+		if (execve(path, ast->cmd, data->utils.envp) < 0)
+			data->utils.exec_status = errno;
 	clean_process(data);
 	free(path);
-	exit(errno);
+	exit(data->utils.exec_status);
 }
