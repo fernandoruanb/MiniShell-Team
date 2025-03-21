@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:31:48 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/20 20:12:17 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/21 00:35:50 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,11 @@ void	restore_redirect(int *original, t_data *data)
 	data->utils.can_read = true;
 	data->utils.can_write = true;
 	data->flags.shoud_restore = !data->flags.shoud_restore;
+}
+
+t_ast	*find_cmd2(t_ast **root)
+{
+	if (isredir((*root)->id))
+		return (*root);
+	return (find_cmd(root));
 }

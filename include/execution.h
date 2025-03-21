@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 22:17:22 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/20 17:00:04 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/21 00:35:58 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ int		exec_pipe(t_ast **root, t_data *data);
 char	*get_str(char *str);
 int		redir_out(char *name, t_id id, t_data *data);
 int		redir_in(char *name, t_id id, t_token **token, t_data *data);
+t_ast	*find_cmd2(t_ast **root);
 
 #endif

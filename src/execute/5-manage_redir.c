@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:38:03 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/20 20:15:17 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/21 00:35:45 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,6 @@ static t_token	*get_pos(t_token **token, t_ast *root)
 	return (temp);
 }
 
-t_ast	*find_cmd2(t_ast **root)
-{
-	if (isredir((*root)->id))
-		return (*root);
-	return (find_cmd(root));
-}
-
 int	manage_redir(t_ast **root, t_token **token, t_data *data)
 {
 	int		fd;
@@ -85,12 +78,10 @@ int	manage_redir(t_ast **root, t_token **token, t_data *data)
 		return (0);
 	temp = get_pos(token, find_cmd2(root));
 	fd = -1;
-	// printf("chaguei na manage\n");
 	while (temp && temp->id != PIPE)
 	{
 		if (isredir(temp->id))
 		{
-			// printf("vou fazer redirect\n");
 			fd = switch_redir(&temp, data);
 			if (fd == INT_MIN || data->utils.exec_status == 130)
 				return (1);
