@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:39:22 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/21 18:03:25 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/21 18:59:07 by fruan-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void	ft_write_read_mode(int *pipefd, t_ast **root, t_data *data)
 			data->utils.exec_status = errno;
 	clean_process(data);
 	free(path);
+	close_all_fds();
 	exit(data->utils.exec_status);
 }

@@ -111,6 +111,7 @@ SRCS = main/2-events.c \
 		handle_operators/single_command.c\
 		handle_operators/ultimate_check.c\
 		handle_operators/the_divine_eye.c\
+		handle_operators/close_all_fds.c\
 		built_in/7-echo.c\
 		built_in/8-env.c\
 		built_in/9-pwd.c\
