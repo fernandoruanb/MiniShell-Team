@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:11:48 by jonas             #+#    #+#             */
-/*   Updated: 2025/03/20 16:32:48 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/21 19:36:05 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	destroy_fd(int **fd)
 {
 	if (!fd || !*fd)
 		return ;
+	// printf("vou dar free\n");
 	close ((*fd)[0]);
 	close ((*fd)[1]);
 	free(*fd);

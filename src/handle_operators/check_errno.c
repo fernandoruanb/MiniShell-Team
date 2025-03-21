@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:51:37 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/15 19:37:54 by fruan-ba         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:35:27 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	clean_process(t_data *data)
 {
-	if (!data)
+	if (!data || !data->flags.should_clean)
 		return ;
 	if (data->prompt)
 	{
