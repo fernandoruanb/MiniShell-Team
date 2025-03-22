@@ -6,7 +6,7 @@
 /*   By: jonas <jonas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:51:37 by fruan-ba          #+#    #+#             */
-/*   Updated: 2025/03/22 15:49:58 by jonas            ###   ########.fr       */
+/*   Updated: 2025/03/22 15:53:37 by jonas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	clean_process(t_data *data)
 	/*
 		Test zone	
 	*/
-	destroy(data, NULL, data->utils.exec_status);
+	//destroy(data, NULL, data->utils.exec_status);
 }
 
 void	check_errno(char **split1, t_utils *data, t_data *__data)
